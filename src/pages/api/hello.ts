@@ -24,5 +24,5 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
         .catch((error) => {
             console.error(error);
         });
-    res.status(200).json({ name: process.env.SENDGRID_API_KEY! });
+    res.status(200).json({ name: "success" });
 }
