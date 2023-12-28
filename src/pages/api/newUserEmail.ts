@@ -18,7 +18,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
             to: email, // Change to your recipient
             from: "ronaga@bridgesforpeace.com", // Change to your verified sender
             subject: "Sending with SendGrid is Fun",
-            text: `Hi ${name}, It's easy and easy to do anywhere, even with Node.js`,
             html: mailBody,
         };
         sgMail
