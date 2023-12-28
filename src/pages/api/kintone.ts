@@ -2,7 +2,7 @@ import { KintoneRestAPIClient } from "@kintone/rest-api-client";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type Data = {
-    name: string;
+    name: any;
 };
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
