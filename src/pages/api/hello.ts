@@ -22,6 +22,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
             res.status(200).json({ name: e });
         })
         .catch((error) => {
-            res.status(200).json({ name: "success" });
+            res.status(200).json({ name: error });
         });
 }
