@@ -12,13 +12,14 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
         const data = req.body; // Access the request body
         const email = data.email;
         const name = data.name;
+        const mailBody = data.mailBody;
         sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
         const msg = {
             to: email, // Change to your recipient
             from: "ronaga@bridgesforpeace.com", // Change to your verified sender
             subject: "Sending with SendGrid is Fun",
             text: `Hi ${name}, It's easy and easy to do anywhere, even with Node.js`,
-            html: `Hi ${name}, <strong>and easy to do anywhere, even with Node.js</strong>`,
+            html: mailBody,
         };
         sgMail
             .send(msg)
