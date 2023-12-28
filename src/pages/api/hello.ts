@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import sgMail from "@sendgrid/mail";
 
 type Data = {
-    name: string;
+    name: any;
 };
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
@@ -18,11 +18,10 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
     };
     sgMail
         .send(msg)
-        .then(() => {
-            console.log("Email sent");
+        .then((e) => {
+            res.status(200).json({ name: e });
         })
         .catch((error) => {
-            console.error(error);
+            res.status(200).json({ name: "success" });
         });
-    res.status(200).json({ name: "success" });
 }
