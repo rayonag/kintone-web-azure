@@ -11,7 +11,8 @@ export default function Home() {
         const fetchData = async () => {
             const response = await fetch("/api/hello");
             const data = await response.json();
-            setMessage(data.message);
+            console.log(data);
+            setMessage(data.name);
         };
 
         fetchData();
