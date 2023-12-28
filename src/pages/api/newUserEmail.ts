@@ -8,20 +8,27 @@ type Data = {
 };
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
-    const msg = {
-        to: "onaga.ray@gmail.com", // Change to your recipient
-        from: "ronaga@bridgesforpeace.com", // Change to your verified sender
-        subject: "Sending with SendGrid is Fun",
-        text: "and easy to do anywhere, even with Node.js",
-        html: "<strong>and easy to do anywhere, even with Node.js</strong>",
-    };
-    sgMail
-        .send(msg)
-        .then((e) => {
-            res.status(200).json({ name: e });
-        })
-        .catch((error) => {
-            res.status(200).json({ name: error });
-        });
+    if (req.method === "POST") {
+        const data = req.body; // Access the request body
+        const email = data.email;
+        const name = data.name;
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
+        const msg = {
+            to: email, // Change to your recipient
+            from: "ronaga@bridgesforpeace.com", // Change to your verified sender
+            subject: "Sending with SendGrid is Fun",
+            text: `Hi ${name}, It's easy and easy to do anywhere, even with Node.js`,
+            html: `Hi ${name}, <strong>and easy to do anywhere, even with Node.js</strong>`,
+        };
+        sgMail
+            .send(msg)
+            .then((e) => {
+                res.status(200).json({ name: e });
+            })
+            .catch((error) => {
+                res.status(200).json({ name: error });
+            });
+    } else {
+        res.status(405).json({ name: "Method Not Allowed" });
+    }
 }

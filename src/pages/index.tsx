@@ -18,6 +18,22 @@ export default function Home() {
         const data = await response.json();
         console.log(data);
     };
+    const sendNewUserEmail = async () => {
+        try {
+            const response = await fetch("/api/newUserEmail", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ name: "Ray", email: "onaga.ray@gmail.com" }), // Replace with your data
+            });
+
+            const data = await response.json();
+            console.log(data);
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    };
 
     return (
         <main className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}>
@@ -25,6 +41,9 @@ export default function Home() {
                 <button onClick={() => fetchKintone()}>Festch kintone</button>
                 <div>
                     <button onClick={async () => sendEmail()}>Send Email</button>
+                </div>
+                <div>
+                    <button onClick={() => sendNewUserEmail()}>New User Email</button>
                 </div>
                 <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
                     Get started by editing&nbsp;
