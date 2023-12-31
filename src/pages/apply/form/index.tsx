@@ -1,0 +1,41 @@
+"use client";
+// Import necessary modules from React
+import React, { useState } from "react";
+
+// Define the functional component Page
+const Page: React.FC = () => {
+    // State to track whether the iframe content is loading
+    const [isLoading, setIsLoading] = useState(true);
+
+    // Function to handle iframe load event
+    const handleIframeLoad = () => {
+        // Set isLoading to false when the iframe has finished loading
+        setIsLoading(false);
+    };
+    return (
+        // Use a wrapper div for the entire page
+        <div style={{ height: "100vh", width: "100vw", display: "flex", flexDirection: "column" }}>
+            hello
+            {/* Header component */}
+            {/* <header style={{ backgroundColor: "#f0f0f0", padding: "10px", textAlign: "center" }}>
+                <h1>Simple Header</h1>
+            </header> */}
+            {/* Display the loading spinner while the iframe is loading */}
+            {isLoading && (
+                <div style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <div className="loading-spinner"></div>
+                </div>
+            )}
+            {/* Iframe component */}
+            <iframe
+                title="Embedded Content"
+                src="https://f62c12b3.form.kintoneapp.com/public/6c3b288a54c80e09b9b9c2160219236edffef801d5d46cdc90e7a81c0ffb2819?iframe=true" // Replace with your desired URL
+                style={{ flex: 1, border: "none" }} // Make the iframe fill the remaining space
+                onLoad={handleIframeLoad}
+            ></iframe>
+        </div>
+    );
+};
+
+// Export the component for use in other files
+export default Page;

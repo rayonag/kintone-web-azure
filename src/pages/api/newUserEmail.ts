@@ -11,13 +11,17 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
     if (req.method === "POST") {
         const data = req.body; // Access the request body
         const email = data.email;
-        const name = data.name;
+        const mailTitle = data.mailTitle;
+        const cc = data.cc;
+        const bcc = data.bcc;
         const mailBody = data.mailBody;
         sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
         const msg = {
             to: email, // Change to your recipient
             from: "ronaga@bridgesforpeace.com", // Change to your verified sender
-            subject: "Sending with SendGrid is Fun",
+            cc: cc,
+            bcc: bcc,
+            subject: mailTitle,
             html: mailBody,
         };
         sgMail
