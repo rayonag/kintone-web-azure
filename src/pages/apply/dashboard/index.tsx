@@ -3,8 +3,11 @@ import { useRef, useState } from "react";
 
 import Layout from "../login/Layout";
 
+import { useDashboardUser } from "@/pages/_app";
+
 const Dashboard = ({ user }) => {
-    const inputRef = useRef();
+    const users = useDashboardUser();
+    console.log(users);
 
     return (
         <>

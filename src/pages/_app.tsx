@@ -17,7 +17,7 @@ const defaultUser: DashboardUser = {
 };
 // Create/Export the User context
 export const DashboardUserContext = createContext<DashboardUser>(defaultUser);
-export const useDashboardUserContext = () => {
+export const useDashboardUser = () => {
     return useContext(DashboardUserContext);
 };
 
