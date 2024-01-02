@@ -25,12 +25,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 if (recordArray.length > 1) console.log("Found more than one user with the same email."); // TODO: add verification
 
                 const user = recordArray[0];
-                user["password"].value = data.password;
-                const { id, ...updateUser } = user;
                 const updateRecord = await client.record.updateRecord({
                     app: "121",
                     id: user["$id"].value,
-                    record: updateUser,
+                    record: {
+                        password: {
+                            value: data.password,
+                        },
+                    },
                 });
                 res.status(200).json({
                     username: user["email"],
@@ -38,6 +40,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 });
             }
         } catch (e) {
+            console.log(e.errors);
             res.status(505);
         }
     } else {

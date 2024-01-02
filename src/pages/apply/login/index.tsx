@@ -82,7 +82,7 @@ const Login: React.FC = () => {
                 },
                 body: JSON.stringify({ username: username.value, password: password.value }), // Replace with your data
             });
-
+            console.log(res);
             if (res.ok) {
                 setCookie(null, "auth", username.value, {
                     maxAge: 7 * 24 * 60 * 60, // お好きな期限を
@@ -119,7 +119,7 @@ const Login: React.FC = () => {
             {section == "Email" && (
                 <Layout>
                     <div className="text-center">Enter your email</div>
-                    <input value={username.value} onChange={(e) => setUsername({ value: e.target.value })} onKeyDown={(e) => allowEnterKeydown(e, handleNext)} placeholder="Email" className="mt-5 border rounded bg-gray-600" />
+                    <input value={username.value} onChange={(e) => setUsername({ value: e.target.value })} onKeyDown={(e) => allowEnterKeydown(e, handleNext)} placeholder="Email" className="mt-5 border rounded bg-gray-600 min-w-full" />
                     {username.isError && <div className="text-red-600">Invalid Email Address</div>}
                     <div className="text-center">
                         <button className="btn" onClick={handleNext}>
@@ -132,7 +132,7 @@ const Login: React.FC = () => {
                 <Layout>
                     <div className="m-4">Email: {username?.value}</div>
                     <div className="text-center">Enter your password</div>
-                    <input value={password.value} onChange={(e) => setPassword({ value: e.target.value })} onKeyDown={(e) => allowEnterKeydown(e, handleLogin)} placeholder="Password" className="mt-5 border rounded bg-gray-600" />
+                    <input value={password.value} onChange={(e) => setPassword({ value: e.target.value })} onKeyDown={(e) => allowEnterKeydown(e, handleLogin)} placeholder="Password" className="mt-5 border rounded bg-gray-600 min-w-full" />
                     {password.isError && <div className="text-red-600">Invalid Password</div>}
                     <div className="text-center">
                         <button className="btn" onClick={handleLogin}>
@@ -145,7 +145,7 @@ const Login: React.FC = () => {
                 <Layout>
                     <div className="m-4">Email: {username?.value}</div>
                     <div className="text-center">Enter your password</div>
-                    <input value={password.value} onChange={(e) => setPassword({ value: e.target.value })} onKeyDown={(e) => allowEnterKeydown(e, handleLogin)} placeholder="Password" className="my-5 border rounded bg-gray-600" />
+                    <input value={password.value} onChange={(e) => setPassword({ value: e.target.value })} onKeyDown={(e) => allowEnterKeydown(e, handleLogin)} placeholder="Password" className="my-5 border rounded bg-gray-600 min-w-full" />
                     <div className="text-center">Confirm your password</div>
                     <input
                         value={confirmPassword}
@@ -154,7 +154,7 @@ const Login: React.FC = () => {
                             handleConfirmPassword(e.target.value);
                         }}
                         placeholder="Re-enter Password"
-                        className="mt-5 border rounded bg-gray-600"
+                        className="mt-5 border rounded bg-gray-600 min-w-full"
                     />
                     {password.isError && <div className="text-red-600">Password doesn't match</div>}
                     <div className="text-center">
