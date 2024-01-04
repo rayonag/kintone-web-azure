@@ -6,24 +6,26 @@ import React, { useState } from "react";
 const Page: React.FC = () => {
     // State to track whether the iframe content is loading
     const [isLoading, setIsLoading] = useState(true);
-
+    console.log(isLoading);
     // Function to handle iframe load event
     const handleIframeLoad = () => {
         // Set isLoading to false when the iframe has finished loading
-        setIsLoading(false);
+        // added 2 seconds for lagging loading time
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 2000);
     };
     return (
         // Use a wrapper div for the entire page
         <div style={{ height: "100vh", width: "100vw", display: "flex", flexDirection: "column" }}>
-            hello
             {/* Header component */}
             {/* <header style={{ backgroundColor: "#f0f0f0", padding: "10px", textAlign: "center" }}>
                 <h1>Simple Header</h1>
             </header> */}
             {/* Display the loading spinner while the iframe is loading */}
             {isLoading && (
-                <div style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
-                    <div className="loading-spinner"></div>
+                <div className="flex items-center justify-center h-screen">
+                    <div className="spinner border-4 border-solid border-white/30 border-t-[#3498db] rounded-full w-[20vmin] h-[20vmin] animate-spin"></div>
                 </div>
             )}
             {/* Iframe component */}

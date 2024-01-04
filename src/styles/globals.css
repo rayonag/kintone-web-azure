@@ -22,13 +22,27 @@ body {
         transform: translateX(100%);
     }
     100% {
-        transform: translateX(-100%);
+        transform: translateX(-50%);
     }
 }
 
 .moveSentence {
-    animation: moveSentences 20s linear infinite;
+    animation: moveSentences 60s linear infinite;
 }
+
+@keyframes moveSentencesRev {
+    0% {
+        transform: translateX(-50%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.moveSentenceRev {
+    animation: moveSentencesRev 60s linear infinite;
+}
+
 /* Add these styles to your CSS file or style block */
 
 .loading-spinner {

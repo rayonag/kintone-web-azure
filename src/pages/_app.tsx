@@ -1,4 +1,4 @@
-import React, { useEffect, createContext, useContext } from "react";
+import React, { useEffect, createContext, useContext, useState, FC, Dispatch, SetStateAction } from "react";
 import { NextPageContext } from "next";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
@@ -11,24 +11,44 @@ export type DashboardUser = {
     isLoggedIn: boolean;
     username?: string;
     password?: string;
+    name?: string;
+    ref?: string;
+    checkList?: string[];
 };
 const defaultUser: DashboardUser = {
     isLoggedIn: false,
 };
 // Create/Export the User context
-export const DashboardUserContext = createContext<DashboardUser>(defaultUser);
+const dashboardUserContext = createContext<DashboardUser>(defaultUser);
+const setDashboardUserContext = createContext<Dispatch<SetStateAction<DashboardUser>>>(() => undefined);
 export const useDashboardUser = () => {
-    return useContext(DashboardUserContext);
+    return useContext(dashboardUserContext);
+};
+export const setDashboardUser = () => {
+    return useContext(setDashboardUserContext);
+};
+const DashboardUserProvider: ({ children }: { children: JSX.Element }) => JSX.Element = ({ children }) => {
+    const [dashboardUser, setDashboardUser] = useState<DashboardUser>(defaultUser);
+    return (
+        <dashboardUserContext.Provider value={dashboardUser}>
+            <setDashboardUserContext.Provider value={setDashboardUser}>{children}</setDashboardUserContext.Provider>
+        </dashboardUserContext.Provider>
+    );
 };
 
 const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
     const router = useRouter();
     const cookies = parseCookies(ctx);
 
+    // set username from cookie
+    if (typeof cookies.auth !== "undefined") {
+        const user = useDashboardUser();
+        user.username = cookies.auth;
+    }
+
     // 第二引数に空配列を指定してマウント・アンマウント毎（CSRでの各画面遷移時）に呼ばれるようにする
     useEffect(() => {
         // CSR用認証チェック
-
         router.beforePopState(({ url, as, options }) => {
             // ログイン画面とエラー画面遷移時のみ認証チェックを行わない
             if (url !== "/apply/login" && url !== "/_error") {
@@ -42,7 +62,12 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
         });
     }, []);
 
-    const component = typeof pageProps === "undefined" ? null : <Component {...pageProps} />;
+    const component =
+        typeof pageProps === "undefined" ? null : (
+            <DashboardUserProvider>
+                <Component {...pageProps} />
+            </DashboardUserProvider>
+        );
 
     return component;
 };

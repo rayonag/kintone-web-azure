@@ -2,8 +2,12 @@ import { KintoneRestAPIClient } from "@kintone/rest-api-client";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type Data = {
+    ok: boolean;
+    name?: any;
+    ref?: any;
     username?: any;
     password?: any;
+    checkList?: any;
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
@@ -20,27 +24,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 },
             });
             const recordArray = await client.record.getAllRecords({ app: "121", condition: `email="${username}"` });
-            if (recordArray.length == 0) res.status(501).json({});
+            if (recordArray.length == 0) res.status(501).json({ ok: false });
             else {
                 if (recordArray.length > 1) console.log("Found more than one user with the same email."); // TODO: add verification
 
                 const user = recordArray[0];
+                // type guard
                 if (typeof user["$id"].value !== "string") {
                     res.status(505);
                     return;
                 }
-                const updateRecord = await client.record.updateRecord({
-                    app: "121",
-                    id: user["$id"].value,
-                    record: {
-                        password: {
-                            value: data.password,
-                        },
-                    },
-                });
+                console.log(user);
+
                 res.status(200).json({
+                    ok: true,
+                    name: user["name"],
+                    ref: user["ref"],
                     username: user["email"],
-                    password: user["password"],
+                    checkList: user["checkList"],
                 });
             }
         } catch (e: any) {
