@@ -6,15 +6,16 @@ import { destroyCookie } from "nookies";
 
 import Layout from "./Layout";
 
+export const handleLogout = () => {
+    destroyCookie({}, "auth", {
+        path: "/", // THE KEY IS TO SET THE SAME PATH
+    });
+    location.reload();
+};
+
 // Define the functional component Page
 const Page: React.FC = () => {
     // Function to handle iframe load event
-    const handleLogout = () => {
-        destroyCookie({}, "auth", {
-            path: "/", // THE KEY IS TO SET THE SAME PATH
-        });
-        location.reload();
-    };
 
     return (
         <Layout>

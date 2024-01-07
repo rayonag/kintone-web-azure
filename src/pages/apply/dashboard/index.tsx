@@ -3,6 +3,8 @@ import { useEffect, useState, useCallback } from "react";
 
 import Layout from "./Layout";
 
+import { handleLogout } from "..";
+
 import { useDashboardUser, setDashboardUser } from "@/pages/_app";
 import Link from "next/link";
 
@@ -66,6 +68,9 @@ const Dashboard = () => {
                         </Link>
                         <button className="btn">Get Ready for Departure</button>
                         <button className="btn">Contact Us</button>
+                        <button className="btn" onClick={handleLogout}>
+                            Log out
+                        </button>
                     </div>
                     {/* Moving sentence */}
                     <div className="absolute bottom-5 left-0 right-0 text-left items-baseline mt-4 moveSentenceRev">
