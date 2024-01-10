@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { destroyCookie } from "nookies";
 
+import { useDashboardUser } from "../_app";
+
 import Layout from "./Layout";
 
 export const handleLogout = () => {
@@ -15,6 +17,7 @@ export const handleLogout = () => {
 
 // Define the functional component Page
 const Page: React.FC = () => {
+    const loginUser = useDashboardUser();
     // Function to handle iframe load event
 
     return (
@@ -22,8 +25,11 @@ const Page: React.FC = () => {
             <div className="relative flex flex-col items-center justify-center min-h-screen bg-black text-white overflow-hidden">
                 {/* Content */}
                 <div className="flex flex-col items-center justify-center">
-                    <Link href="/apply/dashboard" className="btn">
-                        Go to Dashboard
+                    <div>
+                        <h1 className="text-xl my-10">Welcome back, {loginUser?.name}!</h1>
+                    </div>
+                    <Link href="/apply/form" className="btn">
+                        Submit online application form
                     </Link>
                     <button className="btn">Get Ready for Departure</button>
                     <a href="https://www.bridgesforpeace.com" className="btn">

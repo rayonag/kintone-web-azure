@@ -38,14 +38,14 @@ const Dashboard = () => {
                         <h1 className="text-xl my-10">Welcome back, {loginUser?.name}!</h1>
                     </div>
                     {/* Moving sentence */}
-                    <div className="absolute top-5 left-0 right-0 text-left items-baseline mt-4 moveSentence">
+                    {/* <div className="absolute top-5 left-0 right-0 text-left items-baseline mt-4 moveSentence">
                         <div className="flex text-2xl ">
                             <img src="https://www.bridgesforpeace.com/wp-content/themes/bridges4peace/images/logo.jpg" style={{ maxWidth: "7rem" }} alt="Bridges for Peace"></img>
                             <p className="text-2xl italic text-white ml-5">Bridges for Peace</p>
                             <p className="text-2xl italic text-white ml-5">גשרים למעו השלום</p>
                             <p className="text-2xl italic text-blue-300 ml-5">... Your Israel Connection</p>
                         </div>
-                    </div>
+                    </div> */}
                     {/* Content */}
                     <div className="flex flex-col items-center justify-center">
                         <div>This page will show the progress of your application ...</div>
@@ -73,14 +73,14 @@ const Dashboard = () => {
                         </button>
                     </div>
                     {/* Moving sentence */}
-                    <div className="absolute bottom-5 left-0 right-0 text-left items-baseline mt-4 moveSentenceRev">
+                    {/* <div className="absolute bottom-5 left-0 right-0 text-left items-baseline mt-4 moveSentenceRev">
                         <div className="flex text-2xl ">
                             <img src="https://www.bridgesforpeace.com/wp-content/themes/bridges4peace/images/logo.jpg" style={{ maxWidth: "7rem" }} alt="Bridges for Peace"></img>
                             <p className="text-2xl italic text-white ml-5">Bridges for Peace</p>
                             <p className="text-2xl italic text-white ml-5">גשרים למעו השלום</p>
                             <p className="text-2xl italic text-blue-300 ml-5">... Your Israel Connection</p>
                         </div>
-                    </div>
+                    </div> */}
                 </>
             </div>
         </Layout>
