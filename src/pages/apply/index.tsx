@@ -29,10 +29,10 @@ const Page: React.FC = () => {
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ username: username }), // Replace with your data
+                    body: JSON.stringify({ username: username }),
                 });
                 const user = await res.json();
-                setUser((prev) => ({ ...prev, name: user["name"].value, isLoggedIn: true }));
+                setUser((prev) => ({ ...prev, name: user["name"].value, ref: user["ref"].value, isLoggedIn: true }));
             };
             fetchUser();
         }, [loginUser]);

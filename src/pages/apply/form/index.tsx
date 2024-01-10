@@ -3,7 +3,10 @@
 import React, { useState } from "react";
 
 // Define the functional component Page
-const Page: React.FC = () => {
+type ApplicationFormProps = {
+    ref: string;
+};
+const ApplicationForm: (props: ApplicationFormProps) => JSX.Element = ({ ref }) => {
     // State to track whether the iframe content is loading
     const [isLoading, setIsLoading] = useState(true);
     console.log(isLoading);
@@ -31,7 +34,7 @@ const Page: React.FC = () => {
             {/* Iframe component */}
             <iframe
                 title="Embedded Content"
-                src="https://f62c12b3.form.kintoneapp.com/public/6c3b288a54c80e09b9b9c2160219236edffef801d5d46cdc90e7a81c0ffb2819?iframe=true" // Replace with your desired URL
+                src={`https://f62c12b3.form.kintoneapp.com/public/6c3b288a54c80e09b9b9c2160219236edffef801d5d46cdc90e7a81c0ffb2819?iframe=true&ref=${ref}`} // Replace with your desired URL
                 style={{ flex: 1, border: "none" }} // Make the iframe fill the remaining space
                 onLoad={handleIframeLoad}
             ></iframe>
@@ -40,4 +43,4 @@ const Page: React.FC = () => {
 };
 
 // Export the component for use in other files
-export default Page;
+export default ApplicationForm;
