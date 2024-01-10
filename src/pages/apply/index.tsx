@@ -1,10 +1,10 @@
 "use client";
 // Import necessary modules from React
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { destroyCookie } from "nookies";
 
-import { useDashboardUser } from "../_app";
+import { useDashboardUser, setDashboardUser } from "../_app";
 
 import Layout from "./Layout";
 
@@ -18,6 +18,25 @@ export const handleLogout = () => {
 // Define the functional component Page
 const Page: React.FC = () => {
     const loginUser = useDashboardUser();
+    const setUser = setDashboardUser();
+    const username = loginUser.username;
+    // fetch user information
+    if (!loginUser.isLoggedIn) {
+        useEffect(() => {
+            const fetchUser = async () => {
+                const res = await fetch("/api/fetchUserKintone", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ username: username }), // Replace with your data
+                });
+                const user = await res.json();
+                setUser((prev) => ({ ...prev, name: user["name"].value, isLoggedIn: true }));
+            };
+            fetchUser();
+        }, [loginUser]);
+    }
     // Function to handle iframe load event
 
     return (
