@@ -4,6 +4,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 type Data = {
     username?: any;
     password?: any;
+    ref?: any;
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
@@ -28,6 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 res.status(200).json({
                     username: user["email"],
                     password: user["password"],
+                    ref: user["ref"],
                 });
             }
         } catch (e) {

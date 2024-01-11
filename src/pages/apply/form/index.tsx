@@ -1,14 +1,13 @@
 "use client";
+import { useDashboardUser } from "@/pages/_app";
 // Import necessary modules from React
 import React, { useState } from "react";
 
-// Define the functional component Page
-type ApplicationFormProps = {
-    ref: string;
-};
-const ApplicationForm: (props: ApplicationFormProps) => JSX.Element = ({ ref }) => {
+const ApplicationForm = () => {
     // State to track whether the iframe content is loading
     const [isLoading, setIsLoading] = useState(true);
+    const user = useDashboardUser();
+    const ref = user.ref;
     console.log(isLoading);
     // Function to handle iframe load event
     const handleIframeLoad = () => {
@@ -18,6 +17,7 @@ const ApplicationForm: (props: ApplicationFormProps) => JSX.Element = ({ ref }) 
             setIsLoading(false);
         }, 2000);
     };
+
     return (
         // Use a wrapper div for the entire page
         <div style={{ height: "100vh", width: "100vw", display: "flex", flexDirection: "column" }}>

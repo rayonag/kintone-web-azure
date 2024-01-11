@@ -44,6 +44,7 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
     if (typeof cookies.auth !== "undefined") {
         const user = useDashboardUser();
         user.username = cookies.auth;
+        user.ref = cookies.ref;
     }
 
     // 第二引数に空配列を指定してマウント・アンマウント毎（CSRでの各画面遷移時）に呼ばれるようにする
