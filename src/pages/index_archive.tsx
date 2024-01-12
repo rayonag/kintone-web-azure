@@ -6,6 +6,33 @@ import { useEffect, useState } from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+    const fetchtable = () => {
+        const scriptUrl = "https://script.google.com/macros/s/AKfycbwAHzYovoyuHeD6iXuEsHJ1xo1dUOY43vpnJhDfB3PYOI2lv32avCQISoCmJvxYQ25f/exec";
+        fetch(scriptUrl)
+            .then((response) => {
+                // Check if the request was successful (status code 200)
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                // Process the retrieved JSON data
+                console.log(data);
+                const table =
+                    "<table>" +
+                    data.map((val: any) => {
+                        return `<tr><td>${val.eng}</td><td>${val.jap}</td><td>${val.num}</td></tr>`;
+                    }) +
+                    "</table>";
+                document.getElementById("table").innerHTML = table;
+                // Now, 'data' is an array of objects with keys 'eng', 'jap', and 'num'
+                // You can loop through this array and use the data as needed
+            })
+            .catch((error) => {
+                console.error("There was a problem with the fetch operation:", error);
+            });
+    };
     const [message, setMessage] = useState("");
 
     const sendEmail = async () => {
@@ -38,6 +65,8 @@ export default function Home() {
     return (
         <main className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}>
             <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
+                <button onClick={() => fetchtable()}>Fetch Table</button>
+                <div id="table">table</div>
                 <button onClick={() => fetchKintone()}>Fetch kintone</button>
                 <div>
                     <button onClick={async () => sendEmail()}>Send Email</button>

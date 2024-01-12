@@ -119,7 +119,7 @@ const Login: React.FC = () => {
         <div className="relative flex flex-col items-center justify-center min-h-screen">
             {section == "Email" && (
                 <Layout>
-                    <div className="text-center">Enter your email</div>
+                    <div className="text-center w-72">Enter your email</div>
                     <input value={username.value} onChange={(e) => setUsername({ value: e.target.value })} onKeyDown={(e) => allowEnterKeydown(e, handleNext)} placeholder="Email" className="mt-5 border rounded bg-gray-600 min-w-full" autoFocus />
                     {username.isError && <div className="text-red-600">Invalid Email Address</div>}
                     <div className="text-center">
@@ -131,7 +131,7 @@ const Login: React.FC = () => {
             )}
             {section == "Password" && (
                 <Layout>
-                    <div className="m-4">Email: {username?.value}</div>
+                    <div className="m-4 w-52">Email: {username?.value}</div>
                     <div className="text-center">Enter your password</div>
                     <input type="password" value={password.value} onChange={(e) => setPassword({ value: e.target.value })} onKeyDown={(e) => allowEnterKeydown(e, handleLogin)} placeholder="Password" className="mt-5 border rounded bg-gray-600 min-w-full" autoFocus />
                     {password.isError && <div className="text-red-600">Invalid Password</div>}
@@ -144,11 +144,12 @@ const Login: React.FC = () => {
             )}
             {section == "CreatePassword" && (
                 <Layout>
-                    <div className="m-4">Email: {username?.value}</div>
+                    <div className="m-4 w-52">Email: {username?.value}</div>
                     <div className="text-center">Enter your password</div>
-                    <input value={password.value} onChange={(e) => setPassword({ value: e.target.value })} onKeyDown={(e) => allowEnterKeydown(e, handleLogin)} placeholder="Password" className="my-5 border rounded bg-gray-600 min-w-full" autoFocus />
+                    <input type="password" value={password.value} onChange={(e) => setPassword({ value: e.target.value })} onKeyDown={(e) => allowEnterKeydown(e, handleLogin)} placeholder="Password" className="my-5 border rounded bg-gray-600 min-w-full" autoFocus />
                     <div className="text-center">Confirm your password</div>
                     <input
+                        type="password"
                         value={confirmPassword}
                         onChange={(e) => {
                             setConfirmPassword(e.target.value);

@@ -48,7 +48,7 @@ const Page: React.FC = () => {
                         <h1 className="text-xl my-10">Welcome back, {loginUser?.name}!</h1>
                     </div>
                     <Link href="/apply/form" className="btn">
-                        Submit online application form
+                        Online Application Form
                     </Link>
                     <button className="btn">Get Ready for Departure</button>
                     <a href="https://www.bridgesforpeace.com" className="btn">
