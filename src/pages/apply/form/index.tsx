@@ -1,14 +1,24 @@
 "use client";
 import { useDashboardUser } from "@/pages/_app";
 // Import necessary modules from React
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 const ApplicationForm = () => {
     // State to track whether the iframe content is loading
     const [isLoading, setIsLoading] = useState(true);
+    const [ref, setRef] = useState("");
     const user = useDashboardUser();
-    const ref = user.ref;
-    console.log(isLoading);
+    const router = useRouter();
+    console.log(user);
+    useEffect(() => {
+        const ref = user.ref;
+        if (ref == undefined) {
+            router.push("/apply");
+            return;
+        }
+        setRef(ref);
+    }, []);
     // Function to handle iframe load event
     const handleIframeLoad = () => {
         // Set isLoading to false when the iframe has finished loading
@@ -34,7 +44,7 @@ const ApplicationForm = () => {
             {/* Iframe component */}
             <iframe
                 title="Embedded Content"
-                src={`https://f62c12b3.form.kintoneapp.com/public/6c3b288a54c80e09b9b9c2160219236edffef801d5d46cdc90e7a81c0ffb2819?iframe=true&ref=${ref}`} // Replace with your desired URL
+                src={`https://f62c12b3.form.kintoneapp.com/public/1467f38e443994eb2801ba621d22d4b1d9b5ce63db97bba11d8333f6280497b2?iframe=true&ref=${ref}`} // Replace with your desired URL
                 style={{ flex: 1, border: "none" }} // Make the iframe fill the remaining space
                 onLoad={handleIframeLoad}
             ></iframe>
