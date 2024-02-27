@@ -1,0 +1,16 @@
+
+{
+  "sectionTitle": {
+    "personalInformation": "hehPersonal Information"
+  },
+  "placeholder":{
+    "select": "heheSelect"
+  },
+  "error": {
+    "required": "eheThis field is rr"
+  },
+  "firstName": "Feiehrst Name",
+  "lastName": "heheLast Name",
+  "IDType": "IDehe Type"
+
+}
