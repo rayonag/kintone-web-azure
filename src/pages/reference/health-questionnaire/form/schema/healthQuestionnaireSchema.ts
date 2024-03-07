@@ -1,176 +1,60 @@
 import { z } from 'zod';
 import { useTranslation } from 'react-i18next';
 
+const validateCheckbox = (val: string[]) => {
+    return val.length > 0;
+};
+const requiredErrorMessage = {
+    message: 'This field is required'
+};
 // 1
 const name: z.ZodString = z.string().min(1).max(50);
 const age: z.ZodString = z.string().min(1).max(50);
 const height: z.ZodString = z.string().min(1).max(50);
-const heightUnit: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
+const heightUnit: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
 const weight: z.ZodString = z.string().min(1).max(50);
-const weightUnit: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
+const weightUnit: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
 
 // 2
-const migranes: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
-const headInjury: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
-const weakness: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
-const backProblems: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
-const asthma: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
-const lossHearing: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
-const epilepsy: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
-const anxiety: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
-const fatigue: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
-const diabetes: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
-const hemorrhoids: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
-const hepatitis: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
-const stroke: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
-const emphysema: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
-const anemia: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
-const neckPain: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
-const fainting: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
-const dizziness: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
-const heartProblems: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
-const tuberculosis: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
-const lossVision: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
-const depression: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
-const shortBreath: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
-const arthritis: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
-const vomiting: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
-const hiv: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
-const abnormalBleeding: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
-const cancer: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
-const brokenBones: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
-const highBloodPressure: z.ZodArray<z.ZodString> = z.array(z.string().min(1).max(50));
+const migranes: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const headInjury: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const weakness: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const backProblems: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const asthma: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const lossHearing: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const epilepsy: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const anxiety: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const fatigue: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const diabetes: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const hemorrhoids: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const hepatitis: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const stroke: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const emphysema: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const anemia: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const neckPain: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const fainting: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const dizziness: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const heartProblems: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const tuberculosis: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const lossVision: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const depression: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const shortBreath: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const arthritis: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const vomiting: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const hiv: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const abnormalBleeding: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const cancer: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const brokenBones: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const highBloodPressure: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
 
-// const firstName: z.ZodString = z.string().min(1).max(50);
-// const lastName: z.ZodString = z.string().min(1).max(50);
-// const IDType: z.ZodString = z.string().min(2).max(30);
-// const IDNumber: z.ZodString = z.string().min(1).max(30);
-// const gender = z
-//     .string()
-//     .nullable()
-//     .transform((value, ctx): string => {
-//         if (value == null) {
-//             ctx.addIssue({
-//                 code: 'custom',
-//                 message: 'This field is required'
-//             });
-//             return '';
-//         }
-//         return value;
-//     });
-// const birthday = z.object({
-//     day: z.string().max(5, { message: 'Required' }),
-//     month: z.string().max(5, { message: 'Required' }),
-//     year: z.string().max(5, { message: 'Required' })
-// });
-// const originCity: z.ZodString = z.string().min(1).max(50);
-// const originCountry: z.ZodString = z.string().min(1).max(50);
-// const nativeLanguage: z.ZodString = z.string().min(2).max(50);
-// const phone: z.ZodString = z
-//     .string({ required_error: 'This field is required' })
-//     .min(6, { message: 'Invalid phone number' })
-//     .max(20, { message: 'The value length exceeds the limit' });
-// const email: z.ZodString = z.string().min(1).max(100).email({ message: 'Invalid email format' });
-// const address1: z.ZodString = z.string().min(1).max(100);
-// const address2: z.ZodOptional<z.ZodString> = z.string().optional();
-// const city: z.ZodString = z.string().min(1).max(50);
-// const zip: z.ZodOptional<z.ZodString> = z.string().optional();
-
-// // Page 2
-// const spouse = z
-//     .discriminatedUnion('maritalStatus', [
-//         z.object({
-//             maritalStatus: z.literal('Married'),
-//             spouseFirstName: z.string().min(1).max(50),
-//             spouseFamilyName: z.string().min(1).max(50),
-//             spouseIDType: z.string().min(2).max(30),
-//             spouseIDNumber: z.string().min(1).max(50),
-//             spouseBirthday: z.object({
-//                 day: z.string().max(5, { message: 'Required' }),
-//                 month: z.string().max(5, { message: 'Required' }),
-//                 year: z.string().max(5, { message: 'Required' })
-//             })
-//         }),
-//         z.object({
-//             maritalStatus: z.enum(['Single', 'Widowed', 'Divorced', 'd']),
-//             spouseFirstName: z.string().optional(),
-//             spouseFamilyName: z.string().optional(),
-//             spouseIDType: z.string().optional(),
-//             spouseIDNumber: z.string().optional(),
-//             spouseBirthday: z
-//                 .object({
-//                     day: z.string().optional(),
-//                     month: z.string().optional(),
-//                     year: z.string().optional()
-//                 })
-//                 .optional()
-//         })
-//     ])
-//     .refine(
-//         (data) => {
-//             if (data.maritalStatus == 'd') return false;
-//             else return true;
-//         },
-//         {
-//             message: 'This field is required',
-//             path: ['maritalStatus']
-//         }
-//     );
-// const children = z
-//     .discriminatedUnion('childStatus', [
-//         z.object({
-//             childStatus: z.literal('Yes'),
-//             childTable: z.array(
-//                 z.object({
-//                     childFirstName: z.string().min(1).max(50),
-//                     childLastName: z.string().min(1).max(50),
-//                     childGender: z.string().min(2).max(30),
-//                     childAccompanied: z.string().min(1).max(30),
-//                     childBirthday: z.object({
-//                         day: z.string().max(5, { message: 'Required' }),
-//                         month: z.string().max(5, { message: 'Required' }),
-//                         year: z.string().max(5, { message: 'Required' })
-//                     })
-//                 })
-//             )
-//         }),
-//         z.object({
-//             childStatus: z.enum(['No']),
-//             childTable: z.array(
-//                 z.object({
-//                     childFirstName: z.string().optional(),
-//                     childLastName: z.string().optional(),
-//                     childGender: z.string().optional(),
-//                     childAccompanied: z.string().optional(),
-//                     childBirthday: z
-//                         .object({
-//                             day: z.string().optional(),
-//                             month: z.string().optional(),
-//                             year: z.string().optional()
-//                         })
-//                         .optional()
-//                 })
-//             )
-//         }),
-//         z.object({
-//             childStatus: z.null()
-//         })
-//     ])
-//     .refine(
-//         (data) => {
-//             if (data.childStatus == null) return false;
-//             else return true;
-//         },
-//         {
-//             message: 'This field is required',
-//             path: ['childStatus']
-//         }
-//     );
-//const children = z.any();
-
-// const file: z.ZodLiteral<string> = z.literal("true", {
-//     errorMap: () => ({ message: "同意が必須です" }),
-// });
+// 3
+const q1: z.ZodString = z.string().min(1).max(1000);
+const q2: z.ZodString = z.string().min(1).max(1000);
+const q3: z.ZodString = z.string().min(1).max(1000);
+const q4: z.ZodString = z.string().min(1).max(1000);
+const q5: z.ZodString = z.string().min(1).max(1000);
+const q6: z.ZodString = z.string().min(1).max(1000);
+const verify: z.ZodString = z.string().min(1).max(1000);
 
 export const customErrorMap =
     (t: any): z.ZodErrorMap =>
@@ -180,16 +64,8 @@ export const customErrorMap =
                 return { message: t('error.required') };
             case z.ZodIssueCode.too_big:
                 return { message: t('error.too_big') };
-
             case z.ZodIssueCode.custom:
-                // produce a custom message using error.params
-                // error.params won't be set unless you passed
-                // a `params` arguments into a custom validator
-                const params = error.params || {};
-                if (params.myField) {
-                    return { message: `Bad input: ${params.myField}` };
-                }
-                break;
+                return { message: t('error.required') };
         }
 
         // fall back to default message!
@@ -235,6 +111,88 @@ export const HealthQuestionnaireSchema = z.object({
     abnormalBleeding: abnormalBleeding,
     cancer: cancer,
     brokenBones: brokenBones,
-    highBloodPressure: highBloodPressure
+    highBloodPressure: highBloodPressure,
+
+    //3
+    q1: q1,
+    q2: q2,
+    q3: q3,
+    q4: q4,
+    q5: q5,
+    q6: q6,
+    verify: verify
 });
 export type HealthQuestionnaireType = z.infer<typeof HealthQuestionnaireSchema>;
+
+export const HealthQuestionnaireDefaultValues: Partial<HealthQuestionnaireType> = {
+    heightUnit: [],
+    weightUnit: [],
+    migranes: [],
+    headInjury: [],
+    weakness: [],
+    backProblems: [],
+    asthma: [],
+    lossHearing: [],
+    epilepsy: [],
+    anxiety: [],
+    fatigue: [],
+    diabetes: [],
+    hemorrhoids: [],
+    hepatitis: [],
+    stroke: [],
+    emphysema: [],
+    anemia: [],
+    neckPain: [],
+    fainting: [],
+    dizziness: [],
+    heartProblems: [],
+    tuberculosis: [],
+    lossVision: [],
+    depression: [],
+    shortBreath: [],
+    arthritis: [],
+    vomiting: [],
+    hiv: [],
+    abnormalBleeding: [],
+    cancer: [],
+    brokenBones: [],
+    highBloodPressure: [],
+    // 3
+    verify: ''
+};
+export const formFields = [
+    ['name', 'age', 'height', 'heightUnit', 'weight', 'weightUnit'],
+    [
+        'migranes',
+        'headInjury',
+        'weakness',
+        'backProblems',
+        'asthma',
+        'lossHearing',
+        'epilepsy',
+        'anxiety',
+        'fatigue',
+        'diabetes',
+        'hemorrhoids',
+        'hepatitis',
+        'stroke',
+        'emphysema',
+        'anemia',
+        'neckPain',
+        'fainting',
+        'dizziness',
+        'heartProblems',
+        'tuberculosis',
+        'lossVision',
+        'depression',
+        'shortBreath',
+        'arthritis',
+        'vomiting',
+        'hiv',
+        'abnormalBleeding',
+        'cancer',
+        'brokenBones',
+        'highBloodPressure'
+    ],
+    ['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'verify']
+] as const;

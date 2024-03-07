@@ -36,6 +36,20 @@
     "brokenBones": "Broken Bones",
     "highBloodPressure": "High Blood Pressure",
     "error": {
-        "required": "This field is required"
+        "required": "This field is required",
+        "too_big": "Answer exceeds the limit"
+    },
+    "q1": "If you answered Yes to any of the previous page, please explain:",
+    "q2": "Prescription medications you are currently taking:",
+    "q3": "Allergies: (Medicines[drugs], Foods, Animals, or Pollens)",
+    "q4": "List dates and purposes of any hospitalizations:",
+    "q5": "Is there any possibility that you are pregnant?",
+    "q6": "Are there any other health problems that you have at this time?",
+    "verify": "I verify that all of the above is correct to the best of my knowledge.",
+    "system": {
+        "next": "Next",
+        "back": "Back",
+        "submit": "Save & Submit",
+        "typeHere": "Type your answer here"
     }
 }
