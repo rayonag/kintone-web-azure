@@ -19,10 +19,6 @@ type Login = {
         value: string;
         isError?: boolean;
     };
-    applicationRef: {
-        value: string;
-        isError?: boolean;
-    };
 };
 const Login: React.FC = () => {
     const [username, setUsername] = useState<Login['userName']>({ value: '' });
@@ -53,9 +49,6 @@ const Login: React.FC = () => {
                     },
                     ref: {
                         value: kintoneUser['ref'].value
-                    },
-                    applicationRef: {
-                        value: kintoneUser['applicationRef'].value
                     }
                 });
                 if (kintoneUser['password'].value == '') setSection('CreatePassword');
@@ -113,10 +106,10 @@ const Login: React.FC = () => {
                 maxAge: 7 * 24 * 60 * 60, // お好きな期限を
                 path: '/'
             });
-            setCookie(null, 'applicationRef', kintoneUser?.applicationRef.value, {
-                maxAge: 7 * 24 * 60 * 60, // お好きな期限を
-                path: '/'
-            });
+            // setCookie(null, 'applicationRef', kintoneUser?.applicationRef.value, {
+            //     maxAge: 7 * 24 * 60 * 60, // お好きな期限を
+            //     path: '/'
+            // });
             router.push('/apply');
         } else {
             console.log('password not matched');
