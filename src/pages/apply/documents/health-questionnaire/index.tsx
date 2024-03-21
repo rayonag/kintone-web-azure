@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import Layout from './Layout';
 
 import Link from 'next/link';
-import HealthQuestionnaire from './form/Form';
+import HealthQuestionnaire from '@/components/health-questionnaire/form/Form';
 import { useDashboardUser, setDashboardUser } from '@/common/dashboardUser';
 
 const Dashboard = () => {
