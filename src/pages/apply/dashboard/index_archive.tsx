@@ -5,8 +5,8 @@ import Layout from './Layout';
 
 import { handleLogout } from '..';
 
-import { useDashboardUser, setDashboardUser } from '@/pages/_app';
 import Link from 'next/link';
+import { useDashboardUser, setDashboardUser } from '@/common/dashboardUser';
 
 const Dashboard = () => {
     const loginUser = useDashboardUser();

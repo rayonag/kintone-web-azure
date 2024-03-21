@@ -3,8 +3,8 @@ import { useEffect, useState, useCallback } from 'react';
 
 import Layout from './Layout';
 
-import { useDashboardUser, setDashboardUser } from '@/pages/_app';
 import Link from 'next/link';
+import { useDashboardUser } from '@/common/dashboardUser';
 
 const Dashboard = () => {
     const loginUser = useDashboardUser();

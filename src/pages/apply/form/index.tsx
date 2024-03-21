@@ -1,20 +1,20 @@
-"use client";
-import { useDashboardUser } from "@/pages/_app";
+'use client';
 // Import necessary modules from React
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useDashboardUser } from '@/common/dashboardUser';
 
 const ApplicationForm = () => {
     // State to track whether the iframe content is loading
     const [isLoading, setIsLoading] = useState(true);
-    const [ref, setRef] = useState("");
+    const [ref, setRef] = useState('');
     const user = useDashboardUser();
     const router = useRouter();
     console.log(user);
     useEffect(() => {
         const ref = user.ref;
         if (ref == undefined) {
-            router.push("/apply");
+            router.push('/apply');
             return;
         }
         setRef(ref);
@@ -30,7 +30,7 @@ const ApplicationForm = () => {
 
     return (
         // Use a wrapper div for the entire page
-        <div style={{ height: "100vh", width: "100vw", display: "flex", flexDirection: "column" }}>
+        <div style={{ height: '100vh', width: '100vw', display: 'flex', flexDirection: 'column' }}>
             {/* Header component */}
             {/* <header style={{ backgroundColor: "#f0f0f0", padding: "10px", textAlign: "center" }}>
                 <h1>Simple Header</h1>
@@ -45,7 +45,7 @@ const ApplicationForm = () => {
             <iframe
                 title="Embedded Content"
                 src={`https://f62c12b3.form.kintoneapp.com/public/1467f38e443994eb2801ba621d22d4b1d9b5ce63db97bba11d8333f6280497b2?iframe=true&ref=${ref}`} // Replace with your desired URL
-                style={{ flex: 1, border: "none" }} // Make the iframe fill the remaining space
+                style={{ flex: 1, border: 'none' }} // Make the iframe fill the remaining space
                 onLoad={handleIframeLoad}
             ></iframe>
         </div>
