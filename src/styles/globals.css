@@ -14,7 +14,11 @@ body {
 }
 
 .btn {
-    @apply bg-[#012c66] border border-[#012c66] rounded-full text-white px-5 py-1.5 self-center m-6 hover:bg-blue-700 font-bold mt-6 md:max-w-xs;
+    @apply bg-[#012c66] border border-[#012c66] rounded-full text-white px-5 py-1.5 self-center m-6 hover:bg-blue-700 font-bold mt-6 md:max-w-xs cursor-pointer;
+}
+
+.link {
+    @apply underline cursor-pointer hover:text-blue-400;
 }
 
 @keyframes moveSentences {
