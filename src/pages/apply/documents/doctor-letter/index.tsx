@@ -13,7 +13,7 @@ import DeleteIcon from '@/components/icons/DeleteIcon';
 const MedicalForm = () => {
     const loginUser = useDashboardUser();
     fetchUserApplicationMaster();
-    const [fileData, setFileData] = useState([]);
+    const [fileData, setFileData] = useState<any>([]);
     // Does it need preview?
     const [filePreview, setFilePreview] = useState();
     const [userApplicationRef, setUserApplicationRef] = useState('');
@@ -35,7 +35,7 @@ const MedicalForm = () => {
     if (!userApplicationRef) return <>No record found</>;
 
     // upload from input
-    const handleUpload = (e) => {
+    const handleUpload = (e: any) => {
         const files = e.target.files;
         handleUploadFiles(files);
     };
@@ -46,7 +46,7 @@ const MedicalForm = () => {
             setFileData(files);
             const reader = new FileReader();
             reader.onload = (e) => {
-                setFilePreview(e.target.result);
+                //setFilePreview(e.target?.result as string);
             };
             reader.readAsDataURL(file);
         }
@@ -74,11 +74,11 @@ const MedicalForm = () => {
         setFileData([]);
     };
     const DraggableField = () => {
-        const handleDragEnter = (e) => {
+        const handleDragEnter = (e: any) => {
             e.preventDefault();
             setIsDragging(true);
         };
-        const handleDragOver = (e) => {
+        const handleDragOver = (e: any) => {
             e.preventDefault();
             setIsDragging(true);
         };
@@ -86,7 +86,7 @@ const MedicalForm = () => {
             setIsDragging(false);
         };
         // upload from drag&drop
-        const handleDrop = (e) => {
+        const handleDrop = (e: any) => {
             e.preventDefault();
             setIsDragging(false);
             const files = [...e.dataTransfer.files];
