@@ -9,6 +9,7 @@ import { useDashboardUser, setDashboardUser } from '@/common/dashboardUser';
 import fetchUserApplicationMaster from '@/common/fetchUserApplicationMaster';
 import GreenCheckMark from '@/components/icons/GreenCheckMark';
 import DeleteIcon from '@/components/icons/DeleteIcon';
+import LoadingSpinner from '@/components/loading/LoadingSpinner';
 
 const MedicalForm = () => {
     const loginUser = useDashboardUser();
@@ -22,7 +23,7 @@ const MedicalForm = () => {
     const userRef = loginUser.ref;
     // early return. TODO: review validation
     if (!userRef) {
-        return <>No record found</>;
+        return <LoadingSpinner />;
     }
     // get applicationRef
     useEffect(() => {
@@ -32,7 +33,7 @@ const MedicalForm = () => {
         })();
     }, []);
     // TODO: review validation and return val
-    if (!userApplicationRef) return <>No record found</>;
+    if (!userApplicationRef) return <LoadingSpinner />;
 
     // upload from input
     const handleUpload = (e: any) => {

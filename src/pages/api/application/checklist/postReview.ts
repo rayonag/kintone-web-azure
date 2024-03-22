@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 field: string;
                 userApplicationRef: string;
             };
-            const data: ReqData | undefined = req.body;
+            const data: ReqData | undefined = JSON.parse(req.body);
             if (!data) {
                 handleNullOrEmpty({ res: res, errorMessage: 'No data' });
                 return;
