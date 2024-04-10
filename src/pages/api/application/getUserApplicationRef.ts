@@ -51,7 +51,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 return;
             }
         } catch (e: any) {
-            handleCatch(e, null, 'getUserApplicationRef');
+            logError(e, null, 'getUserApplicationRef');
+            res.json({
+                res: 'Something went wrong.'
+            });
             res.status(505);
         }
     } else {

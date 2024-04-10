@@ -7,5 +7,5 @@ export const KintonePassword = process.env.KINTONE_PASSWORD;
 export const VolunteerApplicationAppID = process.env.VOLUNTEER_APPLICATION_FORM_APPID;
 export const PersonalHealthQuestionnaireAppID = process.env.PERSONAL_HEALTH_QUESTIONNAIRE_APPID;
 export const VolunteerApplicationMasterAppID = process.env.VOLUNTEER_APPLICATION_MASTER_APPID;
-export const ErrorLogsAppID = process.env.VITE_ERROR_LOGS_APPID;
-export const ErrorLogsAPIKey = process.env.VITE_ERROR_LOGS_APIKEY;
+export const ErrorLogsAppID = process.env.ERROR_LOGS_APPID;
+export const ErrorLogsAPIKey = process.env.ERROR_LOGS_APIKEY;
