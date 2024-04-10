@@ -1,7 +1,6 @@
-import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { KintonePassword, KintoneUserName, VolunteerApplicationAppID } from '@/common/env';
 import logError from '@/common/logError';
+import updateVolunteerProfile from '../common/updateVolunteerProfile';
 
 type Data = {
     res?: any;
@@ -10,27 +9,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     if (req.method === 'GET') {
         try {
             const ref = req.body;
-            const client = new KintoneRestAPIClient({
-                baseUrl: 'https://bfp.kintone.com',
-                // Use password authentication
-                auth: {
-                    username: KintoneUserName,
-                    password: KintonePassword
-                }
-            });
-            const resp = await client.record.addRecord({
-                app: 217,
-                record: {
-                    name: { value: 'test' }
-                }
-            });
-            if (resp) {
-                res.json({
-                    res: resp
-                });
-                res.end();
-                return;
-            }
+            await updateVolunteerProfile(res);
+            // next...
+            // pledge program
+            // pledge status
+            // pledge count
+            // children birthday
+
+            // lower priority
+            // visa and medical expiry dates and notification
+
+            res.end();
+            return;
+
             // const resp = await client.record.getAllRecords({
             //     app: VolunteerApplicationAppID as string,
             //     condition: `ref="${ref}"`
@@ -63,7 +54,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             //     return;
             // }
         } catch (e: any) {
-            logError(e, null, 'getUserApplicationRef');
+            logError(e, null, 'updateKintone');
             res.json({
                 res: 'Something went wrong.'
             });

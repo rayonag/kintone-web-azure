@@ -16,6 +16,7 @@
         "framer-motion": "^10.16.16",
         "fs": "^0.0.1-security",
         "i18next": "^23.10.0",
+        "luxon": "^3.4.4",
         "next": "14.0.4",
         "nookies": "^2.5.2",
         "react": "^18",
@@ -28,6 +29,7 @@
     "devDependencies": {
         "@sendgrid/mail": "^8.1.0",
         "@types/formidable": "^3.4.5",
+        "@types/luxon": "^3.4.2",
         "@types/node": "^20.12.7",
         "@types/react": "^18",
         "@types/react-dom": "^18",

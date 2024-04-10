@@ -1,4 +1,5 @@
 import { KintonePassword, KintoneUserName, VolunteerApplicationMasterAppID } from '@/common/env';
+import logError from '@/common/logError';
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
@@ -37,6 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 });
             }
         } catch (e) {
+            logError(e, null, 'loginWithKintone');
             throw e;
         }
     } else {
