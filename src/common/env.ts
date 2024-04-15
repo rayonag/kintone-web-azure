@@ -10,3 +10,5 @@ export const PersonalHealthQuestionnaireAppID = process.env.PERSONAL_HEALTH_QUES
 export const VolunteerApplicationMasterAppID = process.env.VOLUNTEER_APPLICATION_MASTER_APPID;
 export const ErrorLogsAppID = process.env.ERROR_LOGS_APPID;
 export const ErrorLogsAPIKey = process.env.ERROR_LOGS_APIKEY;
+// email
+export const email_Japan = process.env.EMAIL_JAPAN;

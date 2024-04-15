@@ -6,10 +6,11 @@ import { destroyCookie } from 'nookies';
 
 import Layout from '@/styles/Layout';
 import fetchUserApplicationMaster from '../../common/fetchUserApplicationMaster';
-import { useDashboardUser } from '@/common/dashboardUser';
+
 import getUserApplicationRef from '@/common/getUserApplicationRef';
 import postReview from '@/common/checklist/postReview';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
+import { useDashboardUser } from '../_app';
 
 export const handleLogout = () => {
     destroyCookie({}, 'auth', {
@@ -20,8 +21,8 @@ export const handleLogout = () => {
 
 // Define the functional component Page
 const Page: React.FC = () => {
-    const loginUser = useDashboardUser();
-    const userRef = loginUser.ref;
+    const { dashboardUser, setDashboardUser } = useDashboardUser();
+    const userRef = dashboardUser.ref;
     fetchUserApplicationMaster();
     const [userApplicationRef, setUserApplicationRef] = useState('');
     // early return. TODO: review validation
@@ -50,11 +51,11 @@ const Page: React.FC = () => {
     };
     return (
         <Layout>
-            <div className="relative flex flex-col items-center justify-center min-h-screen bg-black text-white overflow-hidden">
+            <div className="relative flex flex-col items-center justify-center min-h-screen text-white overflow-hidden">
                 {/* Content */}
                 <div className="flex flex-col items-center justify-center">
                     <div>
-                        <h1 className="text-xl my-10">Welcome back, {loginUser.name}!</h1>
+                        <h1 className="text-xl my-10">Welcome back, {dashboardUser.name}!</h1>
                     </div>
                     <Link
                         href="https://www.bridgesforpeace.com/meet-us/our-vision/"

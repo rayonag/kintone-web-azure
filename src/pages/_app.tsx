@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, createContext, useContext, useEffect, useState } from 'react';
 import { NextPageContext } from 'next';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
@@ -6,7 +6,28 @@ import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
 
 import '@/styles/globals.css';
-import { DashboardUser, dashboardUserContext, defaultUser, setDashboardUserContext } from '@/common/dashboardUser';
+import { lcov } from 'node:test/reporters';
+
+type DashboardUser = {
+    dashboardUser: {
+        isLoggedIn: boolean;
+        username?: string;
+        password?: string;
+        name?: string;
+        ref?: string;
+        applicationRef?: string;
+        checkList?: string[];
+    };
+    setDashboardUser: Dispatch<SetStateAction<DashboardUser['dashboardUser']>>;
+};
+const defaultUserProvider: DashboardUser = {
+    dashboardUser: { isLoggedIn: false },
+    setDashboardUser: () => []
+};
+const DashboardUserContext = createContext(defaultUserProvider);
+export const useDashboardUser = () => {
+    return useContext(DashboardUserContext);
+};
 
 const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
     const router = useRouter();
@@ -15,16 +36,13 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
     const DashboardUserProvider: ({ children }: { children: JSX.Element }) => JSX.Element = ({ children }) => {
         // set username from cookie
         if (typeof cookies.auth !== 'undefined') {
-            defaultUser.ref = cookies.ref;
-            defaultUser.username = cookies.auth;
+            defaultUserProvider.dashboardUser.ref = cookies.ref;
+            defaultUserProvider.dashboardUser.username = cookies.auth;
         }
-        const [dashboardUser, setDashboardUser] = useState<DashboardUser>(defaultUser);
-        return (
-            <dashboardUserContext.Provider value={dashboardUser}>
-                <setDashboardUserContext.Provider value={setDashboardUser}>{children}</setDashboardUserContext.Provider>
-            </dashboardUserContext.Provider>
-        );
+        const [dashboardUser, setDashboardUser] = useState<DashboardUser['dashboardUser']>(defaultUserProvider['dashboardUser']);
+        return <DashboardUserContext.Provider value={{ dashboardUser, setDashboardUser }}>{children}</DashboardUserContext.Provider>;
     };
+    defaultUserProvider;
     // 第二引数に空配列を指定してマウント・アンマウント毎（CSRでの各画面遷移時）に呼ばれるようにする
     useEffect(() => {
         // CSR用認証チェック
@@ -40,6 +58,29 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
             return true;
         });
     }, []);
+
+    //useEffect(() => {
+    // const { dashboardUser, setDashboardUser } = useDashboardUser();
+
+    // if (dashboardUser && !dashboardUser.isLoggedIn) {
+    //     const username = dashboardUser.username;
+    //     const ref = dashboardUser.ref;
+    //     const fetchUser = (async () => {
+    //         const res = await fetch('/api/fetchUserKintone', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             body: JSON.stringify({ username: username })
+    //         });
+    //         const user = await res.json();
+    //         console.log('user', user);
+    //         await setDashboardUser((prev) => ({ username: username, ref: ref, name: user.name, isLoggedIn: true }));
+    //     })();
+    // }
+
+    // console.log('dashboardUser', dashboardUser);
+    //});
 
     const component =
         typeof pageProps === 'undefined' ? null : (

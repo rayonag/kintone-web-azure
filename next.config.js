@@ -10,6 +10,7 @@ const cspHeader = `
 `;
 const nextConfig = {
     reactStrictMode: true,
+    output: 'standalone',
     async headers() {
         return [
             {
@@ -34,6 +35,16 @@ const nextConfig = {
                 ]
             }
         ];
+    },
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'www.bridgesforpeace.com',
+                port: '',
+                pathname: '/wp-content/themes/bridges4peace/images/logo.jpg'
+            }
+        ]
     }
 };
 

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { destroyCookie } from 'nookies';
 import Layout from '@/styles/Layout';
 import fetchUserApplicationMaster from '@/common/fetchUserApplicationMaster';
-import { useDashboardUser } from '@/common/dashboardUser';
+import { useDashboardUser } from '@/pages/_app';
 
 export const handleLogout = () => {
     destroyCookie({}, 'auth', {
@@ -16,11 +16,13 @@ export const handleLogout = () => {
 
 // Define the functional component Page
 const Page: React.FC = () => {
-    const loginUser = useDashboardUser();
+    const { dashboardUser, setDashboardUser } = useDashboardUser();
+    const loginUser = dashboardUser;
+    console.log('loginUser', loginUser);
     fetchUserApplicationMaster();
     return (
         <Layout>
-            <div className="relative flex flex-col items-center justify-center min-h-screen bg-black text-white overflow-hidden">
+            <div className="relative flex flex-col items-center justify-center min-h-screen text-white overflow-hidden">
                 {/* Content */}
                 <div className="flex flex-col items-center justify-center text-center">
                     <div>

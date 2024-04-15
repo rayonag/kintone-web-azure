@@ -1,18 +1,30 @@
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { KintonePassword, KintoneUserName, VolunteerApplicationAppID } from '@/common/env';
+import { KintonePassword, KintoneUserName, VolunteerApplicationAppID, VolunteerApplicationMasterAppID } from '@/common/env';
 import handleNullOrEmpty from '../common/handleNullOrEmpty';
-import handleCatch from '@/common/handleCatch';
+import notificationApplicationUpdated, { updated } from '../hooks/notification';
+import logError from '@/common/logError';
+import { REST_VolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
 
 type Data = {
     res?: any;
+    resp2?: any;
+};
+export const necessaryDocuments = {
+    passport: 'Passport',
+    recentPhoto: 'Recent Photo',
+    medicalStatusForm: 'Medical Status Form',
+    doctorLetter: "Doctor's Letter",
+    ssn: 'Copy of Social Security Card',
+    crimialCheck: 'Criminal Background Check'
 };
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
     if (req.method === 'POST') {
         try {
             type ReqData = {
                 userApplicationRef: string;
-                field: string;
+                userRef: string;
+                field: keyof typeof necessaryDocuments;
                 fileKey: string;
             };
             const data: ReqData | undefined = JSON.parse(req.body);
@@ -24,6 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             console.log('data.field', data.field);
             console.log('data.fileKey', data.fileKey);
             const userApplicationRef = data.userApplicationRef;
+            const userRef = data.userRef;
             const field = data.field;
             const fileKey = data.fileKey;
             if (!userApplicationRef) {
@@ -45,22 +58,52 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     password: KintonePassword
                 }
             });
+            const currentRecord = await client.record.getAllRecords<REST_VolunteerApplicationForm>({
+                app: VolunteerApplicationAppID as string,
+                condition: `$id="${userApplicationRef}"`
+            });
+            console.log('currentRecord[0]', currentRecord[0]);
+            console.log('currentRecord[0][field]', currentRecord[0][field]);
             const resp = await client.record.updateRecord({
                 app: VolunteerApplicationAppID as string,
                 id: userApplicationRef,
                 record: {
                     [field]: {
-                        value: [{ fileKey: fileKey }]
+                        value: [...currentRecord[0][field].value, { fileKey: fileKey }]
                     }
                 }
             });
-            res.status(200).json({
-                res: resp
+            // TODO: come up with a better way to handle this
+            const oldRecord = await client.record.getRecord({
+                app: VolunteerApplicationMasterAppID as string,
+                id: userRef
             });
+            const documents = oldRecord.record['documents'].value as string[];
+            if (!documents.includes(updated[field])) {
+                await client.record.updateRecord({
+                    app: VolunteerApplicationMasterAppID as string,
+                    id: userRef,
+                    record: {
+                        documents: {
+                            value: [...(oldRecord.record['documents'].value as string[]), updated[field]]
+                        }
+                    }
+                });
+            }
+            const newRecord = await client.record.getRecord({
+                app: VolunteerApplicationMasterAppID as string,
+                id: userRef
+            });
+            const resp2 = await notificationApplicationUpdated(res, field as any, newRecord.record, 'documentSubmission');
+            // console.log('resp2', resp2);
+            // res.status(200).json({
+            //     res: resp,
+            //     resp2: resp2 || 'No notification sent'
+            // });
             res.end();
             return;
         } catch (e: any) {
-            handleCatch(e, req.body, 'updateFileKintone');
+            logError(e, req.body, 'updateFileKintone');
             res.status(505).json({
                 res: 'Something went wrong. Could not update Kintone record.'
             });

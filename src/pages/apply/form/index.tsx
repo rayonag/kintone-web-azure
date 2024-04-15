@@ -2,13 +2,14 @@
 // Import necessary modules from React
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useDashboardUser } from '@/common/dashboardUser';
+import { useDashboardUser } from '@/pages/_app';
 
 const ApplicationForm = () => {
     // State to track whether the iframe content is loading
     const [isLoading, setIsLoading] = useState(true);
     const [ref, setRef] = useState('');
-    const user = useDashboardUser();
+    const { dashboardUser, setDashboardUser } = useDashboardUser();
+    const user = dashboardUser;
     const router = useRouter();
     console.log(user);
     useEffect(() => {
