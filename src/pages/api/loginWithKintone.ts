@@ -26,9 +26,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 app: VolunteerApplicationMasterAppID as string,
                 condition: `email="${username}"`
             });
-            if (recordArray.length == 0) res.status(405).json({});
+            if (recordArray.length == 0) throw new Error('No user found');
             else {
-                if (recordArray.length > 1) console.log('Found more than one user with the same email.'); // TODO: add verification
+                if (recordArray.length > 1) throw new Error('More than one user found'); // TODO: add verification
 
                 const user = recordArray[0];
                 res.status(200).json({
@@ -39,7 +39,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             }
         } catch (e) {
             logError(e, null, 'loginWithKintone');
-            throw e;
+            res.status(405);
         }
     } else {
         res.status(405);
