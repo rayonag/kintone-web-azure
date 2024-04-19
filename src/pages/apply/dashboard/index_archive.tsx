@@ -6,19 +6,17 @@ import Layout from './Layout';
 import { handleLogout } from '..';
 
 import Link from 'next/link';
-import { useDashboardUser, setDashboardUser } from '@/common/dashboardUser';
+import { useDashboardUser } from '@/pages/_app';
 
 const Dashboard = () => {
-    const loginUser = useDashboardUser();
-    const setUser = setDashboardUser();
-    const username = loginUser.username;
+    const { dashboardUser, setDashboardUser } = useDashboardUser();
 
     return (
         <Layout>
             <div className="relative flex flex-col items-center justify-center min-h-screen bg-black text-white overflow-hidden">
                 <>
                     <div>
-                        <h1 className="text-xl my-10">Welcome back, {loginUser?.name}!</h1>
+                        <h1 className="text-xl my-10">Welcome back, {dashboardUser?.name}!</h1>
                     </div>
                     {/* Moving sentence */}
                     {/* <div className="absolute top-5 left-0 right-0 text-left items-baseline mt-4 moveSentence">

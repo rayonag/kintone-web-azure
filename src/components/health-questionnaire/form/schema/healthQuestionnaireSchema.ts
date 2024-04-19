@@ -7,6 +7,8 @@ const validateCheckbox = (val: string[]) => {
 const requiredErrorMessage = {
     message: 'This field is required'
 };
+// system
+const ref: z.ZodString = z.string().min(1).max(50);
 // 1
 const name: z.ZodString = z.string().min(1).max(50);
 const age: z.ZodString = z.string().min(1).max(50);
@@ -73,6 +75,9 @@ export const customErrorMap =
     };
 
 export const HealthQuestionnaireSchema = z.object({
+    // system
+    ref: ref,
+
     // 1
     name: name,
     age: age,

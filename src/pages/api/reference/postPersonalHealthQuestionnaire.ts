@@ -1,5 +1,8 @@
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import notificationApplicationUpdated from '../hooks/notification';
+import { REST_VolunteerApplicationMaster, VolunteerApplicationMaster } from '@/types/VolunteerApplicationMaster';
+import { VolunteerApplicationMasterAppID } from '@/common/env';
 
 type Data = {
     username?: any;
@@ -22,6 +25,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 app: '17',
                 record: data
             });
+            const applicationMasterRecord = await client.record.getRecord<REST_VolunteerApplicationMaster>({
+                app: VolunteerApplicationMasterAppID as string,
+                id: data['ref'].value
+            });
+            const resp2 = await notificationApplicationUpdated(
+                res,
+                'healthQuestionnaire',
+                applicationMasterRecord.record,
+                'healthQuestionnaireSubmission'
+            );
             res.status(200).json({
                 username: addRecord,
                 password: addRecord

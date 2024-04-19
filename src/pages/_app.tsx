@@ -16,7 +16,8 @@ type DashboardUser = {
         name?: string;
         ref?: string;
         applicationRef?: string;
-        checkList?: string[];
+        documents?: string[];
+        formSubmission?: string[];
     };
     setDashboardUser: Dispatch<SetStateAction<DashboardUser['dashboardUser']>>;
 };

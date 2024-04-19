@@ -12,7 +12,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     if (req.method === 'POST') {
         try {
             type ReqData = {
-                field: string;
                 userRef: string;
             };
             const data: ReqData | undefined = JSON.parse(req.body);
@@ -20,14 +19,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 handleNullOrEmpty({ res: res, errorMessage: 'No data' });
                 return;
             }
-            console.log('data', data);
-            const field = data.field;
             const userRef = data.userRef;
             if (!userRef) {
                 handleNullOrEmpty({ res: res, errorMessage: 'No userRef' });
-                return;
-            } else if (!field) {
-                handleNullOrEmpty({ res: res, errorMessage: 'No field' });
                 return;
             }
             // update kintone record
@@ -39,13 +33,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     password: KintonePassword
                 }
             });
-            // field value should be 'ok'
+            // field value to 'false'
             const resp = await client.record.updateRecord({
                 app: VolunteerApplicationMasterAppID as string,
                 id: userRef,
                 record: {
-                    [field]: {
-                        value: ['ok']
+                    isFirstTimeOnForm: {
+                        value: 'false'
                     }
                 }
             });
@@ -55,9 +49,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             res.end();
             return;
         } catch (e: any) {
-            logError(e, req.body, 'postReview');
+            logError(e, req.body, 'postIsFirstTime');
             res.status(505).json({
-                res: 'Something went wrong. Failed to update kintone checklist'
+                res: 'Something went wrong. Failed to update kintone'
             });
         }
     } else {

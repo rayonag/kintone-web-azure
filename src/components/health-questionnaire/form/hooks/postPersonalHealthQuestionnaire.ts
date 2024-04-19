@@ -1,8 +1,11 @@
+import postFormSubmission from '@/common/checklist/postFormSubmission';
 import { HealthQuestionnaireType } from '../schema/healthQuestionnaireSchema';
 
-const postPersonalHealthQuestionnaire = async (data: HealthQuestionnaireType) => {
+const postPersonalHealthQuestionnaire = async (data: HealthQuestionnaireType, ref: string) => {
     try {
         const record = {
+            //system
+            ref: { value: data.ref },
             // 1
             name: { value: data.name },
             age: { value: data.age },
@@ -58,6 +61,7 @@ const postPersonalHealthQuestionnaire = async (data: HealthQuestionnaireType) =>
             },
             body: JSON.stringify(record) // Replace with your data
         });
+        const res2 = await postFormSubmission(ref);
         console.log(res);
         if (res.ok) {
             return res;

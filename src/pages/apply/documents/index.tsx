@@ -2,17 +2,9 @@
 // Import necessary modules from React
 import React, { useEffect } from 'react';
 import Link from 'next/link';
-import { destroyCookie } from 'nookies';
-import Layout from '@/styles/Layout';
+import Layout from '@/styles/Layout_fadeIn';
 import fetchUserApplicationMaster from '@/common/fetchUserApplicationMaster';
 import { useDashboardUser } from '@/pages/_app';
-
-export const handleLogout = () => {
-    destroyCookie({}, 'auth', {
-        path: '/' // THE KEY IS TO SET THE SAME PATH
-    });
-    location.reload();
-};
 
 // Define the functional component Page
 const Page: React.FC = () => {
@@ -27,11 +19,8 @@ const Page: React.FC = () => {
                 <div className="flex flex-col items-center justify-center text-center">
                     <div>
                         <h1 className="text-xl my-10">Documents Submission</h1>
-                        <h1 className="text-xl my-10">{loginUser.checkList?.length || 0}/6 Completed</h1>
+                        <h1 className="text-xl my-10">{loginUser.documents?.length || 0}/4 Completed</h1>
                     </div>
-                    <Link href="./documents/health-questionnaire" className="btn">
-                        Health Questionnaire
-                    </Link>
                     <Link href="./documents/medical-form" className="btn">
                         Medical Form
                     </Link>

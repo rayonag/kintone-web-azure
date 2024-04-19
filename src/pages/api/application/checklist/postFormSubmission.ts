@@ -2,8 +2,8 @@ import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { KintonePassword, KintoneUserName, VolunteerApplicationAppID, VolunteerApplicationMasterAppID } from '@/common/env';
 import handleNullOrEmpty from '../../common/handleNullOrEmpty';
-import handleCatch from '@/common/handleCatch';
 import logError from '@/common/logError';
+import { REST_VolunteerApplicationMaster } from '@/types/VolunteerApplicationMaster';
 
 type Data = {
     res?: any;
@@ -12,7 +12,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     if (req.method === 'POST') {
         try {
             type ReqData = {
-                field: string;
                 userRef: string;
             };
             const data: ReqData | undefined = JSON.parse(req.body);
@@ -20,14 +19,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 handleNullOrEmpty({ res: res, errorMessage: 'No data' });
                 return;
             }
-            console.log('data', data);
-            const field = data.field;
             const userRef = data.userRef;
             if (!userRef) {
                 handleNullOrEmpty({ res: res, errorMessage: 'No userRef' });
-                return;
-            } else if (!field) {
-                handleNullOrEmpty({ res: res, errorMessage: 'No field' });
                 return;
             }
             // update kintone record
@@ -39,14 +33,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     password: KintonePassword
                 }
             });
-            // field value should be 'ok'
-            const resp = await client.record.updateRecord({
+            const resp = await client.record.getRecord<REST_VolunteerApplicationMaster>({
+                app: VolunteerApplicationMasterAppID as string,
+                id: userRef
+            });
+            if (resp.record['formSubmission'].value.findIndex((arr) => arr == 'Personal Health Questionaire')) {
+                res.status(200).json({
+                    res: resp
+                });
+                res.end();
+                return;
+            }
+            // now only Personal Health Questionaire in use
+            const resp2 = await client.record.updateRecord({
                 app: VolunteerApplicationMasterAppID as string,
                 id: userRef,
                 record: {
-                    [field]: {
-                        value: ['ok']
-                    }
+                    formSubmission: { value: [...resp.record['formSubmission'].value, 'Personal Health Questionaire'] }
                 }
             });
             res.status(200).json({
@@ -55,9 +58,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             res.end();
             return;
         } catch (e: any) {
-            logError(e, req.body, 'postReview');
+            logError(e, req.body, 'postFormSubmission');
             res.status(505).json({
-                res: 'Something went wrong. Failed to update kintone checklist'
+                res: 'Something went wrong. Failed to update kintone'
             });
         }
     } else {

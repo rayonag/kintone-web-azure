@@ -2,7 +2,7 @@
 import { HealthQuestionnaireDefaultValues, HealthQuestionnaireSchema, HealthQuestionnaireType, formFields } from './schema/healthQuestionnaireSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm, useFieldArray, useWatch, SubmitErrorHandler } from 'react-hook-form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import FirstPage from './views/FirstPage';
 import SecondPage from './views/SecondPage';
@@ -19,8 +19,10 @@ import postToKintone from './hooks/postPersonalHealthQuestionnaire';
 import './translations/config'; //i18
 import ThirdPage from './views/ThirdPage';
 import ConfirmationModal from './views/Confirmation';
+import { useDashboardUser } from '@/pages/_app';
 
 const HealthQuestionnaire = () => {
+    const { dashboardUser } = useDashboardUser();
     const [page, setPage] = useState(0);
     const { t } = useTranslation();
     const initialLang = 'en';
@@ -35,6 +37,7 @@ const HealthQuestionnaire = () => {
         formState: { errors: formatError },
         trigger,
         getValues,
+        setValue,
         register
     } = useForm<HealthQuestionnaireType>({
         mode: 'onChange',
@@ -48,6 +51,10 @@ const HealthQuestionnaire = () => {
     };
     console.log('getval', getValues());
     // console.log('error', formatError);
+    useEffect(() => {
+        if (!dashboardUser.ref) return;
+        setValue('ref', dashboardUser.ref);
+    }, []);
     return (
         <form className="flex flex-col p-[10%] text-center">
             {page === 0 && <FirstPage register={register} errors={formatError} getValues={getValues} t={t} />}

@@ -1,4 +1,5 @@
 import { KintonePassword, KintoneUserName } from '@/common/env';
+import logError from '@/common/logError';
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
@@ -7,7 +8,8 @@ type Data = {
     name?: any;
     ref?: any;
     username?: any;
-    checkList?: any;
+    documents?: any;
+    formSubmission?: any;
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
@@ -29,6 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 if (recordArray.length > 1) console.log('Found more than one user with the same email.'); // TODO: add verification
 
                 const user = recordArray[0];
+                console.log('user', user);
                 // type guard
                 if (typeof user['$id'].value !== 'string') {
                     res.status(505);
@@ -40,11 +43,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     name: user['name'].value,
                     ref: user['ref'].value,
                     username: user['email'].value,
-                    checkList: user['checkList'].value
+                    documents: user['documents'].value,
+                    formSubmission: user['formSubmission'].value
                 });
             }
         } catch (e: any) {
             console.log(e.errors);
+            logError(e, null, 'fetchUserKintone');
             res.status(505);
         }
     } else {

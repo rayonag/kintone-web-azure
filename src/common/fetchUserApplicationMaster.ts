@@ -1,4 +1,5 @@
 import { useDashboardUser } from '@/pages/_app';
+import getUserApplicationRef from './getUserApplicationRef';
 
 const fetchUserApplicationMaster = () => {
     const { dashboardUser, setDashboardUser } = useDashboardUser();
@@ -7,6 +8,7 @@ const fetchUserApplicationMaster = () => {
     if (!dashboardUser.isLoggedIn) {
         const username = dashboardUser.username;
         const ref = dashboardUser.ref;
+        if (!ref) return;
         const fetchUser = (async () => {
             const res = await fetch('/api/fetchUserKintone', {
                 method: 'POST',
@@ -17,7 +19,16 @@ const fetchUserApplicationMaster = () => {
             });
             const user = await res.json();
             console.log('user', user);
-            await setDashboardUser((prev) => ({ username: username, ref: ref, name: user.name, isLoggedIn: true }));
+            const userApplicationRef = await getUserApplicationRef({ ref: ref });
+            await setDashboardUser((prev) => ({
+                username: username,
+                ref: ref,
+                name: user.name,
+                applicationRef: userApplicationRef,
+                isLoggedIn: true,
+                documents: user.documents,
+                formSubmission: user.formSubmission
+            }));
         })();
     }
 };

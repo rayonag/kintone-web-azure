@@ -6,6 +6,7 @@ import { HealthQuestionnaireType, formFields } from '../schema/healthQuestionnai
 import { TFunction } from 'i18next';
 import postPersonalHealthQuestionnaire from '../hooks/postPersonalHealthQuestionnaire';
 import { Router, useRouter } from 'next/router';
+import { useDashboardUser } from '@/pages/_app';
 
 type ButtonProps = {
     label: string;
@@ -23,13 +24,7 @@ const Button: FC<ButtonProps> = ({ label, isHover, setIsHover, onclick }) => {
         fontSize: '1rem'
     };
     return (
-        <button
-            className="self-center w-80 bg-[#012c66] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mt-6 md:max-w-xs"
-            style={buttonStyle}
-            onClick={onclick}
-            onMouseEnter={() => setIsHover(true)}
-            onMouseLeave={() => setIsHover(false)}
-        >
+        <button className="btn" style={buttonStyle} onClick={onclick} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
             {label}
         </button>
     );
@@ -44,6 +39,7 @@ type ConfirmationModalProps = {
 const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIsOpen, getValues, t }) => {
     const [isHoverSubmit, setIsHoverSubmit] = useState(false);
     const [isHoverCancel, setIsHoverCancel] = useState(false);
+    const { dashboardUser } = useDashboardUser();
     const router = useRouter();
     const formData = getValues();
     const modalStyle = {
@@ -53,6 +49,7 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIs
             bottom: 'auto',
             left: '50%',
             transform: 'translate(-50%,-50%)',
+            width: '80%',
             maxWidth: '30rem',
             maxHeight: '80vh'
         }
@@ -62,9 +59,10 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIs
         if (!window.confirm('Would you like to save and submit your questionnaire?')) return;
         else {
             const data = getValues();
-            const res = await postPersonalHealthQuestionnaire(data);
+            // TODO: when undefined
+            const res = await postPersonalHealthQuestionnaire(data, dashboardUser.ref || '0');
             if (res) alert('Response saved and submitted!');
-            router.push('/reference/complete');
+            router.push('/apply/health-questionnaire/complete');
         }
     };
     return (
@@ -110,8 +108,10 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIs
                     );
                 })}
             </div>
-            <Button label="Submit" isHover={isHoverSubmit} setIsHover={setIsHoverSubmit} onclick={onSubmit} />
-            <Button label="Back" isHover={isHoverCancel} setIsHover={setIsHoverCancel} onclick={() => setModalIsOpen(false)} />
+            <div className="flex flex-col justify-center">
+                <Button label="Submit" isHover={isHoverSubmit} setIsHover={setIsHoverSubmit} onclick={onSubmit} />
+                <Button label="Back" isHover={isHoverCancel} setIsHover={setIsHoverCancel} onclick={() => setModalIsOpen(false)} />
+            </div>
         </Modal>
     );
 };

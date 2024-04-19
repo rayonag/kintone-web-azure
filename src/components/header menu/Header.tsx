@@ -4,10 +4,10 @@ import BridgesLogo from './BridgesLogo';
 
 const Header = () => {
     const handleHomeClick = () => {
-        location.href = '/';
+        location.href = '/apply';
     };
     return (
-        <header className="flex justify-around content-center bg-theme absolute left-0 right-0 mx-auto">
+        <header className="flex justify-around content-center bg-theme absolute bg-[rgb(26,26,26)]/60 left-0 right-0 mx-auto">
             <button onClick={handleHomeClick} className="z-10">
                 <BridgesLogo />
             </button>

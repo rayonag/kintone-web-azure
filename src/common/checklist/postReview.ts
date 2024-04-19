@@ -1,10 +1,10 @@
-import handleCatch from '@/common/handleCatch';
+import logError from '../logError';
 
-const postReview = async (field: string, userApplicationRef: string) => {
+const postReview = async (field: string, userRef: string) => {
     try {
         const body = {
             field: field,
-            userApplicationRef: userApplicationRef
+            userRef: userRef
         };
         // upload file to kintone and get filekey
         const res = await fetch('/api/application/checklist/postReview', {
@@ -18,7 +18,7 @@ const postReview = async (field: string, userApplicationRef: string) => {
             throw new Error('Could not upload your document.');
         }
     } catch (e) {
-        handleCatch(e, JSON.stringify({ field, userApplicationRef }), 'postMedicalStatusForm');
+        logError(e, JSON.stringify({ field, userRef }), 'postMedicalStatusForm');
     }
 };
 export default postReview;
