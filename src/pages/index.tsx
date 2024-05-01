@@ -11,6 +11,7 @@ const Home = () => {
     //     console.log(data);
     // };
     return (
+        <></>
         // <div>
         //     <h1>Hello, World!</h1>
         //     <button className="btn" onClick={handleClick}>

@@ -2,7 +2,7 @@
 import { useEffect, useState, useCallback } from 'react';
 
 import Link from 'next/link';
-import { useDashboardUser, setDashboardUser } from '@/common/dashboardUser';
+import { useDashboardUser, setDashboardUser } from '@/common/context/dashboardUser';
 
 const Dashboard = () => {
     const loginUser = useDashboardUser();

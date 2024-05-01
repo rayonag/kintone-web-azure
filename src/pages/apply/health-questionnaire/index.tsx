@@ -5,7 +5,7 @@ import Layout from './Layout';
 
 import Link from 'next/link';
 import HealthQuestionnaire from '@/components/health-questionnaire/form/Form';
-import { useDashboardUser } from '@/pages/_app';
+import { useDashboardUser } from '@/common/context/dashboardUser';
 import fetchUserApplicationMaster from '@/common/fetchUserApplicationMaster';
 import { KintoneUserName, KintonePassword, VolunteerApplicationMasterAppID } from '@/common/env';
 import { REST_VolunteerApplicationMaster } from '@/types/VolunteerApplicationMaster';
@@ -21,7 +21,7 @@ const Dashboard = ({ repo }: InferGetServerSidePropsType<typeof getServerSidePro
             <div className="flex flex-col items-center justify-center min-h-screen overflow-hidden">
                 {formSubmitted ? (
                     <>
-                        <div>Thank you for submitting application form.</div>
+                        <div>Thank you for submitting Personal Health Questionnaire.</div>
                         <Link href="/apply" className="btn">
                             Go to Top
                         </Link>
@@ -53,7 +53,7 @@ export const getServerSideProps = (async (context) => {
         id: cookies.ref
     });
     console.log('resp', resp);
-    const repo: Repo = { formSubmitted: resp.record['formSubmission'].value.findIndex((arr) => arr == 'Application Form Completed') > -1 };
+    const repo: Repo = { formSubmitted: resp.record['formSubmission'].value.findIndex((arr) => arr == 'Personal Health Questionaire') > -1 };
     // Pass data to the page via props
     return { props: { repo } };
 }) satisfies GetServerSideProps<{ repo: Repo }>;

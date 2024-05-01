@@ -7,28 +7,8 @@ import { parseCookies } from 'nookies';
 
 import '@/styles/globals.css';
 import { lcov } from 'node:test/reporters';
-
-type DashboardUser = {
-    dashboardUser: {
-        isLoggedIn: boolean;
-        username?: string;
-        password?: string;
-        name?: string;
-        ref?: string;
-        applicationRef?: string;
-        documents?: string[];
-        formSubmission?: string[];
-    };
-    setDashboardUser: Dispatch<SetStateAction<DashboardUser['dashboardUser']>>;
-};
-const defaultUserProvider: DashboardUser = {
-    dashboardUser: { isLoggedIn: false },
-    setDashboardUser: () => []
-};
-const DashboardUserContext = createContext(defaultUserProvider);
-export const useDashboardUser = () => {
-    return useContext(DashboardUserContext);
-};
+import { defaultUserProvider, DashboardUser, DashboardUserContext } from '@/common/context/dashboardUser';
+import { LoadingContext } from '@/common/context/loading';
 
 const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
     const router = useRouter();
@@ -43,7 +23,6 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
         const [dashboardUser, setDashboardUser] = useState<DashboardUser['dashboardUser']>(defaultUserProvider['dashboardUser']);
         return <DashboardUserContext.Provider value={{ dashboardUser, setDashboardUser }}>{children}</DashboardUserContext.Provider>;
     };
-    defaultUserProvider;
     // 第二引数に空配列を指定してマウント・アンマウント毎（CSRでの各画面遷移時）に呼ばれるようにする
     useEffect(() => {
         // CSR用認証チェック
@@ -55,39 +34,25 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
                     window.location.href = '/apply/login';
                     return false;
                 }
+            } else if (url === '/apply/login' && typeof cookies.auth !== 'undefined') {
+                // ログイン済みの場合はマイページにリダイレクト
+                window.location.href = '/apply/';
+                return false;
             }
             return true;
         });
     }, []);
-
-    //useEffect(() => {
-    // const { dashboardUser, setDashboardUser } = useDashboardUser();
-
-    // if (dashboardUser && !dashboardUser.isLoggedIn) {
-    //     const username = dashboardUser.username;
-    //     const ref = dashboardUser.ref;
-    //     const fetchUser = (async () => {
-    //         const res = await fetch('/api/fetchUserKintone', {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json'
-    //             },
-    //             body: JSON.stringify({ username: username })
-    //         });
-    //         const user = await res.json();
-    //         console.log('user', user);
-    //         await setDashboardUser((prev) => ({ username: username, ref: ref, name: user.name, isLoggedIn: true }));
-    //     })();
-    // }
-
-    // console.log('dashboardUser', dashboardUser);
-    //});
-
+    const CommonProvider: ({ children }: { children: JSX.Element }) => JSX.Element = ({ children }) => {
+        const [isLoading, setIsLoading] = useState<boolean>(false);
+        return <LoadingContext.Provider value={{ isLoading, setIsLoading }}>{children}</LoadingContext.Provider>;
+    };
     const component =
         typeof pageProps === 'undefined' ? null : (
-            <DashboardUserProvider>
-                <Component {...pageProps} />
-            </DashboardUserProvider>
+            <CommonProvider>
+                <DashboardUserProvider>
+                    <Component {...pageProps} />
+                </DashboardUserProvider>
+            </CommonProvider>
         );
 
     return component;

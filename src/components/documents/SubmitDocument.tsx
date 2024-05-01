@@ -1,20 +1,28 @@
 'use client';
-import { useEffect, useState } from 'react';
-import Layout from './Layout';
+import { FC, useEffect, useState } from 'react';
 import Link from 'next/link';
-import postMedicalStatusForm from './hooks/postMedicalStatusForm';
 import getUserApplicationRef from '@/common/getUserApplicationRef';
 import { useDashboardUser } from '@/common/context/dashboardUser';
 import fetchUserApplicationMaster from '@/common/fetchUserApplicationMaster';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import { useLoading } from '@/common/context/loading';
+import postDocument from '@/common/documents/postDocument';
+import Layout_fadeIn from '@/styles/Layout_fadeIn';
+import { useRouter } from 'next/router';
 
-const MedicalForm = () => {
+type SubmitDocumentProps = {
+    document: string;
+    title: string;
+    Help?: FC<any>;
+};
+const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
     const { dashboardUser, setDashboardUser } = useDashboardUser();
     const { isLoading, setIsLoading } = useLoading();
     const loginUser = dashboardUser;
-    console.log('loginUser', loginUser);
-    fetchUserApplicationMaster(dashboardUser, setDashboardUser);
+    useEffect(() => {
+        fetchUserApplicationMaster(dashboardUser, setDashboardUser);
+    }, []);
+    const router = useRouter();
 
     const [fileData, setFileData] = useState<any>([]);
     const [userApplicationRef, setUserApplicationRef] = useState('');
@@ -68,8 +76,9 @@ const MedicalForm = () => {
                 alert('Something went wrong. Could not upload your document');
                 throw new Error('applicationRef undefined');
             }
-            await postMedicalStatusForm({ formData: formData, applicationRef: userApplicationRef, userRef: userRef });
+            await postDocument({ document: document, formData: formData, applicationRef: userApplicationRef, userRef: userRef });
             setIsLoading(false);
+            router.push('/apply/documents/complete');
         } else {
             setIsLoading(false);
             return;
@@ -137,9 +146,9 @@ const MedicalForm = () => {
     return (
         <>
             {isLoading && <LoadingSpinner />}
-            <Layout>
+            <Layout_fadeIn>
                 <div className="relative flex flex-col items-center justify-center text-center min-h-screen text-white overflow-hidden">
-                    <span style={{ fontSize: '2rem' }}>Please Upload Your Completed Medical Form</span>
+                    <span style={{ fontSize: '2rem' }}>{title}</span>
                     <div className="md:hidden m-5">
                         <label htmlFor="pdfInput" className="btn">
                             <input id="pdfInput" type="file" onInput={handleUpload} hidden accept=".pdf,image/png, image/jpeg" />
@@ -169,11 +178,9 @@ const MedicalForm = () => {
                     </div>
 
                     <button className="btn" onClick={async () => await handleSubmit()}>
-                        click to submit
+                        Click to Submit
                     </button>
-                    <Link href="./medical-form/example" className="link">
-                        What is Medical Status Form?
-                    </Link>
+                    {Help && <Help />}
                     <Link href="/contact" className="link">
                         Need Help? Contact Us
                     </Link>
@@ -181,8 +188,8 @@ const MedicalForm = () => {
                         Go to Documents Top
                     </Link>
                 </div>
-            </Layout>
+            </Layout_fadeIn>
         </>
     );
 };
-export default MedicalForm;
+export default SubmitDocument;

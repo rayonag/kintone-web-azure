@@ -6,7 +6,7 @@ import { HealthQuestionnaireType, formFields } from '../schema/healthQuestionnai
 import { TFunction } from 'i18next';
 import postPersonalHealthQuestionnaire from '../hooks/postPersonalHealthQuestionnaire';
 import { Router, useRouter } from 'next/router';
-import { useDashboardUser } from '@/pages/_app';
+import { useDashboardUser } from '@/common/context/dashboardUser';
 
 type ButtonProps = {
     label: string;

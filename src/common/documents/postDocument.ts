@@ -1,10 +1,12 @@
 import handleCatch from '@/common/handleCatch';
 
-type postMedicalStatusFormProps = {
+type postDocumentProps = {
+    document: string;
     formData: any;
     applicationRef: string;
+    userRef: string;
 };
-const postMedicalStatusForm: (props: postMedicalStatusFormProps) => any = async ({ formData, applicationRef }) => {
+const postDocument: (props: postDocumentProps) => any = async ({ document, formData, applicationRef, userRef }) => {
     try {
         // upload file to kintone and get filekey
         const res = await fetch('/api/reference/uploadFileKintone', {
@@ -17,12 +19,14 @@ const postMedicalStatusForm: (props: postMedicalStatusFormProps) => any = async 
         // update kintone record: volunteer application form
         type ReqData = {
             userApplicationRef: string;
+            userRef: string;
             field: string;
             fileKey: string;
         };
         const updateBody: ReqData = {
             userApplicationRef: applicationRef,
-            field: 'medicalStatusForm',
+            userRef: userRef,
+            field: document,
             fileKey: fileKey.res
         };
         console.log('updateBody', updateBody);
@@ -37,7 +41,7 @@ const postMedicalStatusForm: (props: postMedicalStatusFormProps) => any = async 
             return;
         }
     } catch (e) {
-        handleCatch(e, { formData, applicationRef }, 'postMedicalStatusForm');
+        handleCatch(e, { formData, applicationRef }, 'postDocument');
     }
 };
-export default postMedicalStatusForm;
+export default postDocument;

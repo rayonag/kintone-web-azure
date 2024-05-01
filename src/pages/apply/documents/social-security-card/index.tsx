@@ -5,14 +5,14 @@ import Link from 'next/link';
 import postMedicalStatusForm from './hooks/postMedicalStatusForm';
 import getUserApplicationRef from '@/common/getUserApplicationRef';
 import { useRouter } from 'next/router';
-import { useDashboardUser, setDashboardUser } from '@/common/dashboardUser';
+import { useDashboardUser, setDashboardUser } from '@/common/context/dashboardUser';
 import fetchUserApplicationMaster from '@/common/fetchUserApplicationMaster';
 import GreenCheckMark from '@/components/icons/GreenCheckMark';
 import DeleteIcon from '@/components/icons/DeleteIcon';
 
 const MedicalForm = () => {
     const loginUser = useDashboardUser();
-    fetchUserApplicationMaster();
+    fetchUserApplicationMaster(dashboardUser, setDashboardUser);
     const [fileData, setFileData] = useState<any>([]);
     // Does it need preview?
     const [filePreview, setFilePreview] = useState();

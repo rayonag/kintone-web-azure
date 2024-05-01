@@ -2,7 +2,7 @@
 // Import necessary modules from React
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useDashboardUser } from '@/pages/_app';
+import { useDashboardUser } from '@/common/context/dashboardUser';
 import { KintoneUserName, KintonePassword, VolunteerApplicationMasterAppID, VolunteerApplicationAppID } from '@/common/env';
 import { REST_VolunteerApplicationMaster } from '@/types/VolunteerApplicationMaster';
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';

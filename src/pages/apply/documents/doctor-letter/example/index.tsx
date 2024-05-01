@@ -1,16 +1,10 @@
 'use client';
-import { useEffect, useState, useCallback } from 'react';
 
 import Link from 'next/link';
-import { useDashboardUser, setDashboardUser } from '@/common/dashboardUser';
 
-const Dashboard = () => {
-    const loginUser = useDashboardUser();
-    const setUser = setDashboardUser();
-    const username = loginUser.username;
-
+const Example_DoctorLetter = () => {
     return (
-        <div className="relative flex flex-col items-center justify-center min-h-screen bg-black text-white overflow-hidden">
+        <div className="relative flex flex-col items-center justify-center min-h-screen pt-10 text-white overflow-hidden">
             <section className="my-4 w-4/5 grow md:w-1/3">
                 <div className="text-2xl my-4">Please complete the Medical Status Form by following the instructions below:</div>
                 <div className="italic">Note: You may not complete the form on your own. You need to have your doctor fill it out.</div>
@@ -33,8 +27,13 @@ const Dashboard = () => {
                         Download Sample Medical Letter
                     </a>
                 </div>
+                <div className="flex justify-center">
+                    <Link href="/apply/documents/doctor-letter" className="btn">
+                        Back
+                    </Link>
+                </div>
             </section>
         </div>
     );
 };
-export default Dashboard;
+export default Example_DoctorLetter;

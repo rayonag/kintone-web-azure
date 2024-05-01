@@ -1,8 +1,8 @@
 import React from 'react';
 
-const GreenCheckMark = () => {
+const GreenCheckMark = ({ height = 100, width = 100 }) => {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24">
+        <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 24 24">
             {/* Green circle */}
             <circle cx="12" cy="12" r="11" strokeWidth={2} stroke="green" fill="none" />
 

@@ -4,38 +4,62 @@ import React, { useEffect } from 'react';
 import Link from 'next/link';
 import Layout from '@/styles/Layout_fadeIn';
 import fetchUserApplicationMaster from '@/common/fetchUserApplicationMaster';
-import { useDashboardUser } from '@/pages/_app';
+import { useDashboardUser } from '@/common/context/dashboardUser';
+import GreenCheckMark from '@/components/icons/GreenCheckMark';
 
 // Define the functional component Page
 const Page: React.FC = () => {
     const { dashboardUser, setDashboardUser } = useDashboardUser();
     const loginUser = dashboardUser;
     console.log('loginUser', loginUser);
-    fetchUserApplicationMaster();
+    fetchUserApplicationMaster(dashboardUser, setDashboardUser);
+    const Check = () => (
+        <div className="absolute right-[-2.5rem]">
+            <GreenCheckMark height={30} />
+        </div>
+    );
+    const isSubmitted = (document: string) => loginUser.documents?.includes(document);
     return (
         <Layout>
             <div className="relative flex flex-col items-center justify-center min-h-screen text-white overflow-hidden">
                 {/* Content */}
-                <div className="flex flex-col items-center justify-center text-center">
+                <div className="relative flex flex-col items-center justify-center text-center">
                     <div>
                         <h1 className="text-xl my-10">Documents Submission</h1>
-                        <h1 className="text-xl my-10">{loginUser.documents?.length || 0}/4 Completed</h1>
+                        <h1 className="text-xl my-10">{loginUser.documents?.length || '-'}/4 Completed</h1>
                     </div>
-                    <Link href="./documents/medical-form" className="btn">
-                        Medical Form
-                    </Link>
-                    <Link href="./documents/doctor-letter" className="btn">
-                        Doctor's Letter
-                    </Link>
-                    <Link href="./documents/passport" className="btn">
-                        Copy of Passport
-                    </Link>
-                    <Link href="./documents/recent-photo" className="btn">
-                        Recent Photo
-                    </Link>
-                    <Link href="/apply" className="btn">
-                        Return to Home
-                    </Link>
+                    <div className="relative flex items-center">
+                        <Link href="./documents/medical-form" className="btn">
+                            Medical Form
+                        </Link>
+                        {isSubmitted('Medical Status Form') && <Check />}
+                    </div>
+                    <div className="relative flex items-center">
+                        <Link href="./documents/doctor-letter" className="btn">
+                            Doctor's Letter
+                        </Link>
+                        {isSubmitted("Doctor's Letter") && <Check />}
+                    </div>
+
+                    <div className="relative flex items-center">
+                        <Link href="./documents/passport" className="btn">
+                            Copy of Passport
+                        </Link>
+                        {isSubmitted('Passport') && <Check />}
+                    </div>
+
+                    <div className="relative flex items-center">
+                        <Link href="./documents/recent-photo" className="btn">
+                            Recent Photo
+                        </Link>
+                        {isSubmitted('Recent Photo') && <Check />}
+                    </div>
+
+                    <div className="relative flex items-center">
+                        <Link href="/apply" className="btn">
+                            Return to Home
+                        </Link>
+                    </div>
                 </div>
             </div>
         </Layout>

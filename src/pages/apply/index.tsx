@@ -10,7 +10,7 @@ import fetchUserApplicationMaster from '../../common/fetchUserApplicationMaster'
 import getUserApplicationRef from '@/common/getUserApplicationRef';
 import postReview from '@/common/checklist/postReview';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
-import { useDashboardUser } from '../_app';
+import { useDashboardUser } from '@/common/context/dashboardUser';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { KintoneUserName, KintonePassword, VolunteerApplicationAppID, VolunteerApplicationMasterAppID } from '@/common/env';
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
@@ -35,8 +35,12 @@ export const handleCheckListClick = async (field: string, userRef: string) => {
 
 // Define the functional component Page
 const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+    const [isLoaded, setIsLoaded] = useState(false);
+
     console.log('repo', repo);
-    fetchUserApplicationMaster();
+    useEffect(() => {
+        fetchUserApplicationMaster(dashboardUser, setDashboardUser);
+    }, []);
     const { dashboardUser, setDashboardUser } = useDashboardUser();
     console.log('dashboardUser', dashboardUser);
     const userRef = dashboardUser.ref;
@@ -51,6 +55,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
             }
             const userApplicationRef = await getUserApplicationRef({ ref: userRef });
             setUserApplicationRef(userApplicationRef || '');
+            setIsLoaded(true);
         })();
     }, []);
 
@@ -74,10 +79,12 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
     return (
         <Layout>
             <div className="relative flex flex-col items-center justify-center min-h-screen text-white overflow-hidden">
-                {userRef ? (
+                {isLoaded && userRef ? (
                     <div className="flex flex-col items-center justify-center">
                         <div>
-                            <h1 className="text-xl my-10">Welcome back, {dashboardUser.name}!</h1>
+                            <h1 className="text-xl my-10">
+                                Welcome back, <span>{dashboardUser.name || ''}</span>!
+                            </h1>
                         </div>
                         <Link
                             href="https://www.bridgesforpeace.com/meet-us/our-vision/"

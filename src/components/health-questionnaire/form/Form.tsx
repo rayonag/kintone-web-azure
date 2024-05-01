@@ -19,7 +19,7 @@ import postToKintone from './hooks/postPersonalHealthQuestionnaire';
 import './translations/config'; //i18
 import ThirdPage from './views/ThirdPage';
 import ConfirmationModal from './views/Confirmation';
-import { useDashboardUser } from '@/pages/_app';
+import { useDashboardUser } from '@/common/context/dashboardUser';
 
 const HealthQuestionnaire = () => {
     const { dashboardUser } = useDashboardUser();

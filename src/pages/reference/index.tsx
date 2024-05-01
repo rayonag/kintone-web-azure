@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import Layout from './Layout';
 
 import Link from 'next/link';
-import { useDashboardUser } from '@/common/dashboardUser';
+import { useDashboardUser } from '@/common/context/dashboardUser';
 
 const Dashboard = () => {
     const loginUser = useDashboardUser();

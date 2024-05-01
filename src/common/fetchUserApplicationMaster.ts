@@ -1,8 +1,8 @@
-import { useDashboardUser } from '@/pages/_app';
+import { useDashboardUser } from './context/dashboardUser';
 import getUserApplicationRef from './getUserApplicationRef';
 
-const fetchUserApplicationMaster = () => {
-    const { dashboardUser, setDashboardUser } = useDashboardUser();
+const fetchUserApplicationMaster = (dashboardUser, setDashboardUser) => {
+    console.log('fnie');
     console.log('dashboardUser', dashboardUser);
     // fetch user information. When user returns and still holding username in cookie
     if (!dashboardUser.isLoggedIn) {
