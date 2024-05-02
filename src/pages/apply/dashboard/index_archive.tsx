@@ -1,12 +1,11 @@
 'use client';
-import { useEffect, useState, useCallback } from 'react';
 
 import Layout from './Layout';
 
 import { handleLogout } from '..';
 
 import Link from 'next/link';
-import { useDashboardUser } from '@/pages/_app';
+import { useDashboardUser } from '@/common/context/dashboardUser';
 
 const Dashboard = () => {
     const { dashboardUser, setDashboardUser } = useDashboardUser();

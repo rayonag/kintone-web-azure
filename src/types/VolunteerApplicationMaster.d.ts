@@ -1,18 +1,20 @@
 export interface VolunteerApplicationMaster {
     year: kintone.fieldTypes.SingleLineText;
     office: kintone.fieldTypes.DropDown;
+    type: kintone.fieldTypes.DropDown;
     password: kintone.fieldTypes.SingleLineText;
     email: kintone.fieldTypes.SingleLineText;
     commentNationalOffice: kintone.fieldTypes.MultiLineText;
     commentIsraelOffice: kintone.fieldTypes.MultiLineText;
     month: kintone.fieldTypes.DropDown;
     name: kintone.fieldTypes.SingleLineText;
+    isFirstTimeOnForm: kintone.fieldTypes.RadioButton;
     status: kintone.fieldTypes.DropDown;
 
+    formSubmission: kintone.fieldTypes.CheckBox;
     documents: kintone.fieldTypes.CheckBox;
     documentsUSA: kintone.fieldTypes.CheckBox;
     reviewAbout: kintone.fieldTypes.CheckBox;
-    checkList: kintone.fieldTypes.CheckBox;
     reviewFaq: kintone.fieldTypes.CheckBox;
     User_selection: kintone.fieldTypes.UserSelect;
 }
@@ -25,22 +27,25 @@ export interface SavedVolunteerApplicationMaster extends VolunteerApplicationMas
     Created_datetime: kintone.fieldTypes.CreatedTime;
     Updated_datetime: kintone.fieldTypes.UpdatedTime;
 }
+
 import { KintoneRecordField } from '@kintone/rest-api-client';
 export type REST_VolunteerApplicationMaster = {
     year: KintoneRecordField.SingleLineText;
     office: KintoneRecordField.DropDown;
+    type: KintoneRecordField.DropDown;
     password: KintoneRecordField.SingleLineText;
     email: KintoneRecordField.SingleLineText;
     commentNationalOffice: KintoneRecordField.MultiLineText;
     commentIsraelOffice: KintoneRecordField.MultiLineText;
     month: KintoneRecordField.DropDown;
     name: KintoneRecordField.SingleLineText;
+    isFirstTimeOnForm: KintoneRecordField.RadioButton;
     status: KintoneRecordField.DropDown;
 
+    formSubmission: KintoneRecordField.CheckBox;
     documents: KintoneRecordField.CheckBox;
     documentsUSA: KintoneRecordField.CheckBox;
     reviewAbout: KintoneRecordField.CheckBox;
-    checkList: KintoneRecordField.CheckBox;
     reviewFaq: KintoneRecordField.CheckBox;
     User_selection: KintoneRecordField.UserSelect;
 };

@@ -8,7 +8,7 @@ import { REST_VolunteerApplicationMaster } from '@/types/VolunteerApplicationMas
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { parseCookies } from 'nookies';
-import { shortTermApplicationURL, volunteerApplicationURL, zealousAplicationURL } from './iframeLinks';
+import { shortTermApplicationURL, volunteerApplicationURL, zealousAplicationURL } from '@/common/env';
 import postIsFirstTime from '@/common/checklist/postIsFirstTime';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import Link from 'next/link';
@@ -31,9 +31,9 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
             return;
         }
     }
-    const isFirstTimeOnForm = repo.isFirstTimeOnForm;
-    const type = repo.type;
-    const formSubmitted = repo.formSubmitted;
+    const isFirstTimeOnForm = repo?.isFirstTimeOnForm || false;
+    const type = repo?.type || null;
+    const formSubmitted = repo?.formSubmitted || false;
 
     const getIframeLink = (type: string | null) => {
         switch (type) {
@@ -76,7 +76,7 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
     };
     // confirm before leave
     useEffect(() => {
-        const handleBeforeUnload = (event) => {
+        const handleBeforeUnload = (event: any) => {
             event.preventDefault();
             event.returnValue = '';
         };
@@ -144,7 +144,7 @@ type Repo = {
 export const getServerSideProps = (async (context) => {
     try {
         const cookies = parseCookies(context);
-        if (typeof cookies.auth == 'undefined') return;
+        if (typeof cookies.auth == 'undefined') return { props: {} };
         const client = new KintoneRestAPIClient({
             baseUrl: 'https://bfp.kintone.com',
             auth: {
@@ -185,9 +185,9 @@ export const getServerSideProps = (async (context) => {
         };
         // Pass data to the page via props
         return { props: { repo } };
-    } catch (e) {
+    } catch (e: any) {
         logError(e, e.errors || null, 'apply/form/getServerSideProps');
         console.log('error');
         return { props: {} };
     }
-}) satisfies GetServerSideProps<{ repo: Repo }>;
+}) satisfies GetServerSideProps<{ repo: Repo } | {}>;

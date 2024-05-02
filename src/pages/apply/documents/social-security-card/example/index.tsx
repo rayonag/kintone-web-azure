@@ -1,14 +1,5 @@
 'use client';
-import { useEffect, useState, useCallback } from 'react';
-
-import Link from 'next/link';
-import { useDashboardUser, setDashboardUser } from '@/common/context/dashboardUser';
-
 const Dashboard = () => {
-    const loginUser = useDashboardUser();
-    const setUser = setDashboardUser();
-    const username = loginUser.username;
-
     return (
         <div className="relative flex flex-col items-center justify-center min-h-screen bg-black text-white overflow-hidden">
             <section className="my-4 w-4/5 grow md:w-1/3">

@@ -150,4 +150,4 @@ export const getServerSideProps = (async (context) => {
     const repo: Repo = { reviewAbout: resp.record['reviewAbout'].value[0] || null, reviewFaq: resp.record['reviewFaq'].value[0] || null };
     // Pass data to the page via props
     return { props: { repo } };
-}) satisfies GetServerSideProps<{ repo: Repo }>;
+}) satisfies GetServerSideProps<{ repo: Repo } | {}>;

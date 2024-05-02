@@ -1,7 +1,7 @@
-import { useDashboardUser } from './context/dashboardUser';
+import { DashboardUser, useDashboardUser } from './context/dashboardUser';
 import getUserApplicationRef from './getUserApplicationRef';
 
-const fetchUserApplicationMaster = (dashboardUser, setDashboardUser) => {
+const fetchUserApplicationMaster = (dashboardUser: DashboardUser['dashboardUser'], setDashboardUser: DashboardUser['setDashboardUser']) => {
     console.log('fnie');
     console.log('dashboardUser', dashboardUser);
     // fetch user information. When user returns and still holding username in cookie

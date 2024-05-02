@@ -5,21 +5,21 @@ import Link from 'next/link';
 import postMedicalStatusForm from './hooks/postMedicalStatusForm';
 import getUserApplicationRef from '@/common/getUserApplicationRef';
 import { useRouter } from 'next/router';
-import { useDashboardUser, setDashboardUser } from '@/common/context/dashboardUser';
+import { useDashboardUser } from '@/common/context/dashboardUser';
 import fetchUserApplicationMaster from '@/common/fetchUserApplicationMaster';
 import GreenCheckMark from '@/components/icons/GreenCheckMark';
 import DeleteIcon from '@/components/icons/DeleteIcon';
 
 const MedicalForm = () => {
-    const loginUser = useDashboardUser();
+    const { dashboardUser, setDashboardUser } = useDashboardUser();
     fetchUserApplicationMaster(dashboardUser, setDashboardUser);
     const [fileData, setFileData] = useState<any>([]);
     // Does it need preview?
     const [filePreview, setFilePreview] = useState();
     const [userApplicationRef, setUserApplicationRef] = useState('');
     const [isDragging, setIsDragging] = useState(false);
-    const userName = loginUser.username;
-    const userRef = loginUser.ref;
+    const userName = dashboardUser.username;
+    const userRef = dashboardUser.ref;
     // early return. TODO: review validation
     if (!userRef) {
         return <>No record found</>;
@@ -54,7 +54,7 @@ const MedicalForm = () => {
     const handleSubmit = () => {
         const files = fileData;
         console.log(files);
-        console.log('loginUser.ref', loginUser.ref);
+        console.log('loginUser.ref', dashboardUser.ref);
         if (files == undefined) return;
         if (files.length > 0) {
             const file = files[0];

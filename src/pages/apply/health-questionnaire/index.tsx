@@ -15,7 +15,7 @@ import { parseCookies } from 'nookies';
 
 const Dashboard = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const { dashboardUser } = useDashboardUser();
-    const formSubmitted = repo.formSubmitted;
+    const formSubmitted = repo?.formSubmitted;
     return (
         <Layout>
             <div className="flex flex-col items-center justify-center min-h-screen overflow-hidden">
@@ -40,7 +40,7 @@ type Repo = {
 };
 export const getServerSideProps = (async (context) => {
     const cookies = parseCookies(context);
-    if (typeof cookies.auth == 'undefined') return;
+    if (typeof cookies.auth == 'undefined') return { props: {} };
     const client = new KintoneRestAPIClient({
         baseUrl: 'https://bfp.kintone.com',
         auth: {
@@ -56,4 +56,4 @@ export const getServerSideProps = (async (context) => {
     const repo: Repo = { formSubmitted: resp.record['formSubmission'].value.findIndex((arr) => arr == 'Personal Health Questionaire') > -1 };
     // Pass data to the page via props
     return { props: { repo } };
-}) satisfies GetServerSideProps<{ repo: Repo }>;
+}) satisfies GetServerSideProps<{ repo: Repo } | {}>;
