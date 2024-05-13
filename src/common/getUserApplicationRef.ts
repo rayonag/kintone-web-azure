@@ -3,7 +3,7 @@ import handleCatch from './handleCatch';
 type getUserApplicationRefProps = {
     ref: string | '';
 };
-const getUserApplicationRef: (props: getUserApplicationRefProps) => Promise<string | undefined> = async ({ ref }) => {
+const getUserApplicationRef: (props: getUserApplicationRefProps) => Promise<string | undefined | null> = async ({ ref }) => {
     if (!ref) throw new Error('Something went wrong: User not found');
     try {
         const res = await fetch('/api/application/getUserApplicationRef', {

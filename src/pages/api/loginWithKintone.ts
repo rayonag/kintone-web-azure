@@ -39,7 +39,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             }
         } catch (e) {
             logError(e, null, 'loginWithKintone');
-            res.status(405);
+            res.status(400).send({ username: null, password: null, ref: null });
+            return;
         }
     } else {
         res.status(405);

@@ -24,9 +24,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 condition: `ref="${ref}"`
             });
             if (resp.length == 0) {
-                res.status(601);
                 res.json({
-                    res: 'No application found'
+                    res: null
                 });
                 res.end();
                 return;

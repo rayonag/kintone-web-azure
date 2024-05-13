@@ -23,14 +23,14 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
     const { dashboardUser, setDashboardUser } = useDashboardUser();
     const user = dashboardUser;
     const router = useRouter();
-    // server props
-    if (typeof window !== undefined) {
-        if (!repo?.formSubmitted) {
-            alert('Something went wrong.');
-            router.push('/apply');
-            return;
-        }
-    }
+    // // server props
+    // if (typeof window !== undefined) {
+    //     if (!repo?.formSubmitted) {
+    //         alert('Something went wrong.');
+    //         router.push('/apply');
+    //         return;
+    //     }
+    // }
     const isFirstTimeOnForm = repo?.isFirstTimeOnForm || false;
     const type = repo?.type || null;
     const formSubmitted = repo?.formSubmitted || false;
@@ -121,7 +121,7 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
                                 <iframe
                                     title="Embedded Content"
                                     src={`${iframeLink}&ref=${ref}`} // Replace with your desired URL
-                                    style={{ flex: 1, border: 'none' }} // Make the iframe fill the remaining space
+                                    style={{ flex: 1, border: 'none', marginTop: '4rem' }} // Make the iframe fill the remaining space
                                     onLoad={handleIframeLoad}
                                 ></iframe>
                             </>
@@ -183,6 +183,7 @@ export const getServerSideProps = (async (context) => {
             type: resp.record['type'].value || null,
             formSubmitted: resp.record['formSubmission'].value.findIndex((arr) => arr == 'Application Form Completed') > -1
         };
+        console.log('repo', repo);
         // Pass data to the page via props
         return { props: { repo } };
     } catch (e: any) {

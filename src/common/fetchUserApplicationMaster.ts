@@ -24,7 +24,7 @@ const fetchUserApplicationMaster = (dashboardUser: DashboardUser['dashboardUser'
                 username: username,
                 ref: ref,
                 name: user.name,
-                applicationRef: userApplicationRef,
+                applicationRef: userApplicationRef || undefined,
                 isLoggedIn: true,
                 documents: user.documents,
                 formSubmission: user.formSubmission

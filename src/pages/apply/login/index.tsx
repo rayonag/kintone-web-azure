@@ -81,11 +81,17 @@ const Login: React.FC = () => {
             });
             console.log(res);
             if (res.ok) {
-                setCookie(null, 'auth', username.value, {
-                    maxAge: 7 * 24 * 60 * 60, // お好きな期限を
-                    path: '/'
-                });
-                router.push('/apply');
+                if (username.value == kintoneUser?.userName.value && password.value == kintoneUser?.password.value) {
+                    setCookie(null, 'auth', username.value, {
+                        maxAge: 7 * 24 * 60 * 60, // お好きな期限を
+                        path: '/'
+                    });
+                    setCookie(null, 'ref', kintoneUser?.ref.value, {
+                        maxAge: 7 * 24 * 60 * 60, // お好きな期限を
+                        path: '/'
+                    });
+                    router.push('/apply');
+                }
             } else {
                 console.log('Error: password not created');
                 alert('Something wrong. Please start from the top.');
@@ -136,6 +142,20 @@ const Login: React.FC = () => {
                     <div className="text-center">
                         <button className="btn" onClick={handleNext}>
                             Next
+                        </button>
+                        <button
+                            className="btn"
+                            onClick={async () =>
+                                await fetch('/api/aaa/test', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({ username: username })
+                                })
+                            }
+                        >
+                            Cancel
                         </button>
                     </div>
                 </Layout>
