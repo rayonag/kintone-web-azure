@@ -1,5 +1,5 @@
 import { email_Japan } from '@/common/env';
-import NotificationDocument from '../../../../react-email-starter/emails/Notification-document';
+import NotificationDocument from '@/common/react-email/emails/Notification-document';
 import { render } from '@react-email/render';
 import React from 'react';
 import sgMail from '@sendgrid/mail';
