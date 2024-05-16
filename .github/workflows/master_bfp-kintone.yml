@@ -23,7 +23,7 @@ jobs:
 
             - name: npm install, build, and test
               run: |
-                  yarn add
+                  yarn
                   yarn build --if-present --legacy-peer-deps
                   yarn test --if-present
 
