@@ -30,11 +30,16 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
             // ログイン画面とエラー画面遷移時のみ認証チェックを行わない
             if (url !== '/apply/login' && url !== '/_error') {
                 if (typeof cookies.auth === 'undefined') {
+                    console.log('imhssere');
                     // CSR用リダイレクト処理
                     window.location.href = '/apply/login';
                     return false;
                 }
-            } else if (url === '/apply/login' && typeof cookies.auth !== 'undefined') {
+            } else if (
+                url === '/apply/login'
+                //&& typeof cookies.auth !== 'undefined'
+            ) {
+                console.log('imhere');
                 // ログイン済みの場合はマイページにリダイレクト
                 window.location.href = '/apply/';
                 return false;
@@ -76,6 +81,11 @@ App.getInitialProps = async (appContext: any) => {
                 console.log('in ClientSide');
             }
         }
+    } else if (appContext.ctx.pathname == '/apply/login' && typeof cookies.auth !== 'undefined') {
+        // ログイン済みの場合はマイページにリダイレクト
+        appContext.ctx.res.statusCode = 302;
+        appContext.ctx.res.setHeader('Location', '/apply/');
+        return {};
     }
     return {
         pageProps: {
