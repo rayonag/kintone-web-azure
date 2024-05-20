@@ -143,20 +143,6 @@ const Login: React.FC = () => {
                         <button className="btn" onClick={handleNext}>
                             Next
                         </button>
-                        <button
-                            className="btn"
-                            onClick={async () =>
-                                await fetch('/api/aaa/test', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({ username: username })
-                                })
-                            }
-                        >
-                            Cancel
-                        </button>
                     </div>
                 </Layout>
             )}

@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction, createContext, useContext } from 'react';
+import { NationalOffice } from './offices';
 
 export type DashboardUser = {
     dashboardUser: {
@@ -10,6 +11,7 @@ export type DashboardUser = {
         applicationRef?: string;
         documents?: string[];
         formSubmission?: string[];
+        office?: NationalOffice;
     };
     setDashboardUser: Dispatch<SetStateAction<DashboardUser['dashboardUser']>>;
 };

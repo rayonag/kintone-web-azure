@@ -2,8 +2,7 @@ import { DashboardUser, useDashboardUser } from './context/dashboardUser';
 import getUserApplicationRef from './getUserApplicationRef';
 
 const fetchUserApplicationMaster = (dashboardUser: DashboardUser['dashboardUser'], setDashboardUser: DashboardUser['setDashboardUser']) => {
-    console.log('fnie');
-    console.log('dashboardUser', dashboardUser);
+    // console.log('dashboardUser', dashboardUser);
     // fetch user information. When user returns and still holding username in cookie
     if (!dashboardUser.isLoggedIn) {
         const username = dashboardUser.username;
@@ -27,7 +26,8 @@ const fetchUserApplicationMaster = (dashboardUser: DashboardUser['dashboardUser'
                 applicationRef: userApplicationRef || undefined,
                 isLoggedIn: true,
                 documents: user.documents,
-                formSubmission: user.formSubmission
+                formSubmission: user.formSubmission,
+                office: user.office
             }));
         })();
     }

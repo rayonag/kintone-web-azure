@@ -15,13 +15,16 @@ import Link from 'next/link';
 import Layout_fadeIn from '@/styles/Layout_fadeIn';
 import { REST_VolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
 import logError from '@/common/logError';
+import { NationalOffice } from '@/common/context/offices';
+import { set } from 'zod';
 
 const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     // State to track whether the iframe content is loading
     const [isLoading, setIsLoading] = useState(true);
     const [ref, setRef] = useState('');
+    const [office, setOffice] = useState<NationalOffice | undefined>(undefined);
     const { dashboardUser, setDashboardUser } = useDashboardUser();
-    const user = dashboardUser;
+    console.log('dashboardUser', dashboardUser);
     const router = useRouter();
     // // server props
     // if (typeof window !== undefined) {
@@ -51,15 +54,18 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
     // console.log('type', type);
     // console.log(user);
     useEffect(() => {
-        const ref = user.ref;
+        const ref = dashboardUser.ref;
         if (ref == undefined) {
             router.push('/apply');
             return;
         }
+        const office = repo?.office;
+        console.log('office', office);
         setRef(ref);
+        setOffice(office);
         // if first time no loading
         if (isFirstTimeOnForm) setIsLoading(false);
-    }, []);
+    }, [dashboardUser]);
     // Function to handle iframe load event
     const handleIframeLoad = () => {
         // Set isLoading to false when the iframe has finished loading
@@ -116,14 +122,15 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
                         ) : (
                             <>
                                 {isLoading && <LoadingSpinner />}
-
+                                {office && (
+                                    <iframe
+                                        title="Embedded Content"
+                                        src={`${iframeLink}&ref=${ref}&office=${office}`} // Replace with your desired URL
+                                        style={{ flex: 1, border: 'none', marginTop: '4rem' }} // Make the iframe fill the remaining space
+                                        onLoad={handleIframeLoad}
+                                    ></iframe>
+                                )}
                                 {/* Iframe component */}
-                                <iframe
-                                    title="Embedded Content"
-                                    src={`${iframeLink}&ref=${ref}`} // Replace with your desired URL
-                                    style={{ flex: 1, border: 'none', marginTop: '4rem' }} // Make the iframe fill the remaining space
-                                    onLoad={handleIframeLoad}
-                                ></iframe>
                             </>
                         )}
                     </>
@@ -140,6 +147,7 @@ type Repo = {
     isFirstTimeOnForm: boolean;
     type: string | null;
     formSubmitted: boolean;
+    office: NationalOffice;
 };
 export const getServerSideProps = (async (context) => {
     try {
@@ -181,7 +189,8 @@ export const getServerSideProps = (async (context) => {
         const repo: Repo = {
             isFirstTimeOnForm: resp.record['isFirstTimeOnForm'].value == 'true',
             type: resp.record['type'].value || null,
-            formSubmitted: resp.record['formSubmission'].value.findIndex((arr) => arr == 'Application Form Completed') > -1
+            formSubmitted: resp.record['formSubmission'].value.findIndex((arr) => arr == 'Application Form Completed') > -1,
+            office: resp.record['office'].value
         };
         console.log('repo', repo);
         // Pass data to the page via props
