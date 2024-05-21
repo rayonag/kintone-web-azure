@@ -33,6 +33,7 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
     const userRef = loginUser.ref;
     // early return. TODO: review validation
     if (!userRef) {
+        console.log('no user ref');
         return <LoadingSpinner />;
     }
     // get applicationRef
@@ -43,7 +44,10 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
         })();
     }, []);
     // TODO: review validation and return val
-    if (!userApplicationRef) return <LoadingSpinner />;
+    if (!userApplicationRef) {
+        console.log('no application ref');
+        return <LoadingSpinner />;
+    }
 
     // upload from input
     const handleUpload = (e: any) => {

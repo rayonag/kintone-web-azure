@@ -12,6 +12,7 @@ import { useLoading } from '@/common/context/loading';
 const MedicalForm = () => {
     const { dashboardUser, setDashboardUser } = useDashboardUser();
     const { isLoading, setIsLoading } = useLoading();
+    console.log('isLoading', isLoading);
     const loginUser = dashboardUser;
     console.log('loginUser', loginUser);
     fetchUserApplicationMaster(dashboardUser, setDashboardUser);
@@ -136,9 +137,9 @@ const MedicalForm = () => {
     };
     return (
         <>
-            {isLoading && <LoadingSpinner />}
             <Layout>
                 <div className="relative flex flex-col items-center justify-center text-center min-h-screen text-white overflow-hidden">
+                    {/* {isLoading && <LoadingSpinner />} */}
                     <span style={{ fontSize: '2rem' }}>Please Upload Your Completed Medical Form</span>
                     <div className="md:hidden m-5">
                         <label htmlFor="pdfInput" className="btn">

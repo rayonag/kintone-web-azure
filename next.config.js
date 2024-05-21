@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const cspHeader = `
+    default-src 'self' https://f62c12b3.form.kintoneapp.com/;
     script-src 'self' 'unsafe-eval' 'unsafe-inline';
     style-src 'self' 'unsafe-inline';
     object-src 'none';
