@@ -3,8 +3,11 @@ import { ChangeEvent, FormEvent, KeyboardEvent, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { setCookie } from 'nookies';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import Layout from './Layout';
+import StartButton from './StartButton';
+import Layout_fadeIn from '@/styles/Layout_fadeIn';
 
 type Login = {
     userName: {
@@ -20,12 +23,13 @@ type Login = {
         isError?: boolean;
     };
 };
+export type Section = 'Top' | 'Email' | 'Password' | 'CreatePassword';
 const Login: React.FC = () => {
     const [username, setUsername] = useState<Login['userName']>({ value: '' });
     const [password, setPassword] = useState<Login['password']>({ value: '' });
     const [confirmPassword, setConfirmPassword] = useState('');
     const [kintoneUser, setKintoneUser] = useState<Login>();
-    const [section, setSection] = useState('Email');
+    const [section, setSection] = useState<Section>('Top');
     const router = useRouter();
 
     const handleNext = async () => {
@@ -125,80 +129,95 @@ const Login: React.FC = () => {
     const allowEnterKeydown = (e: KeyboardEvent, func: () => void) => {
         if (e.key === 'Enter') func();
     };
+    const [transitioning, setTransitioning] = useState(false);
+
     return (
-        <div className="relative flex flex-col items-center justify-center min-h-screen">
-            {section == 'Email' && (
-                <Layout>
-                    <div className="text-center w-72">Enter your email</div>
-                    <input
-                        value={username.value}
-                        onChange={(e) => setUsername({ value: e.target.value })}
-                        onKeyDown={(e) => allowEnterKeydown(e, handleNext)}
-                        placeholder="Email"
-                        className="mt-5 border rounded bg-gray-600 min-w-full"
-                        autoFocus
-                    />
-                    {username.isError && <div className="text-red-600">Invalid Email Address</div>}
-                    <div className="text-center">
-                        <button className="btn" onClick={handleNext}>
-                            Next
-                        </button>
-                    </div>
-                </Layout>
-            )}
-            {section == 'Password' && (
-                <Layout>
-                    <div className="m-4 w-52">Email: {username?.value}</div>
-                    <div className="text-center">Enter your password</div>
-                    <input
-                        type="password"
-                        value={password.value}
-                        onChange={(e) => setPassword({ value: e.target.value })}
-                        onKeyDown={(e) => allowEnterKeydown(e, handleLogin)}
-                        placeholder="Password"
-                        className="mt-5 border rounded bg-gray-600 min-w-full"
-                        autoFocus
-                    />
-                    {password.isError && <div className="text-red-600">Invalid Password</div>}
-                    <div className="text-center">
-                        <button className="btn" onClick={handleLogin}>
-                            Login
-                        </button>
-                    </div>
-                </Layout>
-            )}
-            {section == 'CreatePassword' && (
-                <Layout>
-                    <div className="m-4 w-52">Email: {username?.value}</div>
-                    <div className="text-center">Enter your password</div>
-                    <input
-                        type="password"
-                        value={password.value}
-                        onChange={(e) => setPassword({ value: e.target.value })}
-                        onKeyDown={(e) => allowEnterKeydown(e, handleLogin)}
-                        placeholder="Password"
-                        className="my-5 border rounded bg-gray-600 min-w-full"
-                        autoFocus
-                    />
-                    <div className="text-center">Confirm your password</div>
-                    <input
-                        type="password"
-                        value={confirmPassword}
-                        onChange={(e) => {
-                            setConfirmPassword(e.target.value);
-                            handleConfirmPassword(e.target.value);
-                        }}
-                        placeholder="Re-enter Password"
-                        className="mt-5 border rounded bg-gray-600 min-w-full"
-                    />
-                    {password.isError && <div className="text-red-600">Password doesn't match</div>}
-                    <div className="text-center">
-                        <button className="btn" onClick={handleCreatePassword}>
-                            Create Password
-                        </button>
-                    </div>
-                </Layout>
-            )}
+        <div className="flex flex-col items-center justify-center min-h-screen">
+            <AnimatePresence>
+                {section == 'Top' && (
+                    <Layout_fadeIn key="top">
+                        <div className="flex flex-col justify-center">
+                            <div className="text-center text-3xl italic font-serif">Bridges for Peace Volunteer Application Portal</div>
+                            <StartButton setSection={setSection} transitioning={transitioning} setTransitioning={setTransitioning} />
+                            <button className="btn" onClick={() => router.push('/contact')}>
+                                Need help? Contact us
+                            </button>
+                        </div>
+                    </Layout_fadeIn>
+                )}
+                {section == 'Email' && (
+                    <Layout_fadeIn key="email">
+                        <div className="text-center w-72">Enter your email</div>
+                        <input
+                            value={username.value}
+                            onChange={(e) => setUsername({ value: e.target.value })}
+                            onKeyDown={(e) => allowEnterKeydown(e, handleNext)}
+                            placeholder="Email"
+                            className="mt-5 p-2 border rounded bg-gray-600 min-w-full"
+                            autoFocus
+                        />
+                        {username.isError && <div className="text-red-600">Invalid Email Address</div>}
+                        <div className="text-center">
+                            <button className="btn" onClick={handleNext}>
+                                Next
+                            </button>
+                        </div>
+                    </Layout_fadeIn>
+                )}
+                {section == 'Password' && (
+                    <Layout_fadeIn key="password">
+                        <div className="m-4 w-52">Email: {username?.value}</div>
+                        <div className="text-center">Enter your password</div>
+                        <input
+                            type="password"
+                            value={password.value}
+                            onChange={(e) => setPassword({ value: e.target.value })}
+                            onKeyDown={(e) => allowEnterKeydown(e, handleLogin)}
+                            placeholder="Password"
+                            className="mt-5 p-2 border rounded bg-gray-600 min-w-full"
+                            autoFocus
+                        />
+                        {password.isError && <div className="text-red-600">Invalid Password</div>}
+                        <div className="text-center">
+                            <button className="btn" onClick={handleLogin}>
+                                Login
+                            </button>
+                        </div>
+                    </Layout_fadeIn>
+                )}
+                {section == 'CreatePassword' && (
+                    <Layout_fadeIn key="createPassword">
+                        <div className="m-4 w-52">Email: {username?.value}</div>
+                        <div className="text-center">Enter your password</div>
+                        <input
+                            type="password"
+                            value={password.value}
+                            onChange={(e) => setPassword({ value: e.target.value })}
+                            onKeyDown={(e) => allowEnterKeydown(e, handleLogin)}
+                            placeholder="Password"
+                            className="my-5 p-2 border rounded bg-gray-600 min-w-full"
+                            autoFocus
+                        />
+                        <div className="text-center">Confirm your password</div>
+                        <input
+                            type="password"
+                            value={confirmPassword}
+                            onChange={(e) => {
+                                setConfirmPassword(e.target.value);
+                                handleConfirmPassword(e.target.value);
+                            }}
+                            placeholder="Re-enter Password"
+                            className="mt-5 p-2 border rounded bg-gray-600 min-w-full"
+                        />
+                        {password.isError && <div className="text-red-600">Password doesn't match</div>}
+                        <div className="text-center">
+                            <button className="btn" onClick={handleCreatePassword}>
+                                Create Password
+                            </button>
+                        </div>
+                    </Layout_fadeIn>
+                )}
+            </AnimatePresence>
         </div>
     );
 };

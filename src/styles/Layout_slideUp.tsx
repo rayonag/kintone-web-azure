@@ -4,19 +4,19 @@ import { FC, ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import Header from '@/components/header menu/Header';
 
-interface Layout_fadeInProps {
+interface Layout_slideUpProps {
     key?: string;
     children: ReactNode;
 }
 
-const Layout_fadeIn: FC<Layout_fadeInProps> = ({ key, children }) => {
+const Layout_slideUp: FC<Layout_slideUpProps> = ({ key, children }) => {
     console.log(key);
     return (
-        <motion.div key={key || 'page'} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
+        <motion.div key={key || 'page'} initial={{ opacity: 0, y: '10%' }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2 }}>
             <Header />
             {children}
         </motion.div>
     );
 };
 
-export default Layout_fadeIn;
+export default Layout_slideUp;

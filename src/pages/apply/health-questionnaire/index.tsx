@@ -1,8 +1,6 @@
 'use client';
 import { useEffect, useState, useCallback } from 'react';
 
-import Layout from './Layout';
-
 import Link from 'next/link';
 import HealthQuestionnaire from '@/components/health-questionnaire/form/Form';
 import { useDashboardUser } from '@/common/context/dashboardUser';
@@ -12,12 +10,13 @@ import { REST_VolunteerApplicationMaster } from '@/types/VolunteerApplicationMas
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
+import Layout_slideUp from '@/styles/Layout_slideUp';
 
 const Dashboard = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const { dashboardUser } = useDashboardUser();
     const formSubmitted = repo?.formSubmitted;
     return (
-        <Layout>
+        <Layout_slideUp key="page">
             <div className="flex flex-col items-center justify-center min-h-screen overflow-hidden">
                 {formSubmitted ? (
                     <>
@@ -30,7 +29,7 @@ const Dashboard = ({ repo }: InferGetServerSidePropsType<typeof getServerSidePro
                     <HealthQuestionnaire />
                 )}
             </div>
-        </Layout>
+        </Layout_slideUp>
     );
 };
 export default Dashboard;

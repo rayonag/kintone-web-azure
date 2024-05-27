@@ -16,8 +16,16 @@ import { KintoneUserName, KintonePassword, VolunteerApplicationAppID, VolunteerA
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import { REST_VolunteerApplicationMaster } from '@/types/VolunteerApplicationMaster';
 import ReactModal from 'react-modal';
-import Helper, { HelperSteps } from '@/components/modal/helper';
+import Helper from '@/components/modal/helper';
+import { REST_VolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
 
+export type ApplicationSteps = 'reviewWebsite' | 'submitApplication' | 'submitDocuments' | 'step3';
+export const applicationSteps = {
+    reviewWebsite: 0,
+    submitApplication: 1,
+    submitDocuments: 2,
+    step3: 3
+};
 export const handleLogout = () => {
     destroyCookie({}, 'auth', {
         path: '/' // THE KEY IS TO SET THE SAME PATH
@@ -62,23 +70,32 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
     // UserapplicationrefはもうCookieに設定しちゃおうかな。いったんそれで
 
     // helper modal
-    const [currentStep, setCurrentStep] = useState<HelperSteps>(
-        repo?.reviewAbout == 'ok' && repo.reviewFaq == 'ok' ? 'submitDocuments' : 'reviewWebsite'
-    );
+    const [currentStep, setCurrentStep] = useState<ApplicationSteps>('step3');
+    useEffect(() => {
+        if (!repo) return;
+        if (repo.reviewAbout !== 'ok' || repo.reviewFaq !== 'ok') {
+            setCurrentStep('reviewWebsite');
+        } else if (!dashboardUser.formSubmission?.includes('Application Form Completed')) {
+            setCurrentStep('submitApplication');
+        } else {
+            setCurrentStep('submitDocuments');
+        }
+    });
     const needsRevieWebsite = currentStep == 'reviewWebsite' ? true : false;
     useEffect(() => {
         // for modal
         ReactModal.setAppElement('#__next');
     }, []);
+    console.log('applicationSteps[availableOn] <= applicationSteps[currentStep]', applicationSteps[currentStep]);
     //if (!userApplicationRef) return <LoadingSpinner />;
-    const buttonProps = {
-        className: `${needsRevieWebsite ? 'btn-disabled pointer-events-none' : 'btn'}`,
+    const buttonProps = (availableOn: ApplicationSteps) => ({
+        className: `${applicationSteps[availableOn] <= applicationSteps[currentStep] ? 'btn' : 'btn-disabled pointer-events-none'}`,
         'aria-disabled': needsRevieWebsite,
         tabIndex: needsRevieWebsite ? -1 : undefined
-    };
+    });
     return (
         <Layout>
-            <div className="relative flex flex-col items-center justify-center min-h-screen text-white overflow-hidden">
+            <div className="flex flex-col items-center justify-center min-h-screen text-white overflow-hidden">
                 {isLoaded && userRef ? (
                     <div className="flex flex-col items-center justify-center">
                         <div>
@@ -102,13 +119,13 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                         >
                             Frequently Asked Questions
                         </Link>
-                        <Link href="/apply/form" {...buttonProps}>
+                        <Link href="/apply/form" {...buttonProps('submitApplication')}>
                             Online Application Form
                         </Link>
-                        <Link href="/apply/health-questionnaire" {...buttonProps}>
+                        <Link href="/apply/health-questionnaire" {...buttonProps('submitApplication')}>
                             Personal Health Questionnaire
                         </Link>
-                        <Link href="/apply/documents" {...buttonProps}>
+                        <Link href="/apply/documents" {...buttonProps('submitDocuments')}>
                             Submit Necessary Documents
                         </Link>
                         <Helper currentStep={currentStep} userRef={userRef} />
@@ -142,10 +159,31 @@ export const getServerSideProps = (async (context) => {
             password: KintonePassword
         }
     });
-    const resp = await client.record.getRecord<REST_VolunteerApplicationMaster>({
+    let resp = await client.record.getRecord<REST_VolunteerApplicationMaster>({
         app: VolunteerApplicationMasterAppID as string,
         id: cookies.ref
     });
+    const resp2 = await client.record.getAllRecords<REST_VolunteerApplicationForm>({
+        app: VolunteerApplicationAppID as string,
+        condition: `ref="${cookies.ref}"`
+    });
+    // check if not yet
+    if (resp2.length > 0) {
+        if (resp.record['formSubmission'].value.findIndex((arr) => arr == 'Application Form Completed') == -1) {
+            console.log('first', [...resp.record['formSubmission'].value, 'Application Form Completed']);
+            await client.record.updateRecord({
+                app: VolunteerApplicationMasterAppID as string,
+                id: cookies.ref,
+                record: {
+                    formSubmission: { value: [...resp.record['formSubmission'].value, 'Application Form Completed'] }
+                }
+            });
+            resp = await client.record.getRecord<REST_VolunteerApplicationMaster>({
+                app: VolunteerApplicationMasterAppID as string,
+                id: cookies.ref
+            });
+        }
+    }
     console.log('resp', resp);
     const repo: Repo = { reviewAbout: resp.record['reviewAbout'].value[0] || null, reviewFaq: resp.record['reviewFaq'].value[0] || null };
     // Pass data to the page via props

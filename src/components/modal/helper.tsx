@@ -1,12 +1,11 @@
-import { handleCheckListClick } from '@/pages/apply';
+import { ApplicationSteps, handleCheckListClick } from '@/pages/apply';
 import { color } from 'framer-motion';
 import React, { useState, ChangeEvent, FC, ReactElement } from 'react';
 import Modal from 'react-modal';
 import Link from 'next/link';
 
-export type HelperSteps = 'reviewWebsite' | 'submitDocuments' | 'step3';
 interface HelperProps {
-    currentStep: HelperSteps;
+    currentStep: ApplicationSteps;
     userRef: string;
 }
 const Helper: React.FC<HelperProps> = ({ currentStep, userRef }) => {
@@ -30,7 +29,7 @@ const Helper: React.FC<HelperProps> = ({ currentStep, userRef }) => {
         }
     };
 
-    const helperSteps: { [key in HelperSteps]: ReactElement } = {
+    const helperSteps: { [key in ApplicationSteps]: ReactElement } = {
         reviewWebsite: (
             <div>
                 For those visiting our website for the first time, a great starting point would be to review the{' '}
@@ -54,13 +53,26 @@ const Helper: React.FC<HelperProps> = ({ currentStep, userRef }) => {
                 sections to gain insight into our organization and requirements for volunteers.
             </div>
         ),
-        submitDocuments: (
-            <div>
+        submitApplication: (
+            <>
                 Next, complete your{' '}
                 <Link className="text-blue-500 underline" href="/apply/form">
                     Online Application Form
                 </Link>{' '}
                 and{' '}
+                <Link className="text-blue-500 underline" href="/apply/health-questionnaire">
+                    Personal Health Questionnaire
+                </Link>
+                <br />
+                If you have any questions, don't hesitate to reach out to us from{' '}
+                <Link className="text-blue-500 underline" href="/apply/form">
+                    Contact Us
+                </Link>
+            </>
+        ),
+        submitDocuments: (
+            <div>
+                Last thing to do is to{' '}
                 <Link className="text-blue-500 underline" href="/apply/documents">
                     Submit Necessary Documents.
                 </Link>
