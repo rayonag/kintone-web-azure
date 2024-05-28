@@ -129,7 +129,9 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                             Submit Necessary Documents
                         </Link>
                         <Helper currentStep={currentStep} userRef={userRef} />
-                        <button className="btn">Contact Us</button>
+                        <Link href="/contact" {...buttonProps('submitDocuments')}>
+                            Contact Us
+                        </Link>
                         <button className="btn" onClick={handleLogout}>
                             Log out
                         </button>

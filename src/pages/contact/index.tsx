@@ -43,7 +43,7 @@ const Contact = () => {
     };
     return (
         <Layout>
-            <div className="relative flex flex-col items-center justify-center min-h-screen">
+            <div className="relative flex flex-col items-center justify-center min-h-screen py-10">
                 <span className="text-3xl font-bold">Contact Us</span>
                 <span className="text-xl font-semibold">Hours</span>
                 <span>Monday-Thursday: 9:00am-5:00pm</span>

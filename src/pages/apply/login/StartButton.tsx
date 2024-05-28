@@ -22,12 +22,10 @@ const StartButton: FC<StartButtonProps> = ({ setSection, transitioning, setTrans
         await animate(
             scope.current,
             {
-                width: '100vw',
-                height: '100vh',
                 x: '50vw',
                 backgroundColor: 'white'
             },
-            { duration: 0.8, ease: 'easeIn' }
+            { duration: 0.3, ease: 'easeIn' }
         );
 
         if (transitioning) {

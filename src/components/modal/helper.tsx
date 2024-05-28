@@ -65,7 +65,7 @@ const Helper: React.FC<HelperProps> = ({ currentStep, userRef }) => {
                 </Link>
                 <br />
                 If you have any questions, don't hesitate to reach out to us from{' '}
-                <Link className="text-blue-500 underline" href="/apply/form">
+                <Link className="text-blue-500 underline" href="/contact">
                     Contact Us
                 </Link>
             </>
@@ -78,7 +78,7 @@ const Helper: React.FC<HelperProps> = ({ currentStep, userRef }) => {
                 </Link>
                 <br />
                 If you have any questions, don't hesitate to reach out to us from{' '}
-                <Link className="text-blue-500 underline" href="/apply/form">
+                <Link className="text-blue-500 underline" href="/contact">
                     Contact Us
                 </Link>
             </div>
