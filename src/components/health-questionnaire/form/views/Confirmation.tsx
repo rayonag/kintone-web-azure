@@ -7,6 +7,9 @@ import { TFunction } from 'i18next';
 import postPersonalHealthQuestionnaire from '../hooks/postPersonalHealthQuestionnaire';
 import { Router, useRouter } from 'next/router';
 import { useDashboardUser } from '@/common/context/dashboardUser';
+import LoadingSpinner from '@/components/loading/LoadingSpinner';
+import { set } from 'zod';
+import Link from 'next/link';
 
 type ButtonProps = {
     label: string;
@@ -55,64 +58,79 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIs
         }
     };
     const onSubmit: SubmitHandler<HealthQuestionnaireType> = async () => {
-        // TODO: react modal, instead of window.confirm
-        if (!window.confirm('Would you like to save and submit your questionnaire?')) return;
-        else {
-            const data = getValues();
-            // TODO: when undefined
-            const res = await postPersonalHealthQuestionnaire(data, dashboardUser.ref || '0');
-            if (res) alert('Response saved and submitted!');
-            router.push('/apply/health-questionnaire/complete');
-        }
+        setIsLoading(true);
+        const data = getValues();
+        // TODO: when undefined
+        const res = await postPersonalHealthQuestionnaire(data, dashboardUser.ref || '0');
+        if (res) setIsComplete(true);
+        //setIsLoading(false);
+        // router.push('/apply/health-questionnaire/complete');
     };
+    const [isLoading, setIsLoading] = useState(false);
+    const [isComplete, setIsComplete] = useState(false);
     return (
-        <Modal
-            isOpen={modalIsOpen}
-            onRequestClose={() => setModalIsOpen(false)}
-            style={modalStyle}
-            shouldCloseOnOverlayClick={false}
-            ariaHideApp={false}
-        >
-            <h1
-                style={{
-                    color: '#333',
-                    fontSize: '1.5rem',
-                    fontWeight: 'bold',
-                    marginBottom: '1rem'
-                }}
+        <div className="relative">
+            <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={() => setModalIsOpen(false)}
+                style={modalStyle}
+                shouldCloseOnOverlayClick={false}
+                ariaHideApp={false}
             >
-                Confirm your response
-            </h1>
-            <div className="text-black">
-                {formFields[0].map((field) => {
-                    return (
-                        <div className="py-1">
-                            {t(field)}:{' ' + formData[field]}
+                {/* TODO: add spinner on loading */}
+                {/* {isLoading && <LoadingSpinner />} */}
+                {isComplete ? (
+                    <div className="flex flex-col justify-center">
+                        <div className="text-2xl m-5 mb-10 text-black font-bold">Response saved and submitted!</div>
+                        <Link href="/apply" className="btn">
+                            Go to Top
+                        </Link>
+                    </div>
+                ) : (
+                    <>
+                        <h1
+                            style={{
+                                color: '#333',
+                                fontSize: '1.5rem',
+                                fontWeight: 'bold',
+                                marginBottom: '1rem'
+                            }}
+                        >
+                            Confirm your response
+                        </h1>
+                        <div className="text-black">
+                            {formFields[0].map((field) => {
+                                return (
+                                    <div className="py-1">
+                                        {t(field)}:{' ' + formData[field]}
+                                        <hr />
+                                    </div>
+                                );
+                            })}
+                            <label>Have History of: </label>
+                            {formFields[1].map((field) => {
+                                return <>{formData[field][0] == 'Yes' && <label className="text-black py-1">{t(field)}, </label>}</>;
+                            })}
                             <hr />
+                            {/* pop() the last question */}
+                            {formFields[2].slice(0, -1).map((field) => {
+                                return (
+                                    <div className="text-black py-1">
+                                        {t(field)}
+                                        <div>{' ' + formData[field]}</div>
+                                        <hr />
+                                    </div>
+                                );
+                            })}
                         </div>
-                    );
-                })}
-                <label>Have History of: </label>
-                {formFields[1].map((field) => {
-                    return <>{formData[field][0] == 'Yes' && <label className="text-black py-1">{t(field)}, </label>}</>;
-                })}
-                <hr />
-                {/* pop() the last question */}
-                {formFields[2].slice(0, -1).map((field) => {
-                    return (
-                        <div className="text-black py-1">
-                            {t(field)}
-                            <div>{' ' + formData[field]}</div>
-                            <hr />
+                        <div className="flex flex-col justify-center">
+                            <Button label="Submit" isHover={isHoverSubmit} setIsHover={setIsHoverSubmit} onclick={onSubmit} />
+                            <Button label="Back" isHover={isHoverCancel} setIsHover={setIsHoverCancel} onclick={() => setModalIsOpen(false)} />
                         </div>
-                    );
-                })}
-            </div>
-            <div className="flex flex-col justify-center">
-                <Button label="Submit" isHover={isHoverSubmit} setIsHover={setIsHoverSubmit} onclick={onSubmit} />
-                <Button label="Back" isHover={isHoverCancel} setIsHover={setIsHoverCancel} onclick={() => setModalIsOpen(false)} />
-            </div>
-        </Modal>
+                    </>
+                )}
+            </Modal>
+        </div>
     );
 };
 

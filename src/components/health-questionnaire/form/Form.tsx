@@ -49,8 +49,6 @@ const HealthQuestionnaire = () => {
         if (isValid) return true;
         else return false;
     };
-    console.log('getval', getValues());
-    // console.log('error', formatError);
     useEffect(() => {
         if (!dashboardUser.ref) return;
         setValue('ref', dashboardUser.ref);

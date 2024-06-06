@@ -83,6 +83,7 @@ const Helper: React.FC<HelperProps> = ({ currentStep, userRef }) => {
                 </Link>
             </div>
         ),
+        complete: <div>You have completed all the steps. We will review your application and get back to you soon.</div>,
         step3: <>'Step 3: Do this and that'</>
     };
 

@@ -20,7 +20,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 handleNullOrEmpty({ res: res, errorMessage: 'No data' });
                 return;
             }
-            console.log('data', data);
             const field = data.field;
             const userRef = data.userRef;
             if (!userRef) {

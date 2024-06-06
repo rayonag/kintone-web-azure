@@ -24,7 +24,6 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
     const [ref, setRef] = useState('');
     const [office, setOffice] = useState<NationalOffice | undefined>(undefined);
     const { dashboardUser, setDashboardUser } = useDashboardUser();
-    console.log('dashboardUser', dashboardUser);
     const router = useRouter();
     // // server props
     // if (typeof window !== undefined) {
@@ -51,8 +50,6 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
         }
     };
     const iframeLink = getIframeLink(type);
-    // console.log('type', type);
-    // console.log(user);
     useEffect(() => {
         const ref = dashboardUser.ref;
         if (ref == undefined) {
@@ -60,7 +57,6 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
             return;
         }
         const office = repo?.office;
-        console.log('office', office);
         setRef(ref);
         setOffice(office);
         // if first time no loading
@@ -80,7 +76,7 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
         await postIsFirstTime(dashboardUser.ref);
         location.reload();
     };
-    // confirm before leave
+    // confirm before leave page
     useEffect(() => {
         const handleBeforeUnload = (event: any) => {
             event.preventDefault();
@@ -89,6 +85,30 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
         window.addEventListener('beforeunload', handleBeforeUnload);
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, []);
+    // back to top after receiving postmessage from FormBridge
+    useEffect(() => {
+        const receiveMessage = (event: any) => {
+            let data = null;
+            try {
+                data = JSON.parse(event.data);
+            } catch (e) {
+                console.log('error', e);
+                return;
+            }
+            console.log(data); // This will log the message data
+            console.log('form', data?.form);
+            console.log('public', data?.form?.publicCode); // This will log the message data
+            if (data?.form?.publicCode) {
+                alert('Thank you for submitting application form.');
+                router.push('/apply');
+            }
+        };
+        window.addEventListener('message', receiveMessage);
+        // Cleanup function to remove the event listener when the component unmounts
+        return () => {
+            window.removeEventListener('message', receiveMessage);
         };
     }, []);
     return (

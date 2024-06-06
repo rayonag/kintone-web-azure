@@ -19,12 +19,13 @@ import ReactModal from 'react-modal';
 import Helper from '@/components/modal/helper';
 import { REST_VolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
 
-export type ApplicationSteps = 'reviewWebsite' | 'submitApplication' | 'submitDocuments' | 'step3';
+export type ApplicationSteps = 'reviewWebsite' | 'submitApplication' | 'submitDocuments' | 'complete' | 'step3';
 export const applicationSteps = {
     reviewWebsite: 0,
     submitApplication: 1,
     submitDocuments: 2,
-    step3: 3
+    complete: 3,
+    step3: 4
 };
 export const handleLogout = () => {
     destroyCookie({}, 'auth', {
@@ -50,7 +51,6 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
         fetchUserApplicationMaster(dashboardUser, setDashboardUser);
     }, []);
     const { dashboardUser, setDashboardUser } = useDashboardUser();
-    console.log('dashboardUser', dashboardUser);
     const userRef = dashboardUser.ref;
     const [userApplicationRef, setUserApplicationRef] = useState('');
 
@@ -77,8 +77,10 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
             setCurrentStep('reviewWebsite');
         } else if (!dashboardUser.formSubmission?.includes('Application Form Completed')) {
             setCurrentStep('submitApplication');
-        } else {
+        } else if (!repo.allDocumentsSubmitted) {
             setCurrentStep('submitDocuments');
+        } else {
+            setCurrentStep('complete');
         }
     });
     const needsRevieWebsite = currentStep == 'reviewWebsite' ? true : false;
@@ -86,7 +88,6 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
         // for modal
         ReactModal.setAppElement('#__next');
     }, []);
-    console.log('applicationSteps[availableOn] <= applicationSteps[currentStep]', applicationSteps[currentStep]);
     //if (!userApplicationRef) return <LoadingSpinner />;
     const buttonProps = (availableOn: ApplicationSteps) => ({
         className: `${applicationSteps[availableOn] <= applicationSteps[currentStep] ? 'btn' : 'btn-disabled pointer-events-none'}`,
@@ -150,6 +151,7 @@ export default Page;
 type Repo = {
     reviewAbout: string | null;
     reviewFaq: string | null;
+    allDocumentsSubmitted: boolean;
 };
 export const getServerSideProps = (async (context) => {
     const cookies = parseCookies(context);
@@ -172,7 +174,6 @@ export const getServerSideProps = (async (context) => {
     // check if not yet
     if (resp2.length > 0) {
         if (resp.record['formSubmission'].value.findIndex((arr) => arr == 'Application Form Completed') == -1) {
-            console.log('first', [...resp.record['formSubmission'].value, 'Application Form Completed']);
             await client.record.updateRecord({
                 app: VolunteerApplicationMasterAppID as string,
                 id: cookies.ref,
@@ -186,8 +187,16 @@ export const getServerSideProps = (async (context) => {
             });
         }
     }
-    console.log('resp', resp);
-    const repo: Repo = { reviewAbout: resp.record['reviewAbout'].value[0] || null, reviewFaq: resp.record['reviewFaq'].value[0] || null };
+    // documents submission
+    const documents = resp.record['office'].value == 'USA' ? resp.record['documentsUSA'].value : resp.record['documents'].value;
+    const documentsLength = resp.record['office'].value == 'USA' ? 7 : 4; // required documents length
+
+    const repo: Repo = {
+        reviewAbout: resp.record['reviewAbout'].value[0] || null,
+        reviewFaq: resp.record['reviewFaq'].value[0] || null,
+        allDocumentsSubmitted: documents.length == documentsLength
+    };
+
     // Pass data to the page via props
     return { props: { repo } };
 }) satisfies GetServerSideProps<{ repo: Repo } | {}>;

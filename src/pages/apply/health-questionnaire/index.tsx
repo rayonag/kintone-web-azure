@@ -11,25 +11,39 @@ import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
 import Layout_slideUp from '@/styles/Layout_slideUp';
+import Layout_fadeIn from '@/styles/Layout_fadeIn';
 
 const Dashboard = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const { dashboardUser } = useDashboardUser();
     const formSubmitted = repo?.formSubmitted;
     return (
-        <Layout_slideUp key="page">
-            <div className="flex flex-col items-center justify-center min-h-screen overflow-hidden">
-                {formSubmitted ? (
-                    <>
-                        <div>Thank you for submitting Personal Health Questionnaire.</div>
+        <>
+            {formSubmitted ? (
+                <Layout_fadeIn>
+                    <div className="flex flex-col items-center justify-center h-screen">
+                        <div>Thank you for submitting application form.</div>
                         <Link href="/apply" className="btn">
                             Go to Top
                         </Link>
-                    </>
-                ) : (
-                    <HealthQuestionnaire />
-                )}
-            </div>
-        </Layout_slideUp>
+                    </div>
+                </Layout_fadeIn>
+            ) : (
+                <Layout_slideUp key="page">
+                    <div className="flex flex-col items-center justify-center min-h-screen overflow-hidden">
+                        {formSubmitted ? (
+                            <>
+                                <div>Thank you for submitting Personal Health Questionnaire.</div>
+                                <Link href="/apply" className="btn">
+                                    Go to Top
+                                </Link>
+                            </>
+                        ) : (
+                            <HealthQuestionnaire />
+                        )}
+                    </div>
+                </Layout_slideUp>
+            )}
+        </>
     );
 };
 export default Dashboard;
@@ -52,7 +66,7 @@ export const getServerSideProps = (async (context) => {
         id: cookies.ref
     });
     console.log('resp', resp);
-    const repo: Repo = { formSubmitted: resp.record['formSubmission'].value.findIndex((arr) => arr == 'Personal Health Questionaire') > -1 };
+    const repo: Repo = { formSubmitted: resp.record['formSubmission'].value.findIndex((arr) => arr == 'Personal Health Questionnaire') > -1 };
     // Pass data to the page via props
     return { props: { repo } };
 }) satisfies GetServerSideProps<{ repo: Repo } | {}>;

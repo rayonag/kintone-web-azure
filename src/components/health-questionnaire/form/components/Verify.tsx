@@ -11,7 +11,7 @@ const Verify: FC<VerifyProps> = ({ label, register, error }) => {
         <div className="my-1 me-5 grow md:max-w-96">
             <div className="my-1 flex">
                 <label className="flex">
-                    <input type="checkbox" value="true" {...register} className="w-8 h-8" />
+                    <input type="checkbox" {...register} className="w-8 h-8" />
                     <span className="ml-1 mr-2 text-xl">{label}</span>
                 </label>
             </div>

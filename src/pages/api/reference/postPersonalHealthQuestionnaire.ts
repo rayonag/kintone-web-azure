@@ -35,6 +35,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 applicationMasterRecord.record,
                 'healthQuestionnaireSubmission'
             );
+            if (applicationMasterRecord.record['formSubmission'].value.findIndex((arr) => arr == 'Personal Health Questionnaire') == -1) {
+                const resp3 = await client.record.updateRecord({
+                    app: VolunteerApplicationMasterAppID as string,
+                    id: data['ref'].value,
+                    record: {
+                        formSubmission: {
+                            value: [...applicationMasterRecord.record['formSubmission'].value, 'Personal Health Questionnaire']
+                        }
+                    }
+                });
+            }
             res.status(200).json({
                 username: addRecord,
                 password: addRecord

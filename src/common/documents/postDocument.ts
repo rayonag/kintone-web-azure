@@ -29,7 +29,6 @@ const postDocument: (props: postDocumentProps) => any = async ({ document, formD
             field: document,
             fileKey: fileKey.res
         };
-        console.log('updateBody', updateBody);
         const resp = await fetch('/api/reference/updateFileKintone', {
             method: 'POST',
             body: JSON.stringify(updateBody)

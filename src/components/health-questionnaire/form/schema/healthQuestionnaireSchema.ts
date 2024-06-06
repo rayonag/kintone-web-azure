@@ -7,12 +7,18 @@ const validateCheckbox = (val: string[]) => {
 const requiredErrorMessage = {
     message: 'This field is required'
 };
+const validateNumber = (value: string) => {
+    const numberValue = parseFloat(value);
+    return (
+        !isNaN(numberValue) && numberValue >= 0 && Number.isInteger(numberValue * 100) && Number((numberValue * 100).toFixed(0)) === numberValue * 100
+    );
+};
 // system
 const ref: z.ZodString = z.string().min(1).max(50);
 // 1
 const name: z.ZodString = z.string().min(1).max(50);
 const age: z.ZodString = z.string().min(1).max(50);
-const height: z.ZodString = z.string().min(1).max(50);
+const height: z.ZodEffects<z.ZodString> = z.string().refine(validateNumber, 'Invalid number');
 const heightUnit: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
 const weight: z.ZodString = z.string().min(1).max(50);
 const weightUnit: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
@@ -50,13 +56,15 @@ const brokenBones: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().re
 const highBloodPressure: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
 
 // 3
-const q1: z.ZodString = z.string().min(1).max(1000);
-const q2: z.ZodString = z.string().min(1).max(1000);
-const q3: z.ZodString = z.string().min(1).max(1000);
-const q4: z.ZodString = z.string().min(1).max(1000);
-const q5: z.ZodString = z.string().min(1).max(1000);
-const q6: z.ZodString = z.string().min(1).max(1000);
-const verify: z.ZodString = z.string().min(1).max(1000);
+const q1: z.ZodString = z.string();
+const q2: z.ZodString = z.string();
+const q3: z.ZodString = z.string();
+const q4: z.ZodString = z.string();
+const q5: z.ZodString = z.string();
+const q6: z.ZodString = z.string();
+const verify: z.ZodEffects<z.ZodBoolean> = z.boolean().refine((value) => value === true, {
+    message: 'Please check the box'
+});
 
 export const customErrorMap =
     (t: any): z.ZodErrorMap =>
@@ -163,7 +171,7 @@ export const HealthQuestionnaireDefaultValues: Partial<HealthQuestionnaireType> 
     brokenBones: [],
     highBloodPressure: [],
     // 3
-    verify: ''
+    verify: false
 };
 export const formFields = [
     ['name', 'age', 'height', 'heightUnit', 'weight', 'weightUnit'],

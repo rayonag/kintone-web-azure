@@ -1,6 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import logError from '@/common/logError';
-import updateVolunteerProfile from '../common/updateVolunteerProfile';
+import updateVolunteerProfile from './update/updateVolunteerProfile';
+import { KintoneUserName, KintonePassword } from '@/common/env';
+import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 
 type Data = {
     res?: any;

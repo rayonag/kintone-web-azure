@@ -35,7 +35,6 @@ export const updated = {
 };
 export const notificationApplicationUpdated = async (res: any, updatedField: Updated, record: any, submitType: SubmitType) => {
     try {
-        console.log('record', record);
         const name = record['name'].value;
         const office = record['office'].value as EmailNationalOffice;
         const documents = record['documents'].value;
@@ -56,7 +55,7 @@ export const notificationApplicationUpdated = async (res: any, updatedField: Upd
         sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
         const msg = {
             to: to, // Change to your recipient
-            from: 'BFP Kintone<noreply@bridgesforpeace.com>', // Change to your verified sender
+            from: 'BFP Noreply<noreply@bridgesforpeace.com>', // Change to your verified sender
             cc: cc,
             bcc: to === 'ronaga@bridgesforpeace.com' ? '' : 'ronaga@bridgesforpeace.com',
             subject: mailTitle,
@@ -65,7 +64,6 @@ export const notificationApplicationUpdated = async (res: any, updatedField: Upd
         sgMail
             .send(msg)
             .then((e) => {
-                console.log('mail sent');
                 res.status(200).json({ resp2: e });
                 return;
             })
@@ -75,7 +73,6 @@ export const notificationApplicationUpdated = async (res: any, updatedField: Upd
                 return;
             });
     } catch (e) {
-        console.log('caught error');
         logError(e, record, 'notificationApplicationUpdated');
         res.status(200).json({ resp2: e });
     }
