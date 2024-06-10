@@ -28,12 +28,12 @@ const updateVolunteerProfile = async (res: NextApiResponse) => {
             // work status
             if (record['startDate'].value) {
                 const startDate = DateTime.fromISO(record['startDate'].value);
-                if (startDate.toISODate() == DateTime.now().toISODate()) {
+                if (startDate < DateTime.now()) {
                     Object.assign(returnRecord, { Personal_Status: { value: 'Current' } });
                 }
                 if (record['endDate'].value) {
                     const endDate = DateTime.fromISO(record['endDate'].value);
-                    if (endDate.toISODate() == DateTime.now().toISODate()) {
+                    if (endDate < DateTime.now()) {
                         Object.assign(returnRecord, { Personal_Status: { value: 'Inactive' } });
                     }
                 }

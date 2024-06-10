@@ -27,6 +27,7 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
     useEffect(() => {
         // CSR用認証チェック
         router.beforePopState(({ url, as, options }) => {
+            console.log('url', url);
             // ログイン画面とエラー画面遷移時のみ認証チェックを行わない
             if (url.startsWith('/apply') && url !== '/apply/login' && url !== '/_error') {
                 if (typeof cookies.auth === 'undefined') {
@@ -35,7 +36,7 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
                     return false;
                 }
             } else if (
-                url === '/apply/login'
+                url == '/apply/login'
                 //&& typeof cookies.auth !== 'undefined'
             ) {
                 // ログイン済みの場合はマイページにリダイレクト
@@ -81,9 +82,13 @@ App.getInitialProps = async (appContext: any) => {
         }
     } else if (appContext.ctx.pathname == '/apply/login' && typeof cookies.auth !== 'undefined') {
         // ログイン済みの場合はマイページにリダイレクト
-        appContext.ctx.res.statusCode = 302;
-        appContext.ctx.res.setHeader('Location', '/apply/');
-        return {};
+        if (typeof cookies.auth === 'undefined') {
+            appContext.ctx.res.statusCode = 302;
+            appContext.ctx.res.setHeader('Location', '/apply/');
+            return {};
+        } else {
+            console.log('in ClientSide');
+        }
     }
     return {
         pageProps: {

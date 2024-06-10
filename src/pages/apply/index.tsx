@@ -18,7 +18,26 @@ import { REST_VolunteerApplicationMaster } from '@/types/VolunteerApplicationMas
 import ReactModal from 'react-modal';
 import Helper from '@/components/modal/helper';
 import { REST_VolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
+import { Status } from '@/common/context/volunteerApplicationMasterFields';
 
+// application steps that matches the kintone app
+export type ApplicationStepsMasterApp =
+    | 'Applying'
+    | 'Complete Application Form'
+    | 'Necessary Documents Submitted'
+    | 'National Office Review'
+    | 'SDD Review'
+    | 'Accepted'
+    | 'Rejected';
+export const applicationStepsMasterApp = {
+    Applying: 0,
+    'Complete Application Form': 1,
+    'Necessary Documents Submitted': 2,
+    'National Office Review': 3,
+    'SDD Review': 4,
+    Accepted: 5,
+    Rejected: 6
+};
 export type ApplicationSteps = 'reviewWebsite' | 'submitApplication' | 'submitDocuments' | 'complete' | 'step3';
 export const applicationSteps = {
     reviewWebsite: 0,
@@ -186,15 +205,43 @@ export const getServerSideProps = (async (context) => {
                 id: cookies.ref
             });
         }
+        // update status
+        if (
+            applicationStepsMasterApp[resp.record['status'].value as ApplicationStepsMasterApp] <
+            applicationStepsMasterApp['Complete Application Form']
+        ) {
+            await client.record.updateRecord({
+                app: VolunteerApplicationMasterAppID as string,
+                id: cookies.ref,
+                record: {
+                    status: { value: 'Complete Application Form' }
+                }
+            });
+        }
     }
     // documents submission
     const documents = resp.record['office'].value == 'USA' ? resp.record['documentsUSA'].value : resp.record['documents'].value;
     const documentsLength = resp.record['office'].value == 'USA' ? 7 : 4; // required documents length
-
+    const isAllDocumentsSubmitted = documents.length == documentsLength;
+    if (isAllDocumentsSubmitted) {
+        // update status
+        if (
+            applicationStepsMasterApp[resp.record['status'].value as ApplicationStepsMasterApp] <
+            applicationStepsMasterApp['Necessary Documents Submitted']
+        ) {
+            await client.record.updateRecord({
+                app: VolunteerApplicationMasterAppID as string,
+                id: cookies.ref,
+                record: {
+                    status: { value: 'Necessary Documents Submitted' }
+                }
+            });
+        }
+    }
     const repo: Repo = {
         reviewAbout: resp.record['reviewAbout'].value[0] || null,
         reviewFaq: resp.record['reviewFaq'].value[0] || null,
-        allDocumentsSubmitted: documents.length == documentsLength
+        allDocumentsSubmitted: isAllDocumentsSubmitted
     };
 
     // Pass data to the page via props
