@@ -13,6 +13,7 @@ export const ErrorLogsAPIKey = process.env.ERROR_LOGS_APIKEY;
 export const TimesheetAppID = process.env.TIMESHEET_APPID;
 // email
 export const email_Japan = process.env.EMAIL_JAPAN;
+export const email_SouthAfrica = process.env.EMAIL_SOUTH_AFRICA;
 
 // url
 export const zealousAplicationURL =

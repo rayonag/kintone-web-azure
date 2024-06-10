@@ -89,7 +89,7 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
     }, []);
     // back to top after receiving postmessage from FormBridge
     useEffect(() => {
-        const receiveMessage = (event: any) => {
+        const receiveMessage = async (event: any) => {
             let data = null;
             try {
                 data = JSON.parse(event.data);
@@ -101,6 +101,14 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
             console.log('form', data?.form);
             console.log('public', data?.form?.publicCode); // This will log the message data
             if (data?.form?.publicCode) {
+                const res = await fetch('/api/reference/postApplicationForm', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ ref: dashboardUser.ref }) // Replace with your data
+                });
+                console.log('res', res);
                 alert('Thank you for submitting application form.');
                 router.push('/apply');
             }

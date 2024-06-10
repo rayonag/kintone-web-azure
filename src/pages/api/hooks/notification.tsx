@@ -1,4 +1,4 @@
-import { email_Japan } from '@/common/env';
+import { email_Japan, email_SouthAfrica } from '@/common/env';
 import NotificationDocument from '@/common/react-email/emails/Notification-document';
 import { render } from '@react-email/render';
 import React from 'react';
@@ -17,7 +17,8 @@ type EmailNationalOffice = keyof typeof emailNationalOffice;
 const emailNationalOffice = {
     // add National Office email
     Japan: email_Japan,
-    USA: ''
+    USA: '',
+    'South Africa': email_SouthAfrica
 } as const;
 
 export type SubmitType = 'documentSubmission' | 'applicationSubmission' | 'healthQuestionnaireSubmission';
