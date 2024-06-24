@@ -62,26 +62,12 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
     const [isLoaded, setIsLoaded] = useState(false);
     const dashboardUser = useDashboardUser();
     const userRef = dashboardUser.ref;
-    const [userApplicationRef, setUserApplicationRef] = useState('');
     console.log('dashboardUser', dashboardUser);
-
-    //get applicationRef
     useEffect(() => {
-        (async () => {
-            // early return. TODO: review validation
-            if (!userRef) {
-                return;
-            }
-            const userApplicationRef = await getUserApplicationRef({ ref: userRef });
-            setUserApplicationRef(userApplicationRef || '');
-            setIsLoaded(true);
-        })();
-    }, []);
-
-    // UserapplicationrefはもうCookieに設定しちゃおうかな。いったんそれで
-
+        if (dashboardUser.isLoggedIn) setIsLoaded(true);
+    }, [dashboardUser]);
     // helper modal
-    const [currentStep, setCurrentStep] = useState<ApplicationSteps>('step3');
+    const [currentStep, setCurrentStep] = useState<ApplicationSteps>('reviewWebsite');
     useEffect(() => {
         if (!repo) return;
         if (repo.reviewAbout !== 'ok' || repo.reviewFaq !== 'ok') {

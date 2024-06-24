@@ -13,7 +13,6 @@ import fetchUserApplicationMaster from '@/common/fetchUserApplicationMaster';
 const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
     const router = useRouter();
     const cookies = parseCookies(ctx);
-    //console.log('hello world');
 
     const DashboardUserProvider: ({ children }: { children: JSX.Element }) => JSX.Element = ({ children }) => {
         const [dashboardUser, setDashboardUser] = useState<DashboardUser>({
@@ -21,7 +20,6 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
             username: cookies.auth || undefined,
             ref: cookies.ref || undefined
         });
-        // Only fetch data if `dashboardUser.username` is not set
         if (dashboardUser.username && dashboardUser.ref && !dashboardUser.isLoggedIn) {
             fetchUserApplicationMaster(dashboardUser, setDashboardUser);
         }

@@ -1,7 +1,6 @@
 'use client';
 import { FC, useEffect, useState } from 'react';
 import Link from 'next/link';
-import getUserApplicationRef from '@/common/getUserApplicationRef';
 import { useDashboardUser } from '@/common/context/dashboardUser';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import { useLoading } from '@/common/context/loading';
@@ -32,13 +31,6 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
         console.log('no user ref');
         return <LoadingSpinner />;
     }
-    // get applicationRef
-    useEffect(() => {
-        (async () => {
-            const userApplicationRef = await getUserApplicationRef({ ref: userRef });
-            setUserApplicationRef(userApplicationRef || '');
-        })();
-    }, []);
     // TODO: review validation and return val
     if (!userApplicationRef) {
         console.log('no application ref');

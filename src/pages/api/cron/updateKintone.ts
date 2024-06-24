@@ -23,38 +23,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
             res.end();
             return;
-
-            // const resp = await client.record.getAllRecords({
-            //     app: VolunteerApplicationAppID as string,
-            //     condition: `ref="${ref}"`
-            // });
-            // if (resp.length == 0) {
-            //     res.status(601);
-            //     res.json({
-            //         res: 'No application found'
-            //     });
-            //     res.end();
-            //     return;
-            // } else if (resp.length > 1) {
-            //     res.json({
-            //         res: resp[0]['$id'].value
-            //     });
-            //     res.end();
-            //     logError(`More than one application found: ref=${ref}`, null, 'getUserApplicationRef');
-            //     return;
-            // } else if (resp.length == 1) {
-            //     res.json({
-            //         res: resp[0]['$id'].value
-            //     });
-            //     res.end();
-            //     return;
-            // } else {
-            //     res.json({
-            //         res: undefined
-            //     });
-            //     res.end();
-            //     return;
-            // }
         } catch (e: any) {
             logError(e, null, 'updateKintone');
             res.json({
