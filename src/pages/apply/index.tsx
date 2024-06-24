@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { destroyCookie, parseCookies } from 'nookies';
 
 import Layout from '@/styles/Layout_fadeIn';
-import fetchUserApplicationMaster from '../../common/fetchUserApplicationMaster';
 
 import getUserApplicationRef from '@/common/getUserApplicationRef';
 import postReview from '@/common/checklist/postReview';
@@ -18,8 +17,6 @@ import { REST_VolunteerApplicationMaster } from '@/types/VolunteerApplicationMas
 import ReactModal from 'react-modal';
 import Helper from '@/components/modal/helper';
 import { REST_VolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
-import { Status } from '@/common/context/volunteerApplicationMasterFields';
-
 // application steps that matches the kintone app
 export type ApplicationStepsMasterApp =
     | 'Applying'
@@ -38,13 +35,12 @@ export const applicationStepsMasterApp = {
     Accepted: 5,
     Rejected: 6
 };
-export type ApplicationSteps = 'reviewWebsite' | 'submitApplication' | 'submitDocuments' | 'complete' | 'step3';
+export type ApplicationSteps = 'reviewWebsite' | 'submitApplication' | 'submitDocuments' | 'complete';
 export const applicationSteps = {
     reviewWebsite: 0,
     submitApplication: 1,
     submitDocuments: 2,
-    complete: 3,
-    step3: 4
+    complete: 3
 };
 export const handleLogout = () => {
     destroyCookie({}, 'auth', {
@@ -64,14 +60,10 @@ export const handleCheckListClick = async (field: string, userRef: string) => {
 // Define the functional component Page
 const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const [isLoaded, setIsLoaded] = useState(false);
-
-    console.log('repo', repo);
-    useEffect(() => {
-        fetchUserApplicationMaster(dashboardUser, setDashboardUser);
-    }, []);
-    const { dashboardUser, setDashboardUser } = useDashboardUser();
+    const dashboardUser = useDashboardUser();
     const userRef = dashboardUser.ref;
     const [userApplicationRef, setUserApplicationRef] = useState('');
+    console.log('dashboardUser', dashboardUser);
 
     //get applicationRef
     useEffect(() => {
@@ -221,7 +213,7 @@ export const getServerSideProps = (async (context) => {
     }
     // documents submission
     const documents = resp.record['office'].value == 'USA' ? resp.record['documentsUSA'].value : resp.record['documents'].value;
-    const documentsLength = resp.record['office'].value == 'USA' ? 7 : 4; // required documents length
+    const documentsLength = resp.record['office'].value == 'USA' ? 6 : 5; // required documents length
     const isAllDocumentsSubmitted = documents.length == documentsLength;
     if (isAllDocumentsSubmitted) {
         // update status

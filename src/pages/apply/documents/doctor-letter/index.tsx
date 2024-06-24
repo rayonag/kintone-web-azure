@@ -4,7 +4,7 @@ import SubmitDocument from '@/components/documents/SubmitDocument';
 
 const DoctorLetter = () => {
     const Help = () => (
-        <Link href="./medical-form/example" className="link">
+        <Link href="./doctor-letter/example" className="link">
             What is Doctor's Letter?
         </Link>
     );

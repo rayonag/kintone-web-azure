@@ -3,8 +3,6 @@ import { useEffect, useState, useCallback } from 'react';
 
 import Link from 'next/link';
 import HealthQuestionnaire from '@/components/health-questionnaire/form/Form';
-import { useDashboardUser } from '@/common/context/dashboardUser';
-import fetchUserApplicationMaster from '@/common/fetchUserApplicationMaster';
 import { KintoneUserName, KintonePassword, VolunteerApplicationMasterAppID } from '@/common/env';
 import { REST_VolunteerApplicationMaster } from '@/types/VolunteerApplicationMaster';
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
@@ -14,7 +12,6 @@ import Layout_slideUp from '@/styles/Layout_slideUp';
 import Layout_fadeIn from '@/styles/Layout_fadeIn';
 
 const Dashboard = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-    const { dashboardUser } = useDashboardUser();
     const formSubmitted = repo?.formSubmitted;
     return (
         <>
@@ -65,7 +62,7 @@ export const getServerSideProps = (async (context) => {
         app: VolunteerApplicationMasterAppID as string,
         id: cookies.ref
     });
-    console.log('resp', resp);
+    //console.log('resp', resp);
     const repo: Repo = { formSubmitted: resp.record['formSubmission'].value.findIndex((arr) => arr == 'Personal Health Questionnaire') > -1 };
     // Pass data to the page via props
     return { props: { repo } };

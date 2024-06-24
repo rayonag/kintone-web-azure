@@ -42,7 +42,7 @@ type ConfirmationModalProps = {
 const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIsOpen, getValues, t }) => {
     const [isHoverSubmit, setIsHoverSubmit] = useState(false);
     const [isHoverCancel, setIsHoverCancel] = useState(false);
-    const { dashboardUser } = useDashboardUser();
+    const dashboardUser = useDashboardUser();
     const router = useRouter();
     const formData = getValues();
     const modalStyle = {

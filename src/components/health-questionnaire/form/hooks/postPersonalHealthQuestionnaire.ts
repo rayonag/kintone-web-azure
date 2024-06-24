@@ -6,6 +6,7 @@ const postPersonalHealthQuestionnaire = async (data: HealthQuestionnaireType, re
         const record = {
             //system
             ref: { value: data.ref },
+            office: { value: [{ code: data.office }] },
             // 1
             name: { value: data.name },
             age: { value: data.age },

@@ -15,8 +15,8 @@ export const necessaryDocuments = {
     recentPhoto: 'Recent Photo',
     medicalStatusForm: 'Medical Status Form',
     doctorLetter: "Doctor's Letter",
-    ssn: 'Copy of Social Security Card',
-    crimialCheck: 'Criminal Background Check'
+    criminalCheck: 'Criminal Check',
+    ssn: 'Copy of Social Security Card'
 };
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
     if (req.method === 'POST') {
@@ -79,13 +79,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 id: userRef
             });
             const documents = oldRecord.record['documents'].value as string[];
+            console.log('oldRecord', oldRecord);
+            console.log('documents', documents);
             if (!documents.includes(updated[field])) {
+                const updatedDocuments = [...(oldRecord.record['documents'].value as string[]), updated[field]];
                 await client.record.updateRecord({
                     app: VolunteerApplicationMasterAppID as string,
                     id: userRef,
                     record: {
                         documents: {
-                            value: [...(oldRecord.record['documents'].value as string[]), updated[field]]
+                            value: updatedDocuments
+                        },
+                        // update status to 'documentSubmitted' if all documents are submitted
+                        status: {
+                            value:
+                                updatedDocuments.length + 1 === Object.keys(necessaryDocuments).length
+                                    ? 'Necessary Documents Submitted'
+                                    : 'Complete Application Form'
                         }
                     }
                 });

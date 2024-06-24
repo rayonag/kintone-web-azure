@@ -141,7 +141,7 @@ export interface VolunteerApplicationForm {
     Check_box: kintone.fieldTypes.CheckBox;
 
     ssn: kintone.fieldTypes.File;
-    crimialCheck: kintone.fieldTypes.File;
+    criminalCheck: kintone.fieldTypes.File;
     recentPhoto: kintone.fieldTypes.File;
     passport: kintone.fieldTypes.File;
     doctorLetter: kintone.fieldTypes.File;
@@ -337,7 +337,7 @@ export type REST_VolunteerApplicationForm = {
     Check_box: KintoneRecordField.CheckBox;
 
     ssn: KintoneRecordField.File;
-    crimialCheck: KintoneRecordField.File;
+    criminalCheck: KintoneRecordField.File;
     recentPhoto: KintoneRecordField.File;
     passport: KintoneRecordField.File;
     doctorLetter: KintoneRecordField.File;

@@ -22,7 +22,7 @@ import ConfirmationModal from './views/Confirmation';
 import { useDashboardUser } from '@/common/context/dashboardUser';
 
 const HealthQuestionnaire = () => {
-    const { dashboardUser } = useDashboardUser();
+    const dashboardUser = useDashboardUser();
     const [page, setPage] = useState(0);
     const { t } = useTranslation();
     const initialLang = 'en';
@@ -50,9 +50,10 @@ const HealthQuestionnaire = () => {
         else return false;
     };
     useEffect(() => {
-        if (!dashboardUser.ref) return;
-        setValue('ref', dashboardUser.ref);
-    }, []);
+        console.log('dashboardUser', dashboardUser);
+        if (dashboardUser.ref) setValue('ref', dashboardUser.ref);
+        if (dashboardUser.office) setValue('office', dashboardUser.office);
+    }, [dashboardUser]);
     return (
         <form className="flex flex-col p-[10%] text-center">
             {page === 0 && <FirstPage register={register} errors={formatError} getValues={getValues} t={t} />}

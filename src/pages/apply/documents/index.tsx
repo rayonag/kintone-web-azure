@@ -3,16 +3,14 @@
 import React, { useEffect } from 'react';
 import Link from 'next/link';
 import Layout from '@/styles/Layout_fadeIn';
-import fetchUserApplicationMaster from '@/common/fetchUserApplicationMaster';
 import { useDashboardUser } from '@/common/context/dashboardUser';
 import GreenCheckMark from '@/components/icons/GreenCheckMark';
 
 // Define the functional component Page
 const Page: React.FC = () => {
-    const { dashboardUser, setDashboardUser } = useDashboardUser();
+    const dashboardUser = useDashboardUser();
     const loginUser = dashboardUser;
     console.log('loginUser', loginUser);
-    fetchUserApplicationMaster(dashboardUser, setDashboardUser);
     const Check = () => (
         <div className="absolute right-[-2.5rem]">
             <GreenCheckMark height={30} />
@@ -26,7 +24,9 @@ const Page: React.FC = () => {
                 <div className="relative flex flex-col items-center justify-center text-center">
                     <div>
                         <h1 className="text-xl my-10">Documents Submission</h1>
-                        <h1 className="text-xl my-10">{loginUser.documents?.length || '-'}/4 Completed</h1>
+                        <h1 className="text-xl my-10">
+                            {loginUser.documents?.length || '-'}/{loginUser['office'] == 'USA' ? 6 : 5} Completed
+                        </h1>
                     </div>
                     <div className="relative flex items-center">
                         <Link href="./documents/medical-form" className="btn">
@@ -53,6 +53,13 @@ const Page: React.FC = () => {
                             Recent Photo
                         </Link>
                         {isSubmitted('Recent Photo') && <Check />}
+                    </div>
+
+                    <div className="relative flex items-center">
+                        <Link href="./documents/criminal-check" className="btn">
+                            Criminal Check
+                        </Link>
+                        {isSubmitted('Criminal Check') && <Check />}
                     </div>
 
                     <div className="relative flex items-center">

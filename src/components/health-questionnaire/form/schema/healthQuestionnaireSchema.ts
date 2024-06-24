@@ -15,6 +15,7 @@ const validateNumber = (value: string) => {
 };
 // system
 const ref: z.ZodString = z.string().min(1).max(50);
+const office: z.ZodString = z.string().min(1).max(50);
 // 1
 const name: z.ZodString = z.string().min(1).max(50);
 const age: z.ZodString = z.string().min(1).max(50);
@@ -85,6 +86,7 @@ export const customErrorMap =
 export const HealthQuestionnaireSchema = z.object({
     // system
     ref: ref,
+    office: office,
 
     // 1
     name: name,

@@ -6,22 +6,26 @@ import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
 
 import '@/styles/globals.css';
-import { lcov } from 'node:test/reporters';
-import { defaultUserProvider, DashboardUser, DashboardUserContext } from '@/common/context/dashboardUser';
+import { DashboardUserContext, DashboardUser } from '@/common/context/dashboardUser';
 import { LoadingContext } from '@/common/context/loading';
+import fetchUserApplicationMaster from '@/common/fetchUserApplicationMaster';
 
 const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
     const router = useRouter();
     const cookies = parseCookies(ctx);
+    //console.log('hello world');
 
     const DashboardUserProvider: ({ children }: { children: JSX.Element }) => JSX.Element = ({ children }) => {
-        // set username from cookie
-        if (typeof cookies.auth !== 'undefined') {
-            defaultUserProvider.dashboardUser.ref = cookies.ref;
-            defaultUserProvider.dashboardUser.username = cookies.auth;
+        const [dashboardUser, setDashboardUser] = useState<DashboardUser>({
+            isLoggedIn: false,
+            username: cookies.auth || undefined,
+            ref: cookies.ref || undefined
+        });
+        // Only fetch data if `dashboardUser.username` is not set
+        if (dashboardUser.username && dashboardUser.ref && !dashboardUser.isLoggedIn) {
+            fetchUserApplicationMaster(dashboardUser, setDashboardUser);
         }
-        const [dashboardUser, setDashboardUser] = useState<DashboardUser['dashboardUser']>(defaultUserProvider['dashboardUser']);
-        return <DashboardUserContext.Provider value={{ dashboardUser, setDashboardUser }}>{children}</DashboardUserContext.Provider>;
+        return <DashboardUserContext.Provider value={dashboardUser}>{children}</DashboardUserContext.Provider>;
     };
     // 第二引数に空配列を指定してマウント・アンマウント毎（CSRでの各画面遷移時）に呼ばれるようにする
     useEffect(() => {
@@ -35,10 +39,7 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
                     window.location.href = '/apply/login';
                     return false;
                 }
-            } else if (
-                url == '/apply/login'
-                //&& typeof cookies.auth !== 'undefined'
-            ) {
+            } else if (url == '/apply/login' && typeof cookies.auth !== 'undefined') {
                 // ログイン済みの場合はマイページにリダイレクト
                 window.location.href = '/apply/';
                 return false;
@@ -81,8 +82,8 @@ App.getInitialProps = async (appContext: any) => {
             }
         }
     } else if (appContext.ctx.pathname == '/apply/login' && typeof cookies.auth !== 'undefined') {
-        // ログイン済みの場合はマイページにリダイレクト
-        if (typeof cookies.auth === 'undefined') {
+        // redirect to dashboard if already logged in
+        if (typeof window === 'undefined') {
             appContext.ctx.res.statusCode = 302;
             appContext.ctx.res.setHeader('Location', '/apply/');
             return {};

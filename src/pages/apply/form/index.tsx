@@ -23,7 +23,7 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
     const [isLoading, setIsLoading] = useState(true);
     const [ref, setRef] = useState('');
     const [office, setOffice] = useState<NationalOffice | undefined>(undefined);
-    const { dashboardUser, setDashboardUser } = useDashboardUser();
+    const dashboardUser = useDashboardUser();
     const router = useRouter();
     // // server props
     // if (typeof window !== undefined) {
@@ -204,7 +204,8 @@ export const getServerSideProps = (async (context) => {
                     app: VolunteerApplicationMasterAppID as string,
                     id: cookies.ref,
                     record: {
-                        formSubmission: { value: [...resp.record['formSubmission'].value, 'Application Form Completed'] }
+                        formSubmission: { value: [...resp.record['formSubmission'].value, 'Application Form Completed'] },
+                        status: { value: 'Complete Application Form' }
                     }
                 });
                 resp = await client.record.getRecord<REST_VolunteerApplicationMaster>({

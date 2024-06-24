@@ -26,7 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 id: data['ref']
             });
             const resp2 = await notificationApplicationUpdated(res, 'application', applicationMasterRecord.record, 'applicationSubmission');
-            console.log('resp2', resp2);
+            //console.log('resp2', resp2);
             res.status(200).json({});
         } catch (e: any) {
             console.log(e.errors);

@@ -5,7 +5,7 @@ import SubmitDocument from '@/components/documents/SubmitDocument';
 const CriminalCheck = () => {
     const Help = () => (
         <Link href="./criminal-check/example" className="link">
-            What is a Criminal Check document?
+            What is a Criminal Background Check?
         </Link>
     );
     return (

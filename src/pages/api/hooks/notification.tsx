@@ -10,7 +10,8 @@ const necessaryDocuments = {
     passport: 'Passport',
     recentPhoto: 'Recent Photo',
     medicalForm: 'Medical Status Form',
-    doctorLetter: "Doctor's Letter"
+    doctorLetter: "Doctor's Letter",
+    criminalCheck: 'Criminal Check'
 };
 
 type EmailNationalOffice = keyof typeof emailNationalOffice;
@@ -23,7 +24,7 @@ const emailNationalOffice = {
 
 export type SubmitType = 'documentSubmission' | 'applicationSubmission' | 'healthQuestionnaireSubmission';
 
-type Updated = 'passport' | 'recentPhoto' | 'medicalStatusForm' | 'doctorLetter' | 'application' | 'healthQuestionnaire' | 'crimialCheck' | 'ssn';
+type Updated = 'passport' | 'recentPhoto' | 'medicalStatusForm' | 'doctorLetter' | 'application' | 'healthQuestionnaire' | 'criminalCheck' | 'ssn';
 export const updated = {
     passport: 'Passport',
     recentPhoto: 'Recent Photo',
@@ -31,8 +32,8 @@ export const updated = {
     doctorLetter: "Doctor's Letter",
     application: 'Online Application',
     healthQuestionnaire: 'Health Questionnaire',
-    ssn: 'Copy of Social Security Card',
-    crimialCheck: 'Criminal Background Check'
+    criminalCheck: 'Criminal Check',
+    ssn: 'Copy of Social Security Card'
 };
 export const notificationApplicationUpdated = async (res: any, updatedField: Updated, record: any, submitType: SubmitType) => {
     try {

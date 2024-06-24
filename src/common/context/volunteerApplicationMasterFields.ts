@@ -9,7 +9,13 @@ export type Status =
     | 'Rejected';
 export type NationalOffice = 'Australia' | 'Canada' | 'Japan' | 'New Zealand' | 'South Africa' | 'South Korea' | 'United Kingdom' | 'USA' | 'Other';
 export type FormSubmission = Partial<['Application Form Completed', 'Personal Health Questionaire']>;
-export type Documents = Partial<['Passport', 'Recent Photo', 'Medical Status Form', "Doctor's Letter"]>;
-export type DocumentsUS = Partial<
-    ['Passport', 'Recent Photo', 'Medical Status Form', "Doctor's Letter", 'Social Security Card', 'Criminal Check', 'Application Fee']
->;
+export type Documents = ['Passport', 'Recent Photo', 'Medical Status Form', "Doctor's Letter", 'Criminal Check'];
+export type DocumentsUS = [
+    'Passport',
+    'Recent Photo',
+    'Medical Status Form',
+    "Doctor's Letter",
+    'Social Security Card',
+    'Criminal Check',
+    'Application Fee'
+];

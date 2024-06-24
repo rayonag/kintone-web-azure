@@ -3,25 +3,21 @@ import { FC, useEffect, useState } from 'react';
 import Link from 'next/link';
 import getUserApplicationRef from '@/common/getUserApplicationRef';
 import { useDashboardUser } from '@/common/context/dashboardUser';
-import fetchUserApplicationMaster from '@/common/fetchUserApplicationMaster';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import { useLoading } from '@/common/context/loading';
 import postDocument from '@/common/documents/postDocument';
 import Layout_fadeIn from '@/styles/Layout_fadeIn';
 import { useRouter } from 'next/router';
+import { NecessaryDocuments } from '@/pages/api/hooks/notification';
 
 type SubmitDocumentProps = {
-    document: string;
+    document: NecessaryDocuments;
     title: string;
     Help?: FC<any>;
 };
 const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
-    const { dashboardUser, setDashboardUser } = useDashboardUser();
+    const dashboardUser = useDashboardUser();
     const { isLoading, setIsLoading } = useLoading();
-    const loginUser = dashboardUser;
-    useEffect(() => {
-        fetchUserApplicationMaster(dashboardUser, setDashboardUser);
-    }, []);
     const router = useRouter();
 
     const [fileData, setFileData] = useState<any>([]);
@@ -30,7 +26,7 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
     // Does it need preview?
     //const [filePreview, setFilePreview] = useState();
 
-    const userRef = loginUser.ref;
+    const userRef = dashboardUser.ref;
     // early return. TODO: review validation
     if (!userRef) {
         console.log('no user ref');
