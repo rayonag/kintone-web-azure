@@ -5,18 +5,31 @@ import handleNullOrEmpty from '../common/handleNullOrEmpty';
 import notificationApplicationUpdated, { updated } from '../hooks/notification';
 import logError from '@/common/logError';
 import { REST_VolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
+import { REST_VolunteerApplicationMaster } from '@/types/VolunteerApplicationMaster';
 
 type Data = {
     res?: any;
     resp2?: any;
 };
-export const necessaryDocuments = {
+const necessaryDocuments = {
     passport: 'Passport',
     recentPhoto: 'Recent Photo',
     medicalStatusForm: 'Medical Status Form',
     doctorLetter: "Doctor's Letter",
-    criminalCheck: 'Criminal Check',
-    ssn: 'Copy of Social Security Card'
+    criminalCheck: 'Criminal Check'
+};
+const necessaryDocumentsUSA = {
+    passport: 'Passport',
+    recentPhoto: 'Recent Photo',
+    medicalStatusForm: 'Medical Status Form',
+    doctorLetter: "Doctor's Letter",
+    criminalCheck: 'Criminal Check'
+};
+const necessaryDocumentsShortTerm = {
+    passport: 'Passport',
+    recentPhoto: 'Recent Photo',
+    medicalStatusForm: 'Medical Status Form',
+    doctorLetter: "Doctor's Letter"
 };
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
     if (req.method === 'POST') {
@@ -74,7 +87,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 }
             });
             // TODO: come up with a better way to handle this
-            const oldRecord = await client.record.getRecord({
+            const oldRecord = await client.record.getRecord<REST_VolunteerApplicationMaster>({
                 app: VolunteerApplicationMasterAppID as string,
                 id: userRef
             });
@@ -83,6 +96,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             console.log('documents', documents);
             if (!documents.includes(updated[field])) {
                 const updatedDocuments = [...(oldRecord.record['documents'].value as string[]), updated[field]];
+                const necDoc =
+                    oldRecord.record['office'].value === 'USA'
+                        ? necessaryDocumentsUSA
+                        : oldRecord.record['type'].value == 'Short Term'
+                        ? necessaryDocumentsShortTerm
+                        : necessaryDocuments;
                 await client.record.updateRecord({
                     app: VolunteerApplicationMasterAppID as string,
                     id: userRef,
@@ -93,7 +112,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                         // update status to 'documentSubmitted' if all documents are submitted
                         status: {
                             value:
-                                updatedDocuments.length + 1 === Object.keys(necessaryDocuments).length
+                                updatedDocuments.length + 1 === Object.keys(necDoc).length
                                     ? 'Necessary Documents Submitted'
                                     : 'Complete Application Form'
                         }

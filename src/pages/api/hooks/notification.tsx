@@ -4,6 +4,7 @@ import { render } from '@react-email/render';
 import React from 'react';
 import sgMail from '@sendgrid/mail';
 import logError from '@/common/logError';
+import { REST_SavedVolunteerApplicationMaster, REST_VolunteerApplicationMaster } from '@/types/VolunteerApplicationMaster';
 
 export type NecessaryDocuments = keyof typeof necessaryDocuments;
 const necessaryDocuments = {
@@ -21,6 +22,13 @@ const necessaryDocumentsUSA = {
     doctorLetter: "Doctor's Letter",
     criminalCheck: 'Criminal Check',
     ssn: 'Social Security Card'
+};
+export type NecessaryDocumentsShortTerm = keyof typeof necessaryDocumentsShortTerm;
+const necessaryDocumentsShortTerm = {
+    passport: 'Passport',
+    recentPhoto: 'Recent Photo',
+    medicalForm: 'Medical Status Form',
+    doctorLetter: "Doctor's Letter"
 };
 
 type EmailNationalOffice = keyof typeof emailNationalOffice;
@@ -89,3 +97,40 @@ export const notificationApplicationUpdated = async (res: any, updatedField: Upd
     }
 };
 export default notificationApplicationUpdated;
+
+export const notificationReferenceSubmitted = async (res: any, record: REST_SavedVolunteerApplicationMaster) => {
+    try {
+        const name = record['name'].value;
+        const office = record['office'].value as EmailNationalOffice;
+        if (!office) throw new Error('Invalid office');
+        const to = emailNationalOffice[office];
+        const mailTitle = `[Online Application] Reference Form submitted for ${name}`;
+        const mailBody = `There is new Reference Form submitted for ${name}`;
+        const cc = ''; // add SDD email
+        //const bcc = data.bcc;
+        const mailHTML = render(<NotificationDocument mailBody={mailBody} applicationRef={record['$id'].value} />);
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
+        const msg = {
+            to: to, // Change to your recipient
+            from: 'BFP Noreply<noreply@bridgesforpeace.com>', // Change to your verified sender
+            cc: cc,
+            bcc: to === 'ronaga@bridgesforpeace.com' ? '' : 'ronaga@bridgesforpeace.com',
+            subject: mailTitle,
+            html: mailHTML
+        };
+        sgMail
+            .send(msg)
+            .then((e) => {
+                res.status(200).json({ resp2: e });
+                return;
+            })
+            .catch((error) => {
+                console.log('error', error.response.body.errors);
+                res.status(200).json({ resp2: error });
+                return;
+            });
+    } catch (e) {
+        logError(e, record, 'notificationApplicationUpdated');
+        res.status(200).json({ resp2: e });
+    }
+};
