@@ -13,6 +13,15 @@ const necessaryDocuments = {
     doctorLetter: "Doctor's Letter",
     criminalCheck: 'Criminal Check'
 };
+export type NecessaryDocumentsUSA = keyof typeof necessaryDocumentsUSA;
+const necessaryDocumentsUSA = {
+    passport: 'Passport',
+    recentPhoto: 'Recent Photo',
+    medicalForm: 'Medical Status Form',
+    doctorLetter: "Doctor's Letter",
+    criminalCheck: 'Criminal Check',
+    ssn: 'Social Security Card'
+};
 
 type EmailNationalOffice = keyof typeof emailNationalOffice;
 const emailNationalOffice = {

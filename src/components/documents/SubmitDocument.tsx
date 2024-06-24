@@ -7,10 +7,10 @@ import { useLoading } from '@/common/context/loading';
 import postDocument from '@/common/documents/postDocument';
 import Layout_fadeIn from '@/styles/Layout_fadeIn';
 import { useRouter } from 'next/router';
-import { NecessaryDocuments } from '@/pages/api/hooks/notification';
+import { NecessaryDocuments, NecessaryDocumentsUSA } from '@/pages/api/hooks/notification';
 
 type SubmitDocumentProps = {
-    document: NecessaryDocuments;
+    document: NecessaryDocuments | NecessaryDocumentsUSA;
     title: string;
     Help?: FC<any>;
 };
