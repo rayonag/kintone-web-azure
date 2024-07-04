@@ -32,7 +32,7 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
         return <LoadingSpinner />;
     }
     // TODO: review validation and return val
-    if (!userApplicationRef) {
+    if (!dashboardUser.applicationRef) {
         console.log('no application ref');
         return <LoadingSpinner />;
     }
@@ -64,11 +64,11 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
             const formData = new FormData();
             formData.append('file', file);
             // TODO: applicationRef validation
-            if (!userApplicationRef) {
+            if (!dashboardUser.applicationRef) {
                 alert('Something went wrong. Could not upload your document');
                 throw new Error('applicationRef undefined');
             }
-            await postDocument({ document: document, formData: formData, applicationRef: userApplicationRef, userRef: userRef });
+            await postDocument({ document: document, formData: formData, applicationRef: dashboardUser.applicationRef, userRef: userRef });
             setIsLoading(false);
             router.push('/apply/documents/complete');
         } else {
