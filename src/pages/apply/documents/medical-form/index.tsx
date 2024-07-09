@@ -10,7 +10,7 @@ const MedicalForm = () => {
     );
     return (
         <>
-            <SubmitDocument document="medicalForm" title="Please Upload Medical Status Form" Help={Help}></SubmitDocument>
+            <SubmitDocument document="medicalStatusForm" title="Please Upload Medical Status Form" Help={Help}></SubmitDocument>
         </>
     );
 };

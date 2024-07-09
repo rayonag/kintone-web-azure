@@ -10,7 +10,7 @@ export type NecessaryDocuments = keyof typeof necessaryDocuments;
 const necessaryDocuments = {
     passport: 'Passport',
     recentPhoto: 'Recent Photo',
-    medicalForm: 'Medical Status Form',
+    medicalStatusForm: 'Medical Status Form',
     doctorLetter: "Doctor's Letter",
     criminalCheck: 'Criminal Check'
 };
@@ -18,7 +18,7 @@ export type NecessaryDocumentsUSA = keyof typeof necessaryDocumentsUSA;
 const necessaryDocumentsUSA = {
     passport: 'Passport',
     recentPhoto: 'Recent Photo',
-    medicalForm: 'Medical Status Form',
+    medicalStatusForm: 'Medical Status Form',
     doctorLetter: "Doctor's Letter",
     criminalCheck: 'Criminal Check',
     ssn: 'Social Security Card'
@@ -27,7 +27,7 @@ export type NecessaryDocumentsShortTerm = keyof typeof necessaryDocumentsShortTe
 const necessaryDocumentsShortTerm = {
     passport: 'Passport',
     recentPhoto: 'Recent Photo',
-    medicalForm: 'Medical Status Form',
+    medicalStatusForm: 'Medical Status Form',
     doctorLetter: "Doctor's Letter"
 };
 
