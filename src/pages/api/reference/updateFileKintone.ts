@@ -112,9 +112,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                         // update status to 'documentSubmitted' if all documents are submitted
                         status: {
                             value:
-                                updatedDocuments.length + 1 === Object.keys(necDoc).length
-                                    ? 'Necessary Documents Submitted'
-                                    : 'Complete Application Form'
+                                updatedDocuments.length === Object.keys(necDoc).length ? 'Necessary Documents Submitted' : 'Complete Application Form'
                         }
                     }
                 });
