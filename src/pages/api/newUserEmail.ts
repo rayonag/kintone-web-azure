@@ -18,7 +18,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
         sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
         const msg = {
             to: email, // Change to your recipient
-            from: 'ronaga@bridgesforpeace.com', // Change to your verified sender
+            from: 'BFP Noreply<noreply@bridgesforpeace.com>', // Change to your verified sender
             cc: cc,
             bcc: bcc,
             subject: mailTitle,

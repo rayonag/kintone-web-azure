@@ -68,7 +68,7 @@ export const notificationApplicationUpdated = async (res: any, updatedField: Upd
                 ? `[Online Application] Health Questionnaire submitted by ${name}`
                 : `[Online Application] Document submitted by ${name}`;
         const mailBody = `${name} submitted ${updated[updatedField]}`;
-        const cc = ''; // add SDD email
+        const cc = 'intl.personnel@bridgesforpeace.com'; // add SDD email
         //const bcc = data.bcc;
         const mailHTML = render(<NotificationDocument mailBody={mailBody} applicationRef={record['$id'].value} />);
         sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
@@ -106,7 +106,7 @@ export const notificationReferenceSubmitted = async (res: any, record: REST_Save
         const to = emailNationalOffice[office];
         const mailTitle = `[Online Application] Reference Form submitted for ${name}`;
         const mailBody = `There is new Reference Form submitted for ${name}`;
-        const cc = ''; // add SDD email
+        const cc = 'intl.personnel@bridgesforpeace.com'; // add SDD email
         //const bcc = data.bcc;
         const mailHTML = render(<NotificationDocument mailBody={mailBody} applicationRef={record['$id'].value} />);
         sgMail.setApiKey(process.env.SENDGRID_API_KEY!);

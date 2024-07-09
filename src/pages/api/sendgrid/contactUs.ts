@@ -16,8 +16,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
         const message = data.message;
         sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
         const msg = {
-            to: 'ronaga@bridgesforpeace.com', // Change to your recipient
-            from: 'noreply@bridgesforpeace.com', // Change to your verified sender
+            to: 'intl.personnel@bridgesforpeace.com', // Change to your recipient
+            cc: 'ronaga@bridgesforpeace.com',
+            from: 'BFP Noreply<noreply@bridgesforpeace.com>', // Change to your verified sender
             subject: '[Online Volunteer Application]New message from Contact Us Form',
             html: `<div>Name: ${name}</div><div>Email: ${email}</div><div>Phone: ${phone}</div><div>Message: ${message}</div>`
         };
