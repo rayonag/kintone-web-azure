@@ -23,6 +23,7 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
     const [isLoading, setIsLoading] = useState(true);
     const [ref, setRef] = useState('');
     const [office, setOffice] = useState<NationalOffice | undefined>(undefined);
+    const [isFirstTimeOnForm, setIsFirstTimeOnForm] = useState(false);
     const dashboardUser = useDashboardUser();
     const router = useRouter();
     // // server props
@@ -33,7 +34,13 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
     //         return;
     //     }
     // }
-    const isFirstTimeOnForm = repo?.isFirstTimeOnForm || false;
+    useEffect(() => {
+        if (repo?.formSubmitted) {
+            alert('Thank you for submitting application form.');
+            router.push('/apply');
+        }
+        setIsFirstTimeOnForm(repo?.isFirstTimeOnForm || false);
+    }, [repo]);
     const type = repo?.type || null;
     const formSubmitted = repo?.formSubmitted || false;
 
@@ -74,7 +81,8 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
         if (!dashboardUser.ref) return;
         setIsLoading(true);
         await postIsFirstTime(dashboardUser.ref);
-        location.reload();
+        setIsFirstTimeOnForm(false);
+        //location.reload();
     };
     // confirm before leave page
     useEffect(() => {
