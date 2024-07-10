@@ -14,6 +14,7 @@ const ApplicationForm = () => {
     // State to track whether the iframe content is loading
     const [isLoading, setIsLoading] = useState(true);
     const [ref, setRef] = useState<string | number | null>('');
+    const [office, setOffice] = useState<string | number | null>('');
     console.log('ref', ref);
     const router = useRouter();
     const iframeLink = referenceFormURL;
@@ -42,6 +43,14 @@ const ApplicationForm = () => {
             const url = new URL(window.location.href);
             const ref = url.searchParams.get('ref');
             setRef(ref);
+        }
+    }, []);
+    useEffect(() => {
+        // if no ref get from url
+        if (!office) {
+            const url = new URL(window.location.href);
+            const office = url.searchParams.get('office');
+            setOffice(office);
         }
     }, []);
     // back to top after receiving postmessage from FormBridge
@@ -95,7 +104,7 @@ const ApplicationForm = () => {
                     {ref && (
                         <iframe
                             title="Embedded Content"
-                            src={`${iframeLink}&ref=${ref}`} // Replace with your desired URL
+                            src={`${iframeLink}&ref=${ref}&office=${office}`} // Replace with your desired URL
                             style={{ flex: 1, border: 'none', marginTop: '4rem' }} // Make the iframe fill the remaining space
                             onLoad={handleIframeLoad}
                         ></iframe>
