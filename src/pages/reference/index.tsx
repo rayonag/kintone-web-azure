@@ -46,7 +46,7 @@ const ApplicationForm = () => {
         }
     }, []);
     useEffect(() => {
-        // if no ref get from url
+        // if no office get from url
         if (!office) {
             const url = new URL(window.location.href);
             const office = url.searchParams.get('office');

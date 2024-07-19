@@ -148,7 +148,7 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
                                 <div className="flex flex-col items-center justify-center h-screen">
                                     <div className="text-3xl m-5">Some tips...</div>
                                     <div className="m-3">This is a volunteer application for: {type}</div>
-                                    <div className="m-3">If you're not intended for {type} please let us know</div>
+                                    <div className="m-3">If you're not intending for {type} please let us know</div>
                                     <div className="m-3">You can save your progress by Temporary Save button on the buttom of each page.</div>
                                     <button onClick={handleContinueOnFirstTime} className="btn">
                                         Continue

@@ -1,5 +1,5 @@
 import { KintonePassword, KintoneUserName, VolunteerProfieAppID } from '@/common/env';
-import { REST_SavedVolunteerProfile, REST_VolunteerProfile } from '@/types/VolunteerProfile';
+import { REST_SavedVolunteerProfile } from '@/types/VolunteerProfile';
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import { NextApiResponse } from 'next';
 import { calcAge, calcVacation, calcVacationDeputationTaken, calcWorkingYears } from '../../common/calc';
@@ -23,7 +23,7 @@ const updateVolunteerProfile = async (res: NextApiResponse) => {
         const updatePromises = records.map(async (record) => {
             const returnRecord = {};
             // working years
-            const years = calcWorkingYears(record['startDate'].value, record['endDate'].value);
+            const years = calcWorkingYears(record);
             if (years !== record['Years'].value) Object.assign(returnRecord, { Years: { value: years } });
             // work status
             if (record['startDate'].value) {

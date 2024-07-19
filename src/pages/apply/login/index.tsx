@@ -17,6 +17,7 @@ type Login = {
     password: {
         value: string;
         isError?: boolean;
+        errorMessage?: string;
     };
     ref: {
         value: string;
@@ -67,14 +68,23 @@ const Login: React.FC = () => {
         }
     };
     const handleConfirmPassword = (confirmPassword: string) => {
-        if (confirmPassword == password.value) {
-            password.isError = false;
+        if (confirmPassword !== password.value) {
+            password.isError = true;
+            password.errorMessage = 'Password does not match';
             return;
-        } else password.isError = true;
+        } else if (confirmPassword.length == 0) {
+            password.isError = true;
+            password.errorMessage = 'Password is empty';
+            return;
+        } else if (confirmPassword.length < 8) {
+            password.isError = true;
+            password.errorMessage = 'Password must be at least 8 characters';
+            return;
+        } else password.isError = false;
         return;
     };
     const handleCreatePassword = async () => {
-        if (password.isError) return alert('Confirm your password');
+        if (password.isError) return alert(password.errorMessage);
         try {
             const res = await fetch('/api/createPasswordKintone', {
                 method: 'POST',

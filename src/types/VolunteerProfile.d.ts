@@ -126,13 +126,14 @@ export interface VolunteerProfile {
             value: {
                 entryExitEntryDate: kintone.fieldTypes.Date;
                 entryExitExitReason: kintone.fieldTypes.SingleLineText;
+                entryExitDays: kintone.fieldTypes.Number;
                 entryExitEntryReason: kintone.fieldTypes.DropDown;
                 entryExitVisaType: kintone.fieldTypes.DropDown;
                 entryExitExitDate: kintone.fieldTypes.Date;
             };
         }>;
     };
-    history1: {
+    workHistory: {
         type: 'SUBTABLE';
         value: Array<{
             id: string;
@@ -285,13 +286,14 @@ export type REST_VolunteerProfile = {
             value: {
                 entryExitEntryDate: KintoneRecordField.Date;
                 entryExitExitReason: KintoneRecordField.SingleLineText;
+                entryExitDays: KintoneRecordField.Number;
                 entryExitEntryReason: KintoneRecordField.DropDown;
                 entryExitVisaType: KintoneRecordField.DropDown;
                 entryExitExitDate: KintoneRecordField.Date;
             };
         }>;
     };
-    history1: {
+    workHistory: {
         type: 'SUBTABLE';
         value: Array<{
             id: string;

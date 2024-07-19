@@ -1,6 +1,6 @@
 import { KintoneUserName, KintonePassword, TimesheetAppID } from '@/common/env';
 import handleCatch from '@/common/handleCatch';
-import { REST_SavedVolunteerProfile, REST_VolunteerProfile } from '@/types/VolunteerProfile';
+import { REST_VolunteerProfile, REST_SavedVolunteerProfile } from '@/types/VolunteerProfile';
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import { DateTime } from 'luxon';
 
@@ -8,13 +8,32 @@ import { DateTime } from 'luxon';
  * @function calculate the service year
  * @param {Date} startDate
  */
-export const calcWorkingYears = (startDate: string | null, endDate: string | null) => {
-    if (!startDate) return '0';
-    else if (!endDate || DateTime.fromISO(endDate) > DateTime.now())
-        return (Math.round(DateTime.now().diff(DateTime.fromISO(startDate), 'months').months) / 12).toString();
-    else if (DateTime.fromISO(endDate) < DateTime.now())
-        return (Math.round(DateTime.fromISO(endDate).diff(DateTime.fromISO(startDate), 'months').months) / 12).toString();
-    else return (Math.round(DateTime.now().diff(DateTime.fromISO(startDate), 'months').months) / 12).toString();
+export const calcWorkingYears = (record: REST_VolunteerProfile) => {
+    let years = 0;
+    if (record['startDate'].value) {
+        const startDateObj = DateTime.fromISO(record['startDate'].value);
+        if (record['endDate'].value) {
+            const endDateObj =
+                DateTime.fromISO(record['endDate'].value) > DateTime.now() ? DateTime.now() : DateTime.fromISO(record['endDate'].value); // if end date is in the future, set it to now
+            years += endDateObj.diff(startDateObj, ['years']).years; // adds to the years
+        } else if (!record['endDate'].value) {
+            years += DateTime.now().diff(startDateObj, ['years']).years;
+        }
+    }
+    const histories = record['workHistory'].value;
+    if (histories.length > 0) {
+        histories.forEach((history: any) => {
+            if (!history.value['historyStartDate'].value || !history.value['historyEndDate'].value) return;
+            if (record['startDate'].value && DateTime.fromISO(record['startDate'].value) <= DateTime.fromISO(history.value['historyStartDate'].value))
+                return;
+            else if (history.value['historyStartDate'].value && history.value['historyEndDate'].value) {
+                const startDateObj = DateTime.fromISO(history.value['historyStartDate'].value);
+                const endDateObj = DateTime.fromISO(history.value['historyEndDate'].value);
+                years += endDateObj.diff(startDateObj, ['years']).years;
+            }
+        });
+    }
+    return years.toFixed(2);
 };
 
 export const calcAge = (dob: string | null) => {

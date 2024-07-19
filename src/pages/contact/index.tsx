@@ -9,7 +9,7 @@ type InputProps = { val: string; label: string; register: Dispatch<SetStateActio
 const Input: FC<InputProps> = ({ val, label, register, placeholder }) => {
     return (
         <label className="flex flex-col my-2 w-80 me-5 md:max-w-sm">
-            <div className="font-semibold mb-1">{label}</div>
+            <div className="font-semibold text-2xl mb-1">{label}</div>
             <input
                 type="text"
                 value={val}
@@ -45,19 +45,19 @@ const Contact = () => {
         <Layout>
             <div className="relative flex flex-col items-center justify-center min-h-screen py-10">
                 <span className="text-3xl font-bold">Contact Us</span>
-                <span className="text-xl font-semibold">Hours</span>
-                <span>Monday-Thursday: 9:00am-5:00pm</span>
-                <span>Friday: 9:00am-1:00pm</span>
+                <span className="text-xl">We will endeaver to get back to you within 3 business days</span>
                 <Input val={name} label="Name" register={setName} />
                 <Input val={email} label="Email" register={setEmail} />
                 <Input val={phone} label="Phone" register={setPhone} />
                 <label className="flex flex-col my-2 w-80 me-5 md:max-w-sm">
-                    <div className="font-semibold mb-1">Message</div>
+                    <div className="font-semibold mb-1 text-2xl">Message</div>
                     <textarea
                         rows={5}
                         value={message}
                         onChange={(e) => setMessage(e.currentTarget.value)}
-                        className={'text-gray-800 rounded-md border py-2 px-3 focus:outline focus:outline-sky-500 focus:ring-4 focus:ring-sky-500/30'}
+                        className={
+                            'text-gray-800 rounded-md border  py-2 px-3 focus:outline focus:outline-sky-500 focus:ring-4 focus:ring-sky-500/30'
+                        }
                         placeholder="Message"
                     />
                 </label>
