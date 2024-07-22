@@ -129,7 +129,7 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
     }, []);
     return (
         // Use a wrapper div for the entire page
-        <Layout_fadeIn>
+        <>
             <div style={{ height: '100vh', width: '100vw', display: 'flex', flexDirection: 'column' }}>
                 {formSubmitted ? (
                     <>
@@ -172,7 +172,7 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
                     </>
                 )}
             </div>
-        </Layout_fadeIn>
+        </>
     );
 };
 

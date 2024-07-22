@@ -93,7 +93,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
     });
     return (
         <Layout>
-            <div className="flex flex-col items-center justify-center min-h-screen text-white overflow-hidden">
+            <div className="flex flex-col items-center justify-center min-h-[95vh] text-white overflow-hidden">
                 {isLoaded && userRef ? (
                     <div className="flex flex-col items-center justify-center">
                         <div>
@@ -127,7 +127,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                             Submit Necessary Documents
                         </Link>
                         <Helper currentStep={currentStep} userRef={userRef} />
-                        <Link href="/contact" {...buttonProps('submitDocuments')}>
+                        <Link href="/contact" className="btn">
                             Contact Us
                         </Link>
                         <button className="btn" onClick={handleLogout}>

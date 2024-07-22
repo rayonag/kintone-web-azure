@@ -67,7 +67,7 @@ const HealthQuestionnaire = () => {
                         const valid = await validate(page);
                         if (valid) setPage(page + 1);
                     }}
-                    className="self-center w-80 bg-[#012c66] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mt-6 md:max-w-xs"
+                    className="self-center w-80 bg-[#012c66] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full md:max-w-xs"
                 >
                     {t('system.next')}
                 </button>
@@ -79,7 +79,7 @@ const HealthQuestionnaire = () => {
                         const valid = await validate(page);
                         if (valid) setModalIsOpen(true);
                     }}
-                    className="self-center w-80 bg-[#012c66] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mt-6 md:max-w-xs"
+                    className="self-center w-80 bg-[#012c66] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full md:max-w-xs"
                 >
                     {t('system.submit')}
                 </button>
@@ -88,7 +88,7 @@ const HealthQuestionnaire = () => {
                 <button
                     type="button"
                     onClick={() => setPage(page - 1)}
-                    className="self-center w-80 bg-[#012c66] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mt-6 md:max-w-xs"
+                    className="self-center w-80 bg-[#012c66] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full md:max-w-xs"
                 >
                     {t('system.back')}
                 </button>

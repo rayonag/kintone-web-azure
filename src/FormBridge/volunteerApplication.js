@@ -1,6 +1,29 @@
 (function () {
-    // fb.events.form.created = [
-    // ];
+    const radioFieldCode = [
+        'sex',
+        'maritalStatus',
+        'hasFamilySupport',
+        'healthCondition',
+        'hasIllness',
+        'hasHandicap',
+        'doesSmoke',
+        'canLift',
+        'ifNoPosition',
+        'hasDriverLicense',
+        'hasLicenseMoreThanTwelveMonths',
+        'hasConvictedCrime',
+        'hasVisitedIsrael',
+        'heavyDutyLicense',
+        'hasFriendsInIsrael'
+    ];
+    fb.events.form.created = [
+        function (state) {
+            radioFieldCode.forEach(function (fieldCode) {
+                state.record[fieldCode].value = '';
+            });
+            return state;
+        }
+    ];
     // fb.events.form.mounted = [
     // ];
     fb.events.form.submit = [
