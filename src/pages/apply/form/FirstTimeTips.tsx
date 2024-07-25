@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React, { FC, use, useEffect, useRef, useState } from 'react';
 
 type FirstTimeTipsProps = {
@@ -5,7 +6,7 @@ type FirstTimeTipsProps = {
     handleContinueOnFirstTime: () => void;
 };
 const FirstTimeTips: FC<FirstTimeTipsProps> = ({ type, handleContinueOnFirstTime }) => {
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const [haveRead, setHaveRead] = useState(false);
     const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -14,26 +15,44 @@ const FirstTimeTips: FC<FirstTimeTipsProps> = ({ type, handleContinueOnFirstTime
             scrollRef.current.scrollTo(0, 0);
         }
     }, [page]);
+
+    const ConfirmType = () => {
+        return (
+            <>
+                <div className="text-3xl m-5">Some tips...</div>
+                <div className="m-3 mb-8">This is a volunteer application for: {type}</div>
+                <div className="m-3 mb-8">If you're not intending for {type} please let us know</div>
+                <button onClick={() => setPage(1)} className="btn-wide">
+                    Next
+                </button>
+                <Link href="/apply" className="btn-wide text-center">
+                    Back to Top
+                </Link>
+            </>
+        );
+    };
     return (
         <div className="flex flex-col items-center justify-center h-screen">
-            {/* <div className="text-3xl m-5">Some tips...</div>
-            <div className="m-3 mb-8">This is a volunteer application for: {type}</div>
-            <div className="m-3 mb-8">If you're not intending for {type} please let us know</div>
-            <div className="m-3 mb-8">You can save your progress by Temporary Save button on the buttom of each page.</div> */}
             <div ref={scrollRef} className="overflow-y-scroll h-[70vh] min-w-80 w-[60vw]">
+                {page == 0 && <ConfirmType />}
                 {page == 1 && <DoctrinalStatement />}
                 {page == 2 && <TermsAndConditions />}
                 <div className="flex justify-center flex-col">
                     {page == 1 && (
-                        <button onClick={() => setPage(2)} className="btn-wide">
-                            Next
-                        </button>
+                        <>
+                            <button onClick={() => setPage(2)} className="btn-wide">
+                                Next
+                            </button>
+                            <Link href="/apply" className="btn-wide text-center">
+                                Back to Top
+                            </Link>
+                        </>
                     )}
                     {page === 2 && (
                         <>
                             <label>
-                                <input onClick={() => setHaveRead(!haveRead)} checked={haveRead} type="checkbox" className="m-3" />
-                                <span>I have read and agree to the terms and conditions</span>
+                                <input onClick={() => setHaveRead(!haveRead)} checked={haveRead} type="checkbox" className="m-3 text-center" />
+                                <span>I have read and agree with the abpve</span>
                             </label>
                             <button
                                 onClick={handleContinueOnFirstTime}
@@ -57,7 +76,7 @@ export default FirstTimeTips;
 
 const TermsAndConditions = () => {
     return (
-        <>
+        <div className="p-4">
             <section className="mb-5">
                 <div className="text-3xl m-5 font-serif italic text-center">BRIDGES FOR PEACEーOUR VISION</div>
                 <div className="mb-3 text-2xl">MISSION STATEMENT</div>
@@ -162,13 +181,13 @@ const TermsAndConditions = () => {
                     Check must be done at the Federal Level.
                 </div>
             </section>
-        </>
+        </div>
     );
 };
 
 const DoctrinalStatement = () => {
     return (
-        <>
+        <div className="p-4">
             <div className="text-3xl m-5 font-serif italic text-center">BRIDGES FOR PEACEーDOCTRINAL STATEMENT</div>
             <div className="mb-3 text-2xl">THE BIBLE</div>
             <ul className="m-3 mb-8">
@@ -263,6 +282,6 @@ const DoctrinalStatement = () => {
                     Download BFP Doctrinal Statement
                 </a>
             </div>
-        </>
+        </div>
     );
 };

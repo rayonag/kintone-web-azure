@@ -93,8 +93,8 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
         tabIndex: needsRevieWebsite ? -1 : undefined
     });
     const Check = () => (
-        <div className="absolute right-[-2.5rem]">
-            <GreenCheckMark height={30} />
+        <div className="absolute right-[-0.5rem]">
+            <GreenCheckMark height={30} width={30} />
         </div>
     );
     return (
