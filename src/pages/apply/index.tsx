@@ -17,6 +17,7 @@ import { REST_VolunteerApplicationMaster } from '@/types/VolunteerApplicationMas
 import ReactModal from 'react-modal';
 import Helper from '@/components/modal/helper';
 import { REST_VolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
+import GreenCheckMark from '@/components/icons/GreenCheckMark';
 // application steps that matches the kintone app
 export type ApplicationStepsMasterApp =
     | 'Applying'
@@ -91,6 +92,11 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
         'aria-disabled': needsRevieWebsite,
         tabIndex: needsRevieWebsite ? -1 : undefined
     });
+    const Check = () => (
+        <div className="absolute right-[-2.5rem]">
+            <GreenCheckMark height={30} />
+        </div>
+    );
     return (
         <Layout>
             <div className="flex flex-col items-center justify-center min-h-[95vh] text-white overflow-hidden">
@@ -117,15 +123,24 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                         >
                             Frequently Asked Questions
                         </Link>
-                        <Link href="/apply/form" {...buttonProps('submitApplication')}>
-                            Online Application Form
-                        </Link>
-                        <Link href="/apply/health-questionnaire" {...buttonProps('submitApplication')}>
-                            Personal Health Questionnaire
-                        </Link>
-                        <Link href="/apply/documents" {...buttonProps('submitDocuments')}>
-                            Submit Necessary Documents
-                        </Link>
+                        <div className="relative flex items-center">
+                            <Link href="/apply/form" {...buttonProps('submitApplication')}>
+                                Online Application Form
+                            </Link>
+                            {dashboardUser.formSubmission?.includes('Application Form Completed') && <Check />}
+                        </div>
+                        <div className="relative flex items-center">
+                            <Link href="/apply/health-questionnaire" {...buttonProps('submitApplication')}>
+                                Personal Health Questionnaire
+                            </Link>
+                            {dashboardUser.formSubmission?.includes('Application Form Completed') && <Check />}
+                        </div>
+                        <div className="relative flex items-center">
+                            <Link href="/apply/documents" {...buttonProps('submitDocuments')}>
+                                Submit Necessary Documents
+                            </Link>
+                            {repo?.allDocumentsSubmitted && <Check />}
+                        </div>
                         <Helper currentStep={currentStep} userRef={userRef} />
                         <Link href="/contact" className="btn">
                             Contact Us

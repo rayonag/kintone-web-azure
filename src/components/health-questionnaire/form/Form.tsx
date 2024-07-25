@@ -20,6 +20,7 @@ import './translations/config'; //i18
 import ThirdPage from './views/ThirdPage';
 import ConfirmationModal from './views/Confirmation';
 import { useDashboardUser } from '@/common/context/dashboardUser';
+import Link from 'next/link';
 
 const HealthQuestionnaire = () => {
     const dashboardUser = useDashboardUser();
@@ -54,6 +55,20 @@ const HealthQuestionnaire = () => {
         if (dashboardUser.ref) setValue('ref', dashboardUser.ref);
         if (dashboardUser.office) setValue('office', dashboardUser.office);
     }, [dashboardUser]);
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [page]);
+    // confirm before leave page. TODO: dirty form check not working
+    useEffect(() => {
+        const handleBeforeUnload = (event: any) => {
+            event.preventDefault();
+            event.returnValue = '';
+        };
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, []);
     return (
         <form className="flex flex-col p-[10%] text-center">
             {page === 0 && <FirstPage register={register} errors={formatError} getValues={getValues} t={t} />}
@@ -67,7 +82,7 @@ const HealthQuestionnaire = () => {
                         const valid = await validate(page);
                         if (valid) setPage(page + 1);
                     }}
-                    className="self-center w-80 bg-[#012c66] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full md:max-w-xs"
+                    className="btn-wide"
                 >
                     {t('system.next')}
                 </button>
@@ -79,19 +94,20 @@ const HealthQuestionnaire = () => {
                         const valid = await validate(page);
                         if (valid) setModalIsOpen(true);
                     }}
-                    className="self-center w-80 bg-[#012c66] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full md:max-w-xs"
+                    className="btn-wide"
                 >
                     {t('system.submit')}
                 </button>
             )}
             {page != 0 && (
-                <button
-                    type="button"
-                    onClick={() => setPage(page - 1)}
-                    className="self-center w-80 bg-[#012c66] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full md:max-w-xs"
-                >
+                <button type="button" onClick={() => setPage(page - 1)} className="btn-wide">
                     {t('system.back')}
                 </button>
+            )}
+            {page == 0 && (
+                <Link type="button" href="/apply" className="btn-wide">
+                    Back to Top
+                </Link>
             )}
         </form>
     );

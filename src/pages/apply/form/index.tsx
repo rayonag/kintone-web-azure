@@ -17,6 +17,7 @@ import { REST_VolunteerApplicationForm } from '@/types/VolunteerApplicationForm'
 import logError from '@/common/logError';
 import { NationalOffice } from '@/common/context/offices';
 import { set } from 'zod';
+import FirstTimeTips from './FirstTimeTips';
 
 const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     // State to track whether the iframe content is loading
@@ -34,13 +35,7 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
     //         return;
     //     }
     // }
-    useEffect(() => {
-        if (repo?.formSubmitted) {
-            alert('Thank you for submitting application form.');
-            router.push('/apply');
-        }
-        setIsFirstTimeOnForm(repo?.isFirstTimeOnForm || false);
-    }, [repo]);
+
     const type = repo?.type || null;
     const formSubmitted = repo?.formSubmitted || false;
 
@@ -68,6 +63,7 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
         setOffice(office);
         // if first time no loading
         if (isFirstTimeOnForm) setIsLoading(false);
+        setIsFirstTimeOnForm(repo?.isFirstTimeOnForm || false);
     }, [dashboardUser]);
     // Function to handle iframe load event
     const handleIframeLoad = () => {
@@ -145,15 +141,7 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
                         {isFirstTimeOnForm ? (
                             <>
                                 {isLoading && <LoadingSpinner />}
-                                <div className="flex flex-col items-center justify-center h-screen">
-                                    <div className="text-3xl m-5">Some tips...</div>
-                                    <div className="m-3">This is a volunteer application for: {type}</div>
-                                    <div className="m-3">If you're not intending for {type} please let us know</div>
-                                    <div className="m-3">You can save your progress by Temporary Save button on the buttom of each page.</div>
-                                    <button onClick={handleContinueOnFirstTime} className="btn">
-                                        Continue
-                                    </button>
-                                </div>
+                                <FirstTimeTips type={type} handleContinueOnFirstTime={handleContinueOnFirstTime} />
                             </>
                         ) : (
                             <>

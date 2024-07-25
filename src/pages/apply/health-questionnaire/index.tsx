@@ -13,32 +13,24 @@ import Layout_fadeIn from '@/styles/Layout_fadeIn';
 
 const Dashboard = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const formSubmitted = repo?.formSubmitted;
+
     return (
         <>
             {formSubmitted ? (
                 <Layout_fadeIn>
                     <div className="flex flex-col items-center justify-center h-screen">
-                        <div>Thank you for submitting application form.</div>
+                        <div>Thank you for submitting Personal Health Questionnaire.</div>
                         <Link href="/apply" className="btn">
                             Go to Top
                         </Link>
                     </div>
                 </Layout_fadeIn>
             ) : (
-                <Layout_slideUp key="page">
+                <Layout_fadeIn key="page">
                     <div className="flex flex-col items-center justify-center min-h-screen overflow-hidden">
-                        {formSubmitted ? (
-                            <>
-                                <div>Thank you for submitting Personal Health Questionnaire.</div>
-                                <Link href="/apply" className="btn">
-                                    Go to Top
-                                </Link>
-                            </>
-                        ) : (
-                            <HealthQuestionnaire />
-                        )}
+                        <HealthQuestionnaire />
                     </div>
-                </Layout_slideUp>
+                </Layout_fadeIn>
             )}
         </>
     );

@@ -10,6 +10,9 @@ const Complete = () => {
             <div className="relative flex flex-col items-center justify-center min-h-screen  text-white overflow-hidden">
                 <GreenCheckMark />
                 <div className="text-2xl">Reference Form Submitted!</div>
+                <Link href="/reference" className="btn">
+                    Go to Top
+                </Link>
             </div>
         </Layout>
     );
