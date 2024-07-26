@@ -141,11 +141,11 @@ const Login: React.FC = () => {
     const [transitioning, setTransitioning] = useState(false);
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen">
+        <div className="flex flex-col items-center justify-center">
             <AnimatePresence>
                 {section == 'Top' && (
                     <Layout_fadeIn key="top">
-                        <div className="flex flex-col justify-center">
+                        <div className="flex flex-col h-[95vh] justify-center">
                             <div className="text-center text-3xl italic font-serif">Bridges for Peace Volunteer Application Portal</div>
                             <StartButton setSection={setSection} transitioning={transitioning} setTransitioning={setTransitioning} />
                             <button className="btn" onClick={() => router.push('/contact')}>
@@ -156,20 +156,22 @@ const Login: React.FC = () => {
                 )}
                 {section == 'Email' && (
                     <Layout_fadeIn key="email">
-                        <div className="text-center w-72">Enter your email</div>
-                        <input
-                            value={username.value}
-                            onChange={(e) => setUsername({ value: e.target.value })}
-                            onKeyDown={(e) => allowEnterKeydown(e, handleNext)}
-                            placeholder="Email"
-                            className="mt-5 p-2 border rounded bg-gray-600 min-w-full"
-                            autoFocus
-                        />
-                        {username.isError && <div className="text-red-600">Invalid Email Address</div>}
-                        <div className="text-center">
-                            <button className="btn" onClick={handleNext}>
-                                Next
-                            </button>
+                        <div className="flex flex-col h-[95vh] justify-center items-center">
+                            <div className="text-center w-72">Enter your email</div>
+                            <input
+                                value={username.value}
+                                onChange={(e) => setUsername({ value: e.target.value })}
+                                onKeyDown={(e) => allowEnterKeydown(e, handleNext)}
+                                placeholder="Email"
+                                className="mt-5 p-2 border rounded bg-gray-600 w-72"
+                                autoFocus
+                            />
+                            {username.isError && <div className="text-red-600">Invalid Email Address</div>}
+                            <div className="text-center">
+                                <button className="btn" onClick={handleNext}>
+                                    Next
+                                </button>
+                            </div>
                         </div>
                     </Layout_fadeIn>
                 )}

@@ -11,6 +11,7 @@ export type DashboardUser = {
     documents?: string[];
     formSubmission?: string[];
     office?: NationalOffice;
+    type?: string;
 };
 export const defaultUserProvider: DashboardUser = {};
 export const DashboardUserContext = createContext(defaultUserProvider);

@@ -12,7 +12,13 @@ interface Layout_fadeInProps {
 const Layout_fadeIn: FC<Layout_fadeInProps> = ({ key, children }) => {
     console.log(key);
     return (
-        <motion.div key={key || 'page'} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
+        <motion.div
+            key={key || 'page'}
+            className="h-screen w-screen relative"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+        >
             <Header />
             {children}
         </motion.div>

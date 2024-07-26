@@ -11,6 +11,7 @@ type Data = {
     documents?: any;
     formSubmission?: any;
     office?: any;
+    type?: any;
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
@@ -46,7 +47,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     username: user['email'].value,
                     documents: user['documents'].value,
                     formSubmission: user['formSubmission'].value,
-                    office: user['office'].value
+                    office: user['office'].value,
+                    type: user['type'].value
                 });
             }
         } catch (e: any) {

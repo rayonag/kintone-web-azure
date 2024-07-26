@@ -18,7 +18,7 @@ const Header = () => {
     );
     return (
         <>
-            <header className="hidden w-full self-center h-[5vh] md:flex justify-around content-center">
+            <header className="hidden h-[5vh] md:flex justify-around content-center">
                 <button onClick={handleHomeClick} className="z-10">
                     <BridgesLogo />
                 </button>

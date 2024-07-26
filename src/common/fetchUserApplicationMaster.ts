@@ -26,7 +26,8 @@ const fetchUserApplicationMaster = (dashboardUser: DashboardUser, setDashboardUs
             isLoggedIn: true,
             documents: user.documents,
             formSubmission: user.formSubmission,
-            office: user.office
+            office: user.office,
+            type: user.type
         }));
     })();
 };

@@ -25,7 +25,10 @@ const Page: React.FC = () => {
                     <div>
                         <h1 className="text-xl my-10">Documents Submission</h1>
                         <h1 className="text-xl my-10">
-                            {loginUser.documents?.length || '-'}/{loginUser['office'] == 'USA' ? 6 : 5} Completed
+                            {/* TODO: review */}
+                            {loginUser.documents?.length || '-'}/
+                            {loginUser['type'] == 'Short Term' ? (loginUser['office'] == 'USA' ? 5 : 4) : loginUser['office'] == 'USA' ? 6 : 5}{' '}
+                            Completed
                         </h1>
                     </div>
                     <div className="relative flex items-center">
@@ -55,12 +58,14 @@ const Page: React.FC = () => {
                         {isSubmitted('Recent Photo') && <Check />}
                     </div>
 
-                    <div className="relative flex items-center">
-                        <Link href="./documents/criminal-check" className="btn">
-                            Criminal Check
-                        </Link>
-                        {isSubmitted('Criminal Check') && <Check />}
-                    </div>
+                    {dashboardUser['type'] != 'Short Term' && (
+                        <div className="relative flex items-center">
+                            <Link href="./documents/criminal-check" className="btn">
+                                Criminal Check
+                            </Link>
+                            {isSubmitted('Criminal Check') && <Check />}
+                        </div>
+                    )}
 
                     <div className="relative flex items-center">
                         <Link href="/apply" className="btn">
