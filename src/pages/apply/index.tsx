@@ -133,7 +133,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                             <Link href="/apply/health-questionnaire" {...buttonProps('submitApplication')}>
                                 Personal Health Questionnaire
                             </Link>
-                            {dashboardUser.formSubmission?.includes('Application Form Completed') && <Check />}
+                            {dashboardUser.formSubmission?.includes('Personal Health Questionnaire') && <Check />}
                         </div>
                         <div className="relative flex items-center">
                             <Link href="/apply/documents" {...buttonProps('submitDocuments')}>

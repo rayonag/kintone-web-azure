@@ -19,55 +19,61 @@ const FirstTimeTips: FC<FirstTimeTipsProps> = ({ type, handleContinueOnFirstTime
     const ConfirmType = () => {
         return (
             <>
-                <div className="text-3xl m-5">Some tips...</div>
-                <div className="m-3 mb-8">This is a volunteer application for: {type}</div>
-                <div className="m-3 mb-8">If you're not intending for {type} please let us know</div>
-                <button onClick={() => setPage(1)} className="btn-wide">
-                    Next
-                </button>
-                <Link href="/apply" className="btn-wide text-center">
-                    Back to Top
-                </Link>
+                <div className="flex flex-col items-center justify-center h-screen">
+                    <div className="text-3xl m-5">Before you begin...</div>
+                    <div className="m-3 mb-8">This is a volunteer application for: {type}</div>
+                    <div className="m-3 mb-8">If you're not intending for {type} please let us know</div>
+                    <div className="flex justify-center flex-col">
+                        <button onClick={() => setPage(1)} className="btn-wide">
+                            Next
+                        </button>
+                        <Link href="/apply" className="btn-wide text-center">
+                            Back to Top
+                        </Link>
+                    </div>
+                </div>
             </>
         );
     };
     return (
         <div className="flex flex-col items-center justify-center h-screen">
-            <div ref={scrollRef} className="overflow-y-scroll h-[70vh] min-w-80 w-[60vw]">
-                {page == 0 && <ConfirmType />}
-                {page == 1 && <DoctrinalStatement />}
-                {page == 2 && <TermsAndConditions />}
-                <div className="flex justify-center flex-col">
-                    {page == 1 && (
-                        <>
-                            <button onClick={() => setPage(2)} className="btn-wide">
-                                Next
-                            </button>
-                            <Link href="/apply" className="btn-wide text-center">
-                                Back to Top
-                            </Link>
-                        </>
-                    )}
-                    {page === 2 && (
-                        <>
-                            <label>
-                                <input onClick={() => setHaveRead(!haveRead)} checked={haveRead} type="checkbox" className="m-3 text-center" />
-                                <span>I have read and agree with the abpve</span>
-                            </label>
-                            <button
-                                onClick={handleContinueOnFirstTime}
-                                aria-disabled={!haveRead}
-                                className={`${!haveRead ? 'btn-disabled-wide pointer-events-none' : 'btn-wide'}`}
-                            >
-                                Continue
-                            </button>
-                            <button onClick={() => setPage(1)} className="btn-wide">
-                                Back
-                            </button>
-                        </>
-                    )}
+            {page == 0 && <ConfirmType />}
+            {page != 0 && (
+                <div ref={scrollRef} className="overflow-y-scroll h-[70vh] min-w-80 w-[60vw]">
+                    {page == 1 && <DoctrinalStatement />}
+                    {page == 2 && <TermsAndConditions />}
+                    <div className="flex justify-center flex-col">
+                        {page == 1 && (
+                            <>
+                                <button onClick={() => setPage(2)} className="btn-wide">
+                                    Next
+                                </button>
+                                <Link href="/apply" className="btn-wide text-center">
+                                    Back to Top
+                                </Link>
+                            </>
+                        )}
+                        {page === 2 && (
+                            <>
+                                <label>
+                                    <input onClick={() => setHaveRead(!haveRead)} checked={haveRead} type="checkbox" className="m-3 text-center" />
+                                    <span>I have read and agree with the above</span>
+                                </label>
+                                <button
+                                    onClick={handleContinueOnFirstTime}
+                                    aria-disabled={!haveRead}
+                                    className={`${!haveRead ? 'btn-disabled-wide pointer-events-none' : 'btn-wide'}`}
+                                >
+                                    Continue
+                                </button>
+                                <button onClick={() => setPage(1)} className="btn-wide">
+                                    Back
+                                </button>
+                            </>
+                        )}
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };

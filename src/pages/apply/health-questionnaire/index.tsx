@@ -18,7 +18,7 @@ const Dashboard = ({ repo }: InferGetServerSidePropsType<typeof getServerSidePro
         <>
             {formSubmitted ? (
                 <Layout_fadeIn>
-                    <div className="flex flex-col items-center justify-center h-screen">
+                    <div className="flex flex-col items-center justify-center h-[95vh]">
                         <div>Thank you for submitting Personal Health Questionnaire.</div>
                         <Link href="/apply" className="btn">
                             Go to Top
@@ -27,7 +27,7 @@ const Dashboard = ({ repo }: InferGetServerSidePropsType<typeof getServerSidePro
                 </Layout_fadeIn>
             ) : (
                 <Layout_fadeIn key="page">
-                    <div className="flex flex-col items-center justify-center min-h-screen overflow-hidden">
+                    <div className="flex flex-col items-center justify-center min-h-[95vh] w-full overflow-hidden">
                         <HealthQuestionnaire />
                     </div>
                 </Layout_fadeIn>

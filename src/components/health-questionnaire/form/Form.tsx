@@ -70,7 +70,7 @@ const HealthQuestionnaire = () => {
         };
     }, []);
     return (
-        <form className="flex flex-col p-[10%] text-center">
+        <form className="flex flex-col py-[6%] text-center">
             {page === 0 && <FirstPage register={register} errors={formatError} getValues={getValues} t={t} />}
             {page === 1 && <SecondPage register={register} errors={formatError} getValues={getValues} t={t} />}
             {page === 2 && <ThirdPage register={register} errors={formatError} t={t} />}

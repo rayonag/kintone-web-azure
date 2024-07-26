@@ -19,7 +19,7 @@ const Page: React.FC = () => {
     const isSubmitted = (document: string) => loginUser.documents?.includes(document);
     return (
         <Layout>
-            <div className="relative flex flex-col items-center justify-center min-h-screen text-white overflow-hidden">
+            <div className="relative flex flex-col items-center justify-center min-h-[95vh] text-white overflow-hidden">
                 {/* Content */}
                 <div className="relative flex flex-col items-center justify-center text-center">
                     <div>
@@ -27,7 +27,15 @@ const Page: React.FC = () => {
                         <h1 className="text-xl my-10">
                             {/* TODO: review */}
                             {loginUser.documents?.length || '-'}/
-                            {loginUser['type'] == 'Short Term' ? (loginUser['office'] == 'USA' ? 5 : 4) : loginUser['office'] == 'USA' ? 6 : 5}{' '}
+                            {!loginUser['type']
+                                ? '-'
+                                : loginUser['type'] == 'Short Term'
+                                ? loginUser['office'] == 'USA'
+                                    ? 5
+                                    : 4
+                                : loginUser['office'] == 'USA'
+                                ? 6
+                                : 5}{' '}
                             Completed
                         </h1>
                     </div>
@@ -58,7 +66,7 @@ const Page: React.FC = () => {
                         {isSubmitted('Recent Photo') && <Check />}
                     </div>
 
-                    {dashboardUser['type'] != 'Short Term' && (
+                    {(dashboardUser['type'] == 'Long Term' || dashboardUser['type'] == 'Zealous') && (
                         <div className="relative flex items-center">
                             <Link href="./documents/criminal-check" className="btn">
                                 Criminal Check

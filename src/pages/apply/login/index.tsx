@@ -70,7 +70,7 @@ const Login: React.FC = () => {
     const handleConfirmPassword = (confirmPassword: string) => {
         if (confirmPassword !== password.value) {
             password.isError = true;
-            password.errorMessage = 'Password does not match';
+            password.errorMessage = 'Passwords do not match';
             return;
         } else if (confirmPassword.length == 0) {
             password.isError = true;
@@ -163,7 +163,7 @@ const Login: React.FC = () => {
                                 onChange={(e) => setUsername({ value: e.target.value })}
                                 onKeyDown={(e) => allowEnterKeydown(e, handleNext)}
                                 placeholder="Email"
-                                className="mt-5 p-2 border rounded bg-gray-600 w-72"
+                                className="mt-5 p-2 border rounded bg-gray-600 w-72 max-w-full"
                                 autoFocus
                             />
                             {username.isError && <div className="text-red-600">Invalid Email Address</div>}
@@ -177,54 +177,58 @@ const Login: React.FC = () => {
                 )}
                 {section == 'Password' && (
                     <Layout_fadeIn key="password">
-                        <div className="m-4 w-52">Email: {username?.value}</div>
-                        <div className="text-center">Enter your password</div>
-                        <input
-                            type="password"
-                            value={password.value}
-                            onChange={(e) => setPassword({ value: e.target.value })}
-                            onKeyDown={(e) => allowEnterKeydown(e, handleLogin)}
-                            placeholder="Password"
-                            className="mt-5 p-2 border rounded bg-gray-600 min-w-full"
-                            autoFocus
-                        />
-                        {password.isError && <div className="text-red-600">Invalid Password</div>}
-                        <div className="text-center">
-                            <button className="btn" onClick={handleLogin}>
-                                Login
-                            </button>
+                        <div className="flex flex-col h-[95vh] justify-center items-center">
+                            <div className="m-4 w-52">Email: {username?.value}</div>
+                            <div className="text-center">Enter your password</div>
+                            <input
+                                type="password"
+                                value={password.value}
+                                onChange={(e) => setPassword({ value: e.target.value })}
+                                onKeyDown={(e) => allowEnterKeydown(e, handleLogin)}
+                                placeholder="Password"
+                                className="mt-5 p-2 border rounded bg-gray-600 w-72 max-w-full"
+                                autoFocus
+                            />
+                            {password.isError && <div className="text-red-600">Invalid Password</div>}
+                            <div className="text-center">
+                                <button className="btn" onClick={handleLogin}>
+                                    Login
+                                </button>
+                            </div>
                         </div>
                     </Layout_fadeIn>
                 )}
                 {section == 'CreatePassword' && (
                     <Layout_fadeIn key="createPassword">
-                        <div className="m-4 w-52">Email: {username?.value}</div>
-                        <div className="text-center">Enter your password</div>
-                        <input
-                            type="password"
-                            value={password.value}
-                            onChange={(e) => setPassword({ value: e.target.value })}
-                            onKeyDown={(e) => allowEnterKeydown(e, handleLogin)}
-                            placeholder="Password"
-                            className="my-5 p-2 border rounded bg-gray-600 min-w-full"
-                            autoFocus
-                        />
-                        <div className="text-center">Confirm your password</div>
-                        <input
-                            type="password"
-                            value={confirmPassword}
-                            onChange={(e) => {
-                                setConfirmPassword(e.target.value);
-                                handleConfirmPassword(e.target.value);
-                            }}
-                            placeholder="Re-enter Password"
-                            className="mt-5 p-2 border rounded bg-gray-600 min-w-full"
-                        />
-                        {password.isError && <div className="text-red-600">Password doesn't match</div>}
-                        <div className="text-center">
-                            <button className="btn" onClick={handleCreatePassword}>
-                                Create Password
-                            </button>
+                        <div className="flex flex-col h-[95vh] justify-center items-center">
+                            <div className="m-4 w-52">Email: {username?.value}</div>
+                            <div className="text-center">Enter your password</div>
+                            <input
+                                type="password"
+                                value={password.value}
+                                onChange={(e) => setPassword({ value: e.target.value })}
+                                onKeyDown={(e) => allowEnterKeydown(e, handleLogin)}
+                                placeholder="Password"
+                                className="my-5 p-2 border rounded bg-gray-600 w-72 max-w-full"
+                                autoFocus
+                            />
+                            <div className="text-center">Confirm your password</div>
+                            <input
+                                type="password"
+                                value={confirmPassword}
+                                onChange={(e) => {
+                                    setConfirmPassword(e.target.value);
+                                    handleConfirmPassword(e.target.value);
+                                }}
+                                placeholder="Re-enter Password"
+                                className="mt-5 p-2 border rounded bg-gray-600 w-72 max-w-full"
+                            />
+                            {password.isError && <div className="text-red-600">{password.errorMessage}</div>}
+                            <div className="text-center">
+                                <button className="btn" onClick={handleCreatePassword}>
+                                    Create Password
+                                </button>
+                            </div>
                         </div>
                     </Layout_fadeIn>
                 )}

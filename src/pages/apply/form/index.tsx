@@ -129,12 +129,14 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
             <div style={{ height: '100vh', width: '100vw', display: 'flex', flexDirection: 'column' }}>
                 {formSubmitted ? (
                     <>
-                        <div className="flex flex-col items-center justify-center h-screen">
-                            <div>Thank you for submitting application form.</div>
-                            <Link href="/apply" className="btn">
-                                Go to Top
-                            </Link>
-                        </div>
+                        <Layout_fadeIn key="page">
+                            <div className="flex flex-col items-center justify-center h-[95vh]">
+                                <div>Thank you for submitting application form.</div>
+                                <Link href="/apply" className="btn">
+                                    Go to Top
+                                </Link>
+                            </div>
+                        </Layout_fadeIn>
                     </>
                 ) : (
                     <>
@@ -146,15 +148,18 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
                         ) : (
                             <>
                                 {isLoading && <LoadingSpinner />}
-                                {office && (
-                                    <iframe
-                                        title="Embedded Content"
-                                        src={`${iframeLink}&ref=${ref}&office=${office}`} // Replace with your desired URL
-                                        style={{ flex: 1, border: 'none', marginTop: '4rem' }} // Make the iframe fill the remaining space
-                                        onLoad={handleIframeLoad}
-                                    ></iframe>
-                                )}
-                                {/* Iframe component */}
+                                <Layout_fadeIn key="page">
+                                    <div style={{ height: '95vh', width: '100vw', display: 'flex', flexDirection: 'column' }}>
+                                        {office && (
+                                            <iframe
+                                                title="Embedded Content"
+                                                src={`${iframeLink}&ref=${ref}&office=${office}`} // Replace with your desired URL
+                                                style={{ flex: 1, border: 'none', marginTop: '2vh' }} // Make the iframe fill the remaining space
+                                                onLoad={handleIframeLoad}
+                                            ></iframe>
+                                        )}
+                                    </div>
+                                </Layout_fadeIn>
                             </>
                         )}
                     </>

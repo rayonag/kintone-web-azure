@@ -17,7 +17,7 @@ body {
 }
 
 .btn {
-    @apply bg-[#012c66] border border-[#012c66] rounded-full text-white px-5 py-1.5 self-center m-6 hover:bg-blue-700 hover:scale-[1.1] delay-75 ease-out duration-75 font-bold mt-6 max-w-full md:max-w-xs cursor-pointer;
+    @apply bg-[#012c66] border border-[#012c66] rounded-full text-white px-5 py-1.5 self-center m-6 hover:bg-blue-700 hover:border-blue-700 hover:scale-[1.1] delay-75 ease-out duration-75 font-bold mt-6 max-w-full md:max-w-xs cursor-pointer;
 }
 .btn-disabled {
     @apply opacity-70 bg-gray-500 rounded-full text-white px-5 py-1.5 self-center m-6 font-bold mt-6 md:max-w-xs;
