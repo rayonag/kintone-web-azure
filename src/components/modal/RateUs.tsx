@@ -37,7 +37,7 @@ const RateUs = () => {
 
     const handleSubmit = () => {
         const name = dashboardUser.name;
-        fetch('/api/sendgrid/contactUs', {
+        fetch('/api/sendgrid/rateUs', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
