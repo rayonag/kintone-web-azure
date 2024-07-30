@@ -1,5 +1,5 @@
 'use client';
-import { ChangeEvent, FormEvent, KeyboardEvent, useRef, useState } from 'react';
+import { ChangeEvent, FormEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { setCookie } from 'nookies';
@@ -8,6 +8,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Layout from './Layout';
 import StartButton from './StartButton';
 import Layout_fadeIn from '@/styles/Layout_fadeIn';
+import { set } from 'zod';
+import logError from '@/common/logError';
 
 type Login = {
     userName: {
@@ -31,11 +33,12 @@ const Login: React.FC = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [kintoneUser, setKintoneUser] = useState<Login>();
     const [section, setSection] = useState<Section>('Top');
+    const [transitioning, setTransitioning] = useState(false);
     const router = useRouter();
 
-    const handleNext = async () => {
+    const handleUsername = async () => {
         try {
-            const res = await fetch('/api/loginWithKintone', {
+            const res = await fetch('/api/login/loginUsername', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -44,47 +47,52 @@ const Login: React.FC = () => {
             });
 
             if (res.ok) {
-                const kintoneUser = await res.json();
-                setKintoneUser({
-                    userName: {
-                        value: kintoneUser['username'].value
-                    },
-                    password: {
-                        value: kintoneUser['password'].value
-                    },
-                    ref: {
-                        value: kintoneUser['ref'].value
-                    }
-                });
-                if (kintoneUser['password'].value == '') setSection('CreatePassword');
-                else if (kintoneUser['password'].value) setSection('Password');
+                const data = await res.json();
+                if (data['hasPassword']) setSection('Password');
+                else setSection('CreatePassword');
                 return;
             } else {
                 setUsername({ value: username.value, isError: true });
                 return;
             }
         } catch (e) {
-            console.log('error on authentication', e);
+            logError(e, username.value, 'loginUsername');
         }
     };
-    const handleConfirmPassword = (confirmPassword: string) => {
-        if (confirmPassword !== password.value) {
-            password.isError = true;
-            password.errorMessage = 'Passwords do not match';
-            return;
-        } else if (confirmPassword.length == 0) {
-            password.isError = true;
-            password.errorMessage = 'Password is empty';
-            return;
-        } else if (confirmPassword.length < 8) {
-            password.isError = true;
-            password.errorMessage = 'Password must be at least 8 characters';
-            return;
-        } else password.isError = false;
-        return;
+    const validatePassword = (type?: 'password' | 'confirmPassword', value?: string) => {
+        const vPassword = type == 'password' ? value : password.value;
+        const vConfirmPassword = type == 'confirmPassword' ? value : confirmPassword;
+        let errorMessage = '';
+
+        if (!vPassword || vPassword.length == 0) {
+            errorMessage = 'Password is empty';
+        } else if (vPassword.length < 8) {
+            errorMessage = 'Password must be at least 8 characters';
+        } else if (vConfirmPassword !== vPassword) {
+            errorMessage = 'Passwords do not match';
+        }
+
+        if (errorMessage) {
+            setPassword({ ...password, isError: true, errorMessage });
+        } else {
+            setPassword({ ...password, isError: false, errorMessage: '' });
+        }
     };
+
+    useEffect(() => {
+        if (!confirmPassword) return;
+        if (section == 'CreatePassword') {
+            validatePassword('password', password.value);
+        }
+    }, [confirmPassword]);
     const handleCreatePassword = async () => {
-        if (password.isError) return alert(password.errorMessage);
+        if (!confirmPassword) {
+            password.isError = true;
+            password.errorMessage = 'Confirm your password';
+            return;
+        }
+        validatePassword();
+        if (password.isError) return;
         try {
             const res = await fetch('/api/createPasswordKintone', {
                 method: 'POST',
@@ -95,12 +103,12 @@ const Login: React.FC = () => {
             });
             console.log(res);
             if (res.ok) {
-                console.log('resok');
+                const data = await res.json();
                 setCookie(null, 'auth', username.value, {
                     maxAge: 7 * 24 * 60 * 60, // お好きな期限を
                     path: '/'
                 });
-                setCookie(null, 'ref', kintoneUser?.ref.value || 'null', {
+                setCookie(null, 'ref', data.ref || 'null', {
                     maxAge: 7 * 24 * 60 * 60, // お好きな期限を
                     path: '/'
                 });
@@ -115,30 +123,38 @@ const Login: React.FC = () => {
             console.log('Error on creating password', e);
         }
     };
-    const handleLogin = async () => {
-        if (username.value == kintoneUser?.userName.value && password.value == kintoneUser?.password.value) {
-            setCookie(null, 'auth', username.value, {
-                maxAge: 7 * 24 * 60 * 60, // お好きな期限を
-                path: '/'
+    const loginPassword = async () => {
+        try {
+            const res = await fetch('/api/login/loginPassword', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username: username.value, password: password.value })
             });
-            setCookie(null, 'ref', kintoneUser?.ref.value, {
-                maxAge: 7 * 24 * 60 * 60, // お好きな期限を
-                path: '/'
-            });
-            // setCookie(null, 'applicationRef', kintoneUser?.applicationRef.value, {
-            //     maxAge: 7 * 24 * 60 * 60, // お好きな期限を
-            //     path: '/'
-            // });
-            router.push('/apply');
-        } else {
-            console.log('password not matched');
-            setPassword({ value: password.value, isError: true });
+
+            if (res.ok) {
+                const data = await res.json();
+                setCookie(null, 'auth', username.value, {
+                    maxAge: 7 * 24 * 60 * 60, // お好きな期限を
+                    path: '/'
+                });
+                setCookie(null, 'ref', data.ref, {
+                    maxAge: 7 * 24 * 60 * 60, // お好きな期限を
+                    path: '/'
+                });
+                router.push('/apply');
+            } else {
+                setPassword({ value: password.value, isError: true });
+                return;
+            }
+        } catch (e) {
+            logError(e, password.value, 'loginPassword');
         }
     };
     const allowEnterKeydown = (e: KeyboardEvent, func: () => void) => {
         if (e.key === 'Enter') func();
     };
-    const [transitioning, setTransitioning] = useState(false);
 
     return (
         <div className="flex flex-col items-center justify-center">
@@ -161,14 +177,14 @@ const Login: React.FC = () => {
                             <input
                                 value={username.value}
                                 onChange={(e) => setUsername({ value: e.target.value })}
-                                onKeyDown={(e) => allowEnterKeydown(e, handleNext)}
+                                onKeyDown={(e) => allowEnterKeydown(e, handleUsername)}
                                 placeholder="Email"
                                 className="mt-5 p-2 border rounded bg-gray-600 w-72 max-w-full"
                                 autoFocus
                             />
                             {username.isError && <div className="text-red-600">Invalid Email Address</div>}
                             <div className="text-center">
-                                <button className="btn" onClick={handleNext}>
+                                <button className="btn" onClick={handleUsername}>
                                     Next
                                 </button>
                             </div>
@@ -184,14 +200,14 @@ const Login: React.FC = () => {
                                 type="password"
                                 value={password.value}
                                 onChange={(e) => setPassword({ value: e.target.value })}
-                                onKeyDown={(e) => allowEnterKeydown(e, handleLogin)}
+                                onKeyDown={(e) => allowEnterKeydown(e, loginPassword)}
                                 placeholder="Password"
                                 className="mt-5 p-2 border rounded bg-gray-600 w-72 max-w-full"
                                 autoFocus
                             />
                             {password.isError && <div className="text-red-600">Invalid Password</div>}
                             <div className="text-center">
-                                <button className="btn" onClick={handleLogin}>
+                                <button className="btn" onClick={loginPassword}>
                                     Login
                                 </button>
                             </div>
@@ -206,8 +222,7 @@ const Login: React.FC = () => {
                             <input
                                 type="password"
                                 value={password.value}
-                                onChange={(e) => setPassword({ value: e.target.value })}
-                                onKeyDown={(e) => allowEnterKeydown(e, handleLogin)}
+                                onChange={(e) => setPassword({ ...password, value: e.target.value })}
                                 placeholder="Password"
                                 className="my-5 p-2 border rounded bg-gray-600 w-72 max-w-full"
                                 autoFocus
@@ -218,7 +233,6 @@ const Login: React.FC = () => {
                                 value={confirmPassword}
                                 onChange={(e) => {
                                     setConfirmPassword(e.target.value);
-                                    handleConfirmPassword(e.target.value);
                                 }}
                                 placeholder="Re-enter Password"
                                 className="mt-5 p-2 border rounded bg-gray-600 w-72 max-w-full"

@@ -9,6 +9,7 @@ import '@/styles/globals.css';
 import { DashboardUserContext, DashboardUser } from '@/common/context/dashboardUser';
 import { LoadingContext } from '@/common/context/loading';
 import fetchUserApplicationMaster from '@/common/fetchUserApplicationMaster';
+import LoadingSpinner from '@/components/loading/LoadingSpinner';
 
 const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
     const router = useRouter();
@@ -47,7 +48,12 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
     }, []);
     const CommonProvider: ({ children }: { children: JSX.Element }) => JSX.Element = ({ children }) => {
         const [isLoading, setIsLoading] = useState<boolean>(false);
-        return <LoadingContext.Provider value={{ isLoading, setIsLoading }}>{children}</LoadingContext.Provider>;
+        return (
+            <LoadingContext.Provider value={{ isLoading, setIsLoading }}>
+                {isLoading && <LoadingSpinner />}
+                {children}
+            </LoadingContext.Provider>
+        );
     };
     const component =
         typeof pageProps === 'undefined' ? null : (

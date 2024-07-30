@@ -52,6 +52,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 });
             }
         } catch (e: any) {
+            console.log('error', e);
             console.log(e.errors);
             logError(e, null, 'fetchUserKintone');
             res.status(505);

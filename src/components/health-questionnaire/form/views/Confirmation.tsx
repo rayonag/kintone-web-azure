@@ -1,15 +1,13 @@
-import kintone from '@/pages/api/kintone';
-import React, { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
+import React, { Dispatch, FC, SetStateAction, useState } from 'react';
 import { SubmitHandler, UseFormGetValues } from 'react-hook-form';
 import Modal from 'react-modal';
 import { HealthQuestionnaireType, formFields } from '../schema/healthQuestionnaireSchema';
 import { TFunction } from 'i18next';
 import postPersonalHealthQuestionnaire from '../hooks/postPersonalHealthQuestionnaire';
-import { Router, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useDashboardUser } from '@/common/context/dashboardUser';
-import LoadingSpinner from '@/components/loading/LoadingSpinner';
-import { set } from 'zod';
 import Link from 'next/link';
+import { useLoading } from '@/common/context/loading';
 
 type ButtonProps = {
     label: string;
@@ -17,7 +15,7 @@ type ButtonProps = {
     setIsHover: React.Dispatch<React.SetStateAction<boolean>>;
     onclick: (props: any) => any;
 };
-const Button: FC<ButtonProps> = ({ label, isHover, setIsHover, onclick }) => {
+const Button: FC<ButtonProps> = ({ label, setIsHover, onclick }) => {
     const buttonStyle = {
         color: 'white',
         padding: '.5rem 1rem',
@@ -42,8 +40,9 @@ type ConfirmationModalProps = {
 const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIsOpen, getValues, t }) => {
     const [isHoverSubmit, setIsHoverSubmit] = useState(false);
     const [isHoverCancel, setIsHoverCancel] = useState(false);
+    const [isComplete, setIsComplete] = useState(false);
+    const { setIsLoading } = useLoading();
     const dashboardUser = useDashboardUser();
-    const router = useRouter();
     const formData = getValues();
     const modalStyle = {
         content: {
@@ -66,8 +65,6 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIs
         //setIsLoading(false);
         // router.push('/apply/health-questionnaire/complete');
     };
-    const [isLoading, setIsLoading] = useState(false);
-    const [isComplete, setIsComplete] = useState(false);
     return (
         <div className="relative">
             <Modal
@@ -77,8 +74,6 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIs
                 shouldCloseOnOverlayClick={false}
                 ariaHideApp={false}
             >
-                {/* TODO: add spinner on loading */}
-                {/* {isLoading && <LoadingSpinner />} */}
                 {isComplete ? (
                     <div className="flex flex-col justify-center">
                         <div className="text-2xl m-5 mb-10 text-black font-bold">Response saved and submitted!</div>

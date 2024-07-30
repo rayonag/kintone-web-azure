@@ -7,15 +7,10 @@ import Link from 'next/link';
 interface HelperProps {
     currentStep: ApplicationSteps;
     userRef: string;
+    isModalOpen: boolean;
+    setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const Helper: React.FC<HelperProps> = ({ currentStep, userRef }) => {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value);
-    };
-
+const Helper: React.FC<HelperProps> = ({ currentStep, userRef, isModalOpen, setIsModalOpen }) => {
     const modalStyle = {
         content: {
             top: '50%',

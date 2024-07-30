@@ -10,31 +10,22 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { parseCookies } from 'nookies';
 import { shortTermApplicationURL, volunteerApplicationURL, zealousAplicationURL } from '@/common/env';
 import postIsFirstTime from '@/common/checklist/postIsFirstTime';
-import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import Link from 'next/link';
 import Layout_fadeIn from '@/styles/Layout_fadeIn';
 import { REST_VolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
 import logError from '@/common/logError';
 import { NationalOffice } from '@/common/context/offices';
-import { set } from 'zod';
 import FirstTimeTips from './FirstTimeTips';
+import { useLoading } from '@/common/context/loading';
 
 const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     // State to track whether the iframe content is loading
-    const [isLoading, setIsLoading] = useState(true);
+    const { setIsLoading } = useLoading();
     const [ref, setRef] = useState('');
     const [office, setOffice] = useState<NationalOffice | undefined>(undefined);
     const [isFirstTimeOnForm, setIsFirstTimeOnForm] = useState(false);
     const dashboardUser = useDashboardUser();
     const router = useRouter();
-    // // server props
-    // if (typeof window !== undefined) {
-    //     if (!repo?.formSubmitted) {
-    //         alert('Something went wrong.');
-    //         router.push('/apply');
-    //         return;
-    //     }
-    // }
 
     const type = repo?.type || null;
     const formSubmitted = repo?.formSubmitted || false;
@@ -142,12 +133,10 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
                     <>
                         {isFirstTimeOnForm ? (
                             <>
-                                {isLoading && <LoadingSpinner />}
                                 <FirstTimeTips type={type} handleContinueOnFirstTime={handleContinueOnFirstTime} />
                             </>
                         ) : (
                             <>
-                                {isLoading && <LoadingSpinner />}
                                 <Layout_fadeIn key="page">
                                     <div style={{ height: '95vh', width: '100vw', display: 'flex', flexDirection: 'column' }}>
                                         {office && (

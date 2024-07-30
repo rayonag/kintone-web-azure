@@ -2,7 +2,6 @@
 import { FC, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useDashboardUser } from '@/common/context/dashboardUser';
-import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import { useLoading } from '@/common/context/loading';
 import postDocument from '@/common/documents/postDocument';
 import Layout_fadeIn from '@/styles/Layout_fadeIn';
@@ -16,7 +15,7 @@ type SubmitDocumentProps = {
 };
 const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
     const dashboardUser = useDashboardUser();
-    const { isLoading, setIsLoading } = useLoading();
+    const { setIsLoading } = useLoading();
     const router = useRouter();
 
     const [fileData, setFileData] = useState<any>([]);
@@ -29,12 +28,10 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
     // early return. TODO: review validation
     if (!userRef) {
         console.log('no user ref');
-        return <LoadingSpinner />;
     }
     // TODO: review validation and return val
     if (!dashboardUser.applicationRef) {
         console.log('no application ref');
-        return <LoadingSpinner />;
     }
 
     // upload from input
@@ -137,7 +134,6 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
     };
     return (
         <>
-            {isLoading && <LoadingSpinner />}
             <Layout_fadeIn>
                 <div className="relative flex flex-col items-center justify-center text-center min-h-screen text-white overflow-hidden">
                     <span style={{ fontSize: '2rem' }}>{title}</span>

@@ -19,6 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     password: KintonePassword
                 }
             });
+            console.log('stpop');
             const resp = await client.record.getAllRecords({
                 app: VolunteerApplicationAppID as string,
                 condition: `ref="${ref}"`
@@ -50,6 +51,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 return;
             }
         } catch (e: any) {
+            console.log('hell');
             logError(e, null, 'getUserApplicationRef');
             res.json({
                 res: 'Something went wrong.'

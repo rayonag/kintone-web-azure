@@ -1,4 +1,5 @@
 'use client';
+import RateUs from '@/components/modal/RateUs';
 import Layout from '@/styles/Layout_fadeIn';
 import Link from 'next/link';
 import { useRouter } from 'next/router';

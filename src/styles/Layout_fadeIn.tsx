@@ -10,7 +10,6 @@ interface Layout_fadeInProps {
 }
 
 const Layout_fadeIn: FC<Layout_fadeInProps> = ({ key, children }) => {
-    console.log(key);
     return (
         <motion.div
             key={key || 'page'}

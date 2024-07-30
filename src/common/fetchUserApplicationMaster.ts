@@ -15,6 +15,7 @@ const fetchUserApplicationMaster = (dashboardUser: DashboardUser, setDashboardUs
             },
             body: JSON.stringify({ username: username })
         });
+        console.log('res', res);
         const user = await res.json();
         const userApplicationRef = await getUserApplicationRef({ ref: ref });
         console.log('user', user);

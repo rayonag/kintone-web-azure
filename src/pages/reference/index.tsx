@@ -1,18 +1,13 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { KintoneUserName, KintonePassword, VolunteerApplicationMasterAppID, referenceFormURL } from '@/common/env';
-import { REST_VolunteerApplicationMaster } from '@/types/VolunteerApplicationMaster';
-import { KintoneRestAPIClient } from '@kintone/rest-api-client';
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { referenceFormURL } from '@/common/env';
 import Layout_fadeIn from '@/styles/Layout_fadeIn';
-import logError from '@/common/logError';
-import { NationalOffice } from '@/common/context/offices';
-import LoadingSpinner from '@/components/loading/LoadingSpinner';
+import { useLoading } from '@/common/context/loading';
 
 const ApplicationForm = () => {
     // State to track whether the iframe content is loading
-    const [isLoading, setIsLoading] = useState(true);
+    const { setIsLoading } = useLoading();
     const [ref, setRef] = useState<string | number | null>('');
     const [office, setOffice] = useState<string | number | null>('');
     console.log('ref', ref);
@@ -100,7 +95,6 @@ const ApplicationForm = () => {
         <Layout_fadeIn>
             <div style={{ height: '100vh', width: '100vw', display: 'flex', flexDirection: 'column' }}>
                 <>
-                    {isLoading && <LoadingSpinner />}
                     {ref && (
                         <iframe
                             title="Embedded Content"
