@@ -28,6 +28,7 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
     // early return. TODO: review validation
     if (!userRef) {
         console.log('no user ref');
+        return <></>;
     }
     // TODO: review validation and return val
     if (!dashboardUser.applicationRef) {

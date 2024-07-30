@@ -219,12 +219,13 @@ export const getServerSideProps = (async (context) => {
                 });
                 // redirect to login page on server side
                 context.res.writeHead(302, { Location: '/apply/login' });
-                return context.res.end();
+                return undefined;
             });
         const resp2 = await client.record.getAllRecords<REST_VolunteerApplicationForm>({
             app: VolunteerApplicationAppID as string,
             condition: `ref="${cookies.ref}"`
         });
+        if (!resp) return { props: {} };
         // check if not yet
         if (resp2.length > 0) {
             if (resp.record['formSubmission'].value.findIndex((arr) => arr == 'Application Form Completed') == -1) {
