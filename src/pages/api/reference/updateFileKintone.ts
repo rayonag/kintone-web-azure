@@ -5,7 +5,7 @@ import handleNullOrEmpty from '../common/handleNullOrEmpty';
 import notificationApplicationUpdated, { updated } from '../hooks/notification';
 import logError from '@/common/logError';
 import { REST_VolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
-import { REST_VolunteerApplicationMaster } from '@/types/VolunteerApplicationMaster';
+import { REST_OnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
 
 type Data = {
     res?: any;
@@ -87,7 +87,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 }
             });
             // TODO: come up with a better way to handle this
-            const oldRecord = await client.record.getRecord<REST_VolunteerApplicationMaster>({
+            const oldRecord = await client.record.getRecord<REST_OnlineVolunteerApplication>({
                 app: VolunteerApplicationMasterAppID as string,
                 id: userRef
             });

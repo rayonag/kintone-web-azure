@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import HealthQuestionnaire from '@/components/health-questionnaire/form/Form';
 import { KintoneUserName, KintonePassword, VolunteerApplicationMasterAppID } from '@/common/env';
-import { REST_VolunteerApplicationMaster } from '@/types/VolunteerApplicationMaster';
+import { REST_OnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
@@ -50,7 +50,7 @@ export const getServerSideProps = (async (context) => {
             password: KintonePassword
         }
     });
-    const resp = await client.record.getRecord<REST_VolunteerApplicationMaster>({
+    const resp = await client.record.getRecord<REST_OnlineVolunteerApplication>({
         app: VolunteerApplicationMasterAppID as string,
         id: cookies.ref
     });

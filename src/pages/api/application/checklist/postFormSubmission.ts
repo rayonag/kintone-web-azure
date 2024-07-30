@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { KintonePassword, KintoneUserName, VolunteerApplicationAppID, VolunteerApplicationMasterAppID } from '@/common/env';
 import handleNullOrEmpty from '../../common/handleNullOrEmpty';
 import logError from '@/common/logError';
-import { REST_VolunteerApplicationMaster } from '@/types/VolunteerApplicationMaster';
+import { REST_OnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
 
 type Data = {
     res?: any;
@@ -33,7 +33,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     password: KintonePassword
                 }
             });
-            const resp = await client.record.getRecord<REST_VolunteerApplicationMaster>({
+            const resp = await client.record.getRecord<REST_OnlineVolunteerApplication>({
                 app: VolunteerApplicationMasterAppID as string,
                 id: userRef
             });

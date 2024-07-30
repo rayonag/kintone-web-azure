@@ -1,5 +1,7 @@
-export interface VolunteerApplicationMaster {
+export interface OnlineVolunteerApplication {
     year: kintone.fieldTypes.SingleLineText;
+    applicationStartDate: kintone.fieldTypes.Date;
+    applicationEndDate: kintone.fieldTypes.Date;
     office: kintone.fieldTypes.DropDown;
     type: kintone.fieldTypes.DropDown;
     password: kintone.fieldTypes.SingleLineText;
@@ -10,15 +12,15 @@ export interface VolunteerApplicationMaster {
     name: kintone.fieldTypes.SingleLineText;
     isFirstTimeOnForm: kintone.fieldTypes.RadioButton;
     status: kintone.fieldTypes.DropDown;
+    isComplete: kintone.fieldTypes.RadioButton;
 
     formSubmission: kintone.fieldTypes.CheckBox;
     documents: kintone.fieldTypes.CheckBox;
     documentsUSA: kintone.fieldTypes.CheckBox;
     reviewAbout: kintone.fieldTypes.CheckBox;
     reviewFaq: kintone.fieldTypes.CheckBox;
-    User_selection: kintone.fieldTypes.UserSelect;
 }
-export interface SavedVolunteerApplicationMaster extends VolunteerApplicationMaster {
+export interface SavedOnlineVolunteerApplication extends OnlineVolunteerApplication {
     $id: kintone.fieldTypes.Id;
     $revision: kintone.fieldTypes.Revision;
     Updated_by: kintone.fieldTypes.Modifier;
@@ -29,8 +31,10 @@ export interface SavedVolunteerApplicationMaster extends VolunteerApplicationMas
 }
 
 import { KintoneRecordField } from '@kintone/rest-api-client';
-export type REST_VolunteerApplicationMaster = {
+export type REST_OnlineVolunteerApplication = {
     year: KintoneRecordField.SingleLineText;
+    applicationStartDate: KintoneRecordField.Date;
+    applicationEndDate: KintoneRecordField.Date;
     office: KintoneRecordField.DropDown;
     type: KintoneRecordField.DropDown;
     password: KintoneRecordField.SingleLineText;
@@ -41,15 +45,15 @@ export type REST_VolunteerApplicationMaster = {
     name: KintoneRecordField.SingleLineText;
     isFirstTimeOnForm: KintoneRecordField.RadioButton;
     status: KintoneRecordField.DropDown;
-
+    isComplete: KintoneRecordField.RadioButton;
     formSubmission: KintoneRecordField.CheckBox;
     documents: KintoneRecordField.CheckBox;
     documentsUSA: KintoneRecordField.CheckBox;
     reviewAbout: KintoneRecordField.CheckBox;
     reviewFaq: KintoneRecordField.CheckBox;
-    User_selection: KintoneRecordField.UserSelect;
 };
-export type REST_SavedVolunteerApplicationMaster = REST_VolunteerApplicationMaster & {
+
+export type REST_SavedOnlineVolunteerApplication = REST_OnlineVolunteerApplication & {
     $id: KintoneRecordField.Id;
     $revision: KintoneRecordField.Revision;
     Updated_by: KintoneRecordField.Modifier;

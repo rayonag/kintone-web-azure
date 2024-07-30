@@ -11,7 +11,7 @@ import { useDashboardUser } from '@/common/context/dashboardUser';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { KintoneUserName, KintonePassword, VolunteerApplicationAppID, VolunteerApplicationMasterAppID } from '@/common/env';
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
-import { REST_VolunteerApplicationMaster } from '@/types/VolunteerApplicationMaster';
+import { REST_OnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
 import ReactModal from 'react-modal';
 import Helper from '@/components/modal/helper';
 import { REST_VolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
@@ -205,7 +205,7 @@ export const getServerSideProps = (async (context) => {
             }
         });
         let resp = await client.record
-            .getRecord<REST_VolunteerApplicationMaster>({
+            .getRecord<REST_OnlineVolunteerApplication>({
                 app: VolunteerApplicationMasterAppID as string,
                 id: cookies.ref
             })
@@ -236,7 +236,7 @@ export const getServerSideProps = (async (context) => {
                         formSubmission: { value: [...resp.record['formSubmission'].value, 'Application Form Completed'] }
                     }
                 });
-                resp = await client.record.getRecord<REST_VolunteerApplicationMaster>({
+                resp = await client.record.getRecord<REST_OnlineVolunteerApplication>({
                     app: VolunteerApplicationMasterAppID as string,
                     id: cookies.ref
                 });
@@ -284,7 +284,7 @@ export const getServerSideProps = (async (context) => {
         // Pass data to the page via props
         return { props: { repo } };
     } catch (e) {
-        logError(e, e.errors || null, 'apply/form/getServerSideProps');
+        logError(e, null, 'apply/form/getServerSideProps');
         return { props: {} };
     }
 }) satisfies GetServerSideProps<{ repo: Repo } | {}>;

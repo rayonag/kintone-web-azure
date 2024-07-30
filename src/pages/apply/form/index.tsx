@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDashboardUser } from '@/common/context/dashboardUser';
 import { KintoneUserName, KintonePassword, VolunteerApplicationMasterAppID, VolunteerApplicationAppID } from '@/common/env';
-import { REST_VolunteerApplicationMaster } from '@/types/VolunteerApplicationMaster';
+import { REST_OnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { parseCookies } from 'nookies';
@@ -178,7 +178,7 @@ export const getServerSideProps = (async (context) => {
                 password: KintonePassword
             }
         });
-        let resp = await client.record.getRecord<REST_VolunteerApplicationMaster>({
+        let resp = await client.record.getRecord<REST_OnlineVolunteerApplication>({
             app: VolunteerApplicationMasterAppID as string,
             id: cookies.ref
         });
@@ -198,7 +198,7 @@ export const getServerSideProps = (async (context) => {
                         status: { value: 'Complete Application Form' }
                     }
                 });
-                resp = await client.record.getRecord<REST_VolunteerApplicationMaster>({
+                resp = await client.record.getRecord<REST_OnlineVolunteerApplication>({
                     app: VolunteerApplicationMasterAppID as string,
                     id: cookies.ref
                 });

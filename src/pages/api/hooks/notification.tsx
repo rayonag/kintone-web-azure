@@ -4,7 +4,7 @@ import { render } from '@react-email/render';
 import React from 'react';
 import sgMail from '@sendgrid/mail';
 import logError from '@/common/logError';
-import { REST_SavedVolunteerApplicationMaster, REST_VolunteerApplicationMaster } from '@/types/VolunteerApplicationMaster';
+import { REST_SavedOnlineVolunteerApplication, REST_OnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
 
 export type NecessaryDocuments = keyof typeof necessaryDocuments;
 const necessaryDocuments = {
@@ -98,7 +98,7 @@ export const notificationApplicationUpdated = async (res: any, updatedField: Upd
 };
 export default notificationApplicationUpdated;
 
-export const notificationReferenceSubmitted = async (res: any, record: REST_SavedVolunteerApplicationMaster) => {
+export const notificationReferenceSubmitted = async (res: any, record: REST_SavedOnlineVolunteerApplication) => {
     try {
         const name = record['name'].value;
         const office = record['office'].value as EmailNationalOffice;

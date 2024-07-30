@@ -1,7 +1,7 @@
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import notificationApplicationUpdated from '../hooks/notification';
-import { REST_VolunteerApplicationMaster, VolunteerApplicationMaster } from '@/types/VolunteerApplicationMaster';
+import { REST_OnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
 import { VolunteerApplicationMasterAppID } from '@/common/env';
 
 type Data = {
@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     password: process.env.KINTONE_PASSWORD
                 }
             });
-            const applicationMasterRecord = await client.record.getRecord<REST_VolunteerApplicationMaster>({
+            const applicationMasterRecord = await client.record.getRecord<REST_OnlineVolunteerApplication>({
                 app: VolunteerApplicationMasterAppID as string,
                 id: data['ref']
             });
