@@ -26,17 +26,17 @@
     ];
     // fb.events.form.mounted = [
     // ];
-    fb.events.form.submit = [
+    // fb.events.form.submit = [
+    //     function (state) {
+    //         return state;
+    //     }
+    // ];
+    fb.events.finish.created = [
         function (state) {
             postMessage(state);
             return state;
         }
     ];
-    // fb.events.finish.created = [
-    //     function (state) {
-    //         return state;
-    //     }
-    // ];
     // fb.events.finish.mounted = [
     // ];
     // fb.events.step.back = [
@@ -49,3 +49,5 @@ const postMessage = (state) => {
     const jsonmessage = JSON.stringify(state);
     window.parent.postMessage(jsonmessage, '*');
 };
+
+//formbridge

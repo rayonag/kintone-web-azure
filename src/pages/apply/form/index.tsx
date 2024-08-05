@@ -18,9 +18,14 @@ import { NationalOffice } from '@/common/context/offices';
 import FirstTimeTips from './FirstTimeTips';
 import { useLoading } from '@/common/context/loading';
 
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+
 const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     // State to track whether the iframe content is loading
     const { setIsLoading } = useLoading();
+    const [isIframeLoading, setIsIframeLoading] = useState(false);
+    const [isIframeLoaded, setIsIframeLoaded] = useState(false);
     const [ref, setRef] = useState('');
     const [office, setOffice] = useState<NationalOffice | undefined>(undefined);
     const [isFirstTimeOnForm, setIsFirstTimeOnForm] = useState(false);
@@ -58,15 +63,23 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
     }, [dashboardUser]);
     // Function to handle iframe load event
     const handleIframeLoad = () => {
-        // Set isLoading to false when the iframe has finished loading
-        // added 2 seconds for lagging loading time
+        setIsIframeLoaded(true);
         setTimeout(() => {
-            setIsLoading(false);
-        }, 2000);
+            setIsIframeLoading(false);
+        }, 4000); // Minimum 4 seconds delay
     };
+
+    useEffect(() => {
+        if (isIframeLoaded) {
+            const timer = setTimeout(() => {
+                setIsIframeLoading(false);
+            }, 7000); // Minimum 4 seconds delay
+            return () => clearTimeout(timer);
+        }
+    }, [isIframeLoaded]);
+
     const handleContinueOnFirstTime = async () => {
         if (!dashboardUser.ref) return;
-        setIsLoading(true);
         await postIsFirstTime(dashboardUser.ref);
         setIsFirstTimeOnForm(false);
         //location.reload();
@@ -114,6 +127,11 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
             window.removeEventListener('message', receiveMessage);
         };
     }, []);
+
+    useEffect(() => {
+        if (!isIframeLoading && !formSubmitted && !isFirstTimeOnForm && !isIframeLoaded) setIsIframeLoading(true);
+    }, [formSubmitted, isFirstTimeOnForm]);
+
     return (
         // Use a wrapper div for the entire page
         <>
@@ -122,7 +140,7 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
                     <>
                         <Layout_fadeIn key="page">
                             <div className="flex flex-col items-center justify-center h-[95vh]">
-                                <div>Thank you for submitting application form.</div>
+                                <div>Thank you for submitting {dashboardUser.type} application form.</div>
                                 <Link href="/apply" className="btn">
                                     Go to Top
                                 </Link>
@@ -139,11 +157,41 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
                             <>
                                 <Layout_fadeIn key="page">
                                     <div style={{ height: '95vh', width: '100vw', display: 'flex', flexDirection: 'column' }}>
+                                        {isIframeLoading && (
+                                            <div style={{ flex: 1, border: 'none', marginTop: '2vh', height: '100%', backgroundColor: '#012C66' }}>
+                                                <div className="my-10 mx-24 p-4 bg-white">
+                                                    <div className="flex h-fit items-center">
+                                                        {Array(10)
+                                                            .fill(0)
+                                                            .map((_, index) => (
+                                                                <>
+                                                                    <Skeleton circle={true} key={index} height={20} width={20} />
+                                                                    {index != 9 && <div className="h-1 w-40 bg-gray-300 align-middle"></div>}
+                                                                </>
+                                                            ))}
+                                                    </div>
+                                                    <Skeleton className="text-4xl my-6" style={{ width: '30rem' }} />
+                                                    <div className="my-10"></div>{' '}
+                                                    {Array(2)
+                                                        .fill(0)
+                                                        .map((_, index) => (
+                                                            <div key={index} className="my-8">
+                                                                <Skeleton className="text-2xl" style={{ width: '10rem' }} />
+                                                                <Skeleton className="text-4xl" style={{ width: '16rem' }} />
+                                                            </div>
+                                                        ))}
+                                                    <div className="mt-10 flex">
+                                                        <Skeleton className="text-3xl" style={{ width: '5rem', marginRight: '10px' }} />
+                                                        <Skeleton className="text-3xl" style={{ width: '10rem' }} />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
                                         {office && (
                                             <iframe
                                                 title="Embedded Content"
                                                 src={`${iframeLink}&ref=${ref}&office=${office}`} // Replace with your desired URL
-                                                style={{ flex: 1, border: 'none', marginTop: '2vh' }} // Make the iframe fill the remaining space
+                                                style={{ flex: 1, border: 'none', marginTop: '2vh', display: `${isIframeLoading ? 'none' : ''}` }} // Make the iframe fill the remaining space
                                                 onLoad={handleIframeLoad}
                                             ></iframe>
                                         )}

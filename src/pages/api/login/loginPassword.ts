@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     if (req.method === 'POST') {
         try {
             const data = req.body;
-            const username = data.username;
+            const username = data.username.toLowerCase();
             const password = data.password;
             const client = new KintoneRestAPIClient({
                 baseUrl: 'https://bfp.kintone.com',
@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             });
             const recordArray = await client.record.getAllRecords({
                 app: VolunteerApplicationMasterAppID as string,
-                condition: `email="${username.toLowerCase()}" and password="${password}"`
+                condition: `email="${username}" and password="${password}"`
             });
             if (recordArray.length == 0) {
                 res.status(501);

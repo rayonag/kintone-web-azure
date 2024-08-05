@@ -21,8 +21,12 @@ const FirstTimeTips: FC<FirstTimeTipsProps> = ({ type, handleContinueOnFirstTime
             <>
                 <div className="flex flex-col items-center justify-center h-screen">
                     <div className="text-3xl m-5">Before you begin...</div>
-                    <div className="m-3 mb-8">This is a volunteer application for: {type}</div>
-                    <div className="m-3 mb-8">If you're not intending for {type} please let us know</div>
+                    <div className="m-3 mb-8">
+                        This is a volunteer application for: <span className="text-2xl">{type}</span>
+                    </div>
+                    <div className="m-3 mb-8">
+                        If you're not intending for <span className="text-2xl">{type}</span> please let us know.
+                    </div>
                     <div className="flex justify-center flex-col">
                         <button onClick={() => setPage(1)} className="btn-wide">
                             Next
@@ -39,7 +43,7 @@ const FirstTimeTips: FC<FirstTimeTipsProps> = ({ type, handleContinueOnFirstTime
         <div className="flex flex-col items-center justify-center h-screen">
             {page == 0 && <ConfirmType />}
             {page != 0 && (
-                <div ref={scrollRef} className="overflow-y-scroll h-[70vh] min-w-80 w-[60vw]">
+                <div ref={scrollRef} className="overflow-y-scroll h-full min-w-80 w-full p-[5%] md:px-[20%]">
                     {page == 1 && <DoctrinalStatement />}
                     {page == 2 && <TermsAndConditions />}
                     <div className="flex justify-center flex-col">
@@ -55,14 +59,19 @@ const FirstTimeTips: FC<FirstTimeTipsProps> = ({ type, handleContinueOnFirstTime
                         )}
                         {page === 2 && (
                             <>
-                                <label>
-                                    <input onClick={() => setHaveRead(!haveRead)} checked={haveRead} type="checkbox" className="m-3 text-center" />
+                                <label className="flex justify-center items-center">
+                                    <input
+                                        onClick={() => setHaveRead(!haveRead)}
+                                        checked={haveRead}
+                                        type="checkbox"
+                                        className="m-2 scale-150 text-center"
+                                    />
                                     <span>I have read and agree with the above</span>
                                 </label>
                                 <button
                                     onClick={handleContinueOnFirstTime}
                                     aria-disabled={!haveRead}
-                                    className={`${!haveRead ? 'btn-disabled-wide pointer-events-none' : 'btn-wide'}`}
+                                    className={`${!haveRead ? 'btn-disabled-wide pointer-events-none btn-wide' : 'btn-wide'}`}
                                 >
                                     Continue
                                 </button>
@@ -84,28 +93,28 @@ const TermsAndConditions = () => {
     return (
         <div className="p-4">
             <section className="mb-5">
-                <div className="text-3xl m-5 font-serif italic text-center">BRIDGES FOR PEACEーOUR VISION</div>
+                <div className="text-2xl m-5 font-serif italic text-center">BRIDGES FOR PEACEーOUR VISION</div>
                 <div className="mb-3 text-2xl">MISSION STATEMENT</div>
-                <div className="m-3 mb-8">
+                <div className="m-3 mb-8 text-justify">
                     Bridges For Peace (BFP): Christians supporting Israel and building relationships between Christians and Jews in Israel and around
                     the world.
                 </div>
                 <div className="mb-3 text-2xl">EXPANDED VISION</div>
-                <div className="mb-3">
+                <div className="m-3 text-justify">
                     It is our desire to see Christians and Jews working side by side for better understanding and a more secure Israel.
                 </div>
-                <div className="mb-3">
+                <div className="m-3 text-justify">
                     Founded in 1976, Bridges for Peace seeks to be a ministry of hope and reconciliation. Through programs both in Israel and
                     worldwide, we are giving Christians the opportunity to actively express their biblical responsibility before God to be faithful to
                     Israel and the Jewish community.
                 </div>
-                <div className="mb-3">
+                <div className="m-3 mb-8 text-justify">
                     For too long Christians have been silent. For too long the Jewish community has had to fight its battles alone. It is time
                     Christian individuals and congregations speak up for the people who gave us the Bible.
                 </div>
             </section>
-            <section className="mb-5">
-                <div className="text-3xl m-5 font-serif italic text-center">WE ARE COMMITTED TO THE FOLLOWING GOALS:</div>
+            <section className="mb-5 text-justify">
+                <div className="text-2xl m-5 font-serif italic text-center">WE ARE COMMITTED TO THE FOLLOWING GOALS:</div>
                 <div className="mb-3">
                     1. To encourage meaningful and supportive relationships between Christians and Jews in Israel and around the world.
                 </div>
@@ -117,58 +126,58 @@ const TermsAndConditions = () => {
                     3. To bless Israel and the Jewish people in Israel and worldwide through practical assistance, volunteer service and prayer.
                 </div>
                 <div className="mb-3">
-                    4. To communicate Christian perspectives to the attention of Israeli leaders and the Jewish community at large
+                    4. To communicate Christian perspectives to the attention of Israeli leaders and the Jewish community at large.
                 </div>
                 <div className="mb-8">
                     5. To counter anti-Semitism worldwide and support Israel’s divine, God-given right to exist in her Godgiven land.
                 </div>
-                <div className="text-3xl m-5 font-serif italic text-center">BASIC VOLUNTEER REQUIREMENTS</div>
+                <div className="text-2xl m-5 font-serif italic text-center">BASIC VOLUNTEER REQUIREMENTS</div>
                 <div className="mb-3 text-2xl">WHO IS A BFP VOLUNTEER?</div>
-                <div className="mb-3">
+                <div className="m-3">
                     The prophets of Israel knew that one day Gentile people would come to the land of Israel and help in its restoration. The prophet
                     Isaiah mentions these Gentiles on several occasions. He refers to them as “servants” in Isaiah 56:6. They are called “servants and
                     handmaids” in Isaiah 14:2. And in Isaiah 61:5, we read, “Strangers shall stand and feed your flocks, and the sons of the foreigner
                     shall be your plowmen and your vinedressers.”
                 </div>
-                <div className="mb-3">
+                <div className="m-3">
                     We can see from Scripture that Gentiles do not come to Israel in a high and mighty position, but rather in the position of a
                     servant. Their position is much like that of Ruth of old. She was willing to abase herself to a position lower than that of a
                     servant girl (Ruth 2:13). As a result, God highly exalted her to be the great-grandmother of King David.
                 </div>
-                <div className="mb-3">
+                <div className="m-3 mb-8">
                     There are great numbers of Christians from foreign lands in Israel today who have come here in meekness and humility to serve the
                     Jewish people on behalf of God. In general, the work of volunteers is often the work that others do not wish to do. It is
                     demanding and requires much patience and love. But in the end, it is also greatly rewarding.
                 </div>
             </section>
-            <section className="mb-5">
-                <div className="text-3xl m-5 font-serif italic text-center">A VOLUNTEER WITH BRIDGES FOR PEACE IS REQUIRED TO:</div>
-                <div className="mb-3">1. Have a servant’s heart. </div>
-                <div className="mb-3">2. Be a committed Christian.</div>
-                <div className="mb-3">3. Be at least 18 years of age.</div>
-                <div className="mb-3">4. Be in good health.</div>
-                <div className="mb-3">5. Be able to speak English.</div>
-                <div className="mb-3">6. Have the recommendations of your family, pastor and others in the community.</div>
-                <div className="mb-3">
+            <section className="mb-5 text-justify">
+                <div className="text-2xl m-5 font-serif italic text-center">A VOLUNTEER WITH BRIDGES FOR PEACE IS REQUIRED TO:</div>
+                <div className="m-3">1. Have a servant’s heart. </div>
+                <div className="m-3">2. Be a committed Christian.</div>
+                <div className="m-3">3. Be at least 18 years of age.</div>
+                <div className="m-3">4. Be in good health.</div>
+                <div className="m-3">5. Be able to speak English.</div>
+                <div className="m-3">6. Have the recommendations of your family, pastor and others in the community.</div>
+                <div className="m-3">
                     7. Have the funds available to cover your food, lodging and other monthly expenses, as well as round trip airfare to and from
                     Israel.
                 </div>
-                <div className="mb-3">
+                <div className="m-3">
                     8. Have medical insurance that is valid outside your country in case of accident, injury or illness in Israel. (If necessary, BFP
                     can assist you to purchase a health insurance policy. Additional information is available upon request).
                 </div>
-                <div className="mb-3">
+                <div className="m-3">
                     9. Understand that during your term of service with BFP, you are not coming on a tour or a vacation, but you are coming to serve
                     in a volunteer position that is vital to the organization.
                 </div>
-                <div className="mb-3">
+                <div className="m-3">
                     10. Understand that the Israeli public perceives you as an ambassador for Jesus Christ and a representative of BFP. The future of
                     our work in Israel depends largely upon this display of Christian character and faithfulness.
                 </div>
-                <div className="mb-3">11. Live and work in an environment where conditions are diverse due to language and cultural differences.</div>
-                <div className="mb-3">12. Understand that luxuries found at “home” may be absent.</div>
+                <div className="m-3">11. Live and work in an environment where conditions are diverse due to language and cultural differences.</div>
+                <div className="m-3">12. Understand that luxuries found at “home” may be absent.</div>
             </section>
-            <section className="mb-5">
+            <section className="mb-5 text-xl">
                 <div className="mb-3">
                     Thank you for considering BFP as a place to volunteer your time and service in the land of Israel. We truly appreciate the desire
                     God has placed in your heart to serve and to give comfort to His people.
@@ -194,7 +203,7 @@ const TermsAndConditions = () => {
 const DoctrinalStatement = () => {
     return (
         <div className="p-4">
-            <div className="text-3xl m-5 font-serif italic text-center">BRIDGES FOR PEACEーDOCTRINAL STATEMENT</div>
+            <div className="text-2xl m-5 font-serif italic text-center">BRIDGES FOR PEACEーDOCTRINAL STATEMENT</div>
             <div className="mb-3 text-2xl">THE BIBLE</div>
             <ul className="m-3 mb-8">
                 <li>The Bible is the inspired Word of God (2 Tim. 3:16)</li>
@@ -237,7 +246,7 @@ const DoctrinalStatement = () => {
                 <li>All believers shall be joint heirs with the Messiah (Rom. 8:17)</li>
             </ul>
             <div className="mb-3 text-2xl">POSITION ON EVANGELISM</div>
-            <div className="m-3 mb-8">
+            <div className="m-3 mb-8 text-justify">
                 <div className="mb-3">
                     Bridges for Peace is a Jerusalem-based, Bible-believing Christian organization supporting Israel and building relationships
                     between Jews and Christians worldwide through education and practical deeds, expressing God’s love and mercy.
@@ -256,7 +265,7 @@ const DoctrinalStatement = () => {
                 </div>
             </div>
             <div className="mb-3 text-2xl">STATEMENT ON MESSIANIC JUDAISM</div>
-            <div className="m-3 mb-8">
+            <div className="m-3 mb-8 text-justify">
                 <div className="mb-3">
                     Recognizing the variety of callings within the body of Christ (e.g. of Paul as an apostle to the Gentiles; James and Peter to “the
                     circumcision”) we believe it is unwise to appear to be promoting the Messianic movement as Bridges for Peace’s mandate, while our

@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     if (req.method === 'POST') {
         try {
             const data = req.body;
-            const username = data.username;
+            const username = data.username.toLowerCase();
             const client = new KintoneRestAPIClient({
                 baseUrl: 'https://bfp.kintone.com',
                 // Use password authentication

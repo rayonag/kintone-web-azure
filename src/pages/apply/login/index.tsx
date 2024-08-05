@@ -104,7 +104,7 @@ const Login: React.FC = () => {
             console.log(res);
             if (res.ok) {
                 const data = await res.json();
-                setCookie(null, 'auth', username.value, {
+                setCookie(null, 'auth', username.value.toLowerCase(), {
                     maxAge: 7 * 24 * 60 * 60, // お好きな期限を
                     path: '/'
                 });
