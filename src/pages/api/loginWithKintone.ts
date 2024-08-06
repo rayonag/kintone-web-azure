@@ -28,7 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             });
             if (recordArray.length == 0) throw new Error('No user found');
             else {
-                if (recordArray.length > 1) throw new Error('More than one user found'); // TODO: add verification
+                if (recordArray.length > 1) console.log('More than one user found'); // TODO: add verification
 
                 const user = recordArray[0];
                 res.status(200).json({

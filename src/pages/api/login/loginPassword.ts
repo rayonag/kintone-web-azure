@@ -27,7 +27,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 res.status(501);
                 return;
             } else if (recordArray.length > 1) {
-                throw new Error('More than one user found');
+                // throw new Error('More than one user found');
+                res.status(200).json({ ref: recordArray[0]['$id'].value as string });
             } else if (recordArray.length == 1) {
                 res.status(200).json({ ref: recordArray[0]['$id'].value as string });
             }

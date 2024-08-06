@@ -30,7 +30,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             } else if (recordArray.length > 1) {
                 // More than one user found
                 console.log('More than one user found');
-                return res.status(400).json({ error: 'More than one user found' });
+                //return res.status(400).json({ error: 'More than one user found' });
+                res.status(200).json({ hasPassword: recordArray[0]['password'].value !== '' });
             } else if (recordArray.length == 1) {
                 res.status(200).json({ hasPassword: recordArray[0]['password'].value !== '' });
             }
