@@ -158,8 +158,8 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
                                 <Layout_fadeIn key="page">
                                     <div style={{ height: '95vh', width: '100vw', display: 'flex', flexDirection: 'column' }}>
                                         {isIframeLoading && (
-                                            <div style={{ flex: 1, border: 'none', marginTop: '2vh', height: '100%', backgroundColor: '#012C66' }}>
-                                                <div className="my-10 mx-24 p-4 bg-white">
+                                            <div className="flex justify-center mt-[2vh] h-full bg-[#012C66] p-4 md:px-16">
+                                                <div className="my-10 mx-24 p-4 bg-white w-full max-w-[1250px] max-h-[500px] rounded-md">
                                                     <div className="flex h-fit items-center">
                                                         {Array(10)
                                                             .fill(0)
@@ -170,19 +170,22 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
                                                                 </>
                                                             ))}
                                                     </div>
-                                                    <Skeleton className="text-4xl my-6" style={{ width: '30rem' }} />
+                                                    <Skeleton className="text-4xl my-6" style={{ width: '30rem', maxWidth: '90%' }} />
                                                     <div className="my-10"></div>{' '}
                                                     {Array(2)
                                                         .fill(0)
                                                         .map((_, index) => (
                                                             <div key={index} className="my-8">
-                                                                <Skeleton className="text-2xl" style={{ width: '10rem' }} />
-                                                                <Skeleton className="text-4xl" style={{ width: '16rem' }} />
+                                                                <Skeleton className="text-2xl" style={{ width: '10rem', maxWidth: '70%' }} />
+                                                                <Skeleton className="text-4xl" style={{ width: '16rem', maxWidth: '70%' }} />
                                                             </div>
                                                         ))}
                                                     <div className="mt-10 flex">
-                                                        <Skeleton className="text-3xl" style={{ width: '5rem', marginRight: '10px' }} />
-                                                        <Skeleton className="text-3xl" style={{ width: '10rem' }} />
+                                                        <Skeleton
+                                                            className="text-3xl"
+                                                            style={{ width: '5rem', maxWidth: '70%', marginRight: '10px' }}
+                                                        />
+                                                        <Skeleton className="text-3xl" style={{ width: '10rem', maxWidth: '70%' }} />
                                                     </div>
                                                 </div>
                                             </div>

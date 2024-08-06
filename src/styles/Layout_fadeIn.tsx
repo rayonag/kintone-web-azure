@@ -13,7 +13,7 @@ const Layout_fadeIn: FC<Layout_fadeInProps> = ({ key, children }) => {
     return (
         <motion.div
             key={key || 'page'}
-            className="h-screen w-screen relative"
+            className="h-screen w-[98vh] relative" // w-screen has issues with horizontal scroll bar
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
