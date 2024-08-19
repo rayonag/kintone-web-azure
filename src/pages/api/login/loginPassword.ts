@@ -21,7 +21,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             });
             const recordArray = await client.record.getAllRecords({
                 app: VolunteerApplicationMasterAppID as string,
-                condition: `email="${username}" and password="${password}"`
+                condition: `email="${username}" and password="${password}"`,
+                orderBy: 'ref desc'
             });
             if (recordArray.length == 0) {
                 res.status(501);

@@ -31,13 +31,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 return;
             } else if (resp.length > 1) {
                 res.json({
-                    res: resp[0]['$id'].value
+                    res: resp[0]
                 });
                 res.end(); // return the newest application
                 return;
             } else if (resp.length == 1) {
                 res.json({
-                    res: resp[0]['$id'].value
+                    res: resp[0]
                 });
                 res.end();
                 return;

@@ -22,7 +22,7 @@ import ConfirmationModal from './views/Confirmation';
 import { useDashboardUser } from '@/common/context/dashboardUser';
 import Link from 'next/link';
 
-const HealthQuestionnaire = () => {
+const HealthQuestionnaire = (props: { repo: any }) => {
     const dashboardUser = useDashboardUser();
     const [page, setPage] = useState(0);
     const { t } = useTranslation();
@@ -69,6 +69,20 @@ const HealthQuestionnaire = () => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
     }, []);
+    console.log('getValues()', getValues());
+    useEffect(() => {
+        if (props.repo.prefilledFormRecord) {
+            const data = props.repo.prefilledFormRecord;
+            console.log('data', data);
+            Object.keys(data).forEach((key) => {
+                if (formFields.some((arr) => arr.includes(key))) {
+                    if (data[key].type === 'DROP_DOWN') setValue(key, [data[key].value]);
+                    //if (data[key].type === 'RADIO_BUTTON') setValue(key, [data[key].value]);
+                    else setValue(key, data[key].value);
+                }
+            });
+        }
+    }, [props]);
     return (
         <form className="flex flex-col py-[6%] text-center">
             {page === 0 && <FirstPage register={register} errors={formatError} getValues={getValues} t={t} />}

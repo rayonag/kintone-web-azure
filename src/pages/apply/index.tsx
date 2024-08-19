@@ -20,6 +20,7 @@ import ArrowUpRight from '@/components/icons/ArrowUpRight';
 import logError from '@/common/logError';
 import { useRouter } from 'next/router';
 import RateUs from '@/components/modal/RateUs';
+import LoadingSpinner from '@/components/loading/LoadingSpinner';
 // application steps that matches the kintone app
 export type ApplicationStepsMasterApp =
     | 'Applying'
@@ -177,7 +178,9 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                         </button>
                     </div>
                 ) : (
-                    <></>
+                    <>
+                        <LoadingSpinner />
+                    </>
                 )}
             </div>
         </Layout>

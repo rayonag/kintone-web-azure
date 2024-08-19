@@ -3,13 +3,20 @@ import { useEffect, useState, useCallback } from 'react';
 
 import Link from 'next/link';
 import HealthQuestionnaire from '@/components/health-questionnaire/form/Form';
-import { KintoneUserName, KintonePassword, VolunteerApplicationMasterAppID } from '@/common/env';
+import {
+    KintoneUserName,
+    KintonePassword,
+    VolunteerApplicationMasterAppID,
+    VolunteerApplicationAppID,
+    PersonalHealthQuestionnaireAppID
+} from '@/common/env';
 import { REST_OnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
 import Layout_slideUp from '@/styles/Layout_slideUp';
 import Layout_fadeIn from '@/styles/Layout_fadeIn';
+import { REST_SavedVolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
 
 const Dashboard = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const formSubmitted = repo?.formSubmitted;
@@ -28,7 +35,7 @@ const Dashboard = ({ repo }: InferGetServerSidePropsType<typeof getServerSidePro
             ) : (
                 <Layout_fadeIn key="page">
                     <div className="flex flex-col items-center justify-center min-h-[95vh] w-full overflow-hidden">
-                        <HealthQuestionnaire />
+                        <HealthQuestionnaire repo={repo} />
                     </div>
                 </Layout_fadeIn>
             )}
@@ -39,6 +46,7 @@ export default Dashboard;
 
 type Repo = {
     formSubmitted: boolean;
+    prefilledFormRecord: any;
 };
 export const getServerSideProps = (async (context) => {
     const cookies = parseCookies(context);
@@ -54,8 +62,19 @@ export const getServerSideProps = (async (context) => {
         app: VolunteerApplicationMasterAppID as string,
         id: cookies.ref
     });
+    let prefilledFormRecord = undefined;
+    if (resp.record['returnRef'].value) {
+        const resp3 = await client.record.getAllRecords<any>({
+            app: PersonalHealthQuestionnaireAppID as string,
+            condition: `ref=${resp.record['returnRef'].value}`
+        });
+        if (resp3) prefilledFormRecord = resp3[0];
+    }
     //console.log('resp', resp);
-    const repo: Repo = { formSubmitted: resp.record['formSubmission'].value.findIndex((arr) => arr == 'Personal Health Questionnaire') > -1 };
+    const repo: Repo = {
+        prefilledFormRecord: prefilledFormRecord,
+        formSubmitted: resp.record['formSubmission'].value.findIndex((arr) => arr == 'Personal Health Questionnaire') > -1
+    };
     // Pass data to the page via props
     return { props: { repo } };
 }) satisfies GetServerSideProps<{ repo: Repo } | {}>;

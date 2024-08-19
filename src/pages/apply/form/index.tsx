@@ -12,7 +12,7 @@ import { shortTermApplicationURL, volunteerApplicationURL, zealousAplicationURL 
 import postIsFirstTime from '@/common/checklist/postIsFirstTime';
 import Link from 'next/link';
 import Layout_fadeIn from '@/styles/Layout_fadeIn';
-import { REST_VolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
+import { REST_VolunteerApplicationForm, REST_SavedVolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
 import logError from '@/common/logError';
 import { NationalOffice } from '@/common/context/offices';
 import FirstTimeTips from './FirstTimeTips';
@@ -20,6 +20,7 @@ import { useLoading } from '@/common/context/loading';
 
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import ViewMyForm from './ViewMyForm';
 
 const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     // State to track whether the iframe content is loading
@@ -34,20 +35,7 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
 
     const type = repo?.type || null;
     const formSubmitted = repo?.formSubmitted || false;
-
-    const getIframeLink = (type: string | null) => {
-        switch (type) {
-            case 'Long Term':
-                return volunteerApplicationURL;
-            case 'Short Term':
-                return shortTermApplicationURL;
-            case 'Zealous':
-                return zealousAplicationURL;
-            default:
-                return '';
-        }
-    };
-    const iframeLink = getIframeLink(type);
+    const iframeLink = repo?.prefilledFormURL || `${getIframeLink(type)}&ref=${ref}&office=${office}`;
     useEffect(() => {
         const ref = dashboardUser.ref;
         if (ref == undefined) {
@@ -105,9 +93,6 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
                 console.log('error', e);
                 return;
             }
-            console.log(data); // This will log the message data
-            console.log('form', data?.form);
-            console.log('public', data?.form?.publicCode); // This will log the message data
             if (data?.form?.publicCode) {
                 const res = await fetch('/api/reference/postApplicationForm', {
                     method: 'POST',
@@ -116,8 +101,7 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
                     },
                     body: JSON.stringify({ ref: dashboardUser.ref }) // Replace with your data
                 });
-                console.log('res', res);
-                alert('Thank you for submitting application form.');
+                //alert('Thank you for submitting application form.');
                 router.push('/apply');
             }
         };
@@ -131,6 +115,7 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
     useEffect(() => {
         if (!isIframeLoading && !formSubmitted && !isFirstTimeOnForm && !isIframeLoaded) setIsIframeLoading(true);
     }, [formSubmitted, isFirstTimeOnForm]);
+    const [viewMyForm, setViewMyForm] = useState(false);
 
     return (
         // Use a wrapper div for the entire page
@@ -140,7 +125,14 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
                     <>
                         <Layout_fadeIn key="page">
                             <div className="flex flex-col items-center justify-center h-[95vh]">
-                                <div>Thank you for submitting {dashboardUser.type} application form.</div>
+                                <div>Thank you for submitting {type} application form.</div>
+                                {viewMyForm ? (
+                                    <ViewMyForm />
+                                ) : (
+                                    <button className="btn" onClick={() => setViewMyForm(true)}>
+                                        View Your Response
+                                    </button>
+                                )}
                                 <Link href="/apply" className="btn">
                                     Go to Top
                                 </Link>
@@ -193,7 +185,7 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
                                         {office && (
                                             <iframe
                                                 title="Embedded Content"
-                                                src={`${iframeLink}&ref=${ref}&office=${office}`} // Replace with your desired URL
+                                                src={`${iframeLink}`} // Replace with your desired URL
                                                 style={{ flex: 1, border: 'none', marginTop: '2vh', display: `${isIframeLoading ? 'none' : ''}` }} // Make the iframe fill the remaining space
                                                 onLoad={handleIframeLoad}
                                             ></iframe>
@@ -217,6 +209,7 @@ type Repo = {
     type: string | null;
     formSubmitted: boolean;
     office: NationalOffice;
+    prefilledFormURL: string | null;
 };
 export const getServerSideProps = (async (context) => {
     try {
@@ -233,34 +226,80 @@ export const getServerSideProps = (async (context) => {
             app: VolunteerApplicationMasterAppID as string,
             id: cookies.ref
         });
-        const resp2 = await client.record.getAllRecords<REST_VolunteerApplicationForm>({
+        const resp2 = await client.record.getAllRecords<REST_SavedVolunteerApplicationForm>({
             app: VolunteerApplicationAppID as string,
             condition: `ref="${cookies.ref}"`
         });
+        let prefilledFormURL = null;
         // check if not yet
+        const getPrefilledFormURL = (record: REST_SavedVolunteerApplicationForm) => {
+            let query = '';
+            Object.keys(record).forEach((key) => {
+                const typedKey = key as keyof REST_VolunteerApplicationForm;
+                // ref
+                if (key === 'ref') {
+                    query += `${key}=${cookies.ref}&`;
+                    return;
+                }
+                if (!Array.isArray(record[typedKey].value) || record[typedKey].value.length === 0) {
+                    // if text box, radio, select, number, date
+                    query += `${key}=${record[typedKey].value}&`;
+                    return;
+                }
+                if (typeof record[typedKey].value[0] === 'object' && record[typedKey].value[0] !== null) {
+                    // if tables
+                    if (record[typedKey].value[0].value) {
+                        record[typedKey].value.forEach((table: any, index: number) => {
+                            Object.keys(table.value).forEach((tableKey) => {
+                                const typedTableKey = tableKey as keyof REST_VolunteerApplicationForm;
+                                query += `${key}-${index}-${tableKey}=${table.value[typedTableKey].value}&`;
+                            });
+                        });
+                    }
+                    // if files
+                    return;
+                }
+                if (typeof record[typedKey].value[0] === 'string') {
+                    // if checkbox array
+                    query += `${key}=${record[typedKey].value.join(',')}&`;
+                    return;
+                }
+            });
+            return `${getIframeLink(resp.record['type'].value)}?${query}`;
+        };
         if (resp2.length > 0) {
             if (resp.record['formSubmission'].value.findIndex((arr) => arr == 'Application Form Completed') == -1) {
-                console.log('first', [...resp.record['formSubmission'].value, 'Application Form Completed']);
-                await client.record.updateRecord({
-                    app: VolunteerApplicationMasterAppID as string,
-                    id: cookies.ref,
-                    record: {
-                        formSubmission: { value: [...resp.record['formSubmission'].value, 'Application Form Completed'] },
-                        status: { value: 'Complete Application Form' }
-                    }
-                });
-                resp = await client.record.getRecord<REST_OnlineVolunteerApplication>({
-                    app: VolunteerApplicationMasterAppID as string,
-                    id: cookies.ref
-                });
+                // check if form is submitted
+                if (resp2[0]) {
+                    await client.record.updateRecord({
+                        app: VolunteerApplicationMasterAppID as string,
+                        id: cookies.ref,
+                        record: {
+                            formSubmission: { value: [...resp.record['formSubmission'].value, 'Application Form Completed'] },
+                            status: { value: 'Complete Application Form' }
+                        }
+                    });
+                    resp = await client.record.getRecord<REST_OnlineVolunteerApplication>({
+                        app: VolunteerApplicationMasterAppID as string,
+                        id: cookies.ref
+                    });
+                }
             }
+        }
+        if (resp.record['returnRef'].value) {
+            const resp3 = await client.record.getAllRecords<REST_SavedVolunteerApplicationForm>({
+                app: VolunteerApplicationAppID as string,
+                condition: `ref=${resp.record['returnRef'].value}`
+            });
+            if (resp3) prefilledFormURL = getPrefilledFormURL(resp3[0]);
         }
         //console.log('resp', resp);
         const repo: Repo = {
             isFirstTimeOnForm: resp.record['isFirstTimeOnForm'].value == 'true',
             type: resp.record['type'].value || null,
             formSubmitted: resp.record['formSubmission'].value.findIndex((arr) => arr == 'Application Form Completed') > -1,
-            office: resp.record['office'].value
+            office: resp.record['office'].value,
+            prefilledFormURL: prefilledFormURL
         };
         console.log('repo', repo);
         // Pass data to the page via props
@@ -271,3 +310,15 @@ export const getServerSideProps = (async (context) => {
         return { props: {} };
     }
 }) satisfies GetServerSideProps<{ repo: Repo } | {}>;
+const getIframeLink = (type: string | null) => {
+    switch (type) {
+        case 'Long Term':
+            return volunteerApplicationURL;
+        case 'Short Term':
+            return shortTermApplicationURL;
+        case 'Zealous':
+            return zealousAplicationURL;
+        default:
+            return '';
+    }
+};
