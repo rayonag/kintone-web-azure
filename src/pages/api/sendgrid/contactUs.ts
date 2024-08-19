@@ -13,10 +13,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
         const name = data.name;
         const email = data.email;
         const message = data.message;
+        const office = data.office;
         sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
         const msg = {
-            to: 'intl.personnel@bridgesforpeace.com', // Change to your recipient
-            cc: 'ronaga@bridgesforpeace.com',
+            to: office ? office : 'intl.personnel@bridgesforpeace.com', // Change to your recipient
+            cc: office ? 'intl.personnel@bridgesforpeace.com' : '',
+            bcc: 'ronaga@bridgesforpeace.com',
             from: 'BFP Noreply<noreply@bridgesforpeace.com>', // Change to your verified sender
             subject: '[Online Volunteer Application]New message from Contact Us Form',
             html: `<div>Name: ${name}</div><div>Email: ${email}</div><div>Message: ${message}</div>`
