@@ -74,8 +74,8 @@ const HealthQuestionnaire = (props: { repo: any }) => {
         if (props.repo.prefilledFormRecord) {
             const data = props.repo.prefilledFormRecord;
             console.log('data', data);
-            Object.keys(data).forEach((key) => {
-                if (formFields.some((arr) => arr.includes(key))) {
+            Object.keys(data).forEach((key: any) => {
+                if (formFields.includes(key)) {
                     if (data[key].type === 'DROP_DOWN') setValue(key, [data[key].value]);
                     //if (data[key].type === 'RADIO_BUTTON') setValue(key, [data[key].value]);
                     else setValue(key, data[key].value);

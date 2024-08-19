@@ -19,6 +19,7 @@ export interface OnlineVolunteerApplication {
     documentsUSA: kintone.fieldTypes.CheckBox;
     reviewAbout: kintone.fieldTypes.CheckBox;
     reviewFaq: kintone.fieldTypes.CheckBox;
+    returnRef: kintone.fieldTypes.Number;
 }
 export interface SavedOnlineVolunteerApplication extends OnlineVolunteerApplication {
     $id: kintone.fieldTypes.Id;
@@ -51,6 +52,7 @@ export type REST_OnlineVolunteerApplication = {
     documentsUSA: KintoneRecordField.CheckBox;
     reviewAbout: KintoneRecordField.CheckBox;
     reviewFaq: KintoneRecordField.CheckBox;
+    returnRef: KintoneRecordField.Number;
 };
 
 export type REST_SavedOnlineVolunteerApplication = REST_OnlineVolunteerApplication & {
