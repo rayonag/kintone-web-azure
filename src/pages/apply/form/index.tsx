@@ -21,8 +21,11 @@ import { useLoading } from '@/common/context/loading';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import ViewMyForm from './ViewMyForm';
+import Application from '@/features/common/forms/application';
 
 const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+    return <Application />;
+
     // State to track whether the iframe content is loading
     const { setIsLoading } = useLoading();
     const [isIframeLoading, setIsIframeLoading] = useState(false);
