@@ -1,11 +1,131 @@
-import React from 'react';
-import Step1 from './steps/Step1';
+import React, { useEffect, useReducer, useState } from 'react';
+import Step1 from './views/Step1';
+import { useDashboardUser } from '@/common/context/dashboardUser';
+import { langReducer } from '@/components/health-questionnaire/form/hooks/lang';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { z } from 'zod';
+import { useShallow } from 'zustand/react/shallow';
+import useUserStore from '../../portal/store';
+import {
+    HealthQuestionnaireType,
+    HealthQuestionnaireDefaultValues,
+    HealthQuestionnaireSchema,
+    customErrorMap,
+    formFields,
+    ApplicationSchema
+} from './schema';
 
-const Application = () => {
+const Application = (props: { repo: any }) => {
+    const [page, setPage] = useState(0);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    // for future use on multi language
+    const initialLang = 'en';
+    const [locale, dispatch] = useReducer<(state: string, actions: string) => string>(langReducer, initialLang);
+
+    const dashboardUser = useDashboardUser();
+    const { username } = useUserStore(
+        useShallow((state) => ({
+            username: state.username
+        }))
+    );
+    console.log('username', username);
+    const { t } = useTranslation();
+    const {
+        formState: { errors: formatError },
+        trigger,
+        getValues,
+        setValue,
+        register
+    } = useForm<HealthQuestionnaireType>({
+        mode: 'onChange',
+        defaultValues: HealthQuestionnaireDefaultValues,
+        resolver: zodResolver(ApplicationSchema)
+    });
+
+    z.setErrorMap(customErrorMap(t));
+
+    const validate = async (page: number) => {
+        const isValid = await trigger(formFields[page]);
+        if (isValid) return true;
+        else return false;
+    };
+
+    useEffect(() => {
+        if (dashboardUser.ref) setValue('ref', dashboardUser.ref);
+        if (dashboardUser.office) setValue('office', dashboardUser.office);
+    }, [dashboardUser]);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [page]);
+    // confirm before leave page. TODO: dirty form check not working
+    useEffect(() => {
+        const handleBeforeUnload = (event: any) => {
+            event.preventDefault();
+            event.returnValue = '';
+        };
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, []);
+    useEffect(() => {
+        if (props.repo.prefilledFormRecord) {
+            const data = props.repo.prefilledFormRecord;
+            console.log('data', data);
+            Object.keys(data).forEach((key: any) => {
+                if (formFields.includes(key)) {
+                    if (data[key].type === 'DROP_DOWN') setValue(key, [data[key].value]);
+                    //if (data[key].type === 'RADIO_BUTTON') setValue(key, [data[key].value]);
+                    else setValue(key, data[key].value);
+                }
+            });
+        }
+    }, [props]);
     return (
-        <div>
-            <Step1 />
-        </div>
+        <form className="flex flex-col py-[6%] text-center bg-white">
+            <Step1 register={register} getValues={getValues} errors={formatError} t={t} />
+            {/* {page === 0 && <FirstPage register={register} errors={formatError} getValues={getValues} t={t} />}
+            {page === 1 && <SecondPage register={register} errors={formatError} getValues={getValues} t={t} />}
+            {page === 2 && <ThirdPage register={register} errors={formatError} t={t} />}
+            <ConfirmationModal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} getValues={getValues} t={t} />
+            {page != 2 && (
+                <button
+                    type="button"
+                    onClick={async () => {
+                        const valid = await validate(page);
+                        if (valid) setPage(page + 1);
+                    }}
+                    className="btn-wide"
+                >
+                    {t('system.next')}
+                </button>
+            )}
+            {page == 2 && (
+                <button
+                    type="button"
+                    onClick={async () => {
+                        const valid = await validate(page);
+                        if (valid) setModalIsOpen(true);
+                    }}
+                    className="btn-wide"
+                >
+                    {t('system.submit')}
+                </button>
+            )}
+            {page != 0 && (
+                <button type="button" onClick={() => setPage(page - 1)} className="btn-wide">
+                    {t('system.back')}
+                </button>
+            )}
+            {page == 0 && (
+                <Link type="button" href="/apply" className="btn-wide">
+                    Back to Top
+                </Link>
+            )} */}
+        </form>
     );
 };
 

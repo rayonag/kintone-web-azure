@@ -1,40 +1,42 @@
 'use client';
-import { HealthQuestionnaireDefaultValues, HealthQuestionnaireSchema, HealthQuestionnaireType, formFields } from './schema/healthQuestionnaireSchema';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { SubmitHandler, useForm, useFieldArray, useWatch, SubmitErrorHandler } from 'react-hook-form';
 import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import Link from 'next/link';
+
+import { HealthQuestionnaireDefaultValues, HealthQuestionnaireSchema, HealthQuestionnaireType, formFields } from './schema/healthQuestionnaireSchema';
+import { useDashboardUser } from '@/common/context/dashboardUser';
+import { useTranslation } from 'react-i18next';
+import { useReducer } from 'react';
+import { langReducer } from './hooks/lang';
+import { customErrorMap } from './schema/healthQuestionnaireSchema';
 
 import FirstPage from './views/FirstPage';
 import SecondPage from './views/SecondPage';
-
-import { useTranslation } from 'react-i18next';
-
-import { useReducer } from 'react';
-import { langReducer } from './hooks/lang';
-
-import { customErrorMap } from './schema/healthQuestionnaireSchema';
-import { z } from 'zod';
-import postToKintone from './hooks/postPersonalHealthQuestionnaire';
-
-import './translations/config'; //i18
 import ThirdPage from './views/ThirdPage';
 import ConfirmationModal from './views/Confirmation';
-import { useDashboardUser } from '@/common/context/dashboardUser';
-import Link from 'next/link';
+
+import './translations/config'; //i18
+import useUserStore from '@/features/common/portal/store';
+import { useShallow } from 'zustand/react/shallow';
 
 const HealthQuestionnaire = (props: { repo: any }) => {
-    const dashboardUser = useDashboardUser();
     const [page, setPage] = useState(0);
-    const { t } = useTranslation();
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    // for future use on multi language
     const initialLang = 'en';
     const [locale, dispatch] = useReducer<(state: string, actions: string) => string>(langReducer, initialLang);
-    const [modalIsOpen, setModalIsOpen] = useState(false);
-    z.setErrorMap(customErrorMap(t));
 
-    const onInvalid: SubmitErrorHandler<HealthQuestionnaireType> = (data) => {};
-
+    const dashboardUser = useDashboardUser();
+    const { username } = useUserStore(
+        useShallow((state) => ({
+            username: state.username
+        }))
+    );
+    console.log('username', username);
+    const { t } = useTranslation();
     const {
-        handleSubmit,
         formState: { errors: formatError },
         trigger,
         getValues,
@@ -45,16 +47,20 @@ const HealthQuestionnaire = (props: { repo: any }) => {
         defaultValues: HealthQuestionnaireDefaultValues,
         resolver: zodResolver(HealthQuestionnaireSchema)
     });
+
+    z.setErrorMap(customErrorMap(t));
+
     const validate = async (page: number) => {
         const isValid = await trigger(formFields[page]);
         if (isValid) return true;
         else return false;
     };
+
     useEffect(() => {
-        console.log('dashboardUser', dashboardUser);
         if (dashboardUser.ref) setValue('ref', dashboardUser.ref);
         if (dashboardUser.office) setValue('office', dashboardUser.office);
     }, [dashboardUser]);
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [page]);
@@ -69,7 +75,6 @@ const HealthQuestionnaire = (props: { repo: any }) => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
     }, []);
-    console.log('getValues()', getValues());
     useEffect(() => {
         if (props.repo.prefilledFormRecord) {
             const data = props.repo.prefilledFormRecord;

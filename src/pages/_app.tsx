@@ -10,11 +10,24 @@ import { DashboardUserContext, DashboardUser } from '@/common/context/dashboardU
 import { LoadingContext } from '@/common/context/loading';
 import fetchUserApplicationMaster from '@/common/fetchUserApplicationMaster';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
-
+import useUserStore from '@/features/common/portal/store';
+import { useShallow } from 'zustand/react/shallow';
 const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
     const router = useRouter();
     const cookies = parseCookies(ctx);
-
+    //
+    const { username, name, initUser } = useUserStore(
+        useShallow((state) => ({
+            username: state.username,
+            name: state.name,
+            initUser: state.initUser
+        }))
+    );
+    useEffect(() => {
+        console.log('inituser', username);
+        initUser();
+    }, []);
+    //
     const DashboardUserProvider: ({ children }: { children: JSX.Element }) => JSX.Element = ({ children }) => {
         const [dashboardUser, setDashboardUser] = useState<DashboardUser>({
             isLoggedIn: false,

@@ -24,7 +24,7 @@ import ViewMyForm from './ViewMyForm';
 import Application from '@/features/common/forms/application';
 
 const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-    return <Application />;
+    return <Application repo={{ prefilledFormRecord: null }} />;
 
     // State to track whether the iframe content is loading
     const { setIsLoading } = useLoading();
