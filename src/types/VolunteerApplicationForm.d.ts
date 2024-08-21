@@ -3,9 +3,9 @@ export interface VolunteerApplicationForm {
     hasHandicap: kintone.fieldTypes.RadioButton;
     type: kintone.fieldTypes.RadioButton;
     refOtherRelationship: kintone.fieldTypes.SingleLineText;
-    maxAbailability: kintone.fieldTypes.SingleLineText;
+    maxAvailability: kintone.fieldTypes.SingleLineText;
     emergencyRelationship: kintone.fieldTypes.SingleLineText;
-    minAbailability: kintone.fieldTypes.SingleLineText;
+    minAvailability: kintone.fieldTypes.SingleLineText;
     skillJournalism: kintone.fieldTypes.Number;
     hasFriendsIsrael: kintone.fieldTypes.RadioButton;
     hasConvictedTrafficAccident: kintone.fieldTypes.RadioButton;
@@ -39,7 +39,7 @@ export interface VolunteerApplicationForm {
     refFriendPhone: kintone.fieldTypes.SingleLineText;
     skillCooking: kintone.fieldTypes.Number;
     refEmployerPhone: kintone.fieldTypes.SingleLineText;
-    hasBeen12monthsLicense: kintone.fieldTypes.RadioButton;
+    hasHeldLicense12Months: kintone.fieldTypes.RadioButton;
     skillElectrical: kintone.fieldTypes.Number;
     listForeignCountries: kintone.fieldTypes.SingleLineText;
     skillOperatingSystem: kintone.fieldTypes.Number;
@@ -56,6 +56,7 @@ export interface VolunteerApplicationForm {
     canLift33lbs: kintone.fieldTypes.RadioButton;
     skillComputer: kintone.fieldTypes.MultiLineText;
     skillRepair: kintone.fieldTypes.Number;
+    ifNoPosition: kintone.fieldTypes.RadioButton;
     personalDoctorPhone: kintone.fieldTypes.SingleLineText;
     hasDriverLicense: kintone.fieldTypes.RadioButton;
     christianExperience: kintone.fieldTypes.MultiLineText;
@@ -122,7 +123,6 @@ export interface VolunteerApplicationForm {
     passportIssued: kintone.fieldTypes.SingleLineText;
     skillVideo: kintone.fieldTypes.Number;
     fullName: kintone.fieldTypes.SingleLineText;
-    ラジオボタン_1: kintone.fieldTypes.RadioButton;
     emergencyName: kintone.fieldTypes.SingleLineText;
     hasFamilySupport: kintone.fieldTypes.RadioButton;
     refPasterName: kintone.fieldTypes.SingleLineText;
@@ -193,7 +193,6 @@ export interface SavedVolunteerApplicationForm extends VolunteerApplicationForm 
     更新日時: kintone.fieldTypes.UpdatedTime;
     Created_datetime: kintone.fieldTypes.CreatedTime;
 }
-
 import { KintoneRecordField } from '@kintone/rest-api-client';
 
 export type REST_VolunteerApplicationForm = {
@@ -254,6 +253,7 @@ export type REST_VolunteerApplicationForm = {
     canLift33lbs: KintoneRecordField.RadioButton;
     skillComputer: KintoneRecordField.MultiLineText;
     skillRepair: KintoneRecordField.Number;
+    ifNoPosition: KintoneRecordField.RadioButton;
     personalDoctorPhone: KintoneRecordField.SingleLineText;
     hasDriverLicense: KintoneRecordField.RadioButton;
     christianExperience: KintoneRecordField.MultiLineText;
@@ -320,7 +320,6 @@ export type REST_VolunteerApplicationForm = {
     passportIssued: KintoneRecordField.SingleLineText;
     skillVideo: KintoneRecordField.Number;
     fullName: KintoneRecordField.SingleLineText;
-    ラジオボタン_1: KintoneRecordField.RadioButton;
     emergencyName: KintoneRecordField.SingleLineText;
     hasFamilySupport: KintoneRecordField.RadioButton;
     refPasterName: KintoneRecordField.SingleLineText;
@@ -382,7 +381,6 @@ export type REST_VolunteerApplicationForm = {
         }>;
     };
 };
-
 export type REST_SavedVolunteerApplicationForm = REST_VolunteerApplicationForm & {
     $id: KintoneRecordField.Id;
     $revision: KintoneRecordField.Revision;

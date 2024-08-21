@@ -21,7 +21,7 @@ import { useLoading } from '@/common/context/loading';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import ViewMyForm from './ViewMyForm';
-import Application from '@/features/common/forms/application';
+import Application from '@/features/common/forms/applicationForm';
 
 const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     return <Application repo={{ prefilledFormRecord: null }} />;
