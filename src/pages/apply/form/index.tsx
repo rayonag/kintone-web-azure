@@ -21,10 +21,10 @@ import { useLoading } from '@/common/context/loading';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import ViewMyForm from './ViewMyForm';
-import Application from '@/features/common/forms/applicationForm';
+import ApplicationForm from '@/features/common/forms/applicationForm';
 
-const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-    return <Application repo={{ prefilledFormRecord: null }} />;
+const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+    return <ApplicationForm repo={{ prefilledFormRecord: null }} />;
 
     // State to track whether the iframe content is loading
     const { setIsLoading } = useLoading();
@@ -205,7 +205,7 @@ const ApplicationForm = ({ repo }: InferGetServerSidePropsType<typeof getServerS
 };
 
 // Export the component for use in other files
-export default ApplicationForm;
+export default Page;
 
 type Repo = {
     isFirstTimeOnForm: boolean;

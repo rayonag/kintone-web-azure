@@ -5,11 +5,12 @@ import SectionTitle from '../../components/SectionTitle';
 import Input from '../../components/Input';
 import { TFunction } from 'i18next';
 import { UseFormRegister, FieldErrors, UseFormGetValues } from 'react-hook-form';
+import { ApplicationFormType } from '../schema';
 
 type Step1Props = {
-    register: UseFormRegister<ApplicationType>;
-    errors: FieldErrors<ApplicationType>;
-    getValues: UseFormGetValues<ApplicationType>;
+    register: UseFormRegister<ApplicationFormType>;
+    errors: FieldErrors<ApplicationFormType>;
+    getValues: UseFormGetValues<ApplicationFormType>;
     t: TFunction<'translation'>;
 };
 const Step1: FC<Step1Props> = ({ register, errors, getValues, t }) => {

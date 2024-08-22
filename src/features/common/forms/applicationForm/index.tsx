@@ -8,16 +8,10 @@ import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import { useShallow } from 'zustand/react/shallow';
 import useUserStore from '../../portal/store';
-import {
-    HealthQuestionnaireType,
-    HealthQuestionnaireDefaultValues,
-    HealthQuestionnaireSchema,
-    customErrorMap,
-    formFields,
-    ApplicationSchema
-} from './schema';
+import { ApplicationFormFields, ApplicationFormSchema, ApplicationFormType, customErrorMap } from './schema';
+import ProgressBar from '../components/ProgressBar';
 
-const Application = (props: { repo: any }) => {
+const ApplicationForm = (props: { repo: any }) => {
     const [page, setPage] = useState(0);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     // for future use on multi language
@@ -38,19 +32,19 @@ const Application = (props: { repo: any }) => {
         getValues,
         setValue,
         register
-    } = useForm<HealthQuestionnaireType>({
+    } = useForm<ApplicationFormType>({
         mode: 'onChange',
-        defaultValues: HealthQuestionnaireDefaultValues,
-        resolver: zodResolver(ApplicationSchema)
+        defaultValues: {},
+        resolver: zodResolver(ApplicationFormSchema)
     });
 
     z.setErrorMap(customErrorMap(t));
 
-    const validate = async (page: number) => {
-        const isValid = await trigger(formFields[page]);
-        if (isValid) return true;
-        else return false;
-    };
+    // const validate = async (page: number) => {
+    //     const isValid = await trigger(ApplicationFormFields[page]);
+    //     if (isValid) return true;
+    //     else return false;
+    // };
 
     useEffect(() => {
         if (dashboardUser.ref) setValue('ref', dashboardUser.ref);
@@ -76,7 +70,7 @@ const Application = (props: { repo: any }) => {
             const data = props.repo.prefilledFormRecord;
             console.log('data', data);
             Object.keys(data).forEach((key: any) => {
-                if (formFields.includes(key)) {
+                if (ApplicationFormFields.includes(key)) {
                     if (data[key].type === 'DROP_DOWN') setValue(key, [data[key].value]);
                     //if (data[key].type === 'RADIO_BUTTON') setValue(key, [data[key].value]);
                     else setValue(key, data[key].value);
@@ -85,9 +79,11 @@ const Application = (props: { repo: any }) => {
         }
     }, [props]);
     return (
-        <form className="flex flex-col py-[6%] text-center bg-white">
-            <Step1 register={register} getValues={getValues} errors={formatError} t={t} />
-            {/* {page === 0 && <FirstPage register={register} errors={formatError} getValues={getValues} t={t} />}
+        <div className="p-10 max-h-screen overflow-scroll">
+            <form className="flex flex-col my-14 bg-white border rounded-md">
+                <ProgressBar steps={9} currentStep={page + 4} />
+                <Step1 register={register} getValues={getValues} errors={formatError} t={t} />
+                {/* {page === 0 && <FirstPage register={register} errors={formatError} getValues={getValues} t={t} />}
             {page === 1 && <SecondPage register={register} errors={formatError} getValues={getValues} t={t} />}
             {page === 2 && <ThirdPage register={register} errors={formatError} t={t} />}
             <ConfirmationModal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} getValues={getValues} t={t} />
@@ -125,8 +121,9 @@ const Application = (props: { repo: any }) => {
                     Back to Top
                 </Link>
             )} */}
-        </form>
+            </form>
+        </div>
     );
 };
 
-export default Application;
+export default ApplicationForm;
