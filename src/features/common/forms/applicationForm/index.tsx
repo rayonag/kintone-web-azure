@@ -10,11 +10,14 @@ import { useShallow } from 'zustand/react/shallow';
 import useUserStore from '../../portal/store';
 import { ApplicationFormFields, ApplicationFormSchema, ApplicationFormType, customErrorMap } from './schema';
 import ProgressBar from '../components/ProgressBar';
+import './i18n/translations/config'; //i18
+import Link from 'next/link';
 
 const ApplicationForm = (props: { repo: any }) => {
     const [page, setPage] = useState(0);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     // for future use on multi language
+    const { t } = useTranslation('applicationForm');
     const initialLang = 'en';
     const [locale, dispatch] = useReducer<(state: string, actions: string) => string>(langReducer, initialLang);
 
@@ -25,7 +28,6 @@ const ApplicationForm = (props: { repo: any }) => {
         }))
     );
     console.log('username', username);
-    const { t } = useTranslation();
     const {
         formState: { errors: formatError },
         trigger,
@@ -40,11 +42,11 @@ const ApplicationForm = (props: { repo: any }) => {
 
     z.setErrorMap(customErrorMap(t));
 
-    // const validate = async (page: number) => {
-    //     const isValid = await trigger(ApplicationFormFields[page]);
-    //     if (isValid) return true;
-    //     else return false;
-    // };
+    const validate = async (page: number) => {
+        // const isValid = await trigger(ApplicationFormFields[page]);
+        // if (isValid) return true;
+        // else return false;
+    };
 
     useEffect(() => {
         if (dashboardUser.ref) setValue('ref', dashboardUser.ref);
@@ -80,9 +82,43 @@ const ApplicationForm = (props: { repo: any }) => {
     }, [props]);
     return (
         <div className="p-10 max-h-screen overflow-scroll">
-            <form className="flex flex-col my-14 bg-white border rounded-md">
-                <ProgressBar steps={9} currentStep={page + 4} />
+            <form className="flex flex-col my-14 p-10 bg-gray-50 border rounded-md">
+                <ProgressBar steps={9} currentStep={page + 1} />
                 <Step1 register={register} getValues={getValues} errors={formatError} t={t} />
+                {page != 2 && (
+                    <button
+                        type="button"
+                        onClick={async () => {
+                            // const valid = await validate(page);
+                            // if (valid) setPage(page + 1);
+                        }}
+                        className="btn-wide"
+                    >
+                        {t('system.next')}
+                    </button>
+                )}
+                {page == 2 && (
+                    <button
+                        type="button"
+                        onClick={async () => {
+                            // const valid = await validate(page);
+                            // if (valid) setModalIsOpen(true);
+                        }}
+                        className="btn-wide"
+                    >
+                        {t('system.submit')}
+                    </button>
+                )}
+                {page != 0 && (
+                    <button type="button" onClick={() => setPage(page - 1)} className="btn-wide">
+                        {t('system.back')}
+                    </button>
+                )}
+                {page == 0 && (
+                    <Link type="button" href="/apply" className="btn-wide">
+                        Back to Top
+                    </Link>
+                )}
                 {/* {page === 0 && <FirstPage register={register} errors={formatError} getValues={getValues} t={t} />}
             {page === 1 && <SecondPage register={register} errors={formatError} getValues={getValues} t={t} />}
             {page === 2 && <ThirdPage register={register} errors={formatError} t={t} />}

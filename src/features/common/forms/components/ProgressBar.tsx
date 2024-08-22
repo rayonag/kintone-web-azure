@@ -8,7 +8,7 @@ type StepProgressBarProps = {
 const StepProgressBar: FC<StepProgressBarProps> = ({ steps, currentStep }) => {
     return (
         <>
-            <div className="flex flex-col items-center justify-center gap-4 px-4 py-8 md:px-6 md:py-12">
+            <div className="flex flex-col items-center justify-center gap-4 pb-4 md:pb-8">
                 <div className="flex items-center justify-center gap-1 md:gap-4 w-full max-w-2xl">
                     {Array.from({ length: steps }).map((_, index) => (
                         <>

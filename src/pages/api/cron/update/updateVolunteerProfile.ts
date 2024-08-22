@@ -5,6 +5,7 @@ import { NextApiResponse } from 'next';
 import { calcAge, calcVacation, calcVacationDeputationTaken, calcWorkingYears } from '../../common/calc';
 import logError from '@/common/logError';
 import { DateTime } from 'luxon';
+import getWorkHistoryCurrent from '../../common/getWorkHistoryCurrent';
 
 const updateVolunteerProfile = async (res: NextApiResponse) => {
     try {
@@ -24,18 +25,16 @@ const updateVolunteerProfile = async (res: NextApiResponse) => {
             const returnRecord = {};
             // working years
             const years = calcWorkingYears(record);
-            if (years !== record['Years'].value) Object.assign(returnRecord, { Years: { value: years } });
+            if (parseInt(years).toFixed(1) !== parseInt(record['Years'].value).toFixed(1)) Object.assign(returnRecord, { Years: { value: years } });
             // work status
-            if (record['startDate'].value) {
-                const startDate = DateTime.fromISO(record['startDate'].value);
-                if (startDate < DateTime.now()) {
+            const history = getWorkHistoryCurrent(record);
+            // if no history make inactive, is there better validation?
+            if (!history) {
+                Object.assign(returnRecord, { Personal_Status: { value: 'Inactive' } });
+            } else if (history['startDate']) {
+                const startDate = DateTime.fromISO(history['startDate'].value || '');
+                if (startDate < DateTime.now() && record['Personal_Status'].value !== 'Current') {
                     Object.assign(returnRecord, { Personal_Status: { value: 'Current' } });
-                }
-                if (record['endDate'].value) {
-                    const endDate = DateTime.fromISO(record['endDate'].value);
-                    if (endDate < DateTime.now()) {
-                        Object.assign(returnRecord, { Personal_Status: { value: 'Inactive' } });
-                    }
                 }
             }
             // age
@@ -69,7 +68,7 @@ const updateVolunteerProfile = async (res: NextApiResponse) => {
         const filteredUpdatedRecords = updateRecords.filter((record) => Object.keys(record.record).length > 0);
 
         const resp = await client.record.updateAllRecords({
-            app: VolunteerProfieAppID as string, //119, //
+            app: VolunteerProfieAppID as string,
             records: filteredUpdatedRecords
         });
 

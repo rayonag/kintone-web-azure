@@ -1,13 +1,13 @@
 import React, { Dispatch, FC, SetStateAction, useState } from 'react';
 import { SubmitHandler, UseFormGetValues } from 'react-hook-form';
 import Modal from 'react-modal';
-import { HealthQuestionnaireType, formFields } from '../schema/applicationSchema';
 import { TFunction } from 'i18next';
-import postPersonalHealthQuestionnaire from '../hooks/postPersonalHealthQuestionnaire';
+import postPersonalHealthQuestionnaire from '../hooks/postApplicationForm';
 import { useRouter } from 'next/router';
 import { useDashboardUser } from '@/common/context/dashboardUser';
 import Link from 'next/link';
 import { useLoading } from '@/common/context/loading';
+import { ApplicationFormFields, ApplicationFormType } from '../schema';
 
 type ButtonProps = {
     label: string;
@@ -34,7 +34,7 @@ const Button: FC<ButtonProps> = ({ label, setIsHover, onclick }) => {
 type ConfirmationModalProps = {
     modalIsOpen: boolean;
     setModalIsOpen: Dispatch<SetStateAction<boolean>>;
-    getValues: UseFormGetValues<HealthQuestionnaireType>;
+    getValues: UseFormGetValues<ApplicationFormType>;
     t: TFunction<'translation'>;
 };
 const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIsOpen, getValues, t }) => {
@@ -56,12 +56,12 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIs
             maxHeight: '80vh'
         }
     };
-    const onSubmit: SubmitHandler<HealthQuestionnaireType> = async () => {
+    const onSubmit: SubmitHandler<ApplicationFormType> = async () => {
         setIsLoading(true);
         const data = getValues();
         // TODO: when undefined
         const res = await postPersonalHealthQuestionnaire(data, dashboardUser.ref || '0');
-        if (res) setIsComplete(true);
+        //if (res) setIsComplete(true);
         //setIsLoading(false);
         // router.push('/apply/health-questionnaire/complete');
     };
@@ -74,7 +74,7 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIs
                 shouldCloseOnOverlayClick={false}
                 ariaHideApp={false}
             >
-                {isComplete ? (
+                {/* {isComplete ? (
                     <div className="flex flex-col justify-center">
                         <div className="text-2xl m-5 mb-10 text-black font-bold">Response saved and submitted!</div>
                         <Link href="/apply" className="btn">
@@ -94,7 +94,7 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIs
                             Confirm your response
                         </h1>
                         <div className="text-black">
-                            {formFields[0].map((field) => {
+                            {ApplicationFormFields[0].map((field) => {
                                 return (
                                     <div className="py-1">
                                         {t(field)}:{' ' + formData[field]}
@@ -103,12 +103,11 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIs
                                 );
                             })}
                             <label>Have History of: </label>
-                            {formFields[1].map((field) => {
+                            {ApplicationFormFields[1].map((field) => {
                                 return <>{formData[field][0] == 'Yes' && <label className="text-black py-1">{t(field)}, </label>}</>;
                             })}
                             <hr />
-                            {/* pop() the last question */}
-                            {formFields[2].slice(0, -1).map((field) => {
+                            {ApplicationFormFields[2].slice(0, -1).map((field) => {
                                 return (
                                     <div className="text-black py-1">
                                         {t(field)}
@@ -123,7 +122,8 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIs
                             <Button label="Back" isHover={isHoverCancel} setIsHover={setIsHoverCancel} onclick={() => setModalIsOpen(false)} />
                         </div>
                     </>
-                )}
+                )} 
+                */}
             </Modal>
         </div>
     );
