@@ -3,6 +3,7 @@ import { z } from 'zod';
 const validateCheckbox = (val: string[]) => {
     return val.length > 0;
 };
+const validateRadio = (value: string | null) => value !== null;
 const requiredErrorMessage = {
     message: 'This field is required'
 };
@@ -32,22 +33,22 @@ const passportIssued: z.ZodString = z.string().min(1).max(50);
 const age: z.ZodString = z.string().min(1).max(50);
 const birthday: z.ZodString = z.string().min(1).max(50);
 const ssn: z.ZodString = z.string().min(1).max(50);
-const sex: z.ZodString = z.string().min(1).max(50);
-const maritalStatus: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const sex: z.ZodEffects<z.ZodNullable<z.ZodString>> = z.string().nullable().refine(validateRadio, requiredErrorMessage);
+const maritalStatus: z.ZodString = z.string().min(1).max(50);
 const spouseFullName: z.ZodString = z.string().min(1).max(50);
-const childrenNames: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
-const hasFamilySupport: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const childrenNames: z.ZodString = z.string().min(1).max(50);
+const hasFamilySupport: z.ZodEffects<z.ZodNullable<z.ZodString>> = z.string().nullable().refine(validateRadio, requiredErrorMessage);
 const hasFamilySupportExplain: z.ZodOptional<z.ZodString> = z.string().optional();
 
 // 2
-const healthCondition: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
-const seriousInjury: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const healthCondition: z.ZodEffects<z.ZodNullable<z.ZodString>> = z.string().nullable().refine(validateRadio, requiredErrorMessage);
+const seriousInjury: z.ZodEffects<z.ZodNullable<z.ZodString>> = z.string().nullable().refine(validateRadio, requiredErrorMessage);
 const seriousInjuryExplain: z.ZodOptional<z.ZodString> = z.string().optional();
-const hasHandicap: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const hasHandicap: z.ZodEffects<z.ZodNullable<z.ZodString>> = z.string().nullable().refine(validateRadio, requiredErrorMessage);
 const hasHandicapExplain: z.ZodOptional<z.ZodString> = z.string().optional();
-const doSmoke: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
-const canLift33lbs: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
-const personalDoctor: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const doSmoke: z.ZodEffects<z.ZodNullable<z.ZodString>> = z.string().nullable().refine(validateRadio, requiredErrorMessage);
+const canLift33lbs: z.ZodEffects<z.ZodNullable<z.ZodString>> = z.string().nullable().refine(validateRadio, requiredErrorMessage);
+const personalDoctor: z.ZodString = z.string().min(1).max(50);
 const personalDoctorPhone: z.ZodString = z.string().min(1).max(50);
 
 // 3

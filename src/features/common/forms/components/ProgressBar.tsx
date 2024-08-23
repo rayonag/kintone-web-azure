@@ -3,9 +3,10 @@ import React, { FC } from 'react';
 
 type StepProgressBarProps = {
     steps: number;
+    setStep: (steps: number) => void;
     currentStep: number;
 };
-const StepProgressBar: FC<StepProgressBarProps> = ({ steps, currentStep }) => {
+const StepProgressBar: FC<StepProgressBarProps> = ({ steps, setStep, currentStep }) => {
     return (
         <>
             <div className="flex flex-col items-center justify-center gap-4 pb-4 md:pb-8">
@@ -19,6 +20,7 @@ const StepProgressBar: FC<StepProgressBarProps> = ({ steps, currentStep }) => {
                                         ? 'bg-gray-900 text-white dark:bg-gray-50 dark:text-gray-900'
                                         : 'bg-gray-200 dark:bg-gray-800'
                                 }`}
+                                onClick={() => setStep(index + 1)}
                             >
                                 {index + 1 < currentStep ? <GreenCheckMark /> : index + 1}
                             </div>

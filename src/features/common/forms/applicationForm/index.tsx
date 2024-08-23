@@ -12,9 +12,17 @@ import { ApplicationFormFields, ApplicationFormSchema, ApplicationFormType, cust
 import ProgressBar from '../components/ProgressBar';
 import './i18n/translations/config'; //i18
 import Link from 'next/link';
+import Step2 from './views/Step2';
+import Step3 from './views/Step3';
+import Step4 from './views/Step4';
+import Step5 from './views/Step5';
+import Step6 from './views/Step6';
+import Step7 from './views/Step7';
+import Step8 from './views/Step8';
+import Step9 from './views/Step9';
 
 const ApplicationForm = (props: { repo: any }) => {
-    const [page, setPage] = useState(0);
+    const [step, setStep] = useState(1);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     // for future use on multi language
     const { t } = useTranslation('applicationForm');
@@ -46,6 +54,7 @@ const ApplicationForm = (props: { repo: any }) => {
         // const isValid = await trigger(ApplicationFormFields[page]);
         // if (isValid) return true;
         // else return false;
+        return true;
     };
 
     useEffect(() => {
@@ -55,7 +64,7 @@ const ApplicationForm = (props: { repo: any }) => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-    }, [page]);
+    }, [step]);
     // confirm before leave page. TODO: dirty form check not working
     useEffect(() => {
         const handleBeforeUnload = (event: any) => {
@@ -83,25 +92,33 @@ const ApplicationForm = (props: { repo: any }) => {
     return (
         <div className="p-10 max-h-screen overflow-scroll">
             <form className="flex flex-col my-14 p-10 bg-gray-50 border rounded-md">
-                <ProgressBar steps={9} currentStep={page + 1} />
-                <Step1 register={register} getValues={getValues} errors={formatError} t={t} />
-                {page != 2 && (
+                <ProgressBar steps={9} setStep={setStep} currentStep={step} />
+                {step == 1 && <Step1 register={register} getValues={getValues} errors={formatError} t={t} />}
+                {step == 2 && <Step2 register={register} getValues={getValues} errors={formatError} t={t} />}
+                {step == 3 && <Step3 register={register} getValues={getValues} errors={formatError} t={t} />}
+                {step == 4 && <Step4 register={register} getValues={getValues} errors={formatError} t={t} />}
+                {step == 5 && <Step5 register={register} getValues={getValues} errors={formatError} t={t} />}
+                {step == 6 && <Step6 register={register} getValues={getValues} errors={formatError} t={t} />}
+                {step == 7 && <Step7 register={register} getValues={getValues} errors={formatError} t={t} />}
+                {step == 8 && <Step8 register={register} getValues={getValues} errors={formatError} t={t} />}
+                {step == 9 && <Step9 register={register} getValues={getValues} errors={formatError} t={t} />}
+                {step != 9 && (
                     <button
                         type="button"
                         onClick={async () => {
-                            // const valid = await validate(page);
-                            // if (valid) setPage(page + 1);
+                            const valid = await validate(step);
+                            if (valid) setStep(step + 1);
                         }}
                         className="btn-wide"
                     >
                         {t('system.next')}
                     </button>
                 )}
-                {page == 2 && (
+                {step == 9 && (
                     <button
                         type="button"
                         onClick={async () => {
-                            // const valid = await validate(page);
+                            // const valid = await validate(step);
                             // if (valid) setModalIsOpen(true);
                         }}
                         className="btn-wide"
@@ -109,12 +126,12 @@ const ApplicationForm = (props: { repo: any }) => {
                         {t('system.submit')}
                     </button>
                 )}
-                {page != 0 && (
-                    <button type="button" onClick={() => setPage(page - 1)} className="btn-wide">
+                {step != 1 && (
+                    <button type="button" onClick={() => setStep(step - 1)} className="btn-wide">
                         {t('system.back')}
                     </button>
                 )}
-                {page == 0 && (
+                {step == 1 && (
                     <Link type="button" href="/apply" className="btn-wide">
                         Back to Top
                     </Link>

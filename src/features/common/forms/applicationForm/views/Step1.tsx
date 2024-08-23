@@ -8,9 +8,9 @@ import { UseFormRegister, FieldErrors, UseFormGetValues } from 'react-hook-form'
 import { ApplicationFormType } from '../schema';
 import Row from '../../components/Row';
 import { Radio } from '../../components/Radio';
-import { MaritalStatus, Sex, YesNo } from '../../enums';
 import { Select } from '../../components/Select';
 import Textarea from '../../components/Textarea';
+import { MaritalStatus, Sex, YesNo } from '../enums';
 
 type Step1Props = {
     register: UseFormRegister<ApplicationFormType>;
@@ -79,8 +79,7 @@ const Step1: FC<Step1Props> = ({ register, errors, getValues, t }) => {
                     label={t('maritalStatus.title')}
                     options={MaritalStatus(t)}
                     register={register('maritalStatus')}
-                    error={errors.firstName || undefined}
-                    //error={errors.maritalStatus || undefined}
+                    error={errors.maritalStatus || undefined}
                 />
                 <Row>
                     <Input
@@ -94,16 +93,14 @@ const Step1: FC<Step1Props> = ({ register, errors, getValues, t }) => {
                     label={t('childrenNames')}
                     register={register('childrenNames')}
                     placeholder={null}
-                    error={errors.firstName || undefined}
-                    //error={errors.childrenNames || undefined}
+                    error={errors.childrenNames || undefined}
                 />
                 <Row>
                     <Radio
                         label={t('hasFamilySupport')}
                         options={YesNo(t)}
                         register={register('hasFamilySupport')}
-                        error={errors.firstName || undefined}
-                        //error={errors.hasFamilySupport || undefined}
+                        error={errors.hasFamilySupport || undefined}
                     />
                     <Input
                         label={t('hasFamilySupportExplain')}

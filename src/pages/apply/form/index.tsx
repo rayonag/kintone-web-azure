@@ -26,7 +26,7 @@ import ApplicationForm from '@/features/common/forms/applicationForm';
 import i18n from '@/components/health-questionnaire/form/translations/config';
 
 const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-    //return <ApplicationForm repo={{ prefilledFormRecord: null }} />;
+    return <ApplicationForm repo={{ prefilledFormRecord: null }} />;
     return <>Currently under maintenance... Sorry for any inconvenience.</>;
     // State to track whether the iframe content is loading
     const { setIsLoading } = useLoading();
