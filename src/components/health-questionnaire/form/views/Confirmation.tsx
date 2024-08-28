@@ -62,7 +62,7 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIs
         // TODO: when undefined
         const res = await postPersonalHealthQuestionnaire(data, dashboardUser.ref || '0');
         if (res) setIsComplete(true);
-        //setIsLoading(false);
+        setIsLoading(false);
         // router.push('/apply/health-questionnaire/complete');
     };
     return (
