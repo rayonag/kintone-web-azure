@@ -27,7 +27,7 @@ const Page: React.FC = () => {
                         <h1 className="text-xl my-10">
                             {/* TODO: review */}
                             {loginUser.documents?.length || '-'}/
-                            {!loginUser['type']
+                            {/* {!loginUser['type']
                                 ? '-'
                                 : loginUser['type'] == 'Short Term'
                                 ? loginUser['office'] == 'USA'
@@ -35,7 +35,8 @@ const Page: React.FC = () => {
                                     : 4
                                 : loginUser['office'] == 'USA'
                                 ? 6
-                                : 5}{' '}
+                                : 5} */}
+                            {!loginUser['type'] ? '-' : loginUser['type'] == 'Short Term' ? 4 : 5}
                             Completed
                         </h1>
                     </div>

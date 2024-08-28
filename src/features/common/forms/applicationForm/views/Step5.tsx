@@ -4,102 +4,139 @@ import { useShallow } from 'zustand/react/shallow';
 import SectionTitle from '../../components/SectionTitle';
 import Input from '../../components/Input';
 import { TFunction } from 'i18next';
-import { UseFormRegister, FieldErrors, UseFormGetValues } from 'react-hook-form';
+import { UseFormRegister, FieldErrors, UseFormGetValues, Control } from 'react-hook-form';
 import { ApplicationFormType } from '../schema';
 import Row from '../../components/Row';
 import { HealthCondition, YesNo } from '../enums';
+import { Radio } from '../../components/Radio';
+import Textarea from '../../components/Textarea';
 
 type Step5Props = {
     register: UseFormRegister<ApplicationFormType>;
     errors: FieldErrors<ApplicationFormType>;
     getValues: UseFormGetValues<ApplicationFormType>;
     t: TFunction<'application'>;
+    control: Control<ApplicationFormType>;
 };
-const Step5: FC<Step5Props> = ({ register, errors, getValues, t }) => {
-    const { username } = useUserStore(
-        useShallow((state) => ({
-            username: state.username
-        }))
-    );
-    console.log('username', username);
+const Step5: FC<Step5Props> = ({ register, errors, getValues, t, control }) => {
     return (
         <div>
             <section>
-                <SectionTitle title={t('sectionTitle.3')} />
+                <SectionTitle title={t('sectionTitle.5')} />
+                <div className="font-semibold mt-2 text-black">{t('educationTable.title')}</div>
+                <Row>
+                    {/* TODO: come back to table 
+                        <EducationTable
+                        //label={t('educationTable.')}
+                        register={register}
+                        control={control}
+                        fieldKeys={['educationSchoolName', 'educationDegree', 'educationDate']}
+                        t={t}
+                        //error={errors.educationTable || undefined}
+                    /> */}
+
+                    <div className="font-semibold mt-2 text-black">{t('educationTable.description')}</div>
+                    <div className="font-semibold mt-2 text-gray-500">{'**Currently not available'}</div>
+                </Row>
                 <Row>
                     <Input
-                        label={t('emergencyName')}
-                        register={register('emergencyName')}
-                        placeholder={t('emergencyName')}
-                        error={errors.emergencyName || undefined}
+                        label={t('employProfession')}
+                        register={register('employProfession')}
+                        placeholder={'Enter here'}
+                        error={errors.employProfession || undefined}
                     />
                     <Input
-                        label={t('emergencyRelationship')}
-                        register={register('emergencyRelationship')}
-                        placeholder={t('emergencyRelationship')}
-                        error={errors.emergencyRelationship || undefined}
+                        label={t('employAccreditation')}
+                        register={register('employAccreditation')}
+                        placeholder={'Enter here'}
+                        error={errors.employAccreditation || undefined}
                     />
-                    <Input
-                        label={t('emergencyEmail')}
-                        register={register('emergencyEmail')}
-                        placeholder={t('emergencyEmail')}
-                        error={errors.emergencyEmail || undefined}
+                </Row>
+                <Row>
+                    {/* <Textarea
+                        label={t('employHistory.title1')}
+                        register={register('employHistory')}
+                        placeholder={t('employHistory.example')}
+                        error={errors.employHistory || undefined}
+                    /> */}
+                    <div className="font-semibold mt-2 text-black">{t('employHistory.title1')}</div>
+                    <div className="font-semibold mt-2 text-gray-500">{'**Currently not available'}</div>
+                </Row>
+                <Row>
+                    <Input label={t('hobby')} register={register('hobby')} placeholder={'Enter here'} error={errors.hobby || undefined} />
+                </Row>
+                <Row>
+                    <Input label={t('clubs')} register={register('clubs')} placeholder={'Enter here'} error={errors.clubs || undefined} />
+                </Row>
+                <Row>
+                    {/* <ServiceTable
+                        name={'educationTable'}
+                        //label={t('educationTable.')}
+                        register={register}
+                        control={control}
+                        fieldKeys={['educationSchoolName', 'educationDegree', 'educationDate']}
+                        t={t}
+                        error={errors.educationTable || undefined}
+                    /> */}
+                    <div className="font-semibold mt-2 text-black">{t('serviceTable.title')}</div>
+                    <div className="font-semibold mt-2 text-gray-500">{'**Currently not available'}</div>
+                </Row>
+                <Row>
+                    <Radio
+                        label={t('hasDriverLicense')}
+                        options={YesNo(t)}
+                        register={register('hasDriverLicense')}
+                        error={errors.hasDriverLicense || undefined}
                     />
-                    <Input
-                        label={t('emergencyPhone')}
-                        register={register('emergencyPhone')}
-                        placeholder={t('emergencyPhone')}
-                        error={errors.emergencyPhone || undefined}
+                    <Radio
+                        label={t('hasLicenseMoreThanTwelveMonths')}
+                        options={YesNo(t)}
+                        register={register('hasLicenseMoreThanTwelveMonths')}
+                        error={errors.hasLicenseMoreThanTwelveMonths || undefined}
                     />
                 </Row>
                 <Row>
                     <Input
-                        label={t('emergencyStreet')}
-                        register={register('emergencyStreet')}
-                        placeholder={t('emergencyStreet')}
-                        error={errors.emergencyStreet || undefined}
-                    />{' '}
-                    <Input
-                        label={t('emergencyState')}
-                        register={register('emergencyState')}
-                        placeholder={t('emergencyState')}
-                        error={errors.emergencyState || undefined}
-                    />{' '}
-                    <Input
-                        label={t('emergencyCity')}
-                        register={register('emergencyCity')}
-                        placeholder={t('emergencyCity')}
-                        error={errors.emergencyCity || undefined}
-                    />{' '}
-                    <Input
-                        label={t('emergencyCountry')}
-                        register={register('emergencyCountry')}
-                        placeholder={t('emergencyCountry')}
-                        error={errors.emergencyCountry || undefined}
-                    />{' '}
-                    <Input
-                        label={t('emergencyZip')}
-                        register={register('emergencyZip')}
-                        placeholder={t('emergencyZip')}
-                        error={errors.emergencyZip || undefined}
+                        label={t('drivingViolation')}
+                        register={register('drivingViolation')}
+                        placeholder={'Enter here'}
+                        error={errors.drivingViolation || undefined}
                     />
                 </Row>
                 <Row>
-                    <Radio label={t('doSmoke')} register={register('doSmoke')} options={YesNo(t)} error={errors.doSmoke} />
-                    <Radio label={t('canLift33lbs')} register={register('canLift33lbs')} options={YesNo(t)} error={errors.canLift33lbs} />
+                    <Radio
+                        label={t('hasConvictedTrafficAccident')}
+                        options={YesNo(t)}
+                        register={register('hasConvictedTrafficAccident')}
+                        error={errors.hasConvictedTrafficAccident || undefined}
+                    />
+                    <Input
+                        label={t('hasTrafficAccidentExplain')}
+                        register={register('hasTrafficAccidentExplain')}
+                        placeholder={'Enter here'}
+                        error={errors.hasTrafficAccidentExplain || undefined}
+                    />
+                </Row>
+                <Row>
+                    <Radio
+                        label={t('hasVisitedIsrael')}
+                        options={YesNo(t)}
+                        register={register('hasVisitedIsrael')}
+                        error={errors.hasVisitedIsrael || undefined}
+                    />
+                    <Input
+                        label={t('hasVisitedIsraelDates')}
+                        register={register('hasVisitedIsraelDates')}
+                        placeholder={'Enter here'}
+                        error={errors.hasVisitedIsraelDates || undefined}
+                    />
                 </Row>
                 <Row>
                     <Input
-                        label={t('personalDoctor')}
-                        register={register('personalDoctor')}
-                        placeholder={t('personalDoctor')}
-                        error={errors.personalDoctor || undefined}
-                    />
-                    <Input
-                        label={t('personalDoctorPhone')}
-                        register={register('personalDoctorPhone')}
-                        placeholder={t('personalDoctorPhone')}
-                        error={errors.personalDoctorPhone || undefined}
+                        label={t('listForeignCountries')}
+                        register={register('listForeignCountries')}
+                        placeholder={'Enter here'}
+                        error={errors.listForeignCountries || undefined}
                     />
                 </Row>
             </section>

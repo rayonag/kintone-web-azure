@@ -82,7 +82,7 @@ export interface VolunteerApplicationForm {
     refEmployerEmail: kintone.fieldTypes.SingleLineText;
     skillAccounting: kintone.fieldTypes.Number;
     skillWebsite: kintone.fieldTypes.Number;
-    refPasterPhone: kintone.fieldTypes.SingleLineText;
+    refPastorPhone: kintone.fieldTypes.SingleLineText;
     refOtherPhone: kintone.fieldTypes.SingleLineText;
     skillProofreading: kintone.fieldTypes.Number;
     passportNumber: kintone.fieldTypes.SingleLineText;
@@ -91,7 +91,7 @@ export interface VolunteerApplicationForm {
     churchName: kintone.fieldTypes.SingleLineText;
     skillGoogleDrive: kintone.fieldTypes.Number;
     emergencyStreet: kintone.fieldTypes.SingleLineText;
-    refPasterEmail: kintone.fieldTypes.SingleLineText;
+    refPastorEmail: kintone.fieldTypes.SingleLineText;
     christianJewishUnderstanding: kintone.fieldTypes.MultiLineText;
     skillLibrary: kintone.fieldTypes.Number;
     firstName: kintone.fieldTypes.SingleLineText;
@@ -115,7 +115,7 @@ export interface VolunteerApplicationForm {
     clubs: kintone.fieldTypes.MultiLineText;
     skillCarpentry: kintone.fieldTypes.Number;
     Text_7: kintone.fieldTypes.SingleLineText;
-    refPasterAddress: kintone.fieldTypes.SingleLineText;
+    refPastorAddress: kintone.fieldTypes.SingleLineText;
     skillMechanic: kintone.fieldTypes.Number;
     skillAdobePhotoshop: kintone.fieldTypes.Number;
     skillAdobeInDesign: kintone.fieldTypes.Number;
@@ -125,7 +125,7 @@ export interface VolunteerApplicationForm {
     fullName: kintone.fieldTypes.SingleLineText;
     emergencyName: kintone.fieldTypes.SingleLineText;
     hasFamilySupport: kintone.fieldTypes.RadioButton;
-    refPasterName: kintone.fieldTypes.SingleLineText;
+    refPastorName: kintone.fieldTypes.SingleLineText;
     skillPhotography: kintone.fieldTypes.Number;
     skillForklift: kintone.fieldTypes.Number;
     middleName: kintone.fieldTypes.SingleLineText;
@@ -279,7 +279,7 @@ export type REST_VolunteerApplicationForm = {
     refEmployerEmail: KintoneRecordField.SingleLineText;
     skillAccounting: KintoneRecordField.Number;
     skillWebsite: KintoneRecordField.Number;
-    refPasterPhone: KintoneRecordField.SingleLineText;
+    refPastorPhone: KintoneRecordField.SingleLineText;
     refOtherPhone: KintoneRecordField.SingleLineText;
     skillProofreading: KintoneRecordField.Number;
     passportNumber: KintoneRecordField.SingleLineText;
@@ -288,7 +288,7 @@ export type REST_VolunteerApplicationForm = {
     churchName: KintoneRecordField.SingleLineText;
     skillGoogleDrive: KintoneRecordField.Number;
     emergencyStreet: KintoneRecordField.SingleLineText;
-    refPasterEmail: KintoneRecordField.SingleLineText;
+    refPastorEmail: KintoneRecordField.SingleLineText;
     christianJewishUnderstanding: KintoneRecordField.MultiLineText;
     skillLibrary: KintoneRecordField.Number;
     firstName: KintoneRecordField.SingleLineText;
@@ -312,7 +312,7 @@ export type REST_VolunteerApplicationForm = {
     clubs: KintoneRecordField.MultiLineText;
     skillCarpentry: KintoneRecordField.Number;
     Text_7: KintoneRecordField.SingleLineText;
-    refPasterAddress: KintoneRecordField.SingleLineText;
+    refPastorAddress: KintoneRecordField.SingleLineText;
     skillMechanic: KintoneRecordField.Number;
     skillAdobePhotoshop: KintoneRecordField.Number;
     skillAdobeInDesign: KintoneRecordField.Number;
@@ -322,7 +322,7 @@ export type REST_VolunteerApplicationForm = {
     fullName: KintoneRecordField.SingleLineText;
     emergencyName: KintoneRecordField.SingleLineText;
     hasFamilySupport: KintoneRecordField.RadioButton;
-    refPasterName: KintoneRecordField.SingleLineText;
+    refPastorName: KintoneRecordField.SingleLineText;
     skillPhotography: KintoneRecordField.Number;
     skillForklift: KintoneRecordField.Number;
     middleName: KintoneRecordField.SingleLineText;

@@ -8,6 +8,8 @@ import { UseFormRegister, FieldErrors, UseFormGetValues } from 'react-hook-form'
 import { ApplicationFormType } from '../schema';
 import Row from '../../components/Row';
 import { HealthCondition, YesNo } from '../enums';
+import { Radio } from '../../components/Radio';
+import Textarea from '../../components/Textarea';
 
 type Step9Props = {
     register: UseFormRegister<ApplicationFormType>;
@@ -16,90 +18,137 @@ type Step9Props = {
     t: TFunction<'application'>;
 };
 const Step9: FC<Step9Props> = ({ register, errors, getValues, t }) => {
-    const { username } = useUserStore(
-        useShallow((state) => ({
-            username: state.username
-        }))
-    );
-    console.log('username', username);
     return (
         <div>
             <section>
-                <SectionTitle title={t('sectionTitle.3')} />
+                <SectionTitle title={t('sectionTitle.9')} />
+                <div className="mt-2 text-black">{t('referenceTitle')}</div>
+                <div className="font-semibold mt-2 text-black">{t('refPastorTitle')}</div>
                 <Row>
                     <Input
-                        label={t('emergencyName')}
-                        register={register('emergencyName')}
-                        placeholder={t('emergencyName')}
-                        error={errors.emergencyName || undefined}
+                        label={null}
+                        register={register('refPastorName')}
+                        placeholder={t('refPastorName')}
+                        error={errors.refPastorName || undefined}
                     />
                     <Input
-                        label={t('emergencyRelationship')}
-                        register={register('emergencyRelationship')}
-                        placeholder={t('emergencyRelationship')}
-                        error={errors.emergencyRelationship || undefined}
+                        label={null}
+                        register={register('refPastorPhone')}
+                        placeholder={t('refPastorPhone')}
+                        error={errors.refPastorPhone || undefined}
                     />
                     <Input
-                        label={t('emergencyEmail')}
-                        register={register('emergencyEmail')}
-                        placeholder={t('emergencyEmail')}
-                        error={errors.emergencyEmail || undefined}
+                        label={null}
+                        register={register('refPastorEmail')}
+                        placeholder={t('refPastorEmail')}
+                        error={errors.refPastorEmail || undefined}
                     />
                     <Input
-                        label={t('emergencyPhone')}
-                        register={register('emergencyPhone')}
-                        placeholder={t('emergencyPhone')}
-                        error={errors.emergencyPhone || undefined}
+                        label={null}
+                        register={register('refPastorAddress')}
+                        placeholder={t('refPastorAddress')}
+                        error={errors.refPastorAddress || undefined}
+                    />
+                </Row>
+                <div className="font-semibold mt-2 text-black">{t('refEmployerTitle')}</div>
+                <Row>
+                    <Input
+                        label={null}
+                        register={register('refEmployerName')}
+                        placeholder={t('refEmployerName')}
+                        error={errors.refEmployerName || undefined}
+                    />
+                    <Input
+                        label={null}
+                        register={register('refEmployerAddress')}
+                        placeholder={t('refEmployerAddress')}
+                        error={errors.refEmployerAddress || undefined}
+                    />
+                    <Input
+                        label={null}
+                        register={register('refEmployerPhone')}
+                        placeholder={t('refEmployerPhone')}
+                        error={errors.refEmployerPhone || undefined}
+                    />
+                    <Input
+                        label={null}
+                        register={register('refEmployerEmail')}
+                        placeholder={t('refEmployerEmail')}
+                        error={errors.refEmployerEmail || undefined}
+                    />
+                </Row>
+                <div className="font-semibold mt-2 text-black">{t('refFriendTitle')}</div>
+                <Row>
+                    <Input
+                        label={null}
+                        register={register('refFriendName')}
+                        placeholder={t('refFriendName')}
+                        error={errors.refFriendName || undefined}
+                    />
+                    <Input
+                        label={null}
+                        register={register('refFriendAddress')}
+                        placeholder={t('refFriendAddress')}
+                        error={errors.refFriendAddress || undefined}
+                    />
+                    <Input
+                        label={null}
+                        register={register('refFriendPhone')}
+                        placeholder={t('refFriendPhone')}
+                        error={errors.refFriendPhone || undefined}
+                    />
+                    <Input
+                        label={null}
+                        register={register('refFriendEmail')}
+                        placeholder={t('refFriendEmail')}
+                        error={errors.refFriendEmail || undefined}
+                    />
+                </Row>
+                <div className="font-semibold mt-2 text-black">{t('refOtherTitle')}</div>
+                <Row>
+                    <Input
+                        label={null}
+                        register={register('refOtherName')}
+                        placeholder={t('refOtherName')}
+                        error={errors.refOtherName || undefined}
+                    />
+                    <Input
+                        label={null}
+                        register={register('refOtherAddress')}
+                        placeholder={t('refOtherAddress')}
+                        error={errors.refOtherAddress || undefined}
+                    />
+                    <Input
+                        label={null}
+                        register={register('refOtherPhone')}
+                        placeholder={t('refOtherPhone')}
+                        error={errors.refOtherPhone || undefined}
+                    />
+                    <Input
+                        label={null}
+                        register={register('refOtherEmail')}
+                        placeholder={t('refOtherEmail')}
+                        error={errors.refOtherEmail || undefined}
+                    />
+                    <Input
+                        label={null}
+                        register={register('refOtherRelationship')}
+                        placeholder={t('refOtherRelationship')}
+                        error={errors.refOtherRelationship || undefined}
                     />
                 </Row>
                 <Row>
-                    <Input
-                        label={t('emergencyStreet')}
-                        register={register('emergencyStreet')}
-                        placeholder={t('emergencyStreet')}
-                        error={errors.emergencyStreet || undefined}
-                    />{' '}
-                    <Input
-                        label={t('emergencyState')}
-                        register={register('emergencyState')}
-                        placeholder={t('emergencyState')}
-                        error={errors.emergencyState || undefined}
-                    />{' '}
-                    <Input
-                        label={t('emergencyCity')}
-                        register={register('emergencyCity')}
-                        placeholder={t('emergencyCity')}
-                        error={errors.emergencyCity || undefined}
-                    />{' '}
-                    <Input
-                        label={t('emergencyCountry')}
-                        register={register('emergencyCountry')}
-                        placeholder={t('emergencyCountry')}
-                        error={errors.emergencyCountry || undefined}
-                    />{' '}
-                    <Input
-                        label={t('emergencyZip')}
-                        register={register('emergencyZip')}
-                        placeholder={t('emergencyZip')}
-                        error={errors.emergencyZip || undefined}
+                    <Radio
+                        label={t('hasFriendsIsrael')}
+                        register={register('hasFriendsIsrael')}
+                        options={YesNo(t)}
+                        error={errors.hasFriendsIsrael || undefined}
                     />
-                </Row>
-                <Row>
-                    <Radio label={t('doSmoke')} register={register('doSmoke')} options={YesNo(t)} error={errors.doSmoke} />
-                    <Radio label={t('canLift33lbs')} register={register('canLift33lbs')} options={YesNo(t)} error={errors.canLift33lbs} />
-                </Row>
-                <Row>
-                    <Input
-                        label={t('personalDoctor')}
-                        register={register('personalDoctor')}
-                        placeholder={t('personalDoctor')}
-                        error={errors.personalDoctor || undefined}
-                    />
-                    <Input
-                        label={t('personalDoctorPhone')}
-                        register={register('personalDoctorPhone')}
-                        placeholder={t('personalDoctorPhone')}
-                        error={errors.personalDoctorPhone || undefined}
+                    <Textarea
+                        label={''}
+                        register={register('hasFriendsIsraelExplain')}
+                        placeholder={t('hasFriendsIsraelExplain')}
+                        error={errors.hasFriendsIsraelExplain || undefined}
                     />
                 </Row>
             </section>

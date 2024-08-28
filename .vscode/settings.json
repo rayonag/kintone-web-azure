@@ -1,5 +1,6 @@
 {
     "appService.defaultWebAppToDeploy": "/subscriptions/0373a3d5-4e64-49b6-98af-9407ef33f349/resourceGroups/BFPHostingResourceGroup/providers/Microsoft.Web/sites/bfp-kintone",
     "appService.deploySubpath": ".",
-    "editor.linkedEditing": true
+    "editor.linkedEditing": true,
+    "liveServer.settings.useLocalIp": true
 }

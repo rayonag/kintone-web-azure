@@ -3,12 +3,12 @@ import Step1 from './views/Step1';
 import { useDashboardUser } from '@/common/context/dashboardUser';
 import { langReducer } from '@/components/health-questionnaire/form/hooks/lang';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import { useShallow } from 'zustand/react/shallow';
 import useUserStore from '../../portal/store';
-import { ApplicationFormFields, ApplicationFormSchema, ApplicationFormType, customErrorMap } from './schema';
+import { ApplicationFormDefaultValues, ApplicationFormFields, ApplicationFormSchema, ApplicationFormType, customErrorMap } from './schema';
 import ProgressBar from '../components/ProgressBar';
 import './i18n/translations/config'; //i18
 import Link from 'next/link';
@@ -20,6 +20,7 @@ import Step6 from './views/Step6';
 import Step7 from './views/Step7';
 import Step8 from './views/Step8';
 import Step9 from './views/Step9';
+import Step10 from './views/Step10';
 
 const ApplicationForm = (props: { repo: any }) => {
     const [step, setStep] = useState(1);
@@ -35,26 +36,37 @@ const ApplicationForm = (props: { repo: any }) => {
             username: state.username
         }))
     );
-    console.log('username', username);
     const {
         formState: { errors: formatError },
         trigger,
         getValues,
         setValue,
-        register
+        register,
+        control,
+        ...rest
     } = useForm<ApplicationFormType>({
-        mode: 'onChange',
-        defaultValues: {},
+        mode: 'onBlur',
+        // reValidateMode: 'onChange', // works only after form submission
+        defaultValues: ApplicationFormDefaultValues,
         resolver: zodResolver(ApplicationFormSchema)
     });
 
     z.setErrorMap(customErrorMap(t));
 
-    const validate = async (page: number) => {
-        // const isValid = await trigger(ApplicationFormFields[page]);
-        // if (isValid) return true;
-        // else return false;
-        return true;
+    const validate = async () => {
+        const values = getValues();
+        console.log('values', values);
+        const isValid = await trigger(ApplicationFormFields[step]);
+        if (isValid) return true;
+        else {
+            const firstErrorField = Object.keys(formatError)[0];
+            console.log('firstErrorField', firstErrorField);
+            const errorElement = document.querySelector(`[name="${firstErrorField}"]`);
+            if (errorElement) {
+                errorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            return false;
+        }
     };
 
     useEffect(() => {
@@ -63,7 +75,7 @@ const ApplicationForm = (props: { repo: any }) => {
     }, [dashboardUser]);
 
     useEffect(() => {
-        window.scrollTo(0, 0);
+        document.querySelector('#section-title')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, [step]);
     // confirm before leave page. TODO: dirty form check not working
     useEffect(() => {
@@ -90,23 +102,24 @@ const ApplicationForm = (props: { repo: any }) => {
         }
     }, [props]);
     return (
-        <div className="p-10 max-h-screen overflow-scroll">
-            <form className="flex flex-col my-14 p-10 bg-gray-50 border rounded-md">
-                <ProgressBar steps={9} setStep={setStep} currentStep={step} />
-                {step == 1 && <Step1 register={register} getValues={getValues} errors={formatError} t={t} />}
+        <div className="grid justify-center p-10 max-h-screen overflow-y-scroll">
+            <form className="flex flex-col my-14 p-10 max-w-[95vw] md:w-[50rem] md:max-w-screen bg-gray-50 border rounded-md">
+                <ProgressBar steps={10} setStep={setStep} currentStep={step} />
+                {step == 1 && <Step1 register={register} getValues={getValues} errors={formatError} t={t} control={control} />}
                 {step == 2 && <Step2 register={register} getValues={getValues} errors={formatError} t={t} />}
                 {step == 3 && <Step3 register={register} getValues={getValues} errors={formatError} t={t} />}
-                {step == 4 && <Step4 register={register} getValues={getValues} errors={formatError} t={t} />}
-                {step == 5 && <Step5 register={register} getValues={getValues} errors={formatError} t={t} />}
+                {step == 4 && <Step4 register={register} getValues={getValues} errors={formatError} t={t} control={control} />}
+                {step == 5 && <Step5 register={register} getValues={getValues} errors={formatError} t={t} control={control} />}
                 {step == 6 && <Step6 register={register} getValues={getValues} errors={formatError} t={t} />}
-                {step == 7 && <Step7 register={register} getValues={getValues} errors={formatError} t={t} />}
-                {step == 8 && <Step8 register={register} getValues={getValues} errors={formatError} t={t} />}
+                {step == 7 && <Step7 register={register} getValues={getValues} errors={formatError} t={t} control={control} />}
+                {step == 8 && <Step8 register={register} getValues={getValues} errors={formatError} t={t} control={control} />}
                 {step == 9 && <Step9 register={register} getValues={getValues} errors={formatError} t={t} />}
-                {step != 9 && (
+                {step == 10 && <Step10 register={register} getValues={getValues} errors={formatError} t={t} />}
+                {step != 10 && (
                     <button
                         type="button"
                         onClick={async () => {
-                            const valid = await validate(step);
+                            const valid = await validate();
                             if (valid) setStep(step + 1);
                         }}
                         className="btn-wide"
@@ -114,7 +127,7 @@ const ApplicationForm = (props: { repo: any }) => {
                         {t('system.next')}
                     </button>
                 )}
-                {step == 9 && (
+                {step == 10 && (
                     <button
                         type="button"
                         onClick={async () => {

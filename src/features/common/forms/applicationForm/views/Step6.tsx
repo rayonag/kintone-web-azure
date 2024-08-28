@@ -8,6 +8,7 @@ import { UseFormRegister, FieldErrors, UseFormGetValues } from 'react-hook-form'
 import { ApplicationFormType } from '../schema';
 import Row from '../../components/Row';
 import { HealthCondition, YesNo } from '../enums';
+import Textarea from '../../components/Textarea';
 
 type Step6Props = {
     register: UseFormRegister<ApplicationFormType>;
@@ -16,90 +17,41 @@ type Step6Props = {
     t: TFunction<'application'>;
 };
 const Step6: FC<Step6Props> = ({ register, errors, getValues, t }) => {
-    const { username } = useUserStore(
-        useShallow((state) => ({
-            username: state.username
-        }))
-    );
-    console.log('username', username);
     return (
         <div>
             <section>
-                <SectionTitle title={t('sectionTitle.3')} />
+                <SectionTitle title={t('sectionTitle.6')} />
                 <Row>
-                    <Input
-                        label={t('emergencyName')}
-                        register={register('emergencyName')}
-                        placeholder={t('emergencyName')}
-                        error={errors.emergencyName || undefined}
-                    />
-                    <Input
-                        label={t('emergencyRelationship')}
-                        register={register('emergencyRelationship')}
-                        placeholder={t('emergencyRelationship')}
-                        error={errors.emergencyRelationship || undefined}
-                    />
-                    <Input
-                        label={t('emergencyEmail')}
-                        register={register('emergencyEmail')}
-                        placeholder={t('emergencyEmail')}
-                        error={errors.emergencyEmail || undefined}
-                    />
-                    <Input
-                        label={t('emergencyPhone')}
-                        register={register('emergencyPhone')}
-                        placeholder={t('emergencyPhone')}
-                        error={errors.emergencyPhone || undefined}
+                    <Textarea
+                        label={t('churchName')}
+                        register={register('churchName')}
+                        placeholder={'Enter here'}
+                        error={errors.churchName || undefined}
                     />
                 </Row>
                 <Row>
-                    <Input
-                        label={t('emergencyStreet')}
-                        register={register('emergencyStreet')}
-                        placeholder={t('emergencyStreet')}
-                        error={errors.emergencyStreet || undefined}
-                    />{' '}
-                    <Input
-                        label={t('emergencyState')}
-                        register={register('emergencyState')}
-                        placeholder={t('emergencyState')}
-                        error={errors.emergencyState || undefined}
-                    />{' '}
-                    <Input
-                        label={t('emergencyCity')}
-                        register={register('emergencyCity')}
-                        placeholder={t('emergencyCity')}
-                        error={errors.emergencyCity || undefined}
-                    />{' '}
-                    <Input
-                        label={t('emergencyCountry')}
-                        register={register('emergencyCountry')}
-                        placeholder={t('emergencyCountry')}
-                        error={errors.emergencyCountry || undefined}
-                    />{' '}
-                    <Input
-                        label={t('emergencyZip')}
-                        register={register('emergencyZip')}
-                        placeholder={t('emergencyZip')}
-                        error={errors.emergencyZip || undefined}
+                    <Textarea
+                        label={t('christianExperience')}
+                        register={register('christianExperience')}
+                        placeholder={'Enter here'}
+                        error={errors.christianExperience || undefined}
                     />
                 </Row>
                 <Row>
-                    <Radio label={t('doSmoke')} register={register('doSmoke')} options={YesNo(t)} error={errors.doSmoke} />
-                    <Radio label={t('canLift33lbs')} register={register('canLift33lbs')} options={YesNo(t)} error={errors.canLift33lbs} />
+                    <Textarea
+                        label={t('christianJewishUnderstanding')}
+                        register={register('christianJewishUnderstanding')}
+                        placeholder={'Enter here'}
+                        error={errors.christianJewishUnderstanding || undefined}
+                    />
                 </Row>
                 <Row>
-                    <Input
-                        label={t('personalDoctor')}
-                        register={register('personalDoctor')}
-                        placeholder={t('personalDoctor')}
-                        error={errors.personalDoctor || undefined}
-                    />
-                    <Input
-                        label={t('personalDoctorPhone')}
-                        register={register('personalDoctorPhone')}
-                        placeholder={t('personalDoctorPhone')}
-                        error={errors.personalDoctorPhone || undefined}
+                    {' '}
+                    <Textarea
+                        label={t('interestIsrael')}
+                        register={register('interestIsrael')}
+                        placeholder={'Enter here'}
+                        error={errors.interestIsrael || undefined}
                     />
                 </Row>
             </section>

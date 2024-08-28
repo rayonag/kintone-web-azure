@@ -15,7 +15,7 @@ const Verify: FC<VerifyProps> = ({ label, register, error }) => {
                     <span className="ml-1 mr-2 text-xl">{label}</span>
                 </label>
             </div>
-            {error && <div className="text-red-500 pl-1 pt-1 text-xs">{error.message as string}</div>}
+            <div className="text-red-500 pl-1 py-1 text-xs h-4">{error && error.message}</div>
         </div>
     );
 };

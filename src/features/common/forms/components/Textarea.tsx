@@ -10,7 +10,7 @@ type TextareaProps = {
 };
 const Textarea: FC<TextareaProps> = ({ label, register, placeholder, error, optional }) => {
     return (
-        <label className="flex flex-col justify-center my-2 w-40 me-5 grow md:max-w-sm">
+        <label className="flex flex-col justify-center my-2 w-40 me-5 grow">
             <div className="font-semibold mb-1 text-black">{label}</div>
             <textarea
                 {...register}
@@ -21,7 +21,7 @@ const Textarea: FC<TextareaProps> = ({ label, register, placeholder, error, opti
                 placeholder={placeholder || ''}
                 rows={5}
             />
-            {error && <div className="text-red-500 pl-1 py-1 text-xs">{error.message}</div>}
+            <div className="text-red-500 pl-1 py-1 text-xs h-4">{error && error.message}</div>
         </label>
     );
 };

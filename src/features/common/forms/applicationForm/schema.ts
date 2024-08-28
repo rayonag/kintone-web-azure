@@ -1,11 +1,22 @@
+import { DateTime } from 'luxon';
 import { z } from 'zod';
 
 const validateCheckbox = (val: string[]) => {
+    debugger;
     return val.length > 0;
 };
 const validateRadio = (value: string | null) => value !== null;
-const requiredErrorMessage = {
+const validateDate = (value: string) => {
+    if (!DateTime.fromFormat(value, 'dd/MM/yyyy').isValid) return false;
+    else if (DateTime.fromFormat(value, 'dd/MM/yyyy') >= DateTime.now().plus({ years: 100 })) return false;
+    else if (DateTime.fromFormat(value, 'dd/MM/yyyy') <= DateTime.now().minus({ years: 100 })) return false;
+    return true;
+};
+const error_required = {
     message: 'This field is required'
+};
+const error_invalidDate = {
+    message: 'Invalid date'
 };
 const validateNumber = (value: string) => {
     const numberValue = parseFloat(value);
@@ -16,40 +27,49 @@ const validateNumber = (value: string) => {
 // system
 const ref: z.ZodString = z.string().min(1).max(50);
 const office: z.ZodString = z.string().min(1).max(50);
+
+// common
+const yesNo: z.ZodEffects<z.ZodNullable<z.ZodString>> = z.string().nullable().refine(validateRadio, error_required);
+const date: z.ZodEffects<z.ZodString> = z.string().min(1).max(50).refine(validateDate, error_invalidDate);
+const string50: z.ZodString = z.string().min(1).max(50);
+const string300: z.ZodString = z.string().min(1).max(300);
+const string2000: z.ZodString = z.string().min(1).max(2000);
+const string_optional: z.ZodOptional<z.ZodString> = z.string().optional();
+
 // 1
-const firstName: z.ZodString = z.string().min(1).max(50);
-const middleName: z.ZodOptional<z.ZodString> = z.string().optional();
-const lastName: z.ZodString = z.string().min(1).max(50);
-const street: z.ZodString = z.string().min(1).max(50);
-const city: z.ZodString = z.string().min(1).max(50);
-const state: z.ZodString = z.string().min(1).max(50);
-const zip: z.ZodString = z.string().min(1).max(50);
-const country: z.ZodString = z.string().min(1).max(50);
-const phone: z.ZodString = z.string().min(1).max(50);
+const firstName = string50;
+const middleName = string_optional;
+const lastName = string50;
+const street = string50;
+const city = string50;
+const state = string50;
+const zip = string50;
+const country = string50;
+const phone = string50;
 const email: z.ZodString = z.string().email();
-const passportNumber: z.ZodString = z.string().min(1).max(50);
-const passportExpiration: z.ZodString = z.string().min(1).max(50);
-const passportIssued: z.ZodString = z.string().min(1).max(50);
-const age: z.ZodString = z.string().min(1).max(50);
-const birthday: z.ZodString = z.string().min(1).max(50);
-const ssn: z.ZodString = z.string().min(1).max(50);
-const sex: z.ZodEffects<z.ZodNullable<z.ZodString>> = z.string().nullable().refine(validateRadio, requiredErrorMessage);
-const maritalStatus: z.ZodString = z.string().min(1).max(50);
-const spouseFullName: z.ZodString = z.string().min(1).max(50);
-const childrenNames: z.ZodString = z.string().min(1).max(50);
-const hasFamilySupport: z.ZodEffects<z.ZodNullable<z.ZodString>> = z.string().nullable().refine(validateRadio, requiredErrorMessage);
-const hasFamilySupportExplain: z.ZodOptional<z.ZodString> = z.string().optional();
+const passportNumber = string50;
+//const passportExpiration: z.ZodString = z.string().min(1).max(50);
+const passportIssued = string50;
+const age = string50;
+const birthday = string50;
+const ssn = string_optional;
+const sex: z.ZodEffects<z.ZodNullable<z.ZodString>> = z.string().nullable().refine(validateRadio, error_required);
+const maritalStatus = string50;
+const spouseFullName = string_optional;
+const childrenNames = string_optional;
+const hasFamilySupport: z.ZodEffects<z.ZodNullable<z.ZodString>> = z.string().nullable().refine(validateRadio, error_required);
+const hasFamilySupportExplain = string300;
 
 // 2
-const healthCondition: z.ZodEffects<z.ZodNullable<z.ZodString>> = z.string().nullable().refine(validateRadio, requiredErrorMessage);
-const seriousInjury: z.ZodEffects<z.ZodNullable<z.ZodString>> = z.string().nullable().refine(validateRadio, requiredErrorMessage);
+const healthCondition: z.ZodEffects<z.ZodNullable<z.ZodString>> = z.string().nullable().refine(validateRadio, error_required);
+const seriousInjury: z.ZodEffects<z.ZodNullable<z.ZodString>> = z.string().nullable().refine(validateRadio, error_required);
 const seriousInjuryExplain: z.ZodOptional<z.ZodString> = z.string().optional();
-const hasHandicap: z.ZodEffects<z.ZodNullable<z.ZodString>> = z.string().nullable().refine(validateRadio, requiredErrorMessage);
+const hasHandicap: z.ZodEffects<z.ZodNullable<z.ZodString>> = z.string().nullable().refine(validateRadio, error_required);
 const hasHandicapExplain: z.ZodOptional<z.ZodString> = z.string().optional();
-const doSmoke: z.ZodEffects<z.ZodNullable<z.ZodString>> = z.string().nullable().refine(validateRadio, requiredErrorMessage);
-const canLift33lbs: z.ZodEffects<z.ZodNullable<z.ZodString>> = z.string().nullable().refine(validateRadio, requiredErrorMessage);
-const personalDoctor: z.ZodString = z.string().min(1).max(50);
-const personalDoctorPhone: z.ZodString = z.string().min(1).max(50);
+const doSmoke: z.ZodEffects<z.ZodNullable<z.ZodString>> = z.string().nullable().refine(validateRadio, error_required);
+const canLift33lbs: z.ZodEffects<z.ZodNullable<z.ZodString>> = z.string().nullable().refine(validateRadio, error_required);
+const personalDoctor = string_optional;
+const personalDoctorPhone = string_optional;
 
 // 3
 const emergencyName: z.ZodString = z.string().min(1).max(50);
@@ -63,44 +83,64 @@ const emergencyCountry: z.ZodString = z.string().min(1).max(50);
 const emergencyEmail: z.ZodString = z.string().email();
 
 // 4
-const describeMotivation: z.ZodString = z.string().min(1).max(50);
-const areaInterested: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
-const otherAreaInterested: z.ZodOptional<z.ZodString> = z.string().optional();
-const minAvailability: z.ZodString = z.string().min(1).max(50);
-const maxAvailability: z.ZodString = z.string().min(1).max(50);
-const preferredStartDate: z.ZodString = z.string().min(1).max(50);
-const preferredStartDate2: z.ZodString = z.string().min(1).max(50);
-const ifNoPosition: z.ZodString = z.string().min(1).max(50);
+const describeMotivation = string2000;
+const areaInterested = z.array(z.string()).refine(
+    (arr) => {
+        return arr.some((str) => str.trim() !== '');
+    },
+    { message: 'You must select at least one' }
+);
+const otherAreaInterested = string_optional;
+const minAvailability = string50;
+const maxAvailability = string50;
+const preferredStartDate = string_optional;
+const preferredStartDate2 = string_optional;
+const ifNoPosition = yesNo;
 
 // 5
-const educationSchoolName: z.ZodString = z.string().min(1).max(50);
-const educationDegree: z.ZodString = z.string().min(1).max(50);
-const educationDate: z.ZodString = z.string().min(1).max(50);
-const employProfessional: z.ZodString = z.string().min(1).max(50);
-const employAccreditation: z.ZodString = z.string().min(1).max(50);
-const employHistory: z.ZodString = z.string().min(1).max(50);
-const hobby: z.ZodString = z.string().min(1).max(50);
-const clubs: z.ZodString = z.string().min(1).max(50);
-const serviceOrganizationName: z.ZodString = z.string().min(1).max(50);
-const serviceStartDate: z.ZodString = z.string().min(1).max(50);
-const serviceEndDate: z.ZodString = z.string().min(1).max(50);
-const serviceDuties: z.ZodString = z.string().min(1).max(50);
-const hasDriverLicense: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
-const hasHeldLicense12Months: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
-const drivingViolation: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
-const hasConvictedTrafficAccident: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
-const hasTrafficAccidentExplain: z.ZodOptional<z.ZodString> = z.string().optional();
-const hasVisitedIsrael: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
-const hasVisitedIsraelDates: z.ZodString = z.string().min(1).max(50);
-const listForeignCountries: z.ZodString = z.string().min(1).max(50);
+const educationTable = z.array(
+    z.object({
+        educationSchoolName: z.string().min(1).max(50),
+        educationDegree: z.string().min(1).max(50),
+        educationDate: z.string().min(1).max(50)
+    })
+);
+const employProfession = string_optional; // Tables are temporarily optional
+const employAccreditation = string_optional;
+const employHistory = string_optional;
+const hobby = string_optional;
+const clubs = string_optional;
+const serviceOrganizationName = string_optional;
+const serviceStartDate = string_optional;
+const serviceEndDate = string_optional;
+const serviceDuties = string_optional;
+const hasDriverLicense = yesNo;
+const hasLicenseMoreThanTwelveMonths = yesNo;
+const drivingViolation = string_optional;
+const hasConvictedTrafficAccident = yesNo;
+const hasTrafficAccidentExplain = string_optional;
+const hasVisitedIsrael = yesNo;
+const hasVisitedIsraelDates = string_optional;
+const listForeignCountries = string_optional;
 
 // 6
-const churchName: z.ZodString = z.string().min(1).max(50);
-const christianExperience: z.ZodString = z.string().min(1).max(50);
-const christianJewishUnderstanding: z.ZodString = z.string().min(1).max(50);
-const interestIsrael: z.ZodString = z.string().min(1).max(50);
+const churchName = string50;
+const christianExperience = string50;
+const christianJewishUnderstanding = string50;
+const interestIsrael = string50;
 
 // 7
+const skillInventory = z.string().refine(
+    (value) => {
+        if (value === null) return true;
+        if (value === '0') return '5';
+        const numberValue = parseInt(value, 10);
+        return numberValue >= 1 && numberValue <= 5;
+    },
+    {
+        message: 'Skill must be a number between 1 and 5, or 0 to return null'
+    }
+);
 // A
 const skillCarpentry: z.ZodNumber = z.number();
 const skillConstruction: z.ZodNumber = z.number();
@@ -115,7 +155,7 @@ const skillPlumbing: z.ZodNumber = z.number();
 const skillPainting: z.ZodNumber = z.number();
 const skillWarehouseMaintenance: z.ZodNumber = z.number();
 const skillTransportation: z.ZodNumber = z.number();
-const hasHeavyLicense: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const hasHeavyLicense = yesNo;
 // B
 const skillWebsite: z.ZodNumber = z.number();
 const skillWebDesign: z.ZodNumber = z.number();
@@ -158,16 +198,13 @@ const skillComputer: z.ZodNumber = z.number();
 const skillSpecialTraining: z.ZodNumber = z.number();
 
 // 8
-const character1: z.ZodString = z.string().min(1).max(50);
-const character2: z.ZodString = z.string().min(1).max(50);
-const character3: z.ZodString = z.string().min(1).max(50);
-const character4: z.ZodString = z.string().min(1).max(50);
+const checkBox: z.ZodArray<z.ZodString> = z.array(z.string());
 
 // 9
-const refPasterName: z.ZodString = z.string().min(1).max(50);
-const refPasterAddress: z.ZodString = z.string().min(1).max(50);
-const refPasterPhone: z.ZodString = z.string().min(1).max(50);
-const refPasterEmail: z.ZodString = z.string().email();
+const refPastorName: z.ZodString = z.string().min(1).max(50);
+const refPastorAddress: z.ZodString = z.string().min(1).max(50);
+const refPastorPhone: z.ZodString = z.string().min(1).max(50);
+const refPastorEmail: z.ZodString = z.string().email();
 const refEmployerName: z.ZodString = z.string().min(1).max(50);
 const refEmployerAddress: z.ZodString = z.string().min(1).max(50);
 const refEmployerPhone: z.ZodString = z.string().min(1).max(50);
@@ -181,7 +218,7 @@ const refOtherAddress: z.ZodString = z.string().min(1).max(50);
 const refOtherPhone: z.ZodString = z.string().min(1).max(50);
 const refOtherEmail: z.ZodString = z.string().email();
 const refOtherRelationship: z.ZodString = z.string().min(1).max(50);
-const hasFriendsIsrael: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, requiredErrorMessage);
+const hasFriendsIsrael: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, error_required);
 const hasFriendsIsraelExplain: z.ZodOptional<z.ZodString> = z.string().optional();
 
 // 10
@@ -222,7 +259,7 @@ export const ApplicationFormSchema = z.object({
     phone: phone,
     email: email,
     passportNumber: passportNumber,
-    passportExpiration: passportExpiration,
+    passportExpiration: date,
     passportIssued: passportIssued,
     age: age,
     birthday: birthday,
@@ -230,6 +267,7 @@ export const ApplicationFormSchema = z.object({
     sex: sex,
     maritalStatus: maritalStatus,
     spouseFullName: spouseFullName,
+    hasChildren: yesNo,
     childrenNames: childrenNames,
     hasFamilySupport: hasFamilySupport,
     hasFamilySupportExplain: hasFamilySupportExplain,
@@ -267,10 +305,8 @@ export const ApplicationFormSchema = z.object({
     ifNoPosition: ifNoPosition,
 
     // 5
-    educationSchoolName: educationSchoolName,
-    educationDegree: educationDegree,
-    educationDate: educationDate,
-    employProfessional: employProfessional,
+    educationTable: educationTable,
+    employProfession: employProfession,
     employAccreditation: employAccreditation,
     employHistory: employHistory,
     hobby: hobby,
@@ -280,7 +316,7 @@ export const ApplicationFormSchema = z.object({
     serviceEndDate: serviceEndDate,
     serviceDuties: serviceDuties,
     hasDriverLicense: hasDriverLicense,
-    hasHeldLicense12Months: hasHeldLicense12Months,
+    hasLicenseMoreThanTwelveMonths: hasLicenseMoreThanTwelveMonths,
     drivingViolation: drivingViolation,
     hasConvictedTrafficAccident: hasConvictedTrafficAccident,
     hasTrafficAccidentExplain: hasTrafficAccidentExplain,
@@ -296,72 +332,72 @@ export const ApplicationFormSchema = z.object({
 
     // 7
     // A
-    skillCarpentry: skillCarpentry,
-    skillConstruction: skillConstruction,
-    skillElectrical: skillElectrical,
-    skillForklift: skillForklift,
-    skillMechanic: skillMechanic,
-    skillRepair: skillRepair,
-    skillLaborer: skillLaborer,
-    skillWelding: skillWelding,
-    skillMasonry: skillMasonry,
-    skillPlumbing: skillPlumbing,
-    skillPainting: skillPainting,
-    skillWarehouseMaintenance: skillWarehouseMaintenance,
-    skillTransportation: skillTransportation,
-    hasHeavyLicense: hasHeavyLicense,
+    skillCarpentry: skillInventory,
+    skillConstruction: skillInventory,
+    skillElectrical: skillInventory,
+    skillForklift: skillInventory,
+    skillMechanic: skillInventory,
+    skillRepair: skillInventory,
+    skillLaborer: skillInventory,
+    skillWelding: skillInventory,
+    skillMasonry: skillInventory,
+    skillPlumbing: skillInventory,
+    skillPainting: skillInventory,
+    skillWarehouseMaintenance: skillInventory,
+    skillTransportation: skillInventory,
+    hasHeavyLicense: yesNo,
     // B
-    skillWebsite: skillWebsite,
-    skillWebDesign: skillWebDesign,
-    skillIT: skillIT,
-    skillVideo: skillVideo,
-    skillComputerDesign: skillComputerDesign,
-    skillAdobePhotoshop: skillAdobePhotoshop,
-    skillAdobeInDesign: skillAdobeInDesign,
-    skillOtherPrograms: skillOtherPrograms,
-    skillJournalism: skillJournalism,
-    skillPublicSpeaking: skillPublicSpeaking,
-    skillFilmmaking: skillFilmmaking,
-    skillPhotography: skillPhotography,
+    skillWebsite: skillInventory,
+    skillWebDesign: skillInventory,
+    skillIT: skillInventory,
+    skillVideo: skillInventory,
+    skillComputerDesign: skillInventory,
+    skillAdobePhotoshop: skillInventory,
+    skillAdobeInDesign: skillInventory,
+    skillOtherPrograms: skillInventory,
+    skillJournalism: skillInventory,
+    skillPublicSpeaking: skillInventory,
+    skillFilmmaking: skillInventory,
+    skillPhotography: skillInventory,
     // C
-    skillAccounting: skillAccounting,
-    skillAdministration: skillAdministration,
-    skillBookkeeping: skillBookkeeping,
-    skillOperatingSystems: skillOperatingSystems,
-    skillSystem: skillSystem,
-    skillSoftware: skillSoftware,
-    skillOfficeSuite: skillOfficeSuite,
-    skillExcel: skillExcel,
-    skillTyping: skillTyping,
-    skillGoogleDrive: skillGoogleDrive,
-    skillSecretarial: skillSecretarial,
-    skillOrganizing: skillOrganizing,
-    skillLibrary: skillLibrary,
-    skillReception: skillReception,
+    skillAccounting: skillInventory,
+    skillAdministration: skillInventory,
+    skillBookkeeping: skillInventory,
+    skillOperatingSystems: skillInventory,
+    skillSystem: skillInventory,
+    skillSoftware: skillInventory,
+    skillOfficeSuite: skillInventory,
+    skillExcel: skillInventory,
+    skillTyping: skillInventory,
+    skillGoogleDrive: skillInventory,
+    skillSecretarial: skillInventory,
+    skillOrganizing: skillInventory,
+    skillLibrary: skillInventory,
+    skillReception: skillInventory,
     // D
-    skillProofreading: skillProofreading,
-    skillCopyEditing: skillCopyEditing,
-    skillTranslation: skillTranslation,
+    skillProofreading: skillInventory,
+    skillCopyEditing: skillInventory,
+    skillTranslation: skillInventory,
     // E
-    skillCounseling: skillCounseling,
-    skillMusicalInstrument: skillMusicalInstrument,
-    skillJanitorial: skillJanitorial,
-    skillCooking: skillCooking,
-    skillForeignLanguage: skillForeignLanguage,
-    skillComputer: skillComputer,
-    skillSpecialTraining: skillSpecialTraining,
+    skillCounseling: skillInventory,
+    skillMusicalInstrument: skillInventory,
+    skillJanitorial: skillInventory,
+    skillCooking: skillInventory,
+    skillForeignLanguage: string_optional,
+    skillComputer: string_optional,
+    skillSpecialTraining: string_optional,
 
     // 8
-    character1: character1,
-    character2: character2,
-    character3: character3,
-    character4: character4,
+    character1: checkBox,
+    character2: checkBox,
+    character3: checkBox,
+    character4: checkBox,
 
     // 9
-    refPasterName: refPasterName,
-    refPasterAddress: refPasterAddress,
-    refPasterPhone: refPasterPhone,
-    refPasterEmail: refPasterEmail,
+    refPastorName: refPastorName,
+    refPastorAddress: refPastorAddress,
+    refPastorPhone: refPastorPhone,
+    refPastorEmail: refPastorEmail,
     refEmployerName: refEmployerName,
     refEmployerAddress: refEmployerAddress,
     refEmployerPhone: refEmployerPhone,
@@ -370,89 +406,243 @@ export const ApplicationFormSchema = z.object({
     refFriendAddress: refFriendAddress,
     refFriendPhone: refFriendPhone,
     refFriendEmail: refFriendEmail,
-    refOtherName: refOtherName,
-    refOtherAddress: refOtherAddress,
-    refOtherPhone: refOtherPhone,
-    refOtherEmail: refOtherEmail,
-    refOtherRelationship: refOtherRelationship,
-    hasFriendsIsrael: hasFriendsIsrael,
-    hasFriendsIsraelExplain: hasFriendsIsraelExplain,
+    refOtherName: string_optional,
+    refOtherAddress: string_optional,
+    refOtherPhone: string_optional,
+    refOtherEmail: string_optional,
+    refOtherRelationship: string_optional,
+    hasFriendsIsrael: yesNo,
+    hasFriendsIsraelExplain: string_optional,
 
     // 10
-    verify: verify
+    verify1: verify,
+    verify2: verify,
+    verify3: verify,
+    verify4: verify,
+    verify5: verify,
+    verify6: verify,
+    verify7: verify
 });
 
 export type ApplicationFormType = z.infer<typeof ApplicationFormSchema>;
 
-// export const HealthQuestionnaireDefaultValues: Partial<ApplicationFormType> = {
-//     heightUnit: [],
-//     weightUnit: [],
-//     migranes: [],
-//     headInjury: [],
-//     weakness: [],
-//     backProblems: [],
-//     asthma: [],
-//     lossHearing: [],
-//     epilepsy: [],
-//     anxiety: [],
-//     fatigue: [],
-//     diabetes: [],
-//     hemorrhoids: [],
-//     hepatitis: [],
-//     stroke: [],
-//     emphysema: [],
-//     anemia: [],
-//     neckPain: [],
-//     fainting: [],
-//     dizziness: [],
-//     heartProblems: [],
-//     tuberculosis: [],
-//     lossVision: [],
-//     depression: [],
-//     shortBreath: [],
-//     arthritis: [],
-//     vomiting: [],
-//     hiv: [],
-//     abnormalBleeding: [],
-//     cancer: [],
-//     brokenBones: [],
-//     highBloodPressure: [],
-//     // 3
-//     verify: false
-// };
+export const ApplicationFormDefaultValues: Partial<ApplicationFormType> = {
+    areaInterested: [],
+    educationTable: [{ educationSchoolName: '', educationDegree: '', educationDate: '' }],
+    character1: [],
+    character2: [],
+    character3: [],
+    character4: [],
+    skillCarpentry: '0',
+    skillConstruction: '0',
+    skillElectrical: '0',
+    skillForklift: '0',
+    skillMechanic: '0',
+    skillRepair: '0',
+    skillLaborer: '0',
+    skillWelding: '0',
+    skillMasonry: '0',
+    skillPlumbing: '0',
+    skillPainting: '0',
+    skillWarehouseMaintenance: '0',
+    skillTransportation: '0',
+    skillWebsite: '0',
+    skillWebDesign: '0',
+    skillIT: '0',
+    skillVideo: '0',
+    skillComputerDesign: '0',
+    skillAdobePhotoshop: '0',
+    skillAdobeInDesign: '0',
+    skillOtherPrograms: '0',
+    skillJournalism: '0',
+    skillPublicSpeaking: '0',
+    skillFilmmaking: '0',
+    skillPhotography: '0',
+    skillAccounting: '0',
+    skillAdministration: '0',
+    skillBookkeeping: '0',
+    skillOperatingSystems: '0',
+    skillSystem: '0',
+    skillSoftware: '0',
+    skillOfficeSuite: '0',
+    skillExcel: '0',
+    skillTyping: '0',
+    skillGoogleDrive: '0',
+    skillSecretarial: '0',
+    skillOrganizing: '0',
+    skillLibrary: '0',
+    skillReception: '0',
+    skillProofreading: '0',
+    skillCopyEditing: '0',
+    skillTranslation: '0',
+    skillCounseling: '0',
+    skillMusicalInstrument: '0',
+    skillJanitorial: '0',
+    skillCooking: '0'
+};
 export const ApplicationFormFields = [
-    ['name', 'age', 'height', 'heightUnit', 'weight', 'weightUnit'],
+    // Step 0: System
+    ['ref', 'office'],
+    // Step 1: Personal Information
     [
-        'migranes',
-        'headInjury',
-        'weakness',
-        'backProblems',
-        'asthma',
-        'lossHearing',
-        'epilepsy',
-        'anxiety',
-        'fatigue',
-        'diabetes',
-        'hemorrhoids',
-        'hepatitis',
-        'stroke',
-        'emphysema',
-        'anemia',
-        'neckPain',
-        'fainting',
-        'dizziness',
-        'heartProblems',
-        'tuberculosis',
-        'lossVision',
-        'depression',
-        'shortBreath',
-        'arthritis',
-        'vomiting',
-        'hiv',
-        'abnormalBleeding',
-        'cancer',
-        'brokenBones',
-        'highBloodPressure'
+        'firstName',
+        'middleName',
+        'lastName',
+        'street',
+        'city',
+        'state',
+        'zip',
+        'country',
+        'phone',
+        'email',
+        'passportNumber',
+        'passportExpiration',
+        'passportIssued',
+        'age',
+        'birthday',
+        'ssn',
+        'sex',
+        'maritalStatus',
+        'spouseFullName',
+        'childrenNames',
+        'hasFamilySupport',
+        'hasFamilySupportExplain'
     ],
-    ['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'verify']
+    // Step 2: Health Information
+    [
+        'healthCondition',
+        'seriousInjury',
+        'seriousInjuryExplain',
+        'hasHandicap',
+        'hasHandicapExplain',
+        'doSmoke',
+        'canLift33lbs',
+        'personalDoctor',
+        'personalDoctorPhone'
+    ],
+    // Step 3: Emergency Contact
+    [
+        'emergencyName',
+        'emergencyRelationship',
+        'emergencyStreet',
+        'emergencyCity',
+        'emergencyState',
+        'emergencyZip',
+        'emergencyPhone',
+        'emergencyCountry',
+        'emergencyEmail'
+    ],
+    // Step 4: Motivation and Availability
+    [
+        'describeMotivation',
+        'areaInterested',
+        'otherAreaInterested',
+        'minAvailability',
+        'maxAvailability',
+        'preferredStartDate',
+        'preferredStartDate2',
+        'ifNoPosition'
+    ],
+    // Step 5: Education and Employment
+    [
+        'educationTable',
+        'employProfession',
+        'employAccreditation',
+        'employHistory',
+        'hobby',
+        'clubs',
+        'serviceOrganizationName',
+        'serviceStartDate',
+        'serviceEndDate',
+        'serviceDuties',
+        'hasDriverLicense',
+        'hasHeldLicense12Months',
+        'drivingViolation',
+        'hasConvictedTrafficAccident',
+        'hasTrafficAccidentExplain',
+        'hasVisitedIsrael',
+        'hasVisitedIsraelDates',
+        'listForeignCountries'
+    ],
+    // Step 6: Religious Information
+    ['churchName', 'christianExperience', 'christianJewishUnderstanding', 'interestIsrael'],
+    // Step 7: Skills
+    [
+        'skillCarpentry',
+        'skillConstruction',
+        'skillElectrical',
+        'skillForklift',
+        'skillMechanic',
+        'skillRepair',
+        'skillLaborer',
+        'skillWelding',
+        'skillMasonry',
+        'skillPlumbing',
+        'skillPainting',
+        'skillWarehouseMaintenance',
+        'skillTransportation',
+        'hasHeavyLicense',
+        'skillWebsite',
+        'skillWebDesign',
+        'skillIT',
+        'skillVideo',
+        'skillComputerDesign',
+        'skillAdobePhotoshop',
+        'skillAdobeInDesign',
+        'skillOtherPrograms',
+        'skillJournalism',
+        'skillPublicSpeaking',
+        'skillFilmmaking',
+        'skillPhotography',
+        'skillAccounting',
+        'skillAdministration',
+        'skillBookkeeping',
+        'skillOperatingSystems',
+        'skillSystem',
+        'skillSoftware',
+        'skillOfficeSuite',
+        'skillExcel',
+        'skillTyping',
+        'skillGoogleDrive',
+        'skillSecretarial',
+        'skillOrganizing',
+        'skillLibrary',
+        'skillReception',
+        'skillProofreading',
+        'skillCopyEditing',
+        'skillTranslation',
+        'skillCounseling',
+        'skillMusicalInstrument',
+        'skillJanitorial',
+        'skillCooking',
+        'skillForeignLanguage',
+        'skillComputer',
+        'skillSpecialTraining'
+    ],
+    // Step 8: Character References
+    ['character1', 'character2', 'character3', 'character4'],
+    // Step 9: References
+    [
+        'refPastorName',
+        'refPastorAddress',
+        'refPastorPhone',
+        'refPastorEmail',
+        'refEmployerName',
+        'refEmployerAddress',
+        'refEmployerPhone',
+        'refEmployerEmail',
+        'refFriendName',
+        'refFriendAddress',
+        'refFriendPhone',
+        'refFriendEmail',
+        'refOtherName',
+        'refOtherAddress',
+        'refOtherPhone',
+        'refOtherEmail',
+        'refOtherRelationship',
+        'hasFriendsIsrael',
+        'hasFriendsIsraelExplain'
+    ],
+    // Step 10: Verification
+    ['verify1', 'verify2', 'verify3', 'verify4', 'verify5', 'verify6', 'verify7']
 ] as const;

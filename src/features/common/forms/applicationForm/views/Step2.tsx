@@ -19,12 +19,6 @@ type Step2Props = {
     t: TFunction<'application'>;
 };
 const Step2: FC<Step2Props> = ({ register, errors, getValues, t }) => {
-    const { username } = useUserStore(
-        useShallow((state) => ({
-            username: state.username
-        }))
-    );
-    console.log('username', username);
     return (
         <div>
             <section>

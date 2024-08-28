@@ -4,103 +4,30 @@ import { useShallow } from 'zustand/react/shallow';
 import SectionTitle from '../../components/SectionTitle';
 import Input from '../../components/Input';
 import { TFunction } from 'i18next';
-import { UseFormRegister, FieldErrors, UseFormGetValues } from 'react-hook-form';
+import { UseFormRegister, FieldErrors, UseFormGetValues, Control } from 'react-hook-form';
 import { ApplicationFormType } from '../schema';
 import Row from '../../components/Row';
-import { HealthCondition, YesNo } from '../enums';
+import { Character1, Character2, Character3, Character4, HealthCondition, YesNo } from '../enums';
+import Checkbox from '../../components/Checkbox';
 
 type Step8Props = {
     register: UseFormRegister<ApplicationFormType>;
     errors: FieldErrors<ApplicationFormType>;
     getValues: UseFormGetValues<ApplicationFormType>;
     t: TFunction<'application'>;
+    control: Control<ApplicationFormType>;
 };
-const Step8: FC<Step8Props> = ({ register, errors, getValues, t }) => {
-    const { username } = useUserStore(
-        useShallow((state) => ({
-            username: state.username
-        }))
-    );
-    console.log('username', username);
+const Step8: FC<Step8Props> = ({ register, errors, getValues, t, control }) => {
     return (
         <div>
             <section>
-                <SectionTitle title={t('sectionTitle.3')} />
+                <SectionTitle title={t('sectionTitle.8')} />
+                <div className="font-semibold mt-2 text-black">{t('characterDescription')}</div>
                 <Row>
-                    <Input
-                        label={t('emergencyName')}
-                        register={register('emergencyName')}
-                        placeholder={t('emergencyName')}
-                        error={errors.emergencyName || undefined}
-                    />
-                    <Input
-                        label={t('emergencyRelationship')}
-                        register={register('emergencyRelationship')}
-                        placeholder={t('emergencyRelationship')}
-                        error={errors.emergencyRelationship || undefined}
-                    />
-                    <Input
-                        label={t('emergencyEmail')}
-                        register={register('emergencyEmail')}
-                        placeholder={t('emergencyEmail')}
-                        error={errors.emergencyEmail || undefined}
-                    />
-                    <Input
-                        label={t('emergencyPhone')}
-                        register={register('emergencyPhone')}
-                        placeholder={t('emergencyPhone')}
-                        error={errors.emergencyPhone || undefined}
-                    />
-                </Row>
-                <Row>
-                    <Input
-                        label={t('emergencyStreet')}
-                        register={register('emergencyStreet')}
-                        placeholder={t('emergencyStreet')}
-                        error={errors.emergencyStreet || undefined}
-                    />{' '}
-                    <Input
-                        label={t('emergencyState')}
-                        register={register('emergencyState')}
-                        placeholder={t('emergencyState')}
-                        error={errors.emergencyState || undefined}
-                    />{' '}
-                    <Input
-                        label={t('emergencyCity')}
-                        register={register('emergencyCity')}
-                        placeholder={t('emergencyCity')}
-                        error={errors.emergencyCity || undefined}
-                    />{' '}
-                    <Input
-                        label={t('emergencyCountry')}
-                        register={register('emergencyCountry')}
-                        placeholder={t('emergencyCountry')}
-                        error={errors.emergencyCountry || undefined}
-                    />{' '}
-                    <Input
-                        label={t('emergencyZip')}
-                        register={register('emergencyZip')}
-                        placeholder={t('emergencyZip')}
-                        error={errors.emergencyZip || undefined}
-                    />
-                </Row>
-                <Row>
-                    <Radio label={t('doSmoke')} register={register('doSmoke')} options={YesNo(t)} error={errors.doSmoke} />
-                    <Radio label={t('canLift33lbs')} register={register('canLift33lbs')} options={YesNo(t)} error={errors.canLift33lbs} />
-                </Row>
-                <Row>
-                    <Input
-                        label={t('personalDoctor')}
-                        register={register('personalDoctor')}
-                        placeholder={t('personalDoctor')}
-                        error={errors.personalDoctor || undefined}
-                    />
-                    <Input
-                        label={t('personalDoctorPhone')}
-                        register={register('personalDoctorPhone')}
-                        placeholder={t('personalDoctorPhone')}
-                        error={errors.personalDoctorPhone || undefined}
-                    />
+                    <Checkbox label={null} name={'character1'} control={control} options={Character1(t)} error={errors.character1 || undefined} />
+                    <Checkbox label={null} name={'character2'} control={control} options={Character2(t)} error={errors.character2 || undefined} />
+                    <Checkbox label={null} name={'character3'} control={control} options={Character3(t)} error={errors.character3 || undefined} />
+                    <Checkbox label={null} name={'character4'} control={control} options={Character4(t)} error={errors.character4 || undefined} />
                 </Row>
             </section>
         </div>

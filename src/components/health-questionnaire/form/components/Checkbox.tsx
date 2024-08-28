@@ -35,7 +35,7 @@ const Checkbox: FC<CheckboxProps> = ({ label, register, options, error, value })
                 ))}
                 {label && <div className="font-semibold mb-1">{label}</div>}
             </div>
-            {error && <div className="text-red-500 pl-1 pt-1 text-xs">{error.message as string}</div>}
+            <div className="text-red-500 pl-1 py-1 text-xs h-4">{error && error.message}</div>
         </div>
     );
 };

@@ -15,7 +15,7 @@ const Input: FC<InputProps> = ({ label, register, placeholder, error }) => {
                 }
                 placeholder={placeholder || label}
             />
-            {error && <div className="text-red-500 pl-1 py-1 text-xs">{error.message}</div>}
+            <div className="text-red-500 pl-1 py-1 text-xs h-4">{error && error.message}</div>
         </label>
     );
 };

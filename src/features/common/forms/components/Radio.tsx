@@ -11,7 +11,7 @@ type RadioProps = {
 
 export const Radio: FC<RadioProps> = ({ label, register, options, error, optional }) => {
     return (
-        <label className="flex flex-col my-2 w-40 me-5 grow md:max-w-sm">
+        <label className="flex flex-col my-2 w-40 me-5 grow">
             <div className="font-semibold mb-1 text-black">
                 {label}
                 {optional && <span className="text-gray-500 text-sm"> (optional)</span>}
@@ -29,7 +29,7 @@ export const Radio: FC<RadioProps> = ({ label, register, options, error, optiona
                 })}
             </div>
 
-            {error && <div className="text-red-500 pl-1 pt-1 text-xs">{error.message as string}</div>}
+            <div className="text-red-500 pl-1 py-1 text-xs h-4">{error && error.message}</div>
         </label>
     );
 };

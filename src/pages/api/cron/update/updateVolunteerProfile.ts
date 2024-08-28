@@ -2,10 +2,10 @@ import { KintonePassword, KintoneUserName, VolunteerProfieAppID } from '@/common
 import { REST_SavedVolunteerProfile } from '@/types/VolunteerProfile';
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import { NextApiResponse } from 'next';
-import { calcAge, calcVacation, calcVacationDeputationTaken, calcWorkingYears } from '../../common/calc';
+import { calcAge, calcVacation, calcVacationDeputationTaken, calcWorkingYears } from '../../hooks/calc';
 import logError from '@/common/logError';
 import { DateTime } from 'luxon';
-import getWorkHistoryCurrent from '../../common/getWorkHistoryCurrent';
+import getWorkHistoryCurrent from '../../hooks/getWorkHistoryCurrent';
 
 const updateVolunteerProfile = async (res: NextApiResponse) => {
     try {
