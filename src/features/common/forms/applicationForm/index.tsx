@@ -56,7 +56,7 @@ const ApplicationForm = (props: { repo: any }) => {
     const validate = async () => {
         const values = getValues();
         console.log('values', values);
-        const isValid = await trigger(ApplicationFormFields[step]);
+        const isValid = await trigger(ApplicationFormFields[step] as any); // TODO: review type
         if (isValid) return true;
         else {
             const firstErrorField = Object.keys(formatError)[0];
