@@ -14,7 +14,6 @@ const Date: FC<DateProps> = ({ label, register, placeholder, error, optional }) 
                 mask="99/99/9999"
                 maskPlaceholder={'dd/mm/yyyy'}
                 placeholder="dd/mm/yyyy"
-                maskChar={'-'}
                 {...register}
                 className={
                     'text-gray-800 rounded-md border py-2 px-3 focus:outline focus:outline-sky-500 focus:ring-4 focus:ring-sky-500/30' +

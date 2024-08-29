@@ -50,7 +50,8 @@ export const HealthCondition = (t: Translation) => ({
 
 export const AreaInterested = (t: Translation) => ({
     Administration: t('areaInterested.options.administration'),
-    'Food Bank': t('areaInterested.options.foodBank'),
+    'Food bank': t('areaInterested.options.foodBank'),
+    'General assistance': t('areaInterested.options.generalAssistance'),
     Accounting: t('areaInterested.options.accounting'),
     'Maintenance team/Home repair team': t('areaInterested.options.maintenanceTeam'),
     'Publications/Media': t('areaInterested.options.publicationsMedia'),

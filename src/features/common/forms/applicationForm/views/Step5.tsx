@@ -67,7 +67,6 @@ const Step5: FC<Step5Props> = ({ register, errors, getValues, t, control }) => {
                                                 mask="99/99/9999"
                                                 maskPlaceholder={'dd/mm/yyyy'}
                                                 placeholder="dd/mm/yyyy"
-                                                maskChar={'-'}
                                                 className="w-32 h-[2rem] p-1 outline-none"
                                             />
                                         </td>
@@ -182,7 +181,6 @@ const Step5: FC<Step5Props> = ({ register, errors, getValues, t, control }) => {
                                                 mask="99/99/9999"
                                                 maskPlaceholder={'dd/mm/yyyy'}
                                                 placeholder="dd/mm/yyyy"
-                                                maskChar={'-'}
                                                 className="w-32 h-[2rem] p-1 outline-none"
                                             />
                                         </td>
@@ -192,7 +190,6 @@ const Step5: FC<Step5Props> = ({ register, errors, getValues, t, control }) => {
                                                 mask="99/99/9999"
                                                 maskPlaceholder={'dd/mm/yyyy'}
                                                 placeholder="dd/mm/yyyy"
-                                                maskChar={'-'}
                                                 className="w-32 h-[2rem] p-1 outline-none"
                                             />
                                         </td>

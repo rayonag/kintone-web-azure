@@ -2,7 +2,6 @@ import { DateTime } from 'luxon';
 import { z } from 'zod';
 
 const validateCheckbox = (val: string[]) => {
-    debugger;
     return val.length > 0;
 };
 const validateRadio = (value: string | null) => value !== null;
@@ -141,17 +140,7 @@ const christianJewishUnderstanding = string50;
 const interestIsrael = string50;
 
 // 7
-const skillInventory = z.string().refine(
-    (value) => {
-        if (value === null) return true;
-        if (value === '0') return '5';
-        const numberValue = parseInt(value, 10);
-        return numberValue >= 1 && numberValue <= 5;
-    },
-    {
-        message: 'Skill must be a number between 1 and 5, or 0 to return null'
-    }
-);
+const skillInventory = z.string();
 // 8
 const checkBox: z.ZodArray<z.ZodString> = z.array(z.string());
 
@@ -314,8 +303,8 @@ export const ApplicationFormSchema = z.object({
     skillAdministration: skillInventory,
     skillBookkeeping: skillInventory,
     skillOperatingSystems: skillInventory,
-    skillSystem: skillInventory,
-    skillSoftware: skillInventory,
+    skillSystem: z.array(z.string()),
+    skillSoftware: z.array(z.string()),
     skillOfficeSuite: skillInventory,
     skillExcel: skillInventory,
     skillTyping: skillInventory,
@@ -653,8 +642,8 @@ export const ApplicationFormDefaultValues: Partial<ApplicationFormType> = {
     skillAdministration: '0',
     skillBookkeeping: '0',
     skillOperatingSystems: '0',
-    skillSystem: '0',
-    skillSoftware: '0',
+    skillSystem: [],
+    skillSoftware: [],
     skillOfficeSuite: '0',
     skillExcel: '0',
     skillTyping: '0',

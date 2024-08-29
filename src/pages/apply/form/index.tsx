@@ -32,12 +32,6 @@ import ApplicationForm from '@/features/common/forms/applicationForm';
 import i18n from '@/components/health-questionnaire/form/translations/config';
 
 const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-    return <ApplicationForm repo={repo} />;
-    return <>Currently under maintenance... Sorry for any inconvenience.</>;
-    // State to track whether the iframe content is loading
-    const { setIsLoading } = useLoading();
-    const [isIframeLoading, setIsIframeLoading] = useState(false);
-    const [isIframeLoaded, setIsIframeLoaded] = useState(false);
     const [ref, setRef] = useState('');
     const [office, setOffice] = useState<NationalOffice | undefined>(undefined);
     const [isFirstTimeOnForm, setIsFirstTimeOnForm] = useState(false);
@@ -46,7 +40,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
 
     const type = repo?.type || null;
     const formSubmitted = repo?.formSubmitted || false;
-    //const iframeLink = repo?.prefilledFormURL || `${getIframeLink(type)}&ref=${ref}&office=${office}`;
+
     useEffect(() => {
         const ref = dashboardUser.ref;
         if (ref == undefined) {
@@ -56,158 +50,47 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
         const office = repo?.office;
         setRef(ref);
         setOffice(office);
-        // if first time no loading
-        if (isFirstTimeOnForm) setIsLoading(false);
         setIsFirstTimeOnForm(repo?.isFirstTimeOnForm || false);
     }, [dashboardUser]);
-    // Function to handle iframe load event
-    const handleIframeLoad = () => {
-        setIsIframeLoaded(true);
-        setTimeout(() => {
-            setIsIframeLoading(false);
-        }, 4000); // Minimum 4 seconds delay
-    };
-
-    useEffect(() => {
-        if (isIframeLoaded) {
-            const timer = setTimeout(() => {
-                setIsIframeLoading(false);
-            }, 7000); // Minimum 4 seconds delay
-            return () => clearTimeout(timer);
-        }
-    }, [isIframeLoaded]);
-
     const handleContinueOnFirstTime = async () => {
         if (!dashboardUser.ref) return;
         await postIsFirstTime(dashboardUser.ref);
         setIsFirstTimeOnForm(false);
-        //location.reload();
     };
-    // confirm before leave page
-    useEffect(() => {
-        const handleBeforeUnload = (event: any) => {
-            event.preventDefault();
-            event.returnValue = '';
-        };
-        window.addEventListener('beforeunload', handleBeforeUnload);
-        return () => {
-            window.removeEventListener('beforeunload', handleBeforeUnload);
-        };
-    }, []);
-    // back to top after receiving postmessage from FormBridge
-    useEffect(() => {
-        const receiveMessage = async (event: any) => {
-            let data = null;
-            try {
-                data = JSON.parse(event.data);
-            } catch (e) {
-                console.log('error', e);
-                return;
-            }
-            if (data?.form?.publicCode) {
-                const res = await fetch('/api/reference/postApplicationForm', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ ref: dashboardUser.ref }) // Replace with your data
-                });
-                //alert('Thank you for submitting application form.');
-                router.push('/apply');
-            }
-        };
-        window.addEventListener('message', receiveMessage);
-        // Cleanup function to remove the event listener when the component unmounts
-        return () => {
-            window.removeEventListener('message', receiveMessage);
-        };
-    }, []);
-
-    useEffect(() => {
-        if (!isIframeLoading && !formSubmitted && !isFirstTimeOnForm && !isIframeLoaded) setIsIframeLoading(true);
-    }, [formSubmitted, isFirstTimeOnForm]);
-    const [viewMyForm, setViewMyForm] = useState(false);
 
     return (
-        // Use a wrapper div for the entire page
         <>
-            <div style={{ height: '100vh', width: '100vw', display: 'flex', flexDirection: 'column' }}>
-                {formSubmitted ? (
-                    <>
-                        <Layout_fadeIn key="page">
-                            <div className="flex flex-col items-center justify-center h-[95vh]">
-                                <div>Thank you for submitting {type} application form.</div>
-                                {viewMyForm ? (
+            {formSubmitted ? (
+                <>
+                    <Layout_fadeIn key="page">
+                        <div className="flex flex-col items-center justify-center h-[95vh]">
+                            <div>Thank you for submitting {type} application form.</div>
+                            {/* {viewMyForm ? (
                                     <ViewMyForm />
-                                ) : (
+                                ) : 
+                                (
                                     <button className="btn" onClick={() => setViewMyForm(true)}>
                                         View Your Response
                                     </button>
-                                )}
-                                <Link href="/apply" className="btn">
-                                    Go to Top
-                                </Link>
-                            </div>
-                        </Layout_fadeIn>
-                    </>
-                ) : (
-                    <>
-                        {isFirstTimeOnForm ? (
-                            <>
-                                <FirstTimeTips type={type} handleContinueOnFirstTime={handleContinueOnFirstTime} />
-                            </>
-                        ) : (
-                            <>
-                                <Layout_fadeIn key="page">
-                                    <div style={{ height: '95vh', width: '100vw', display: 'flex', flexDirection: 'column' }}>
-                                        {isIframeLoading && (
-                                            <div className="flex justify-center mt-[2vh] h-full bg-[#012C66] p-4 md:px-16">
-                                                <div className="my-10 mx-24 p-4 bg-white w-full max-w-[1250px] max-h-[500px] rounded-md">
-                                                    <div className="flex h-fit items-center">
-                                                        {Array(10)
-                                                            .fill(0)
-                                                            .map((_, index) => (
-                                                                <>
-                                                                    <Skeleton circle={true} key={index} height={20} width={20} />
-                                                                    {index != 9 && <div className="h-1 w-40 bg-gray-300 align-middle"></div>}
-                                                                </>
-                                                            ))}
-                                                    </div>
-                                                    <Skeleton className="text-4xl my-6" style={{ width: '30rem', maxWidth: '90%' }} />
-                                                    <div className="my-10"></div>{' '}
-                                                    {Array(2)
-                                                        .fill(0)
-                                                        .map((_, index) => (
-                                                            <div key={index} className="my-8">
-                                                                <Skeleton className="text-2xl" style={{ width: '10rem', maxWidth: '70%' }} />
-                                                                <Skeleton className="text-4xl" style={{ width: '16rem', maxWidth: '70%' }} />
-                                                            </div>
-                                                        ))}
-                                                    <div className="mt-10 flex">
-                                                        <Skeleton
-                                                            className="text-3xl"
-                                                            style={{ width: '5rem', maxWidth: '70%', marginRight: '10px' }}
-                                                        />
-                                                        <Skeleton className="text-3xl" style={{ width: '10rem', maxWidth: '70%' }} />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )}
-                                        {/* {office && (
-                                            <iframe
-                                                title="Embedded Content"
-                                                src={`${iframeLink}`} // Replace with your desired URL
-                                                style={{ flex: 1, border: 'none', marginTop: '2vh', display: `${isIframeLoading ? 'none' : ''}` }} // Make the iframe fill the remaining space
-                                                onLoad={handleIframeLoad}
-                                            ></iframe>
-                                        )} */}
-                                    </div>
-                                </Layout_fadeIn>
-                            </>
-                        )}
-                    </>
-                )}
-            </div>
+                                )
+                                } */}
+                            <Link href="/apply" className="btn">
+                                Go to Top
+                            </Link>
+                        </div>
+                    </Layout_fadeIn>
+                </>
+            ) : (
+                <>
+                    {isFirstTimeOnForm ? (
+                        <>
+                            <FirstTimeTips type={type} handleContinueOnFirstTime={handleContinueOnFirstTime} />
+                        </>
+                    ) : (
+                        <ApplicationForm repo={repo} />
+                    )}
+                </>
+            )}
         </>
     );
 };

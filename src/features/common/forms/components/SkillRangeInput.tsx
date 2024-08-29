@@ -21,7 +21,7 @@ const SkillRangeInput: FC<SkillRangeInputProps> = ({ label, register, placeholde
         >
             <div className="flex justify-between mb-1 text-black" onClick={() => setIsFocused(!isFocused)}>
                 <span>{label}</span>
-                <span>{value == '0' ? '-' : value}</span>
+                <span>{value == '0' ? '-' : value == '' ? '-' : value}</span>
             </div>
             <div className={`overflow-hidden transition-all duration-500 ease ${isFocused ? 'max-h-20' : 'max-h-0'}`}>
                 <input

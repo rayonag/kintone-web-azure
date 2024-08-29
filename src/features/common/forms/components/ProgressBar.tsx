@@ -24,7 +24,7 @@ const StepProgressBar: FC<StepProgressBarProps> = ({ steps, setStep, currentStep
                             >
                                 {index + 1 < currentStep ? <GreenCheckMark /> : index + 1}
                             </div>
-                            {index + 1 < steps && <div className="flex h-1 flex-1 bg-gray-200 dark:bg-gray-800" />}
+                            {index + 1 < steps && <div key={index + 10000} className="flex h-1 flex-1 bg-gray-200 dark:bg-gray-800" />}
                         </>
                     ))}
                 </div>

@@ -151,7 +151,7 @@ input[type='number'] {
     stroke-dashoffset: 0;
     -webkit-animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
     animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
-    stroke-linecap: round;
+    strokelinecap: round;
 }
 @-webkit-keyframes rotate {
     100% {

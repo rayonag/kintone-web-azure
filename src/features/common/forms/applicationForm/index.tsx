@@ -24,15 +24,20 @@ import Step10 from './views/Step10';
 import { useLoading } from '@/common/context/loading';
 import postApplicationForm from './hooks/postApplicationForm';
 import { useRouter } from 'next/router';
+import Layout_fadeIn from '@/styles/Layout_fadeIn';
+import Header from '@/components/header menu/Header';
+import convertPrefilledFormRecord from './hooks/convertPrefilledFormRecord';
+import Modal from 'react-modal';
+import ReactModal from 'react-modal';
+import postTempApplicationForm from './hooks/postTempApplicationForm';
 
 const ApplicationForm = (props: any) => {
     const [step, setStep] = useState(1);
     const { setIsLoading } = useLoading();
-
     //const [modalIsOpen, setModalIsOpen] = useState(false);
     // for future use on multi language
     const { t } = useTranslation('applicationForm');
-    const initialLang = 'en';
+    //const initialLang = 'en';
     //const [locale, dispatch] = useReducer<(state: string, actions: string) => string>(langReducer, initialLang);
     const form = props.repo;
     console.log('form', form);
@@ -94,19 +99,37 @@ const ApplicationForm = (props: any) => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
     }, []);
+
+    // load prefilled data
+    const [isModalOpen, setIsModalOpen] = useState(false);
     useEffect(() => {
         if (props.repo?.prefilledFormRecord) {
+            setIsModalOpen(true);
+        }
+    }, []);
+    const handleModalResponse = (isResume: boolean) => {
+        if (!isResume) {
+            if (!window.confirm('Are you sure you want to delete your progress and start from scratch?')) {
+                return;
+            } else {
+                setIsModalOpen(false);
+                return; // delete the record?
+            }
+        } else if (isResume) {
             const data = props.repo.prefilledFormRecord;
             console.log('data', data);
-            Object.keys(data).forEach((key: any) => {
-                if (ApplicationFormFields.includes(key)) {
-                    if (data[key].type === 'DROP_DOWN') setValue(key, [data[key].value]);
-                    //if (data[key].type === 'RADIO_BUTTON') setValue(key, [data[key].value]);
-                    else setValue(key, data[key].value);
-                }
-            });
+            convertPrefilledFormRecord(data, setValue);
+            setStep(parseInt(data['currentStep'].value) || 1);
+            setIsModalOpen(false);
+        } else {
+            // Handle starting from scratch if needed
+            // For example, reset the form
         }
-    }, [props]);
+    };
+    useEffect(() => {
+        // for modal
+        ReactModal.setAppElement('#__next');
+    }, []);
     const router = useRouter();
     const onSubmit = async (e: any) => {
         e.preventDefault();
@@ -128,52 +151,79 @@ const ApplicationForm = (props: any) => {
         // const res = await postPersonalHealthQuestionnaire(values, dashboardUser.ref || '0');
         // if (res) setModalIsOpen(true);
     };
+    const customStyles = {
+        content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)'
+        }
+    };
     return (
-        <div className="grid justify-center p-10 max-h-screen overflow-y-scroll">
-            <form
-                onSubmit={(e) => onSubmit(e)}
-                className="flex flex-col my-14 p-10 max-w-[95vw] md:w-[50rem] md:max-w-screen bg-gray-50 border rounded-md"
-            >
-                <ProgressBar steps={10} setStep={setStep} currentStep={step} />
-                {step == 1 && <Step1 register={register} getValues={getValues} errors={formatError} t={t} control={control} />}
-                {step == 2 && <Step2 register={register} getValues={getValues} errors={formatError} t={t} />}
-                {step == 3 && <Step3 register={register} getValues={getValues} errors={formatError} t={t} />}
-                {step == 4 && <Step4 register={register} getValues={getValues} errors={formatError} t={t} control={control} />}
-                {step == 5 && <Step5 register={register} getValues={getValues} errors={formatError} t={t} control={control} />}
-                {step == 6 && <Step6 register={register} getValues={getValues} errors={formatError} t={t} />}
-                {step == 7 && <Step7 register={register} getValues={getValues} errors={formatError} t={t} control={control} />}
-                {step == 8 && <Step8 register={register} getValues={getValues} errors={formatError} t={t} control={control} />}
-                {step == 9 && <Step9 register={register} getValues={getValues} errors={formatError} t={t} />}
-                {step == 10 && <Step10 register={register} getValues={getValues} errors={formatError} t={t} />}
-                {step != 10 && (
-                    <button
-                        type="button"
-                        onClick={async () => {
-                            const valid = await validate();
-                            if (valid) setStep(step + 1);
-                        }}
-                        className="btn-wide"
-                    >
-                        {t('system.next')}
-                    </button>
-                )}
-                {step == 10 && (
-                    <button type="submit" className="btn-wide">
-                        {t('system.submit')}
-                    </button>
-                )}
-                {step != 1 && (
-                    <button type="button" onClick={() => setStep(step - 1)} className="btn-wide">
-                        {t('system.back')}
-                    </button>
-                )}
-                {step == 1 && (
-                    <Link href="/apply" className="text-center btn-wide">
-                        Back to Top
-                    </Link>
-                )}
-            </form>
-        </div>
+        <>
+            <div className="grid justify-center px-10 pb-10 max-h-screen overflow-y-scroll">
+                <Header />
+
+                <Modal isOpen={isModalOpen} style={customStyles}>
+                    <div className="text-black flex flex-col text-center">
+                        <h1 className="text-xl font-semibold">There is a saved record of your progress.</h1>
+                        <button className="btn" onClick={() => handleModalResponse(true)}>
+                            Resume from the saved point.
+                        </button>
+                        <button className="btn-disabled" onClick={() => handleModalResponse(false)}>
+                            Delete your progress and start from scratch
+                        </button>
+                    </div>
+                </Modal>
+                <form
+                    onSubmit={(e) => onSubmit(e)}
+                    className="flex flex-col my-14 p-10 max-w-[95vw] md:w-[50rem] md:max-w-screen bg-gray-50 border rounded-md"
+                >
+                    <ProgressBar steps={10} setStep={setStep} currentStep={step} />
+                    {step == 1 && <Step1 register={register} getValues={getValues} errors={formatError} t={t} control={control} />}
+                    {step == 2 && <Step2 register={register} getValues={getValues} errors={formatError} t={t} />}
+                    {step == 3 && <Step3 register={register} getValues={getValues} errors={formatError} t={t} />}
+                    {step == 4 && <Step4 register={register} getValues={getValues} errors={formatError} t={t} control={control} />}
+                    {step == 5 && <Step5 register={register} getValues={getValues} errors={formatError} t={t} control={control} />}
+                    {step == 6 && <Step6 register={register} getValues={getValues} errors={formatError} t={t} />}
+                    {step == 7 && <Step7 register={register} getValues={getValues} errors={formatError} t={t} control={control} />}
+                    {step == 8 && <Step8 register={register} getValues={getValues} errors={formatError} t={t} control={control} />}
+                    {step == 9 && <Step9 register={register} getValues={getValues} errors={formatError} t={t} />}
+                    {step == 10 && <Step10 register={register} getValues={getValues} errors={formatError} t={t} />}
+                    {step != 10 && (
+                        <button
+                            type="button"
+                            onClick={async () => {
+                                const valid = await validate();
+                                if (valid) setStep(step + 1);
+                                // temp save
+                                postTempApplicationForm(getValues(), dashboardUser.ref || '0', step);
+                            }}
+                            className="btn-wide"
+                        >
+                            {t('system.next')}
+                        </button>
+                    )}
+                    {step == 10 && (
+                        <button type="submit" className="btn-wide">
+                            {t('system.submit')}
+                        </button>
+                    )}
+                    {step != 1 && (
+                        <button type="button" onClick={() => setStep(step - 1)} className="btn-wide">
+                            {t('system.back')}
+                        </button>
+                    )}
+                    {step == 1 && (
+                        <Link href="/apply" className="text-center btn-wide">
+                            Back to Top
+                        </Link>
+                    )}
+                </form>
+            </div>
+        </>
     );
 };
 

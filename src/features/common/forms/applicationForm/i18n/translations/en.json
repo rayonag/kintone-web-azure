@@ -92,7 +92,7 @@
         "title": "In which area would you like to service in BFP:",
         "options": {
             "administration": "Administration",
-            "foodBank": "Food Bank",
+            "foodBank": "Food bank",
             "generalAssistance": "General assistance",
             "accounting": "Accounting",
             "maintenanceTeam": "Maintenance team/Home repair team",

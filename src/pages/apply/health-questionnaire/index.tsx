@@ -62,7 +62,7 @@ export const getServerSideProps = (async (context) => {
         app: VolunteerApplicationMasterAppID as string,
         id: cookies.ref
     });
-    let prefilledFormRecord = undefined;
+    let prefilledFormRecord = null;
     if (resp.record['returnRef'].value) {
         const resp3 = await client.record.getAllRecords<any>({
             app: PersonalHealthQuestionnaireAppID as string,
