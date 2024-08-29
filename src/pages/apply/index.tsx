@@ -128,7 +128,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                     <div className="flex flex-col items-center justify-center">
                         <div>
                             <h1 className="text-xl my-10">
-                                Welcome{currentStep != 'reviewWebsite' && 'back'}, <span>{dashboardUser.name || ''}</span>!
+                                Welcome{currentStep != 'reviewWebsite' && ' back'}, <span>{dashboardUser.name || ''}</span>!
                                 {/* TODO: review welcome message */}
                             </h1>
                         </div>
@@ -287,7 +287,7 @@ export const getServerSideProps = (async (context) => {
         // Pass data to the page via props
         return { props: { repo } };
     } catch (e) {
-        logError(e, null, 'apply/form/getServerSideProps');
+        logError(e, null, 'apply/getServerSideProps');
         return { props: {} };
     }
 }) satisfies GetServerSideProps<{ repo: Repo } | {}>;
