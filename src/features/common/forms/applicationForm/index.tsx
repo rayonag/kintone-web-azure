@@ -21,15 +21,28 @@ import Step7 from './views/Step7';
 import Step8 from './views/Step8';
 import Step9 from './views/Step9';
 import Step10 from './views/Step10';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import {
+    KintoneUserName,
+    KintonePassword,
+    VolunteerApplicationMasterAppID,
+    PersonalHealthQuestionnaireAppID,
+    TempVolunteerApplicationAppID
+} from '@/common/env';
+import { REST_OnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
+import { KintoneRecordField, KintoneRestAPIClient } from '@kintone/rest-api-client';
+import { parseCookies } from 'nookies';
+import { REST_VolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
 
-const ApplicationForm = (props: { repo: any }) => {
+const ApplicationForm = (props: any) => {
     const [step, setStep] = useState(1);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     // for future use on multi language
     const { t } = useTranslation('applicationForm');
     const initialLang = 'en';
     const [locale, dispatch] = useReducer<(state: string, actions: string) => string>(langReducer, initialLang);
-
+    const form = props.repo;
+    console.log('form', form);
     const dashboardUser = useDashboardUser();
     const { username } = useUserStore(
         useShallow((state) => ({
@@ -89,7 +102,7 @@ const ApplicationForm = (props: { repo: any }) => {
         };
     }, []);
     useEffect(() => {
-        if (props.repo.prefilledFormRecord) {
+        if (props.repo?.prefilledFormRecord) {
             const data = props.repo.prefilledFormRecord;
             console.log('data', data);
             Object.keys(data).forEach((key: any) => {
@@ -131,6 +144,7 @@ const ApplicationForm = (props: { repo: any }) => {
                     <button
                         type="button"
                         onClick={async () => {
+                            await validate();
                             // const valid = await validate(step);
                             // if (valid) setModalIsOpen(true);
                         }}
@@ -145,7 +159,7 @@ const ApplicationForm = (props: { repo: any }) => {
                     </button>
                 )}
                 {step == 1 && (
-                    <Link type="button" href="/apply" className="btn-wide">
+                    <Link href="/apply" className="text-center btn-wide">
                         Back to Top
                     </Link>
                 )}

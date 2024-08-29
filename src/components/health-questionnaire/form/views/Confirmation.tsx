@@ -44,6 +44,7 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIs
     const { setIsLoading } = useLoading();
     const dashboardUser = useDashboardUser();
     const formData = getValues();
+    const router = useRouter();
     const modalStyle = {
         content: {
             top: '50%',
@@ -63,7 +64,7 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIs
         const res = await postPersonalHealthQuestionnaire(data, dashboardUser.ref || '0');
         if (res) setIsComplete(true);
         setIsLoading(false);
-        // router.push('/apply/health-questionnaire/complete');
+        router.push('/apply/health-questionnaire/complete');
     };
     return (
         <div className="relative">

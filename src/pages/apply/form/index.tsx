@@ -3,9 +3,15 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDashboardUser } from '@/common/context/dashboardUser';
-import { KintoneUserName, KintonePassword, VolunteerApplicationMasterAppID, VolunteerApplicationAppID } from '@/common/env';
+import {
+    KintoneUserName,
+    KintonePassword,
+    VolunteerApplicationMasterAppID,
+    VolunteerApplicationAppID,
+    TempVolunteerApplicationAppID
+} from '@/common/env';
 import { REST_OnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
-import { KintoneRestAPIClient } from '@kintone/rest-api-client';
+import { KintoneRecordField, KintoneRestAPIClient } from '@kintone/rest-api-client';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { parseCookies } from 'nookies';
 import { shortTermApplicationURL, volunteerApplicationURL, zealousAplicationURL } from '@/common/env';
@@ -26,7 +32,7 @@ import ApplicationForm from '@/features/common/forms/applicationForm';
 import i18n from '@/components/health-questionnaire/form/translations/config';
 
 const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-    return <ApplicationForm repo={{ prefilledFormRecord: null }} />;
+    return <ApplicationForm repo={repo} />;
     return <>Currently under maintenance... Sorry for any inconvenience.</>;
     // State to track whether the iframe content is loading
     const { setIsLoading } = useLoading();
@@ -40,7 +46,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
 
     const type = repo?.type || null;
     const formSubmitted = repo?.formSubmitted || false;
-    const iframeLink = repo?.prefilledFormURL || `${getIframeLink(type)}&ref=${ref}&office=${office}`;
+    //const iframeLink = repo?.prefilledFormURL || `${getIframeLink(type)}&ref=${ref}&office=${office}`;
     useEffect(() => {
         const ref = dashboardUser.ref;
         if (ref == undefined) {
@@ -187,14 +193,14 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                                                 </div>
                                             </div>
                                         )}
-                                        {office && (
+                                        {/* {office && (
                                             <iframe
                                                 title="Embedded Content"
                                                 src={`${iframeLink}`} // Replace with your desired URL
                                                 style={{ flex: 1, border: 'none', marginTop: '2vh', display: `${isIframeLoading ? 'none' : ''}` }} // Make the iframe fill the remaining space
                                                 onLoad={handleIframeLoad}
                                             ></iframe>
-                                        )}
+                                        )} */}
                                     </div>
                                 </Layout_fadeIn>
                             </>
@@ -209,12 +215,13 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
 // Export the component for use in other files
 export default Page;
 
+type REST_TempVolunteerApplicationForm = REST_VolunteerApplicationForm & { keepingTempRecord: KintoneRecordField.RadioButton };
 type Repo = {
     isFirstTimeOnForm: boolean;
     type: string | null;
     formSubmitted: boolean;
     office: NationalOffice;
-    prefilledFormURL: string | null;
+    prefilledFormRecord: REST_TempVolunteerApplicationForm | null;
 };
 export const getServerSideProps = (async (context) => {
     try {
@@ -235,43 +242,48 @@ export const getServerSideProps = (async (context) => {
             app: VolunteerApplicationAppID as string,
             condition: `ref="${cookies.ref}"`
         });
-        let prefilledFormURL = null;
+        const resp3 = await client.record.getAllRecords<REST_TempVolunteerApplicationForm>({
+            app: TempVolunteerApplicationAppID as string,
+            condition: `ref="${cookies.ref}" and keepingTempRecord in ("true")`,
+            orderBy: '$id desc'
+        });
+        let prefilledFormRecord = resp3[0] ? await resp3[0] : null;
         // check if not yet
-        const getPrefilledFormURL = (record: REST_SavedVolunteerApplicationForm) => {
-            let query = '';
-            Object.keys(record).forEach((key) => {
-                const typedKey = key as keyof REST_VolunteerApplicationForm;
-                // ref
-                if (key === 'ref') {
-                    query += `${key}=${cookies.ref}&`;
-                    return;
-                }
-                if (!Array.isArray(record[typedKey].value) || record[typedKey].value.length === 0) {
-                    // if text box, radio, select, number, date
-                    query += `${key}=${record[typedKey].value}&`;
-                    return;
-                }
-                if (typeof record[typedKey].value[0] === 'object' && record[typedKey].value[0] !== null) {
-                    // if tables
-                    if (record[typedKey].value[0].value) {
-                        record[typedKey].value.forEach((table: any, index: number) => {
-                            Object.keys(table.value).forEach((tableKey) => {
-                                const typedTableKey = tableKey as keyof REST_VolunteerApplicationForm;
-                                query += `${key}-${index}-${tableKey}=${table.value[typedTableKey].value}&`;
-                            });
-                        });
-                    }
-                    // if files
-                    return;
-                }
-                if (typeof record[typedKey].value[0] === 'string') {
-                    // if checkbox array
-                    query += `${key}=${record[typedKey].value.join(',')}&`;
-                    return;
-                }
-            });
-            return `${getIframeLink(resp.record['type'].value)}?${query}`;
-        };
+        // const getPrefilledFormURL = (record: REST_SavedVolunteerApplicationForm) => {
+        //     let query = '';
+        //     Object.keys(record).forEach((key) => {
+        //         const typedKey = key as keyof REST_VolunteerApplicationForm;
+        //         // ref
+        //         if (key === 'ref') {
+        //             query += `${key}=${cookies.ref}&`;
+        //             return;
+        //         }
+        //         if (!Array.isArray(record[typedKey].value) || record[typedKey].value.length === 0) {
+        //             // if text box, radio, select, number, date
+        //             query += `${key}=${record[typedKey].value}&`;
+        //             return;
+        //         }
+        //         if (typeof record[typedKey].value[0] === 'object' && record[typedKey].value[0] !== null) {
+        //             // if tables
+        //             if (record[typedKey].value[0].value) {
+        //                 record[typedKey].value.forEach((table: any, index: number) => {
+        //                     Object.keys(table.value).forEach((tableKey) => {
+        //                         const typedTableKey = tableKey as keyof REST_VolunteerApplicationForm;
+        //                         query += `${key}-${index}-${tableKey}=${table.value[typedTableKey].value}&`;
+        //                     });
+        //                 });
+        //             }
+        //             // if files
+        //             return;
+        //         }
+        //         if (typeof record[typedKey].value[0] === 'string') {
+        //             // if checkbox array
+        //             query += `${key}=${record[typedKey].value.join(',')}&`;
+        //             return;
+        //         }
+        //     });
+        //     return `${getIframeLink(resp.record['type'].value)}?${query}`;
+        // };
         if (resp2.length > 0) {
             if (resp.record['formSubmission'].value.findIndex((arr) => arr == 'Application Form Completed') == -1) {
                 // check if form is submitted
@@ -291,20 +303,20 @@ export const getServerSideProps = (async (context) => {
                 }
             }
         }
-        if (resp.record['returnRef'].value) {
-            const resp3 = await client.record.getAllRecords<REST_SavedVolunteerApplicationForm>({
-                app: VolunteerApplicationAppID as string,
-                condition: `ref=${resp.record['returnRef'].value}`
-            });
-            if (resp3) prefilledFormURL = getPrefilledFormURL(resp3[0]);
-        }
+        // if (resp.record['returnRef'].value) {
+        //     const resp3 = await client.record.getAllRecords<REST_SavedVolunteerApplicationForm>({
+        //         app: VolunteerApplicationAppID as string,
+        //         condition: `ref=${resp.record['returnRef'].value}`
+        //     });
+        //     if (resp3) prefilledFormURL = getPrefilledFormURL(resp3[0]);
+        // }
         //console.log('resp', resp);
         const repo: Repo = {
             isFirstTimeOnForm: resp.record['isFirstTimeOnForm'].value == 'true',
             type: resp.record['type'].value || null,
             formSubmitted: resp.record['formSubmission'].value.findIndex((arr) => arr == 'Application Form Completed') > -1,
             office: resp.record['office'].value,
-            prefilledFormURL: prefilledFormURL
+            prefilledFormRecord: prefilledFormRecord
         };
         console.log('repo', repo);
         // Pass data to the page via props

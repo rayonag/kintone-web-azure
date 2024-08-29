@@ -332,10 +332,10 @@
     "verify3": "I acknowledge my responsibility to provide my round-trip transportation and all living expenses while serving with BFP.",
     "verify4": "I acknowledge that I must have valid health insurance coverage while serving with BFP in Israel. It is my responsibility to provide proof of coverage prior to my arrival in Israel.",
     "verify5": {
-        "title": "I have read and agree to the following BFP position papers:",
+        "title": "I have read and agree to the following BFP position documents:",
         "options": {
             "1": "Doctrinal Statement",
-            "position2": "Mission Statement",
+            "2": "Mission Statement",
             "3": "Goals",
             "4": "Evangelism Statement",
             "5": "Messianic Jewish Statement"
