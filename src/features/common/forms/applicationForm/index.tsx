@@ -108,7 +108,7 @@ const ApplicationForm = (props: any) => {
         }
     }, [props]);
     const router = useRouter();
-    const onSubmit = async (e) => {
+    const onSubmit = async (e: any) => {
         e.preventDefault();
         const valid = await validate();
         if (!valid) return;
