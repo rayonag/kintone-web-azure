@@ -14,8 +14,9 @@ type Step9Props = {
     errors: FieldErrors<ApplicationFormType>;
     getValues: UseFormGetValues<ApplicationFormType>;
     t: TFunction<'application'>;
+    type: string | undefined;
 };
-const Step9: FC<Step9Props> = ({ register, errors, getValues, t }) => {
+const Step9: FC<Step9Props> = ({ register, errors, getValues, t, type }) => {
     return (
         <div>
             <section>
@@ -103,38 +104,40 @@ const Step9: FC<Step9Props> = ({ register, errors, getValues, t }) => {
                     />
                 </Row>
                 <div className="font-semibold mt-2 text-black">{t('refOtherTitle')}</div>
-                <Row>
-                    <Input
-                        label={null}
-                        register={register('refOtherName')}
-                        placeholder={t('refOtherName')}
-                        error={errors.refOtherName || undefined}
-                    />
-                    <Input
-                        label={null}
-                        register={register('refOtherPhone')}
-                        placeholder={t('refOtherPhone')}
-                        error={errors.refOtherPhone || undefined}
-                    />
-                    <Input
-                        label={null}
-                        register={register('refOtherEmail')}
-                        placeholder={t('refOtherEmail')}
-                        error={errors.refOtherEmail || undefined}
-                    />
-                    <Input
-                        label={null}
-                        register={register('refOtherAddress')}
-                        placeholder={t('refOtherAddress')}
-                        error={errors.refOtherAddress || undefined}
-                    />
-                    <Input
-                        label={null}
-                        register={register('refOtherRelationship')}
-                        placeholder={t('refOtherRelationship')}
-                        error={errors.refOtherRelationship || undefined}
-                    />
-                </Row>
+                {type == 'Long Term' && (
+                    <Row>
+                        <Input
+                            label={null}
+                            register={register('refOtherName')}
+                            placeholder={t('refOtherName')}
+                            error={errors.refOtherName || undefined}
+                        />
+                        <Input
+                            label={null}
+                            register={register('refOtherPhone')}
+                            placeholder={t('refOtherPhone')}
+                            error={errors.refOtherPhone || undefined}
+                        />
+                        <Input
+                            label={null}
+                            register={register('refOtherEmail')}
+                            placeholder={t('refOtherEmail')}
+                            error={errors.refOtherEmail || undefined}
+                        />
+                        <Input
+                            label={null}
+                            register={register('refOtherAddress')}
+                            placeholder={t('refOtherAddress')}
+                            error={errors.refOtherAddress || undefined}
+                        />
+                        <Input
+                            label={null}
+                            register={register('refOtherRelationship')}
+                            placeholder={t('refOtherRelationship')}
+                            error={errors.refOtherRelationship || undefined}
+                        />
+                    </Row>
+                )}
                 <Row>
                     <Radio
                         label={t('hasFriendsIsrael')}

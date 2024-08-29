@@ -190,7 +190,7 @@ const ApplicationForm = (props: any) => {
                     {step == 6 && <Step6 register={register} getValues={getValues} errors={formatError} t={t} />}
                     {step == 7 && <Step7 register={register} getValues={getValues} errors={formatError} t={t} control={control} />}
                     {step == 8 && <Step8 register={register} getValues={getValues} errors={formatError} t={t} control={control} />}
-                    {step == 9 && <Step9 register={register} getValues={getValues} errors={formatError} t={t} />}
+                    {step == 9 && <Step9 register={register} getValues={getValues} errors={formatError} t={t} type={dashboardUser.type} />}
                     {step == 10 && <Step10 register={register} getValues={getValues} errors={formatError} t={t} />}
                     {step != 10 && (
                         <button
