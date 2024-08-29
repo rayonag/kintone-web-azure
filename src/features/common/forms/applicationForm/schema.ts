@@ -100,20 +100,31 @@ const ifNoPosition = yesNo;
 // 5
 const educationTable = z.array(
     z.object({
-        educationSchoolName: z.string().min(1).max(50),
-        educationDegree: z.string().min(1).max(50),
-        educationDate: z.string().min(1).max(50)
+        educationSchoolName: string_optional,
+        educationDegree: string_optional,
+        educationDate: string_optional
     })
 );
-const employProfession = string_optional; // Tables are temporarily optional
-const employAccreditation = string_optional;
-const employHistory = string_optional;
+const employTable = z.array(
+    z.object({
+        employDate: string_optional,
+        employName: string_optional,
+        employAddress: string_optional,
+        employPhone: string_optional,
+        employDuties: string_optional,
+        employLeavingReason: string_optional
+    })
+);
 const hobby = string_optional;
 const clubs = string_optional;
-const serviceOrganizationName = string_optional;
-const serviceStartDate = string_optional;
-const serviceEndDate = string_optional;
-const serviceDuties = string_optional;
+const serviceTable = z.array(
+    z.object({
+        serviceOrganizationName: string_optional,
+        serviceStartDate: string_optional,
+        serviceEndDate: string_optional,
+        serviceDuties: string_optional
+    })
+);
 const hasDriverLicense = yesNo;
 const hasLicenseMoreThanTwelveMonths = yesNo;
 const drivingViolation = string_optional;
@@ -141,62 +152,6 @@ const skillInventory = z.string().refine(
         message: 'Skill must be a number between 1 and 5, or 0 to return null'
     }
 );
-// A
-const skillCarpentry: z.ZodNumber = z.number();
-const skillConstruction: z.ZodNumber = z.number();
-const skillElectrical: z.ZodNumber = z.number();
-const skillForklift: z.ZodNumber = z.number();
-const skillMechanic: z.ZodNumber = z.number();
-const skillRepair: z.ZodNumber = z.number();
-const skillLaborer: z.ZodNumber = z.number();
-const skillWelding: z.ZodNumber = z.number();
-const skillMasonry: z.ZodNumber = z.number();
-const skillPlumbing: z.ZodNumber = z.number();
-const skillPainting: z.ZodNumber = z.number();
-const skillWarehouseMaintenance: z.ZodNumber = z.number();
-const skillTransportation: z.ZodNumber = z.number();
-const hasHeavyLicense = yesNo;
-// B
-const skillWebsite: z.ZodNumber = z.number();
-const skillWebDesign: z.ZodNumber = z.number();
-const skillIT: z.ZodNumber = z.number();
-const skillVideo: z.ZodNumber = z.number();
-const skillComputerDesign: z.ZodNumber = z.number();
-const skillAdobePhotoshop: z.ZodNumber = z.number();
-const skillAdobeInDesign: z.ZodNumber = z.number();
-const skillOtherPrograms: z.ZodNumber = z.number();
-const skillJournalism: z.ZodNumber = z.number();
-const skillPublicSpeaking: z.ZodNumber = z.number();
-const skillFilmmaking: z.ZodNumber = z.number();
-const skillPhotography: z.ZodNumber = z.number();
-// C
-const skillAccounting: z.ZodNumber = z.number();
-const skillAdministration: z.ZodNumber = z.number();
-const skillBookkeeping: z.ZodNumber = z.number();
-const skillOperatingSystems: z.ZodNumber = z.number();
-const skillSystem: z.ZodNumber = z.number();
-const skillSoftware: z.ZodNumber = z.number();
-const skillOfficeSuite: z.ZodNumber = z.number();
-const skillExcel: z.ZodNumber = z.number();
-const skillTyping: z.ZodNumber = z.number();
-const skillGoogleDrive: z.ZodNumber = z.number();
-const skillSecretarial: z.ZodNumber = z.number();
-const skillOrganizing: z.ZodNumber = z.number();
-const skillLibrary: z.ZodNumber = z.number();
-const skillReception: z.ZodNumber = z.number();
-// D
-const skillProofreading: z.ZodNumber = z.number();
-const skillCopyEditing: z.ZodNumber = z.number();
-const skillTranslation: z.ZodNumber = z.number();
-// E
-const skillCounseling: z.ZodNumber = z.number();
-const skillMusicalInstrument: z.ZodNumber = z.number();
-const skillJanitorial: z.ZodNumber = z.number();
-const skillCooking: z.ZodNumber = z.number();
-const skillForeignLanguage: z.ZodNumber = z.number();
-const skillComputer: z.ZodNumber = z.number();
-const skillSpecialTraining: z.ZodNumber = z.number();
-
 // 8
 const checkBox: z.ZodArray<z.ZodString> = z.array(z.string());
 
@@ -306,15 +261,10 @@ export const ApplicationFormSchema = z.object({
 
     // 5
     educationTable: educationTable,
-    employProfession: employProfession,
-    employAccreditation: employAccreditation,
-    employHistory: employHistory,
+    employTable: employTable,
     hobby: hobby,
     clubs: clubs,
-    serviceOrganizationName: serviceOrganizationName,
-    serviceStartDate: serviceStartDate,
-    serviceEndDate: serviceEndDate,
-    serviceDuties: serviceDuties,
+    serviceTable: serviceTable,
     hasDriverLicense: hasDriverLicense,
     hasLicenseMoreThanTwelveMonths: hasLicenseMoreThanTwelveMonths,
     drivingViolation: drivingViolation,

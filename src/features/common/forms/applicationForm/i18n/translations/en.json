@@ -121,26 +121,25 @@
     },
     "employProfession": "Profession/vocation:",
     "employAccreditation": "Accreditation/clergy/licenses held:",
-    "employHistory": {
-        "title1": "Please list all employers for whom you have worked over the past ten years, beginning with your current employer.",
-        "title2": "(Date of Employment-Name-Address-Telephone- Email-Website-Supervisor-Duties-Reason for Leaving)",
-        "example": "Example:Jan2020-Present, Bills Plumbing, 123 Main St. New York 33022,111-111-1111, bill@plumbing.com,www.test.com, Instaler,    looking or a change.",
-        "details": "Employment Details"
+    "employTable": {
+        "title": "Please list all employers for whom you have worked over the past ten years, beginning with your current employer.",
+        "employDate": "",
+        "employName": ""
     },
     "hobby": "Please describe your hobbies and interests:",
     "clubs": "Please list which clubs,societies,lodges or other organizations you belong to:",
     "serviceTable": {
         "title": "Please list civic/social/ministry service projects you have been involved with:",
-        "serviceOrganizationName": "Service Organization Name",
-        "serviceStartDate": "Service Start Date",
-        "serviceEndDate": "Service End Date",
-        "serviceDuties": "Service Duties"
+        "serviceOrganizationName": "Organization Name",
+        "serviceStartDate": "Start Date",
+        "serviceEndDate": "End Date",
+        "serviceDuties": "Duties"
     },
     "hasDriverLicense": "Do you have a valid driver's license?",
     "hasLicenseMoreThanTwelveMonths": "Have you held your license for more than 12 months?",
     "drivingViolation": "Give details of your driving violations, if any:",
     "hasConvictedTrafficAccident": "Have you ever been convicted of a crime other than a traffic violation?",
-    "hasConvictedTrafficAccidentExplain": "If so, provide the date and nature of the charge:",
+    "hasTrafficAccidentExplain": "If so, provide the date and nature of the charge:",
     "hasVisitedIsrael": "Have you visited Israel in the past?",
     "hasVisitedIsraelDates": "Please list dates:",
     "listForeignCountries": "List foreign countries you have visited for one month or longer:",

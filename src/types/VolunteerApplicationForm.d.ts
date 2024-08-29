@@ -3,9 +3,9 @@ export interface VolunteerApplicationForm {
     hasHandicap: kintone.fieldTypes.RadioButton;
     type: kintone.fieldTypes.RadioButton;
     refOtherRelationship: kintone.fieldTypes.SingleLineText;
-    maxAvailability: kintone.fieldTypes.SingleLineText;
+    maxAbailability: kintone.fieldTypes.SingleLineText;
     emergencyRelationship: kintone.fieldTypes.SingleLineText;
-    minAvailability: kintone.fieldTypes.SingleLineText;
+    minAbailability: kintone.fieldTypes.SingleLineText;
     skillJournalism: kintone.fieldTypes.Number;
     hasFriendsIsrael: kintone.fieldTypes.RadioButton;
     hasConvictedTrafficAccident: kintone.fieldTypes.RadioButton;
@@ -39,7 +39,7 @@ export interface VolunteerApplicationForm {
     refFriendPhone: kintone.fieldTypes.SingleLineText;
     skillCooking: kintone.fieldTypes.Number;
     refEmployerPhone: kintone.fieldTypes.SingleLineText;
-    hasHeldLicense12Months: kintone.fieldTypes.RadioButton;
+    hasBeen12monthsLicense: kintone.fieldTypes.RadioButton;
     skillElectrical: kintone.fieldTypes.Number;
     listForeignCountries: kintone.fieldTypes.SingleLineText;
     skillOperatingSystem: kintone.fieldTypes.Number;
@@ -82,7 +82,7 @@ export interface VolunteerApplicationForm {
     refEmployerEmail: kintone.fieldTypes.SingleLineText;
     skillAccounting: kintone.fieldTypes.Number;
     skillWebsite: kintone.fieldTypes.Number;
-    refPastorPhone: kintone.fieldTypes.SingleLineText;
+    refPasterPhone: kintone.fieldTypes.SingleLineText;
     refOtherPhone: kintone.fieldTypes.SingleLineText;
     skillProofreading: kintone.fieldTypes.Number;
     passportNumber: kintone.fieldTypes.SingleLineText;
@@ -91,7 +91,7 @@ export interface VolunteerApplicationForm {
     churchName: kintone.fieldTypes.SingleLineText;
     skillGoogleDrive: kintone.fieldTypes.Number;
     emergencyStreet: kintone.fieldTypes.SingleLineText;
-    refPastorEmail: kintone.fieldTypes.SingleLineText;
+    refPasterEmail: kintone.fieldTypes.SingleLineText;
     christianJewishUnderstanding: kintone.fieldTypes.MultiLineText;
     skillLibrary: kintone.fieldTypes.Number;
     firstName: kintone.fieldTypes.SingleLineText;
@@ -115,7 +115,7 @@ export interface VolunteerApplicationForm {
     clubs: kintone.fieldTypes.MultiLineText;
     skillCarpentry: kintone.fieldTypes.Number;
     Text_7: kintone.fieldTypes.SingleLineText;
-    refPastorAddress: kintone.fieldTypes.SingleLineText;
+    refPasterAddress: kintone.fieldTypes.SingleLineText;
     skillMechanic: kintone.fieldTypes.Number;
     skillAdobePhotoshop: kintone.fieldTypes.Number;
     skillAdobeInDesign: kintone.fieldTypes.Number;
@@ -125,7 +125,7 @@ export interface VolunteerApplicationForm {
     fullName: kintone.fieldTypes.SingleLineText;
     emergencyName: kintone.fieldTypes.SingleLineText;
     hasFamilySupport: kintone.fieldTypes.RadioButton;
-    refPastorName: kintone.fieldTypes.SingleLineText;
+    refPasterName: kintone.fieldTypes.SingleLineText;
     skillPhotography: kintone.fieldTypes.Number;
     skillForklift: kintone.fieldTypes.Number;
     middleName: kintone.fieldTypes.SingleLineText;
@@ -160,7 +160,21 @@ export interface VolunteerApplicationForm {
     passport: kintone.fieldTypes.File;
     doctorLetter: kintone.fieldTypes.File;
     medicalStatusForm: kintone.fieldTypes.File;
-    Table_2: {
+    employTable: {
+        type: 'SUBTABLE';
+        value: Array<{
+            id: string;
+            value: {
+                employName: kintone.fieldTypes.SingleLineText;
+                employPhone: kintone.fieldTypes.SingleLineText;
+                employDate: kintone.fieldTypes.Date;
+                employDuties: kintone.fieldTypes.SingleLineText;
+                employAddress: kintone.fieldTypes.SingleLineText;
+                employLeavingReason: kintone.fieldTypes.SingleLineText;
+            };
+        }>;
+    };
+    serviceTable: {
         type: 'SUBTABLE';
         value: Array<{
             id: string;
@@ -172,7 +186,7 @@ export interface VolunteerApplicationForm {
             };
         }>;
     };
-    Table: {
+    educationTable: {
         type: 'SUBTABLE';
         value: Array<{
             id: string;
@@ -193,6 +207,7 @@ export interface SavedVolunteerApplicationForm extends VolunteerApplicationForm 
     更新日時: kintone.fieldTypes.UpdatedTime;
     Created_datetime: kintone.fieldTypes.CreatedTime;
 }
+
 import { KintoneRecordField } from '@kintone/rest-api-client';
 
 export type REST_VolunteerApplicationForm = {
@@ -279,7 +294,7 @@ export type REST_VolunteerApplicationForm = {
     refEmployerEmail: KintoneRecordField.SingleLineText;
     skillAccounting: KintoneRecordField.Number;
     skillWebsite: KintoneRecordField.Number;
-    refPastorPhone: KintoneRecordField.SingleLineText;
+    refPasterPhone: KintoneRecordField.SingleLineText;
     refOtherPhone: KintoneRecordField.SingleLineText;
     skillProofreading: KintoneRecordField.Number;
     passportNumber: KintoneRecordField.SingleLineText;
@@ -288,7 +303,7 @@ export type REST_VolunteerApplicationForm = {
     churchName: KintoneRecordField.SingleLineText;
     skillGoogleDrive: KintoneRecordField.Number;
     emergencyStreet: KintoneRecordField.SingleLineText;
-    refPastorEmail: KintoneRecordField.SingleLineText;
+    refPasterEmail: KintoneRecordField.SingleLineText;
     christianJewishUnderstanding: KintoneRecordField.MultiLineText;
     skillLibrary: KintoneRecordField.Number;
     firstName: KintoneRecordField.SingleLineText;
@@ -312,7 +327,7 @@ export type REST_VolunteerApplicationForm = {
     clubs: KintoneRecordField.MultiLineText;
     skillCarpentry: KintoneRecordField.Number;
     Text_7: KintoneRecordField.SingleLineText;
-    refPastorAddress: KintoneRecordField.SingleLineText;
+    refPasterAddress: KintoneRecordField.SingleLineText;
     skillMechanic: KintoneRecordField.Number;
     skillAdobePhotoshop: KintoneRecordField.Number;
     skillAdobeInDesign: KintoneRecordField.Number;
@@ -322,7 +337,7 @@ export type REST_VolunteerApplicationForm = {
     fullName: KintoneRecordField.SingleLineText;
     emergencyName: KintoneRecordField.SingleLineText;
     hasFamilySupport: KintoneRecordField.RadioButton;
-    refPastorName: KintoneRecordField.SingleLineText;
+    refPasterName: KintoneRecordField.SingleLineText;
     skillPhotography: KintoneRecordField.Number;
     skillForklift: KintoneRecordField.Number;
     middleName: KintoneRecordField.SingleLineText;
@@ -357,7 +372,21 @@ export type REST_VolunteerApplicationForm = {
     passport: KintoneRecordField.File;
     doctorLetter: KintoneRecordField.File;
     medicalStatusForm: KintoneRecordField.File;
-    Table_2: {
+    employTable: {
+        type: 'SUBTABLE';
+        value: Array<{
+            id: string;
+            value: {
+                employName: KintoneRecordField.SingleLineText;
+                employPhone: KintoneRecordField.SingleLineText;
+                employDate: KintoneRecordField.Date;
+                employDuties: KintoneRecordField.SingleLineText;
+                employAddress: KintoneRecordField.SingleLineText;
+                employLeavingReason: KintoneRecordField.SingleLineText;
+            };
+        }>;
+    };
+    serviceTable: {
         type: 'SUBTABLE';
         value: Array<{
             id: string;
@@ -369,7 +398,7 @@ export type REST_VolunteerApplicationForm = {
             };
         }>;
     };
-    Table: {
+    educationTable: {
         type: 'SUBTABLE';
         value: Array<{
             id: string;

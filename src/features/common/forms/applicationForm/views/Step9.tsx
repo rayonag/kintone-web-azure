@@ -58,12 +58,6 @@ const Step9: FC<Step9Props> = ({ register, errors, getValues, t }) => {
                     />
                     <Input
                         label={null}
-                        register={register('refEmployerAddress')}
-                        placeholder={t('refEmployerAddress')}
-                        error={errors.refEmployerAddress || undefined}
-                    />
-                    <Input
-                        label={null}
                         register={register('refEmployerPhone')}
                         placeholder={t('refEmployerPhone')}
                         error={errors.refEmployerPhone || undefined}
@@ -74,6 +68,12 @@ const Step9: FC<Step9Props> = ({ register, errors, getValues, t }) => {
                         placeholder={t('refEmployerEmail')}
                         error={errors.refEmployerEmail || undefined}
                     />
+                    <Input
+                        label={null}
+                        register={register('refEmployerAddress')}
+                        placeholder={t('refEmployerAddress')}
+                        error={errors.refEmployerAddress || undefined}
+                    />
                 </Row>
                 <div className="font-semibold mt-2 text-black">{t('refFriendTitle')}</div>
                 <Row>
@@ -82,12 +82,6 @@ const Step9: FC<Step9Props> = ({ register, errors, getValues, t }) => {
                         register={register('refFriendName')}
                         placeholder={t('refFriendName')}
                         error={errors.refFriendName || undefined}
-                    />
-                    <Input
-                        label={null}
-                        register={register('refFriendAddress')}
-                        placeholder={t('refFriendAddress')}
-                        error={errors.refFriendAddress || undefined}
                     />
                     <Input
                         label={null}
@@ -101,6 +95,12 @@ const Step9: FC<Step9Props> = ({ register, errors, getValues, t }) => {
                         placeholder={t('refFriendEmail')}
                         error={errors.refFriendEmail || undefined}
                     />
+                    <Input
+                        label={null}
+                        register={register('refFriendAddress')}
+                        placeholder={t('refFriendAddress')}
+                        error={errors.refFriendAddress || undefined}
+                    />
                 </Row>
                 <div className="font-semibold mt-2 text-black">{t('refOtherTitle')}</div>
                 <Row>
@@ -109,12 +109,6 @@ const Step9: FC<Step9Props> = ({ register, errors, getValues, t }) => {
                         register={register('refOtherName')}
                         placeholder={t('refOtherName')}
                         error={errors.refOtherName || undefined}
-                    />
-                    <Input
-                        label={null}
-                        register={register('refOtherAddress')}
-                        placeholder={t('refOtherAddress')}
-                        error={errors.refOtherAddress || undefined}
                     />
                     <Input
                         label={null}
@@ -127,6 +121,12 @@ const Step9: FC<Step9Props> = ({ register, errors, getValues, t }) => {
                         register={register('refOtherEmail')}
                         placeholder={t('refOtherEmail')}
                         error={errors.refOtherEmail || undefined}
+                    />
+                    <Input
+                        label={null}
+                        register={register('refOtherAddress')}
+                        placeholder={t('refOtherAddress')}
+                        error={errors.refOtherAddress || undefined}
                     />
                     <Input
                         label={null}

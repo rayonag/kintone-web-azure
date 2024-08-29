@@ -3,7 +3,7 @@ import Step1 from './views/Step1';
 import { useDashboardUser } from '@/common/context/dashboardUser';
 import { langReducer } from '@/components/health-questionnaire/form/hooks/lang';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import { useShallow } from 'zustand/react/shallow';
@@ -21,34 +21,25 @@ import Step7 from './views/Step7';
 import Step8 from './views/Step8';
 import Step9 from './views/Step9';
 import Step10 from './views/Step10';
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import {
-    KintoneUserName,
-    KintonePassword,
-    VolunteerApplicationMasterAppID,
-    PersonalHealthQuestionnaireAppID,
-    TempVolunteerApplicationAppID
-} from '@/common/env';
-import { REST_OnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
-import { KintoneRecordField, KintoneRestAPIClient } from '@kintone/rest-api-client';
-import { parseCookies } from 'nookies';
-import { REST_VolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
+import { useLoading } from '@/common/context/loading';
 
 const ApplicationForm = (props: any) => {
     const [step, setStep] = useState(1);
-    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const { setIsLoading } = useLoading();
+
+    //const [modalIsOpen, setModalIsOpen] = useState(false);
     // for future use on multi language
     const { t } = useTranslation('applicationForm');
     const initialLang = 'en';
-    const [locale, dispatch] = useReducer<(state: string, actions: string) => string>(langReducer, initialLang);
+    //const [locale, dispatch] = useReducer<(state: string, actions: string) => string>(langReducer, initialLang);
     const form = props.repo;
     console.log('form', form);
     const dashboardUser = useDashboardUser();
-    const { username } = useUserStore(
-        useShallow((state) => ({
-            username: state.username
-        }))
-    );
+    // const { username } = useUserStore(
+    //     useShallow((state) => ({
+    //         username: state.username
+    //     }))
+    // );
     const {
         formState: { errors: formatError },
         trigger,
@@ -73,7 +64,7 @@ const ApplicationForm = (props: any) => {
         if (isValid) return true;
         else {
             const firstErrorField = Object.keys(formatError)[0];
-            console.log('firstErrorField', firstErrorField);
+            console.log('firstErrorField', formatError);
             const errorElement = document.querySelector(`[name="${firstErrorField}"]`);
             if (errorElement) {
                 errorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -114,9 +105,21 @@ const ApplicationForm = (props: any) => {
             });
         }
     }, [props]);
+    const onSubmit = async () => {
+        if (!window.confirm('Do you want to submit?')) return;
+        const values = getValues();
+        console.log('values', values);
+        setIsLoading(true);
+        setTimeout(() => {
+            alert('Your form has been submitted!');
+            setIsLoading(false);
+        }, 3000);
+        // const res = await postPersonalHealthQuestionnaire(values, dashboardUser.ref || '0');
+        // if (res) setModalIsOpen(true);
+    };
     return (
         <div className="grid justify-center p-10 max-h-screen overflow-y-scroll">
-            <form className="flex flex-col my-14 p-10 max-w-[95vw] md:w-[50rem] md:max-w-screen bg-gray-50 border rounded-md">
+            <form onSubmit={onSubmit} className="flex flex-col my-14 p-10 max-w-[95vw] md:w-[50rem] md:max-w-screen bg-gray-50 border rounded-md">
                 <ProgressBar steps={10} setStep={setStep} currentStep={step} />
                 {step == 1 && <Step1 register={register} getValues={getValues} errors={formatError} t={t} control={control} />}
                 {step == 2 && <Step2 register={register} getValues={getValues} errors={formatError} t={t} />}
@@ -142,7 +145,7 @@ const ApplicationForm = (props: any) => {
                 )}
                 {step == 10 && (
                     <button
-                        type="button"
+                        type="submit"
                         onClick={async () => {
                             await validate();
                             // const valid = await validate(step);
