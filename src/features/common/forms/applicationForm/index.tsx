@@ -22,6 +22,8 @@ import Step8 from './views/Step8';
 import Step9 from './views/Step9';
 import Step10 from './views/Step10';
 import { useLoading } from '@/common/context/loading';
+import postApplicationForm from './hooks/postApplicationForm';
+import { useRouter } from 'next/router';
 
 const ApplicationForm = (props: any) => {
     const [step, setStep] = useState(1);
@@ -105,21 +107,33 @@ const ApplicationForm = (props: any) => {
             });
         }
     }, [props]);
-    const onSubmit = async () => {
+    const router = useRouter();
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        const valid = await validate();
+        if (!valid) return;
         if (!window.confirm('Do you want to submit?')) return;
         const values = getValues();
         console.log('values', values);
         setIsLoading(true);
-        setTimeout(() => {
+        const res = await postApplicationForm(values, dashboardUser.ref || undefined);
+        if (res) {
             alert('Your form has been submitted!');
             setIsLoading(false);
-        }, 3000);
+            router.push('/apply');
+        } else {
+            alert('Failed to submit the form. Please try again.');
+            setIsLoading(false);
+        }
         // const res = await postPersonalHealthQuestionnaire(values, dashboardUser.ref || '0');
         // if (res) setModalIsOpen(true);
     };
     return (
         <div className="grid justify-center p-10 max-h-screen overflow-y-scroll">
-            <form onSubmit={onSubmit} className="flex flex-col my-14 p-10 max-w-[95vw] md:w-[50rem] md:max-w-screen bg-gray-50 border rounded-md">
+            <form
+                onSubmit={(e) => onSubmit(e)}
+                className="flex flex-col my-14 p-10 max-w-[95vw] md:w-[50rem] md:max-w-screen bg-gray-50 border rounded-md"
+            >
                 <ProgressBar steps={10} setStep={setStep} currentStep={step} />
                 {step == 1 && <Step1 register={register} getValues={getValues} errors={formatError} t={t} control={control} />}
                 {step == 2 && <Step2 register={register} getValues={getValues} errors={formatError} t={t} />}
@@ -144,15 +158,7 @@ const ApplicationForm = (props: any) => {
                     </button>
                 )}
                 {step == 10 && (
-                    <button
-                        type="submit"
-                        onClick={async () => {
-                            await validate();
-                            // const valid = await validate(step);
-                            // if (valid) setModalIsOpen(true);
-                        }}
-                        className="btn-wide"
-                    >
+                    <button type="submit" className="btn-wide">
                         {t('system.submit')}
                     </button>
                 )}
@@ -166,44 +172,6 @@ const ApplicationForm = (props: any) => {
                         Back to Top
                     </Link>
                 )}
-                {/* {page === 0 && <FirstPage register={register} errors={formatError} getValues={getValues} t={t} />}
-            {page === 1 && <SecondPage register={register} errors={formatError} getValues={getValues} t={t} />}
-            {page === 2 && <ThirdPage register={register} errors={formatError} t={t} />}
-            <ConfirmationModal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} getValues={getValues} t={t} />
-            {page != 2 && (
-                <button
-                    type="button"
-                    onClick={async () => {
-                        const valid = await validate(page);
-                        if (valid) setPage(page + 1);
-                    }}
-                    className="btn-wide"
-                >
-                    {t('system.next')}
-                </button>
-            )}
-            {page == 2 && (
-                <button
-                    type="button"
-                    onClick={async () => {
-                        const valid = await validate(page);
-                        if (valid) setModalIsOpen(true);
-                    }}
-                    className="btn-wide"
-                >
-                    {t('system.submit')}
-                </button>
-            )}
-            {page != 0 && (
-                <button type="button" onClick={() => setPage(page - 1)} className="btn-wide">
-                    {t('system.back')}
-                </button>
-            )}
-            {page == 0 && (
-                <Link type="button" href="/apply" className="btn-wide">
-                    Back to Top
-                </Link>
-            )} */}
             </form>
         </div>
     );

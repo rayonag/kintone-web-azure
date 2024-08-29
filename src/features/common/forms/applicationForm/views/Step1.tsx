@@ -69,7 +69,7 @@ const Step1: FC<Step1Props> = ({ register, errors, getValues, t, control }) => {
                     <Number label={t('age')} register={register('age')} placeholder={t('age')} error={errors.age || undefined} />
                 </Row>
                 <Row>
-                    <Input optional label={t('ssn')} register={register('ssn')} placeholder={t('ssn')} error={errors.ssn || undefined} />
+                    <Input optional label={t('ssn')} register={register('ssnNumber')} placeholder={t('ssn')} error={errors.ssnNumber || undefined} />
                     <Radio label={t('sex.title')} options={Sex(t)} register={register('sex')} error={errors.sex || undefined} />
                 </Row>
                 <Row>

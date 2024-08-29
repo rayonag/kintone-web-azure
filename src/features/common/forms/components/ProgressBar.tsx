@@ -20,7 +20,7 @@ const StepProgressBar: FC<StepProgressBarProps> = ({ steps, setStep, currentStep
                                         ? 'bg-gray-900 text-white dark:bg-gray-50 dark:text-gray-900'
                                         : 'bg-gray-200 dark:bg-gray-800'
                                 }`}
-                                onClick={() => setStep(index + 1)}
+                                //onClick={() => setStep(index + 1)}
                             >
                                 {index + 1 < currentStep ? <GreenCheckMark /> : index + 1}
                             </div>
