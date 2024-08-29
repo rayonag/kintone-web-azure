@@ -132,7 +132,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         } catch (e: any) {
             logError(e, req.body, 'updateFileKintone');
             res.status(505).json({
-                res: 'Something went wrong. Could not update Kintone record.'
+                res: e
             });
         }
     } else {

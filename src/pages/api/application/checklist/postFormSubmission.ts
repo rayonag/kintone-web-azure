@@ -60,7 +60,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         } catch (e: any) {
             logError(e, req.body, 'postFormSubmission');
             res.status(505).json({
-                res: 'Something went wrong. Failed to update kintone'
+                res: e
             });
         }
     } else {

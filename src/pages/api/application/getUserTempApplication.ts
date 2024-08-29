@@ -22,7 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 }
             });
             const resp = await client.record.getAllRecords<REST_TempVolunteerApplicationForm>({
-                app: 235, //TempVolunteerApplicationAppID as string,
+                app: 235, //TempVolunteerApplicationAppID as string, TODO: change to env
                 condition: `ref="${ref}" and keepingTempRecord in ("true")`,
                 orderBy: 'createdTime desc'
             });

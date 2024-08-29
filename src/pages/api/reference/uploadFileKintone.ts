@@ -58,7 +58,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         } catch (e: any) {
             handleCatch(e, req.body, 'uploadFileKintone');
             res.status(505).json({
-                res: 'Something went wrong. Could not upload file to Kintone.'
+                res: e
             });
             return;
         }

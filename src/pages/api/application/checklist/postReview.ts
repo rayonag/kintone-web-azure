@@ -56,7 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         } catch (e: any) {
             logError(e, req.body, 'postReview');
             res.status(505).json({
-                res: 'Something went wrong. Failed to update kintone checklist'
+                res: e
             });
         }
     } else {
