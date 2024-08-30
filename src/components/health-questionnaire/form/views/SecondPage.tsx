@@ -9,7 +9,7 @@ type SecondPageProps = {
     register: UseFormRegister<HealthQuestionnaireType>;
     errors: FieldErrors<HealthQuestionnaireType>;
     getValues: UseFormGetValues<HealthQuestionnaireType>;
-    t: TFunction<'translation'>;
+    t: any;
 };
 const SecondPage: FC<SecondPageProps> = ({ register, errors, getValues, t }) => {
     return (

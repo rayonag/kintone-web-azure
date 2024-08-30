@@ -7,10 +7,11 @@ import { TFunction } from 'i18next';
 import { UseFormRegister, FieldErrors, UseFormGetValues, Control } from 'react-hook-form';
 import { ApplicationFormType } from '../schema';
 import Row from '../../components/Row';
-import { HealthCondition, YesNo } from '../enums';
+import { HealthCondition, SkillSoftware, SkillSystem, YesNo } from '../enums';
 import SkillRangeInput from '../../components/SkillRangeInput';
 import { Radio } from '../../components/Radio';
 import Image from 'next/image';
+import Checkbox from '../../components/Checkbox';
 
 type Step7Props = {
     register: UseFormRegister<ApplicationFormType>;
@@ -208,12 +209,30 @@ const Step7: FC<Step7Props> = ({ register, errors, getValues, control, t }) => {
                         register={register('skillBookkeeping')}
                         error={errors.skillBookkeeping || undefined}
                     />
-                    <SkillRangeInput
+                </Row>
+                <Row>
+                    <Checkbox
+                        label={t('skillSystem.title')}
+                        name={'skillSystem'}
+                        control={control}
+                        options={SkillSystem(t)}
+                        error={errors.skillSystem || undefined}
+                    />
+                    <Checkbox
+                        label={t('skillSoftware.title')}
+                        name={'skillSoftware'}
+                        control={control}
+                        options={SkillSoftware(t)}
+                        error={errors.skillSoftware || undefined}
+                    />
+                    {/* <SkillRangeInput
                         control={control}
                         label={t('skillOperatingSystems')}
                         register={register('skillOperatingSystems')}
                         error={errors.skillOperatingSystems || undefined}
-                    />
+                    /> */}
+                </Row>
+                <Row>
                     <SkillRangeInput
                         control={control}
                         label={t('skillOfficeSuite')}

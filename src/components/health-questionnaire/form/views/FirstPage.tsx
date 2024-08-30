@@ -12,7 +12,7 @@ type FirstPageProps = {
     register: UseFormRegister<HealthQuestionnaireType>;
     errors: FieldErrors<HealthQuestionnaireType>;
     getValues: UseFormGetValues<HealthQuestionnaireType>;
-    t: TFunction<'translation'>;
+    t: any;
 };
 const FirstPage: FC<FirstPageProps> = ({ register, errors, getValues, t }) => {
     return (

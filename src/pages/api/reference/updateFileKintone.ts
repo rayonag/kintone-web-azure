@@ -71,10 +71,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     password: KintonePassword
                 }
             });
-            const currentRecord = await client.record.getAllRecords<REST_VolunteerApplicationForm>({
-                app: VolunteerApplicationAppID as string,
-                condition: `$id="${userApplicationRef}"`
-            });
+            const currentRecord = await client.record
+                .getAllRecords<REST_VolunteerApplicationForm>({
+                    app: VolunteerApplicationAppID as string,
+                    condition: `$id="${userApplicationRef}"`
+                })
+                .catch((e) => {
+                    throw new Error('currentRecord:' + e);
+                });
             console.log('currentRecord[0]', currentRecord[0]);
             console.log('currentRecord[0][field]', currentRecord[0][field]);
             const resp = await client.record.updateRecord({
@@ -87,10 +91,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 }
             });
             // TODO: come up with a better way to handle this
-            const oldRecord = await client.record.getRecord<REST_OnlineVolunteerApplication>({
-                app: VolunteerApplicationMasterAppID as string,
-                id: userRef
-            });
+            const oldRecord = await client.record
+                .getRecord<REST_OnlineVolunteerApplication>({
+                    app: VolunteerApplicationMasterAppID as string,
+                    id: userRef
+                })
+                .catch((e) => {
+                    throw new Error('oilRecord:' + e);
+                });
             const documents = oldRecord.record['documents'].value as string[];
             console.log('oldRecord', oldRecord);
             console.log('documents', documents);
@@ -117,10 +125,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     }
                 });
             }
-            const newRecord = await client.record.getRecord({
-                app: VolunteerApplicationMasterAppID as string,
-                id: userRef
-            });
+            const newRecord = await client.record
+                .getRecord({
+                    app: VolunteerApplicationMasterAppID as string,
+                    id: userRef
+                })
+                .catch((e) => {
+                    throw new Error('newRecord:' + e);
+                });
             const resp2 = await notificationApplicationUpdated(res, field as any, newRecord.record, 'documentSubmission');
             // console.log('resp2', resp2);
             // res.status(200).json({

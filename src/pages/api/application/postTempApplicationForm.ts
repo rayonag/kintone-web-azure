@@ -93,7 +93,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             });
             return;
         } catch (e: any) {
-            logError(e, req.body, 'postApplicationForm');
+            logError(e, req.body, 'postTempApplicationForm');
             res.status(505).json({
                 res: e
             });

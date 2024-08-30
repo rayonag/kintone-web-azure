@@ -35,7 +35,7 @@ type ConfirmationModalProps = {
     modalIsOpen: boolean;
     setModalIsOpen: Dispatch<SetStateAction<boolean>>;
     getValues: UseFormGetValues<ApplicationFormType>;
-    t: TFunction<'translation'>;
+    t: any;
 };
 const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIsOpen, getValues, t }) => {
     const [isHoverSubmit, setIsHoverSubmit] = useState(false);

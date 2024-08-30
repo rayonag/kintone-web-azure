@@ -77,6 +77,20 @@ const Step5: FC<Step5Props> = ({ register, errors, getValues, t, control }) => {
                     </div>
                 </Row>
                 <Row>
+                    <Input
+                        label={t('employProfession')}
+                        register={register('employProfession')}
+                        placeholder={'Enter here'}
+                        error={errors.employProfession || undefined}
+                    />
+                    <Input
+                        label={t('employAccreditation')}
+                        register={register('employAccreditation')}
+                        placeholder={'Enter here'}
+                        error={errors.employAccreditation || undefined}
+                    />
+                </Row>
+                <Row>
                     {/* <Textarea
                         label={t('employHistory.title1')}
                         register={register('employHistory')}

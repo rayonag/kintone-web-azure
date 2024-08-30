@@ -14,7 +14,7 @@ import Verify from '../components/Verify';
 type ThirdPageProps = {
     register: UseFormRegister<HealthQuestionnaireType>;
     errors: FieldErrors<HealthQuestionnaireType>;
-    t: TFunction<'translation'>;
+    t: any;
 };
 const ThirdPage: FC<ThirdPageProps> = ({ register, errors, t }) => {
     return (

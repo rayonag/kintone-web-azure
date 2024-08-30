@@ -20,7 +20,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
             to: email, // Change to your recipient
             from: 'BFP Noreply<noreply@bridgesforpeace.com>', // Change to your verified sender
             cc: cc,
-            bcc: bcc,
+            bcc: 'ronaga@bridgesforpeace.com', // delete later
             subject: mailTitle,
             html: mailBody
         };

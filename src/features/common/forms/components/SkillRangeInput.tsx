@@ -28,7 +28,6 @@ const SkillRangeInput: FC<SkillRangeInputProps> = ({ label, register, placeholde
                     type="range"
                     min={0}
                     max={5}
-                    defaultValue={0}
                     {...register}
                     className={
                         'text-gray-800 w-full rounded-md border focus:outline focus:outline-sky-500 focus:ring-4 focus:ring-sky-500/30' +

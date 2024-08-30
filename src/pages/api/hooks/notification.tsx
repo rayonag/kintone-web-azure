@@ -31,12 +31,18 @@ const necessaryDocumentsShortTerm = {
     doctorLetter: "Doctor's Letter"
 };
 
-type EmailNationalOffice = keyof typeof emailNationalOffice;
-const emailNationalOffice = {
+export type EmailNationalOffice = keyof typeof emailNationalOffice;
+export const emailNationalOffice = {
     // add National Office email
-    Japan: email_Japan,
-    USA: '',
-    'South Africa': email_SouthAfrica
+    Australia: 'ronaga@bridgesforpeace.com',
+    Canada: 'ronaga@bridgesforpeace.com',
+    Japan: 'ronaga@bridgesforpeace.com',
+    'New Zealand': 'ronaga@bridgesforpeace.com',
+    'South Africa': 'ronaga@bridgesforpeace.com',
+    'South Korea': 'ronaga@bridgesforpeace.com',
+    'United Kingdom': 'ronaga@bridgesforpeace.com',
+    USA: 'ronaga@bridgesforpeace.com',
+    Other: 'ronaga@bridgesforpeace.com'
 } as const;
 
 export type SubmitType = 'documentSubmission' | 'applicationSubmission' | 'healthQuestionnaireSubmission';
@@ -58,7 +64,7 @@ export const notificationApplicationUpdated = async (res: any, updatedField: Upd
         const office = record['office'].value as EmailNationalOffice;
         const documents = record['documents'].value;
         if (!office) throw new Error('Invalid office');
-        const to = emailNationalOffice[office];
+        const to = emailNationalOffice[office] == undefined ? 'intl.personnel@bridgesforpeace.com' : emailNationalOffice[office];
         const mailTitle =
             submitType === 'documentSubmission'
                 ? `[Online Application] Document submitted by ${name} (${documents.length}/${Object.keys(necessaryDocuments).length})`
@@ -76,7 +82,7 @@ export const notificationApplicationUpdated = async (res: any, updatedField: Upd
             to: to, // Change to your recipient
             from: 'BFP Noreply<noreply@bridgesforpeace.com>', // Change to your verified sender
             cc: cc,
-            bcc: to === 'ronaga@bridgesforpeace.com' ? '' : 'ronaga@bridgesforpeace.com',
+            bcc: '',
             subject: mailTitle,
             html: mailHTML
         };
@@ -86,9 +92,9 @@ export const notificationApplicationUpdated = async (res: any, updatedField: Upd
                 res.status(200).json({ resp2: e });
                 return;
             })
-            .catch((error) => {
-                console.log('error', error.response.body.errors);
-                res.status(200).json({ resp2: error });
+            .catch((e) => {
+                logError(e, e.response.body.errors, 'notificationApplicationUpdated');
+                res.status(200).json({ resp2: e });
                 return;
             });
     } catch (e) {
@@ -111,10 +117,10 @@ export const notificationReferenceSubmitted = async (res: any, record: REST_Save
         const mailHTML = render(<NotificationDocument mailBody={mailBody} applicationRef={record['$id'].value} />);
         sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
         const msg = {
-            to: to, // Change to your recipient
+            to: ['noreply@bridgesforpeace.com', to], // Change to your recipient
             from: 'BFP Noreply<noreply@bridgesforpeace.com>', // Change to your verified sender
             cc: cc,
-            bcc: to === 'ronaga@bridgesforpeace.com' ? '' : 'ronaga@bridgesforpeace.com',
+            bcc: '',
             subject: mailTitle,
             html: mailHTML
         };

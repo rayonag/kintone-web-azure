@@ -6,7 +6,7 @@ const convertPrefilledFormRecord = (record: SavedVolunteerApplicationForm, setVa
     const convertedForm: Partial<ApplicationFormType> = {};
 
     const addFieldIfValid = (key: keyof ApplicationFormType, value: any) => {
-        if (value !== undefined && value !== null) {
+        if (value !== undefined && value !== null && value !== '') {
             setValue(key, value);
         }
     };

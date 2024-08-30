@@ -147,6 +147,7 @@ const ApplicationForm = (props: any) => {
         const values = getValues();
         console.log('values', values);
         setIsLoading(true);
+        postTempApplicationForm(values, dashboardUser.ref || '0', step);
         const res = await postApplicationForm(values, dashboardUser.ref || undefined);
         if (res) {
             alert('Your form has been submitted!');
@@ -205,9 +206,11 @@ const ApplicationForm = (props: any) => {
                             type="button"
                             onClick={async () => {
                                 const valid = await validate();
-                                if (valid) setStep(step + 1);
-                                // temp save
-                                postTempApplicationForm(getValues(), dashboardUser.ref || '0', step);
+                                if (valid) {
+                                    // temp save
+                                    postTempApplicationForm(getValues(), dashboardUser.ref || '0', step);
+                                    setStep(step + 1);
+                                }
                             }}
                             className="btn-wide"
                         >

@@ -234,10 +234,14 @@ export const getServerSideProps = (async (context) => {
                 context.res.writeHead(302, { Location: '/apply/login' });
                 return undefined;
             });
-        const resp2 = await client.record.getAllRecords<REST_VolunteerApplicationForm>({
-            app: VolunteerApplicationAppID as string,
-            condition: `ref="${cookies.ref}"`
-        });
+        const resp2 = await client.record
+            .getAllRecords<REST_VolunteerApplicationForm>({
+                app: VolunteerApplicationAppID as string,
+                condition: `ref="${cookies.ref}"`
+            })
+            .catch((e) => {
+                throw new Error('resp2:' + e);
+            });
         if (!resp) return { props: {} };
         // check if not yet
         if (resp2.length > 0) {
@@ -249,23 +253,31 @@ export const getServerSideProps = (async (context) => {
                         formSubmission: { value: [...resp.record['formSubmission'].value, 'Application Form Completed'] }
                     }
                 });
-                resp = await client.record.getRecord<REST_OnlineVolunteerApplication>({
-                    app: VolunteerApplicationMasterAppID as string,
-                    id: cookies.ref
-                });
+                resp = await client.record
+                    .getRecord<REST_OnlineVolunteerApplication>({
+                        app: VolunteerApplicationMasterAppID as string,
+                        id: cookies.ref
+                    })
+                    .catch((e) => {
+                        throw new Error('resp_2:' + e);
+                    });
             }
             // update status
             if (
                 applicationStepsMasterApp[resp.record['status'].value as ApplicationStepsMasterApp] <
                 applicationStepsMasterApp['Complete Application Form']
             ) {
-                await client.record.updateRecord({
-                    app: VolunteerApplicationMasterAppID as string,
-                    id: cookies.ref,
-                    record: {
-                        status: { value: 'Complete Application Form' }
-                    }
-                });
+                await client.record
+                    .updateRecord({
+                        app: VolunteerApplicationMasterAppID as string,
+                        id: cookies.ref,
+                        record: {
+                            status: { value: 'Complete Application Form' }
+                        }
+                    })
+                    .catch((e) => {
+                        throw new Error('updateRecord:' + e);
+                    });
             }
         }
         // documents submission
@@ -278,13 +290,17 @@ export const getServerSideProps = (async (context) => {
                 applicationStepsMasterApp[resp.record['status'].value as ApplicationStepsMasterApp] <
                 applicationStepsMasterApp['Necessary Documents Submitted']
             ) {
-                await client.record.updateRecord({
-                    app: VolunteerApplicationMasterAppID as string,
-                    id: cookies.ref,
-                    record: {
-                        status: { value: 'Necessary Documents Submitted' }
-                    }
-                });
+                await client.record
+                    .updateRecord({
+                        app: VolunteerApplicationMasterAppID as string,
+                        id: cookies.ref,
+                        record: {
+                            status: { value: 'Necessary Documents Submitted' }
+                        }
+                    })
+                    .catch((e) => {
+                        throw new Error('updateRecord_2:' + e);
+                    });
             }
         }
         const repo: Repo = {

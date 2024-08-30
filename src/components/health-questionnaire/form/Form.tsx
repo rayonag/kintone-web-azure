@@ -20,6 +20,7 @@ import ConfirmationModal from './views/Confirmation';
 import './translations/config'; //i18
 import useUserStore from '@/features/common/portal/store';
 import { useShallow } from 'zustand/react/shallow';
+import healthQuestionnaire_en from './translations/en.json';
 
 const HealthQuestionnaire = (props: { repo: any }) => {
     const [page, setPage] = useState(0);
@@ -35,7 +36,13 @@ const HealthQuestionnaire = (props: { repo: any }) => {
         }))
     );
     console.log('username', username);
-    const { t } = useTranslation();
+    // temp disable i18n
+    // const { t } = useTranslation();
+    const tStore = { ...healthQuestionnaire_en };
+    const getNestedProperty = (obj: any, path: string) => {
+        return path.split('.').reduce((acc, part) => acc && acc[part], obj);
+    };
+    const t = (key: string) => getNestedProperty(tStore, key);
     const {
         formState: { errors: formatError },
         trigger,

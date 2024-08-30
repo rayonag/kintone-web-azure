@@ -6,6 +6,7 @@ const postTempApplicationForm = async (data: ApplicationFormType, ref: string | 
     const convertDate = (date: string) => {
         return DateTime.fromFormat(date, 'dd/MM/yyyy').toISODate();
     };
+    const nullIfZero = (value: number) => (value === 0 ? null : value);
     try {
         const record = (() => {
             switch (step) {
@@ -96,6 +97,8 @@ const postTempApplicationForm = async (data: ApplicationFormType, ref: string | 
                                 }
                             }))
                         },
+                        employProfession: { value: data.employProfession },
+                        employAccreditation: { value: data.employAccreditation },
                         employTable: {
                             type: 'SUBTABLE',
                             value: data.employTable.map((emp) => ({
@@ -144,53 +147,53 @@ const postTempApplicationForm = async (data: ApplicationFormType, ref: string | 
                     return {
                         currentStep: { value: step },
                         ref: { value: parseInt(data.ref) },
-                        skillCarpentry: { value: data.skillCarpentry },
-                        skillConstruction: { value: data.skillConstruction },
-                        skillElectrical: { value: data.skillElectrical },
-                        skillForklift: { value: data.skillForklift },
-                        skillMechanic: { value: data.skillMechanic },
-                        skillRepair: { value: data.skillRepair },
-                        skillLaborer: { value: data.skillLaborer },
-                        skillWelding: { value: data.skillWelding },
-                        skillMasonry: { value: data.skillMasonry },
-                        skillPlumbing: { value: data.skillPlumbing },
-                        skillPainting: { value: data.skillPainting },
-                        skillWarehouseMaintenance: { value: data.skillWarehouseMaintenance },
-                        skillTransportation: { value: data.skillTransportation },
+                        skillCarpentry: { value: nullIfZero(parseInt(data.skillCarpentry)) },
+                        skillConstruction: { value: nullIfZero(parseInt(data.skillConstruction)) },
+                        skillElectrical: { value: nullIfZero(parseInt(data.skillElectrical)) },
+                        skillForklift: { value: nullIfZero(parseInt(data.skillForklift)) },
+                        skillMechanic: { value: nullIfZero(parseInt(data.skillMechanic)) },
+                        skillRepair: { value: nullIfZero(parseInt(data.skillRepair)) },
+                        skillLaborer: { value: nullIfZero(parseInt(data.skillLaborer)) },
+                        skillWelding: { value: nullIfZero(parseInt(data.skillWelding)) },
+                        skillMasonry: { value: nullIfZero(parseInt(data.skillMasonry)) },
+                        skillPlumbing: { value: nullIfZero(parseInt(data.skillPlumbing)) },
+                        skillPainting: { value: nullIfZero(parseInt(data.skillPainting)) },
+                        skillWarehouseMaintenance: { value: nullIfZero(parseInt(data.skillWarehouseMaintenance)) },
+                        skillTransportation: { value: nullIfZero(parseInt(data.skillTransportation)) },
                         hasHeavyLicense: { value: data.hasHeavyLicense },
-                        skillWebsite: { value: data.skillWebsite },
-                        skillWebDesign: { value: data.skillWebDesign },
-                        skillIT: { value: data.skillIT },
-                        skillVideo: { value: data.skillVideo },
-                        skillComputerDesign: { value: data.skillComputerDesign },
-                        skillAdobePhotoshop: { value: data.skillAdobePhotoshop },
-                        skillAdobeInDesign: { value: data.skillAdobeInDesign },
-                        skillOtherPrograms: { value: data.skillOtherPrograms },
-                        skillJournalism: { value: data.skillJournalism },
-                        skillPublicSpeaking: { value: data.skillPublicSpeaking },
-                        skillFilmmaking: { value: data.skillFilmmaking },
-                        skillPhotography: { value: data.skillPhotography },
-                        skillAccounting: { value: data.skillAccounting },
-                        skillAdministration: { value: data.skillAdministration },
-                        skillBookkeeping: { value: data.skillBookkeeping },
-                        skillOperatingSystems: { value: data.skillOperatingSystems },
+                        skillWebsite: { value: nullIfZero(parseInt(data.skillWebsite)) },
+                        skillWebDesign: { value: nullIfZero(parseInt(data.skillWebDesign)) },
+                        skillIT: { value: nullIfZero(parseInt(data.skillIT)) },
+                        skillVideo: { value: nullIfZero(parseInt(data.skillVideo)) },
+                        skillComputerDesign: { value: nullIfZero(parseInt(data.skillComputerDesign)) },
+                        skillAdobePhotoshop: { value: nullIfZero(parseInt(data.skillAdobePhotoshop)) },
+                        skillAdobeInDesign: { value: nullIfZero(parseInt(data.skillAdobeInDesign)) },
+                        skillOtherPrograms: { value: nullIfZero(parseInt(data.skillOtherPrograms)) },
+                        skillJournalism: { value: nullIfZero(parseInt(data.skillJournalism)) },
+                        skillPublicSpeaking: { value: nullIfZero(parseInt(data.skillPublicSpeaking)) },
+                        skillFilmmaking: { value: nullIfZero(parseInt(data.skillFilmmaking)) },
+                        skillPhotography: { value: nullIfZero(parseInt(data.skillPhotography)) },
+                        skillAccounting: { value: nullIfZero(parseInt(data.skillAccounting)) },
+                        skillAdministration: { value: nullIfZero(parseInt(data.skillAdministration)) },
+                        skillBookkeeping: { value: nullIfZero(parseInt(data.skillBookkeeping)) },
+                        skillOperatingSystems: { value: nullIfZero(parseInt(data.skillOperatingSystems)) },
                         skillSystem: { value: data.skillSystem },
                         skillSoftware: { value: data.skillSoftware },
-                        skillOfficeSuite: { value: data.skillOfficeSuite },
-                        skillExcel: { value: data.skillExcel },
-                        skillTyping: { value: data.skillTyping },
-                        skillGoogleDrive: { value: data.skillGoogleDrive },
-                        skillSecretarial: { value: data.skillSecretarial },
-                        skillOrganizing: { value: data.skillOrganizing },
-                        skillLibrary: { value: data.skillLibrary },
-                        skillReception: { value: data.skillReception },
-                        skillProofreading: { value: data.skillProofreading },
-                        skillCopyEditing: { value: data.skillCopyEditing },
-                        skillTranslation: { value: data.skillTranslation },
-                        skillCounseling: { value: data.skillCounseling },
-                        skillMusicalInstrument: { value: data.skillMusicalInstrument },
-                        skillJanitorial: { value: data.skillJanitorial },
-                        skillCooking: { value: data.skillCooking },
+                        skillOfficeSuite: { value: nullIfZero(parseInt(data.skillOfficeSuite)) },
+                        skillExcel: { value: nullIfZero(parseInt(data.skillExcel)) },
+                        skillTyping: { value: nullIfZero(parseInt(data.skillTyping)) },
+                        skillGoogleDrive: { value: nullIfZero(parseInt(data.skillGoogleDrive)) },
+                        skillSecretarial: { value: nullIfZero(parseInt(data.skillSecretarial)) },
+                        skillOrganizing: { value: nullIfZero(parseInt(data.skillOrganizing)) },
+                        skillLibrary: { value: nullIfZero(parseInt(data.skillLibrary)) },
+                        skillReception: { value: nullIfZero(parseInt(data.skillReception)) },
+                        skillProofreading: { value: nullIfZero(parseInt(data.skillProofreading)) },
+                        skillCopyEditing: { value: nullIfZero(parseInt(data.skillCopyEditing)) },
+                        skillTranslation: { value: nullIfZero(parseInt(data.skillTranslation)) },
+                        skillCounseling: { value: nullIfZero(parseInt(data.skillCounseling)) },
+                        skillMusicalInstrument: { value: nullIfZero(parseInt(data.skillMusicalInstrument)) },
+                        skillJanitorial: { value: nullIfZero(parseInt(data.skillJanitorial)) },
+                        skillCooking: { value: nullIfZero(parseInt(data.skillCooking)) },
                         skillForeignLanguage: { value: data.skillForeignLanguage },
                         skillComputer: { value: data.skillComputer },
                         skillSpecialTraining: { value: data.skillSpecialTraining }
@@ -227,6 +230,12 @@ const postTempApplicationForm = async (data: ApplicationFormType, ref: string | 
                         refOtherRelationship: { value: data.refOtherRelationship },
                         hasFriendsIsrael: { value: data.hasFriendsIsrael },
                         hasFriendsIsraelExplain: { value: data.hasFriendsIsraelExplain }
+                    };
+                case 10:
+                    return {
+                        currentStep: { value: step },
+                        ref: { value: parseInt(data.ref) },
+                        keepingTempRecord: { value: 'false' }
                     };
                 default:
                     return {};

@@ -104,6 +104,8 @@ const educationTable = z.array(
         educationDate: string_optional
     })
 );
+const employProfession = string_optional;
+const employAccreditation = string_optional;
 const employTable = z.array(
     z.object({
         employDate: string_optional,
@@ -250,6 +252,8 @@ export const ApplicationFormSchema = z.object({
 
     // 5
     educationTable: educationTable,
+    employProfession: employProfession,
+    employAccreditation: employAccreditation,
     employTable: employTable,
     hobby: hobby,
     clubs: clubs,
@@ -365,250 +369,8 @@ export const ApplicationFormSchema = z.object({
 
 export type ApplicationFormType = z.infer<typeof ApplicationFormSchema>;
 
-// export const ApplicationFormDefaultValues: Partial<ApplicationFormType> = {
-//     areaInterested: ['Publications/Media'],
-//     educationTable: [
-//         {
-//             educationSchoolName: 'asf',
-//             educationDegree: 'daf',
-//             educationDate: '01/01/2000'
-//         },
-//         {
-//             educationSchoolName: 'adf',
-//             educationDegree: 'asdf',
-//             educationDate: '01/01/2000'
-//         },
-//         {
-//             educationSchoolName: '',
-//             educationDegree: '',
-//             educationDate: ''
-//         },
-//         {
-//             educationSchoolName: '',
-//             educationDegree: '',
-//             educationDate: ''
-//         },
-//         {
-//             educationSchoolName: '',
-//             educationDegree: '',
-//             educationDate: ''
-//         }
-//     ],
-//     character1: ['Firm', 'Take charge', 'Determined'],
-//     character2: ['Visionary', 'Take risks', 'Energetic'],
-//     character3: ['Loyal', 'Even-keeled', 'Non-demanding'],
-//     character4: [],
-//     skillCarpentry: '4',
-//     skillConstruction: '3',
-//     skillElectrical: '1',
-//     skillForklift: '0',
-//     skillMechanic: '0',
-//     skillRepair: '0',
-//     skillLaborer: '0',
-//     skillWelding: '0',
-//     skillMasonry: '0',
-//     skillPlumbing: '0',
-//     skillPainting: '0',
-//     skillWarehouseMaintenance: '0',
-//     skillTransportation: '0',
-//     skillWebsite: '0',
-//     skillWebDesign: '0',
-//     skillIT: '0',
-//     skillVideo: '0',
-//     skillComputerDesign: '0',
-//     skillAdobePhotoshop: '0',
-//     skillAdobeInDesign: '0',
-//     skillOtherPrograms: '0',
-//     skillJournalism: '0',
-//     skillPublicSpeaking: '0',
-//     skillFilmmaking: '0',
-//     skillPhotography: '0',
-//     skillAccounting: '0',
-//     skillAdministration: '0',
-//     skillBookkeeping: '0',
-//     skillOperatingSystems: '0',
-//     skillSystem: '0',
-//     skillSoftware: '0',
-//     skillOfficeSuite: '0',
-//     skillExcel: '0',
-//     skillTyping: '0',
-//     skillGoogleDrive: '0',
-//     skillSecretarial: '0',
-//     skillOrganizing: '0',
-//     skillLibrary: '0',
-//     skillReception: '0',
-//     skillProofreading: '0',
-//     skillCopyEditing: '0',
-//     skillTranslation: '0',
-//     skillCounseling: '0',
-//     skillMusicalInstrument: '0',
-//     skillJanitorial: '0',
-//     skillCooking: '0',
-//     firstName: 'a',
-//     middleName: 'asfd',
-//     lastName: 'a',
-//     street: 'a',
-//     city: 'aasf',
-//     zip: 'aasfd',
-//     state: 'asa',
-//     country: 'aasf',
-//     phone: 'a',
-//     email: 'a@a.aa',
-//     passportNumber: 'a',
-//     passportExpiration: '01/01/2000',
-//     passportIssued: 'a',
-//     birthday: '01/01/2000',
-//     age: '12',
-//     ssnNumber: '',
-//     sex: 'Female',
-//     maritalStatus: 'Single',
-//     hasChildren: 'No',
-//     hasFamilySupport: 'No',
-//     hasFamilySupportExplain: 'a',
-//     ref: '58',
-//     office: 'Japan',
-//     verify1: true,
-//     verify2: true,
-//     verify3: true,
-//     verify4: true,
-//     verify5: true,
-//     verify6: true,
-//     verify7: true,
-//     healthCondition: 'Excellent',
-//     seriousInjury: 'No',
-//     seriousInjuryExplain: 'ad',
-//     hasHandicap: 'Yes',
-//     hasHandicapExplain: 'af',
-//     doSmoke: 'Yes',
-//     canLift33lbs: 'No',
-//     personalDoctor: 'asf',
-//     personalDoctorPhone: 'asfd',
-//     emergencyName: 'as',
-//     emergencyRelationship: 'fdasdf',
-//     emergencyEmail: 'a@a.aa',
-//     emergencyPhone: 'asfd',
-//     emergencyStreet: 'asfd',
-//     emergencyState: 'as',
-//     emergencyCity: 'fsad',
-//     emergencyCountry: 'asfd',
-//     emergencyZip: 'fsadf',
-//     describeMotivation: 'asdf',
-//     otherAreaInterested: 'asf',
-//     minAvailability: 'sdaf',
-//     maxAvailability: 'sa',
-//     preferredStartDate: '01/01/2000',
-//     preferredStartDate2: '01/01/2000',
-//     ifNoPosition: 'No',
-//     employTable: [
-//         {
-//             employDate: 'sda',
-//             employName: 'fadf',
-//             employAddress: 'sadf',
-//             employDuties: 'sadf',
-//             employLeavingReason: 'asdfa'
-//         },
-//         {
-//             employDate: 'sad',
-//             employName: 'sdf',
-//             employAddress: 'df',
-//             employDuties: 'f',
-//             employLeavingReason: 'sfd'
-//         },
-//         {
-//             employDate: '',
-//             employName: '',
-//             employAddress: '',
-//             employDuties: '',
-//             employLeavingReason: ''
-//         },
-//         {
-//             employDate: '',
-//             employName: '',
-//             employAddress: '',
-//             employDuties: '',
-//             employLeavingReason: ''
-//         },
-//         {
-//             employDate: '',
-//             employName: '',
-//             employAddress: '',
-//             employDuties: '',
-//             employLeavingReason: ''
-//         }
-//     ],
-//     hobby: 'asfd',
-//     clubs: 'asfd',
-//     serviceTable: [
-//         {
-//             serviceOrganizationName: 'asfd',
-//             serviceStartDate: '01/01/2000',
-//             serviceEndDate: '01/01/2000',
-//             serviceDuties: 'sadf'
-//         },
-//         {
-//             serviceOrganizationName: 'safd',
-//             serviceStartDate: '01/01/2000',
-//             serviceEndDate: '01/01/2000',
-//             serviceDuties: 'asfd'
-//         },
-//         {
-//             serviceOrganizationName: '',
-//             serviceStartDate: '',
-//             serviceEndDate: '',
-//             serviceDuties: ''
-//         },
-//         {
-//             serviceOrganizationName: '',
-//             serviceStartDate: '',
-//             serviceEndDate: '',
-//             serviceDuties: ''
-//         },
-//         {
-//             serviceOrganizationName: '',
-//             serviceStartDate: '',
-//             serviceEndDate: '',
-//             serviceDuties: ''
-//         }
-//     ],
-//     hasDriverLicense: 'No',
-//     hasLicenseMoreThanTwelveMonths: 'No',
-//     drivingViolation: 'asdf',
-//     hasConvictedTrafficAccident: 'Yes',
-//     hasTrafficAccidentExplain: 'asfd',
-//     hasVisitedIsrael: 'Yes',
-//     hasVisitedIsraelDates: 'fdas',
-//     listForeignCountries: 'asfd',
-//     churchName: 'asf',
-//     christianExperience: 'asfd',
-//     christianJewishUnderstanding: 'asfd',
-//     interestIsrael: 'asf',
-//     hasHeavyLicense: 'No',
-//     skillForeignLanguage: 'asdf',
-//     skillComputer: 'safd',
-//     skillSpecialTraining: 'asdf',
-//     refPastorName: 'a',
-//     refPastorPhone: 'fasdf',
-//     refPastorEmail: 'a@a.aa',
-//     refPastorAddress: 'asdfa',
-//     refEmployerName: 'afadsf',
-//     refEmployerPhone: 'asdf',
-//     refEmployerEmail: 'a@a.aa',
-//     refEmployerAddress: 'asfd',
-//     refFriendName: 'asf',
-//     refFriendPhone: 'asf',
-//     refFriendEmail: 'a@a.aa',
-//     refFriendAddress: 'asf',
-//     refOtherName: 'asf',
-//     refOtherPhone: 'asfd',
-//     refOtherEmail: 'asdf',
-//     refOtherAddress: 'asf',
-//     refOtherRelationship: 'asfd',
-//     hasFriendsIsrael: 'No',
-//     hasFriendsIsraelExplain: 'asfd'
-// };
 export const ApplicationFormDefaultValues: Partial<ApplicationFormType> = {
     areaInterested: [],
-    educationTable: [{ educationSchoolName: '', educationDegree: '', educationDate: '' }],
     character1: [],
     character2: [],
     character3: [],

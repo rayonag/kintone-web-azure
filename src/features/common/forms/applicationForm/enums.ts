@@ -59,6 +59,15 @@ export const AreaInterested = (t: Translation) => ({
     Other: t('areaInterested.options.other')
 });
 
+export const SkillSystem = (t: Translation) => ({
+    PC: t('skillSystem.options.PC'),
+    MAC: t('skillSystem.options.MAC')
+});
+export const SkillSoftware = (t: Translation) => ({
+    SAP: t('skillSoftware.options.SAP'),
+    QuickBooks: t('skillSoftware.options.QuickBooks')
+});
+
 export const Character1 = (t: Translation) => ({
     'Take charge': t('character1.options.takeCharge'),
     Determined: t('character1.options.determined'),
@@ -72,7 +81,7 @@ export const Character1 = (t: Translation) => ({
     'Decision maker': t('character1.options.decisionMaker'),
     'Self-reliant': t('character1.options.selfReliant'),
     Adventurous: t('character1.options.adventurous'),
-    'Goal driven': t('character1.options.goalDriven'),
+    'Goal-driven': t('character1.options.goalDriven'),
     'Enjoy a challenge': t('character1.options.enjoyChallenge')
 });
 
@@ -83,11 +92,11 @@ export const Character2 = (t: Translation) => ({
     Motivator: t('character2.options.motivator'),
     'Like variety': t('character2.options.likeVariety'),
     Promoter: t('character2.options.promoter'),
-    'Fun loving': t('character2.options.funLoving'),
+    'Fun-loving': t('character2.options.funLoving'),
     Verbal: t('character2.options.verbal'),
     Creative: t('character2.options.creative'),
     'Enjoy change': t('character2.options.enjoyChange'),
-    'Group oriented': t('character2.options.groupOriented'),
+    'Group-oriented': t('character2.options.groupOriented'),
     'Avoid details': t('character2.options.avoidDetails'),
     'Mix easily': t('character2.options.mixEasily'),
     'Open to new ideas': t('character2.options.openToNewIdeas')
@@ -101,7 +110,7 @@ export const Character3 = (t: Translation) => ({
     Optimistic: t('character3.options.optimistic'),
     'Enjoy routine': t('character3.options.enjoyRoutine'),
     'Good listener': t('character3.options.goodListener'),
-    'Enjoy deep relationships': t('character3.options.enjoyDeepRelationships'),
+    'Enjoy deep Relationships': t('character3.options.enjoyDeepRelationships'),
     Adaptable: t('character3.options.adaptable'),
     Sympathetic: t('character3.options.sympathetic'),
     Thoughtful: t('character3.options.thoughtful'),

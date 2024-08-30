@@ -2,6 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import sgMail from '@sendgrid/mail';
+import logError from '@/common/logError';
 
 type Data = {
     name: any;
@@ -26,8 +27,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
             .then((e) => {
                 res.status(200).json({ name: e });
             })
-            .catch((error) => {
-                res.status(200).json({ name: error });
+            .catch((e) => {
+                logError(e, e.response.body.errors, 'notificationApplicationUpdated');
+                res.status(200).json({ name: e });
             });
     } else {
         res.status(405).json({ name: 'Method Not Allowed' });

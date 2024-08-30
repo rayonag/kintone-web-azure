@@ -117,19 +117,31 @@ export const getServerSideProps = (async (context) => {
                 password: KintonePassword
             }
         });
-        let resp = await client.record.getRecord<REST_OnlineVolunteerApplication>({
-            app: VolunteerApplicationMasterAppID as string,
-            id: cookies.ref
-        });
-        const resp2 = await client.record.getAllRecords<REST_SavedVolunteerApplicationForm>({
-            app: VolunteerApplicationAppID as string,
-            condition: `ref="${cookies.ref}"`
-        });
-        const resp3 = await client.record.getAllRecords<REST_TempVolunteerApplicationForm>({
-            app: 235, //TempVolunteerApplicationAppID as string,
-            condition: `ref="${cookies.ref}" and keepingTempRecord in ("true")`,
-            orderBy: '$id desc'
-        });
+        let resp = await client.record
+            .getRecord<REST_OnlineVolunteerApplication>({
+                app: VolunteerApplicationMasterAppID as string,
+                id: cookies.ref
+            })
+            .catch((e) => {
+                throw new Error('resp:' + e);
+            });
+        const resp2 = await client.record
+            .getAllRecords<REST_SavedVolunteerApplicationForm>({
+                app: VolunteerApplicationAppID as string,
+                condition: `ref="${cookies.ref}"`
+            })
+            .catch((e) => {
+                throw new Error('resp2:' + e);
+            });
+        const resp3 = await client.record
+            .getAllRecords<REST_TempVolunteerApplicationForm>({
+                app: 235, //TempVolunteerApplicationAppID as string,
+                condition: `ref="${cookies.ref}" and keepingTempRecord in ("true")`,
+                orderBy: '$id desc'
+            })
+            .catch((e) => {
+                throw new Error('resp3:' + e);
+            });
         let prefilledFormRecord = resp3[0] ? await resp3[0] : null;
         // check if not yet
         // const getPrefilledFormURL = (record: REST_SavedVolunteerApplicationForm) => {

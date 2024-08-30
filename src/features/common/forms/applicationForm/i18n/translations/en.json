@@ -188,8 +188,8 @@
     "skillSystem": {
         "title": "Systems",
         "options": {
-            "Windows": "Windows",
-            "Mac": "Mac"
+            "PC": "PC",
+            "MAC": "MAC"
         }
     },
     "skillSoftware": {
@@ -237,7 +237,7 @@
             "decisionMaker": "Decision maker",
             "selfReliant": "Self-reliant",
             "adventurous": "Adventurous",
-            "goalDriven": "Goal driven",
+            "goalDriven": "Goal-driven",
             "enjoyChallenge": "Enjoy a challenge"
         }
     },
@@ -250,11 +250,11 @@
             "motivator": "Motivator",
             "likeVariety": "Like variety",
             "promoter": "Promoter",
-            "funLoving": "Fun loving",
+            "funLoving": "Fun-loving",
             "verbal": "Verbal",
             "creative": "Creative",
             "enjoyChange": "Enjoy change",
-            "groupOriented": "Group oriented",
+            "groupOriented": "Group-oriented",
             "avoidDetails": "Avoid details",
             "mixEasily": "Mix easily",
             "openToNewIdeas": "Open to new ideas"
@@ -270,7 +270,7 @@
             "optimistic": "Optimistic",
             "enjoyRoutine": "Enjoy routine",
             "goodListener": "Good listener",
-            "enjoyDeepRelationships": "Enjoy deep relationships",
+            "enjoyDeepRelationships": "Enjoy deep Relationships",
             "adaptable": "Adaptable",
             "sympathetic": "Sympathetic",
             "thoughtful": "Thoughtful",
