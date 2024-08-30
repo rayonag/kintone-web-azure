@@ -1,5 +1,5 @@
 import { KintoneUserName, KintonePassword, TimesheetAppID } from '@/common/env';
-import handleCatch from '@/common/handleCatch';
+import logError from '@/common/logError';
 import { REST_VolunteerProfile, REST_SavedVolunteerProfile } from '@/types/VolunteerProfile';
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import { DateTime } from 'luxon';
@@ -114,7 +114,7 @@ export const calcVacationDeputationTaken = async (record: REST_SavedVolunteerPro
             });
             return res;
         } catch (e) {
-            handleCatch(new Error('Could not read timesheet: ' + e), record, 'getTimesheetbyStatus');
+            logError(new Error('Could not read timesheet: ' + e), record, 'getTimesheetbyStatus');
         }
     };
     const timesheet = await getTimesheetbyStatus(record['kintoneAccount'].value[0].code, vacationDeputation, record['WorkerType'].value);

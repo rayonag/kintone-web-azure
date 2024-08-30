@@ -1,4 +1,4 @@
-import handleCatch from '@/common/handleCatch';
+import logError from '../logError';
 
 type postDocumentProps = {
     document: string;
@@ -40,7 +40,7 @@ const postDocument: (props: postDocumentProps) => any = async ({ document, formD
             return;
         }
     } catch (e) {
-        handleCatch(e, { formData, applicationRef }, 'postDocument');
+        logError(e, { formData, applicationRef }, 'postDocument');
     }
 };
 export default postDocument;

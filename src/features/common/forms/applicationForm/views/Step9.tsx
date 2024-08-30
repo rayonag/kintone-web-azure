@@ -13,7 +13,7 @@ type Step9Props = {
     register: UseFormRegister<ApplicationFormType>;
     errors: FieldErrors<ApplicationFormType>;
     getValues: UseFormGetValues<ApplicationFormType>;
-    t: TFunction<'application'>;
+    t: any;
     type: string | undefined;
 };
 const Step9: FC<Step9Props> = ({ register, errors, getValues, t, type }) => {

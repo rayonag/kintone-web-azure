@@ -21,6 +21,8 @@ import logError from '@/common/logError';
 import { useRouter } from 'next/router';
 import RateUs from '@/components/modal/RateUs';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
+import useUserStore from '@/features/common/portal/store';
+import { useShallow } from 'zustand/react/shallow';
 // application steps that matches the kintone app
 export type ApplicationStepsMasterApp =
     | 'Applying'
@@ -121,6 +123,14 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
             <GreenCheckMark height={30} width={30} />
         </div>
     );
+    // const { username, name, initUser } = useUserStore(
+    //     useShallow((state) => ({
+    //         username: state.username,
+    //         name: state.name,
+    //         initUser: state.initUser
+    //     }))
+    // );
+    // console.log('username', username);
     return (
         <Layout>
             <div className="flex flex-col items-center justify-center min-h-[95vh] text-white overflow-hidden">

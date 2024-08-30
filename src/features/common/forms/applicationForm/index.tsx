@@ -30,13 +30,21 @@ import convertPrefilledFormRecord from './hooks/convertPrefilledFormRecord';
 import Modal from 'react-modal';
 import ReactModal from 'react-modal';
 import postTempApplicationForm from './hooks/postTempApplicationForm';
+import applicationForm_en from './i18n/translations/en.json';
+import common_en from '@/libs/i18n/common/en.json';
 
 const ApplicationForm = (props: any) => {
     const [step, setStep] = useState(1);
     const { setIsLoading } = useLoading();
     //const [modalIsOpen, setModalIsOpen] = useState(false);
     // for future use on multi language
-    const { t } = useTranslation('applicationForm');
+    // currently disabled
+    // const { t } = useTranslation('applicationForm');
+    const tStore = { ...applicationForm_en, ...common_en };
+    const getNestedProperty = (obj: any, path: string) => {
+        return path.split('.').reduce((acc, part) => acc && acc[part], obj);
+    };
+    const t = (key: string) => getNestedProperty(tStore, key);
     //const initialLang = 'en';
     //const [locale, dispatch] = useReducer<(state: string, actions: string) => string>(langReducer, initialLang);
     const form = props.repo;

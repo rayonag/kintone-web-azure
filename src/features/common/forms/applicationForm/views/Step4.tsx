@@ -17,7 +17,7 @@ type Step4Props = {
     register: UseFormRegister<ApplicationFormType>;
     errors: FieldErrors<ApplicationFormType>;
     getValues: UseFormGetValues<ApplicationFormType>;
-    t: TFunction<'application'>;
+    t: any;
     control: Control<ApplicationFormType>;
 };
 const Step4: FC<Step4Props> = ({ register, errors, getValues, t, control }) => (

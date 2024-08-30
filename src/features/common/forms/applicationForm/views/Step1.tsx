@@ -1,5 +1,5 @@
 import useUserStore from '@/features/common/portal/store';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import SectionTitle from '../../components/SectionTitle';
 import Input from '../../components/Input';
@@ -19,7 +19,7 @@ type Step1Props = {
     register: UseFormRegister<ApplicationFormType>;
     errors: FieldErrors<ApplicationFormType>;
     getValues: UseFormGetValues<ApplicationFormType>;
-    t: TFunction<'application'>;
+    t: any;
     control: Control<ApplicationFormType>;
 };
 const Step1: FC<Step1Props> = ({ register, errors, getValues, t, control }) => {
@@ -27,6 +27,17 @@ const Step1: FC<Step1Props> = ({ register, errors, getValues, t, control }) => {
     const isMarried = maritalStatusField === 'Married';
     const hasChildrenField = useWatch({ control, name: 'hasChildren' });
     const hasChildren = hasChildrenField === 'Yes';
+    const { username, name, initUser } = useUserStore(
+        useShallow((state) => ({
+            username: state.username,
+            name: state.name,
+            initUser: state.initUser
+        }))
+    );
+    useEffect(() => {
+        console.log('inituser', username);
+        initUser();
+    });
     return (
         <div>
             <section>

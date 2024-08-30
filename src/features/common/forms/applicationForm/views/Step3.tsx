@@ -13,9 +13,17 @@ type Step3Props = {
     register: UseFormRegister<ApplicationFormType>;
     errors: FieldErrors<ApplicationFormType>;
     getValues: UseFormGetValues<ApplicationFormType>;
-    t: TFunction<'application'>;
+    t: any;
 };
 const Step3: FC<Step3Props> = ({ register, errors, getValues, t }) => {
+    const { username, name, initUser } = useUserStore(
+        useShallow((state) => ({
+            username: state.username,
+            name: state.name,
+            initUser: state.initUser
+        }))
+    );
+    console.log('username', username);
     return (
         <div>
             <section>

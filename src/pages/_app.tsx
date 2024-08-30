@@ -23,10 +23,10 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
             initUser: state.initUser
         }))
     );
-    useEffect(() => {
-        console.log('inituser', username);
-        initUser();
-    }, []);
+    // useEffect(() => {
+    //     console.log('inituser', username);
+    //     initUser();
+    // }, []);
     //
     const DashboardUserProvider: ({ children }: { children: JSX.Element }) => JSX.Element = ({ children }) => {
         const [dashboardUser, setDashboardUser] = useState<DashboardUser>({

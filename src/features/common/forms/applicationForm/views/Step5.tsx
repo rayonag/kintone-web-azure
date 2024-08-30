@@ -16,7 +16,7 @@ type Step5Props = {
     register: UseFormRegister<ApplicationFormType>;
     errors: FieldErrors<ApplicationFormType>;
     getValues: UseFormGetValues<ApplicationFormType>;
-    t: TFunction<'application'>;
+    t: any;
     control: Control<ApplicationFormType>;
 };
 const Step5: FC<Step5Props> = ({ register, errors, getValues, t, control }) => {

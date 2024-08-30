@@ -48,7 +48,7 @@ import { ApplicationFormType } from '../applicationForm/schema';
 //     fieldKeys: string[];
 //     error?: FieldError | undefined;
 //     optional?: boolean;
-//     t: TFunction<'application'>;
+//     t: any;
 // };
 // export const EducationTable: FC<EducationTableProps> = ({ label, register, error, optional, control, fieldKeys, t }) => {
 //     debugger;
@@ -126,7 +126,7 @@ import { ApplicationFormType } from '../applicationForm/schema';
 //     fieldKeys: string[];
 //     error: FieldError | undefined;
 //     optional?: boolean;
-//     t: TFunction<'application'>;
+//     t: any;
 // };
 // export const ServiceTable: FC<ServiceTableProps> = ({ label, register, error, optional, control, name, fieldKeys, t }) => {
 //     debugger;

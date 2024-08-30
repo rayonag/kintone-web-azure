@@ -1,4 +1,4 @@
-import handleCatch from '@/common/handleCatch';
+import logError from '@/common/logError';
 
 type postMedicalStatusFormProps = {
     formData: any;
@@ -40,7 +40,7 @@ const postMedicalStatusForm: (props: postMedicalStatusFormProps) => any = async 
             return;
         }
     } catch (e) {
-        handleCatch(e, { formData, applicationRef }, 'postMedicalStatusForm');
+        logError(e, { formData, applicationRef }, 'postMedicalStatusForm');
     }
 };
 export default postMedicalStatusForm;

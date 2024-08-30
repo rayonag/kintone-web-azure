@@ -1,4 +1,4 @@
-import handleCatch from './handleCatch';
+import logError from './logError';
 
 type getUserApplicationRefProps = {
     ref: string | '';
@@ -18,7 +18,7 @@ const getUserApplicationRef: (props: getUserApplicationRefProps) => Promise<stri
             return undefined;
         }
     } catch (e) {
-        handleCatch(e, null, 'getUserApplicationRef');
+        logError(e, null, 'getUserApplicationRef');
     }
 };
 export default getUserApplicationRef;

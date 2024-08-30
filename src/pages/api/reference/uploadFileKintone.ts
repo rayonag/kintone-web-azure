@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import formidable from 'formidable';
 import fs from 'fs';
 import { KintonePassword, KintoneUserName } from '@/common/env';
-import handleCatch from '@/common/handleCatch';
+import logError from '@/common/logError';
 
 type Data = {
     res?: any;
@@ -56,7 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             });
             return;
         } catch (e: any) {
-            handleCatch(e, req.body, 'uploadFileKintone');
+            logError(e, req.body, 'uploadFileKintone');
             res.status(505).json({
                 res: e
             });
