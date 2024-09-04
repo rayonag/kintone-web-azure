@@ -2,28 +2,21 @@ import { FC } from 'react';
 import { UseFormRegisterReturn, FieldError } from 'react-hook-form';
 
 type RadioProps = {
-    label: string | null;
     register: UseFormRegisterReturn;
     options: { [key: number]: string };
     error: FieldError | undefined;
     optional?: boolean;
 };
 
-export const Radio: FC<RadioProps> = ({ label, register, options, error, optional }) => {
+export const Radio: FC<RadioProps> = ({ register, options, error, optional }) => {
     return (
         <label className="flex flex-col my-2 w-40 me-5 grow">
-            {label && (
-                <div className="font-semibold mb-1 text-black">
-                    {label}
-                    {optional && <span className="text-gray-500 text-sm"> (optional)</span>}
-                </div>
-            )}
-            <div>
+            <div className="flex">
                 {Object.entries(options).map(([key, value]) => {
                     return (
-                        <div key={key}>
-                            <label className="text-black">
-                                <input type="radio" value={key} {...register} />
+                        <div key={key} className="m-3">
+                            <label className="text-2xl">
+                                <input type="radio" className="scale-125 m-1" value={key} {...register} />
                                 {value}
                             </label>
                         </div>

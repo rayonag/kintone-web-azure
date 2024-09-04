@@ -5,6 +5,7 @@ import handleNullOrEmpty from '../hooks/handleNullOrEmpty';
 import logError from '@/common/logError';
 import { REST_OnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
 import { REST_VolunteerApplicationForm, VolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
+import notificationApplicationUpdated from '../hooks/notification';
 
 type Data = {
     res?: any;
@@ -39,26 +40,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 app: VolunteerApplicationAppID as string,
                 record: record
             });
-
-            // const resp = await client.record.getRecord<REST_OnlineVolunteerApplication>({
-            //     app: VolunteerApplicationMasterAppID as string,
-            //     id: userRef
-            // });
-            // if (resp.record['formSubmission'].value.findIndex((arr) => arr == 'Personal Health Questionaire')) {
-            //     res.status(200).json({
-            //         res: resp
-            //     });
-            //     res.end();
-            //     return;
-            // }
-            // // now only Personal Health Questionaire in use
-            // const resp2 = await client.record.updateRecord({
-            //     app: VolunteerApplicationMasterAppID as string,
-            //     id: userRef,
-            //     record: {
-            //         formSubmission: { value: [...resp.record['formSubmission'].value, 'Personal Health Questionaire'] }
-            //     }
-            // });
+            const resp2 = await client.record.getAllRecords<REST_OnlineVolunteerApplication>({
+                app: VolunteerApplicationMasterAppID as string,
+                condition: `ref=${record['ref'].value}`
+            });
+            if (resp2.length === 0) {
+                logError('No online volunteer application record found: resp2', req.body, 'postApplicationForm');
+                res.status(200).json({
+                    res: resp
+                });
+                return;
+            }
+            const resp3 = await notificationApplicationUpdated(res, 'application', resp2[0], 'applicationSubmission');
+            // TODO: add resp3 handler
             res.status(200).json({
                 res: resp
             });

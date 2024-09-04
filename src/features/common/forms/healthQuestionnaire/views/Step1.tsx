@@ -2,19 +2,20 @@
 
 import Input from '../components/Input';
 import Number from '../components/Number';
-import Checkbox from '../components/Checkbox';
-import { FieldErrors, UseFormGetValues, UseFormRegister } from 'react-hook-form';
-import { HealthQuestionnaireType } from '../schema/healthQuestionnaireSchema';
+import { Control, FieldErrors, UseFormGetValues, UseFormRegister } from 'react-hook-form';
+import { HealthQuestionnaireType } from '../schema';
 import { FC } from 'react';
-import { TFunction } from 'i18next';
+import { HeightUnit, WeightUnit } from '../enums';
+import { Radio } from '../components/Radio';
 
-type FirstPageProps = {
+type Step1Props = {
     register: UseFormRegister<HealthQuestionnaireType>;
     errors: FieldErrors<HealthQuestionnaireType>;
     getValues: UseFormGetValues<HealthQuestionnaireType>;
     t: any;
+    control: Control<HealthQuestionnaireType>;
 };
-const FirstPage: FC<FirstPageProps> = ({ register, errors, getValues, t }) => {
+const Step1: FC<Step1Props> = ({ register, errors, getValues, t, control }) => {
     return (
         <>
             <div className="text-2xl font-bold my-10">
@@ -25,27 +26,15 @@ const FirstPage: FC<FirstPageProps> = ({ register, errors, getValues, t }) => {
                 <Input label={t('name')} register={register('name')} placeholder={t('name')} error={errors.name || undefined} />
                 <Number label={t('age')} register={register('age')} placeholder={t('age')} error={errors.age || undefined} />
             </div>
-            <div className="flex flex-wrap items-end">
+            <div className="flex flex-wrap items-end text-white">
                 <Number label={t('height')} register={register('height')} placeholder={t('height')} error={errors.height || undefined} />
-                <Checkbox
-                    label={null}
-                    register={register('heightUnit')}
-                    options={['ft', 'cm']}
-                    error={errors.heightUnit || undefined}
-                    value={getValues('heightUnit')}
-                />
+                <Radio register={register('heightUnit')} options={HeightUnit(t)} error={errors.heightUnit || undefined} />
             </div>
             <div className="flex flex-wrap items-end">
                 <Number label={t('weight')} register={register('weight')} placeholder={t('weight')} error={errors.weight || undefined} />
-                <Checkbox
-                    label={null}
-                    register={register('weightUnit')}
-                    options={['lbs', 'kg']}
-                    error={errors.weightUnit || undefined}
-                    value={getValues('weightUnit')}
-                />
+                <Radio register={register('weightUnit')} options={WeightUnit(t)} error={errors.weightUnit || undefined} />
             </div>
         </>
     );
 };
-export default FirstPage;
+export default Step1;

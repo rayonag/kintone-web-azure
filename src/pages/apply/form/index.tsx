@@ -29,7 +29,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import ViewMyForm from './ViewMyForm';
 import ApplicationForm from '@/features/common/forms/applicationForm';
 
-import i18n from '@/components/health-questionnaire/form/translations/config';
+import i18n from '@/features/common/forms/healthQuestionnaire/i18n/translations/config';
 
 const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const [ref, setRef] = useState('');

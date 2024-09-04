@@ -4,19 +4,20 @@ import { useTranslation } from 'react-i18next';
 import Input from '../components/Input';
 import Number from '../components/Number';
 import Checkbox from '../components/Checkbox';
-import { FieldErrors, UseFormGetValues, UseFormRegister } from 'react-hook-form';
-import { HealthQuestionnaireType } from '../schema/healthQuestionnaireSchema';
+import { Control, FieldErrors, UseFormGetValues, UseFormRegister } from 'react-hook-form';
+import { HealthQuestionnaireType } from '../schema';
 import { FC } from 'react';
 import { TFunction } from 'i18next';
 import Textarea from '../components/Textarea';
 import Verify from '../components/Verify';
 
-type ThirdPageProps = {
+type Step3Props = {
     register: UseFormRegister<HealthQuestionnaireType>;
     errors: FieldErrors<HealthQuestionnaireType>;
     t: any;
+    control: Control<HealthQuestionnaireType>;
 };
-const ThirdPage: FC<ThirdPageProps> = ({ register, errors, t }) => {
+const Step3: FC<Step3Props> = ({ register, errors, t }) => {
     return (
         <>
             <div className="text-2xl font-bold my-10">
@@ -33,4 +34,4 @@ const ThirdPage: FC<ThirdPageProps> = ({ register, errors, t }) => {
         </>
     );
 };
-export default ThirdPage;
+export default Step3;

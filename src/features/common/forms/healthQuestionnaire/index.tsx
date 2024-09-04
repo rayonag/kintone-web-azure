@@ -5,22 +5,25 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import Link from 'next/link';
 
-import { HealthQuestionnaireDefaultValues, HealthQuestionnaireSchema, HealthQuestionnaireType, formFields } from './schema/healthQuestionnaireSchema';
+import { HealthQuestionnaireDefaultValues, HealthQuestionnaireSchema, HealthQuestionnaireType, formFields } from './schema';
 import { useDashboardUser } from '@/common/context/dashboardUser';
 import { useTranslation } from 'react-i18next';
 import { useReducer } from 'react';
-import { langReducer } from './hooks/lang';
-import { customErrorMap } from './schema/healthQuestionnaireSchema';
+import { langReducer } from './i18n/lang';
+import { customErrorMap } from './schema';
 
-import FirstPage from './views/FirstPage';
-import SecondPage from './views/SecondPage';
-import ThirdPage from './views/ThirdPage';
+import FirstPage from './views/Step1';
+import SecondPage from './views/Step2';
+import ThirdPage from './views/Step3';
 import ConfirmationModal from './views/Confirmation';
 
-import './translations/config'; //i18
+import './i18n/translations/config'; //i18
 import useUserStore from '@/features/common/portal/store';
 import { useShallow } from 'zustand/react/shallow';
-import healthQuestionnaire_en from './translations/en.json';
+import healthQuestionnaire_en from './i18n/translations/en.json';
+import Step1 from './views/Step1';
+import Step2 from './views/Step2';
+import Step3 from './views/Step3';
 
 const HealthQuestionnaire = (props: { repo: any }) => {
     const [page, setPage] = useState(0);
@@ -48,7 +51,8 @@ const HealthQuestionnaire = (props: { repo: any }) => {
         trigger,
         getValues,
         setValue,
-        register
+        register,
+        control
     } = useForm<HealthQuestionnaireType>({
         mode: 'onChange',
         defaultValues: HealthQuestionnaireDefaultValues,
@@ -96,10 +100,10 @@ const HealthQuestionnaire = (props: { repo: any }) => {
         }
     }, [props]);
     return (
-        <form className="flex flex-col py-[6%] text-center">
-            {page === 0 && <FirstPage register={register} errors={formatError} getValues={getValues} t={t} />}
-            {page === 1 && <SecondPage register={register} errors={formatError} getValues={getValues} t={t} />}
-            {page === 2 && <ThirdPage register={register} errors={formatError} t={t} />}
+        <form className="flex flex-col px-10 pb-10 text-center">
+            {page === 0 && <Step1 register={register} errors={formatError} getValues={getValues} t={t} control={control} />}
+            {page === 1 && <Step2 register={register} errors={formatError} getValues={getValues} t={t} />}
+            {page === 2 && <Step3 register={register} errors={formatError} t={t} control={control} />}
             <ConfirmationModal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} getValues={getValues} t={t} />
             {page != 2 && (
                 <button

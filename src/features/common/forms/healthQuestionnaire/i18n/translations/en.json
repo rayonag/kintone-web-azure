@@ -2,9 +2,15 @@
     "name": "Name",
     "age": "Age",
     "height": "Height",
-    "heightUnit": "",
+    "heightUnit": {
+        "ft": "ft",
+        "cm": "cm"
+    },
     "weight": "Weight",
-    "weightUnit": "",
+    "weightUnit": {
+        "lbs": "lbs",
+        "kg": "kg"
+    },
     "migranes": "Migranes",
     "headInjury": "Head Injury",
     "weakness": "Weakness",
@@ -25,12 +31,12 @@
     "dizziness": "Dizziness",
     "heartProblems": "Heart Problems",
     "tuberculosis": "Tuberculosis",
-    "lossVision": "Loss Vision",
+    "lossVision": "Loss of Vision",
     "depression": "Depression",
-    "shortBreath": "Short Breath",
+    "shortBreath": "Shortness of Breath",
     "arthritis": "Arthritis",
     "vomiting": "Vomiting",
-    "hiv": "Hiv",
+    "hiv": "HIV/AIDS",
     "abnormalBleeding": "Abnormal Bleeding",
     "cancer": "Cancer",
     "brokenBones": "Broken Bones",

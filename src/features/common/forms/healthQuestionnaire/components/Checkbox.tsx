@@ -1,6 +1,6 @@
 import { FC, useState, ChangeEvent } from 'react';
 import { UseFormRegisterReturn, FieldError, Merge, UseFormGetValues } from 'react-hook-form';
-import { HealthQuestionnaireType } from '../schema/healthQuestionnaireSchema';
+import { HealthQuestionnaireType } from '../schema';
 
 type CheckboxProps = {
     label: string | null;

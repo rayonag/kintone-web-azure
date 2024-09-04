@@ -1,7 +1,7 @@
 import React, { Dispatch, FC, SetStateAction, useState } from 'react';
 import { SubmitHandler, UseFormGetValues } from 'react-hook-form';
 import Modal from 'react-modal';
-import { HealthQuestionnaireType, formFields } from '../schema/healthQuestionnaireSchema';
+import { HealthQuestionnaireType, formFields } from '../schema';
 import { TFunction } from 'i18next';
 import postPersonalHealthQuestionnaire from '../hooks/postPersonalHealthQuestionnaire';
 import { useRouter } from 'next/router';
@@ -96,6 +96,7 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIs
                         </h1>
                         <div className="text-black">
                             {formFields[0].map((field) => {
+                                if (field === 'heightUnit' || field === 'weightUnit') return <div>{formData[field]}</div>;
                                 return (
                                     <div className="py-1">
                                         {t(field)}:{' ' + formData[field]}

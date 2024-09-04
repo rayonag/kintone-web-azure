@@ -1,5 +1,5 @@
 import postFormSubmission from '@/common/checklist/postFormSubmission';
-import { HealthQuestionnaireType } from '../schema/healthQuestionnaireSchema';
+import { HealthQuestionnaireType } from '../schema';
 
 const postPersonalHealthQuestionnaire = async (data: HealthQuestionnaireType, ref: string) => {
     try {
@@ -11,9 +11,9 @@ const postPersonalHealthQuestionnaire = async (data: HealthQuestionnaireType, re
             name: { value: data.name },
             age: { value: data.age },
             height: { value: data.height },
-            heightUnit: { value: data.heightUnit[0] },
+            heightUnit: { value: data.heightUnit },
             weight: { value: data.weight },
-            weightUnit: { value: data.weightUnit[0] },
+            weightUnit: { value: data.weightUnit },
 
             // 2
             migranes: { value: data.migranes[0] },

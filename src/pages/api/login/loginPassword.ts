@@ -25,14 +25,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 orderBy: 'ref desc'
             });
             if (recordArray.length == 0) {
-                res.status(501);
-                return;
+                console.log('recordArray', recordArray);
+                res.status(501).json({ ref: undefined });
             } else if (recordArray.length > 1) {
                 // throw new Error('More than one user found');
                 res.status(200).json({ ref: recordArray[0]['$id'].value as string });
             } else if (recordArray.length == 1) {
                 res.status(200).json({ ref: recordArray[0]['$id'].value as string });
             }
+            return;
         } catch (e) {
             logError(e, req.body.username || null, 'loginPassword');
             res.status(500);

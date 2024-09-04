@@ -13,9 +13,14 @@ const validateNumber = (value: string) => {
         !isNaN(numberValue) && numberValue >= 0 && Number.isInteger(numberValue * 100) && Number((numberValue * 100).toFixed(0)) === numberValue * 100
     );
 };
+const validateRadio = (value: string | null) => value !== null;
 // system
 const ref: z.ZodString = z.string().min(1).max(50);
 const office: z.ZodString = z.string().min(1).max(50);
+
+// common
+const radio: z.ZodEffects<z.ZodNullable<z.ZodString>> = z.string().nullable().refine(validateRadio);
+
 // 1
 const name: z.ZodString = z.string().min(1).max(50);
 const age: z.ZodString = z.string().min(1).max(50);
@@ -92,9 +97,9 @@ export const HealthQuestionnaireSchema = z.object({
     name: name,
     age: age,
     height: height,
-    heightUnit: heightUnit,
+    heightUnit: radio,
     weight: weight,
-    weightUnit: weightUnit,
+    weightUnit: radio,
 
     // 2
     migranes: migranes,
@@ -140,8 +145,6 @@ export const HealthQuestionnaireSchema = z.object({
 export type HealthQuestionnaireType = z.infer<typeof HealthQuestionnaireSchema>;
 
 export const HealthQuestionnaireDefaultValues: Partial<HealthQuestionnaireType> = {
-    heightUnit: [],
-    weightUnit: [],
     migranes: [],
     headInjury: [],
     weakness: [],

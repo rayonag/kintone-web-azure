@@ -2,7 +2,7 @@
 import { useEffect, useState, useCallback } from 'react';
 
 import Link from 'next/link';
-import HealthQuestionnaire from '@/components/health-questionnaire/form/Form';
+import HealthQuestionnaire from '@/features/common/forms/healthQuestionnaire';
 import {
     KintoneUserName,
     KintonePassword,

@@ -1,4 +1,5 @@
 export interface OnlineVolunteerApplication {
+    returnRef: kintone.fieldTypes.Number;
     year: kintone.fieldTypes.SingleLineText;
     applicationStartDate: kintone.fieldTypes.Date;
     applicationEndDate: kintone.fieldTypes.Date;
@@ -9,6 +10,7 @@ export interface OnlineVolunteerApplication {
     commentNationalOffice: kintone.fieldTypes.MultiLineText;
     commentIsraelOffice: kintone.fieldTypes.MultiLineText;
     month: kintone.fieldTypes.DropDown;
+    referenceCount: kintone.fieldTypes.SingleLineText;
     name: kintone.fieldTypes.SingleLineText;
     isFirstTimeOnForm: kintone.fieldTypes.RadioButton;
     status: kintone.fieldTypes.DropDown;
@@ -19,7 +21,6 @@ export interface OnlineVolunteerApplication {
     documentsUSA: kintone.fieldTypes.CheckBox;
     reviewAbout: kintone.fieldTypes.CheckBox;
     reviewFaq: kintone.fieldTypes.CheckBox;
-    returnRef: kintone.fieldTypes.Number;
 }
 export interface SavedOnlineVolunteerApplication extends OnlineVolunteerApplication {
     $id: kintone.fieldTypes.Id;
@@ -32,7 +33,9 @@ export interface SavedOnlineVolunteerApplication extends OnlineVolunteerApplicat
 }
 
 import { KintoneRecordField } from '@kintone/rest-api-client';
+
 export type REST_OnlineVolunteerApplication = {
+    returnRef: KintoneRecordField.Number;
     year: KintoneRecordField.SingleLineText;
     applicationStartDate: KintoneRecordField.Date;
     applicationEndDate: KintoneRecordField.Date;
@@ -43,18 +46,18 @@ export type REST_OnlineVolunteerApplication = {
     commentNationalOffice: KintoneRecordField.MultiLineText;
     commentIsraelOffice: KintoneRecordField.MultiLineText;
     month: KintoneRecordField.DropDown;
+    referenceCount: KintoneRecordField.SingleLineText;
     name: KintoneRecordField.SingleLineText;
     isFirstTimeOnForm: KintoneRecordField.RadioButton;
     status: KintoneRecordField.DropDown;
     isComplete: KintoneRecordField.RadioButton;
+
     formSubmission: KintoneRecordField.CheckBox;
     documents: KintoneRecordField.CheckBox;
     documentsUSA: KintoneRecordField.CheckBox;
     reviewAbout: KintoneRecordField.CheckBox;
     reviewFaq: KintoneRecordField.CheckBox;
-    returnRef: KintoneRecordField.Number;
 };
-
 export type REST_SavedOnlineVolunteerApplication = REST_OnlineVolunteerApplication & {
     $id: KintoneRecordField.Id;
     $revision: KintoneRecordField.Revision;

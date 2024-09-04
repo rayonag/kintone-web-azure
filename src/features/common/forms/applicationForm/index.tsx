@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import Step1 from './views/Step1';
 import { useDashboardUser } from '@/common/context/dashboardUser';
-import { langReducer } from '@/components/health-questionnaire/form/hooks/lang';
+import { langReducer } from '@/features/common/forms/healthQuestionnaire/i18n/lang';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -121,7 +121,8 @@ const ApplicationForm = (props: any) => {
                 return;
             } else {
                 setIsModalOpen(false);
-                return; // delete the record?
+                postTempApplicationForm(null as unknown as ApplicationFormType, dashboardUser.ref || '0', 10); // step 10 to delete progress. TODO: review type
+                return;
             }
         } else if (isResume) {
             const data = props.repo.prefilledFormRecord;
