@@ -1,4 +1,4 @@
-import useUserStore from '@/features/common/portal/store';
+import useUserStore from '@/features/common/store';
 import React, { FC, useEffect } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import SectionTitle from '../../components/SectionTitle';
@@ -34,10 +34,6 @@ const Step1: FC<Step1Props> = ({ register, errors, getValues, t, control }) => {
             initUser: state.initUser
         }))
     );
-    useEffect(() => {
-        console.log('inituser', username);
-        initUser();
-    });
     return (
         <div>
             <section>

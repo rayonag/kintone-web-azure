@@ -1,13 +1,17 @@
 import { FC, useState, ChangeEvent } from 'react';
-import { UseFormRegisterReturn, FieldError, Merge } from 'react-hook-form';
+import { UseFormRegisterReturn, FieldError, Merge, Control, Controller } from 'react-hook-form';
+import { HealthQuestionnaireType } from '../schema';
+import HealthQuestionnaire from '..';
 
 type HealthCheckboxProps = {
     label: string | null;
+    name: any; //keyof HealthQuestionnaireType;
     register: UseFormRegisterReturn;
     error: Merge<FieldError, (FieldError | undefined)[]> | undefined;
     value: string[];
+    control: Control<HealthQuestionnaireType>;
 };
-export const HealthCheckbox: FC<HealthCheckboxProps> = ({ label, register, error, value }) => {
+export const HealthCheckbox: FC<HealthCheckboxProps> = ({ label, name, register, error, value, control }) => {
     const [selectedOption, setSelectedOption] = useState(value?.[0] || '');
     const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
@@ -17,26 +21,44 @@ export const HealthCheckbox: FC<HealthCheckboxProps> = ({ label, register, error
     };
     return (
         <div className="ml-3 my-1 grow md:max-w-sm">
-            <div className="flex justify-start">
-                <input
-                    key="yes"
-                    type="checkbox"
-                    value="Yes"
-                    checked={selectedOption == 'Yes'}
-                    {...register}
-                    onChange={handleCheckboxChange}
-                    className="w-8 h-8 m-1 accent-green-600"
+            <div className="my-1 flex">
+                <Controller
+                    name={name}
+                    control={control}
+                    render={({ field }) => {
+                        return (
+                            <div className="flex">
+                                <label className="flex">
+                                    <input
+                                        name="yes"
+                                        type="checkbox"
+                                        value="Yes"
+                                        checked={field.value?.includes('Yes')}
+                                        onChange={(event) => {
+                                            const newValue = event.target.value;
+                                            field.onChange([newValue]);
+                                        }}
+                                        className="w-8 h-8 m-1 accent-green-600"
+                                    />
+                                </label>
+                                <label className="flex">
+                                    <input
+                                        name="no"
+                                        type="checkbox"
+                                        value="No"
+                                        checked={field.value?.includes('No')}
+                                        onChange={(event) => {
+                                            const newValue = event.target.value;
+                                            field.onChange([newValue]);
+                                        }}
+                                        className="w-8 h-8 m-1 accent-red-600"
+                                    />
+                                </label>
+                            </div>
+                        );
+                    }}
                 />
-                <input
-                    key="no"
-                    type="checkbox"
-                    value="No"
-                    checked={selectedOption == 'No'}
-                    {...register}
-                    onChange={handleCheckboxChange}
-                    className="w-8 h-8 m-1 accent-red-600"
-                />
-                <span className="ml-1 mr-2 text-xl">{label}</span>
+                {label && <div className="font-semibold mb-1">{label}</div>}
             </div>
             <div className="text-red-500 pl-1 py-1 text-xs h-4">{error && error.message}</div>
         </div>

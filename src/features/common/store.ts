@@ -1,9 +1,11 @@
+import getUserApplicationRef from '@/common/getUserApplicationRef';
 import { NationalOffice } from '@/constants/nationalOffices';
 import { create } from 'zustand';
 
 type State = {
     username: string;
     name: string;
+    knownAs: string;
     ref: string;
     applicationRef: string;
     returnRef: string;
@@ -14,7 +16,7 @@ type State = {
 };
 
 type Action = {
-    initUser: () => void;
+    initUser: (username: string, ref: string) => void;
     // updateUsername: (username: State['username']) => void;
     // updateName: (name: State['name']) => void;
     // updateRef: (ref: State['ref']) => void;
@@ -29,6 +31,7 @@ type Action = {
 const useUserStore = create<State & Action>((set, get) => ({
     username: '',
     name: '',
+    knownAs: '',
     ref: '',
     applicationRef: '',
     returnRef: '',
@@ -36,23 +39,31 @@ const useUserStore = create<State & Action>((set, get) => ({
     formSubmission: [],
     nationalOffice: null,
     applicationType: '',
-    initUser: async () => {
+    initUser: async (username, ref) => {
+        if (!username || !ref) return;
         if (typeof window === 'undefined') return;
         if (get().username) return;
-        set({ username: 'Raymond' });
-        // const response = await fetch('/api/user');
-        // const data = await response.json();
-        // set(data);
+        const res = await fetch('/api/fetchUserKintone', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username: username })
+        });
+        const user = await res.json();
+        const userApplicationRef = await getUserApplicationRef({ ref: ref });
+        set({
+            username: username,
+            ref: ref,
+            name: user.name,
+            knownAs: user.knownAs,
+            applicationRef: userApplicationRef || undefined,
+            documents: user.documents,
+            formSubmission: user.formSubmission,
+            nationalOffice: user.office as NationalOffice,
+            applicationType: user.type
+        });
     }
-    // updateUsername: (username) => set({ username }),
-    // updateName: (name) => set({ name }),
-    // updateRef: (ref) => set({ ref }),
-    // updateApplicationRef: (applicationRef) => set({ applicationRef }),
-    // updateReturnRef: (returnRef) => set({ returnRef }),
-    // updateDocuments: (documents) => set({ documents }),
-    // updateFormSubmission: (formSubmission) => set({ formSubmission }),
-    // updateNationalOffice: (nationalOffice) => set({ nationalOffice }),
-    // updateApplicationType: (applicationType) => set({ applicationType
 }));
 
 export default useUserStore;

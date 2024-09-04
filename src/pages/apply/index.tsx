@@ -21,7 +21,7 @@ import logError from '@/common/logError';
 import { useRouter } from 'next/router';
 import RateUs from '@/components/modal/RateUs';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
-import useUserStore from '@/features/common/portal/store';
+import useUserStore from '@/features/common/store';
 import { useShallow } from 'zustand/react/shallow';
 // application steps that matches the kintone app
 export type ApplicationStepsMasterApp =
@@ -123,13 +123,16 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
             <GreenCheckMark height={30} width={30} />
         </div>
     );
-    // const { username, name, initUser } = useUserStore(
-    //     useShallow((state) => ({
-    //         username: state.username,
-    //         name: state.name,
-    //         initUser: state.initUser
-    //     }))
-    // );
+    const { username, knownAs, name, initUser } = useUserStore(
+        useShallow((state) => ({
+            username: state.username,
+            name: state.name,
+            knownAs: state.knownAs,
+            initUser: state.initUser
+        }))
+    );
+    const all = useUserStore();
+    console.log('all', all);
     // console.log('username', username);
     return (
         <Layout>
@@ -138,7 +141,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                     <div className="flex flex-col items-center justify-center">
                         <div>
                             <h1 className="text-xl my-10">
-                                Welcome{currentStep != 'reviewWebsite' && ' back'}, <span>{dashboardUser.name || ''}</span>!
+                                Welcome{currentStep != 'reviewWebsite' && ' back'} <span>{knownAs || name || ''}</span>!
                                 {/* TODO: review welcome message */}
                             </h1>
                         </div>

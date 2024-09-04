@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import { useShallow } from 'zustand/react/shallow';
-import useUserStore from '../../portal/store';
+import useUserStore from '../../store';
 import { ApplicationFormDefaultValues, ApplicationFormFields, ApplicationFormSchema, ApplicationFormType, customErrorMap } from './schema';
 import ProgressBar from '../components/ProgressBar';
 import './i18n/translations/config'; //i18

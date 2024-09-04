@@ -1,4 +1,4 @@
-import useUserStore from '@/features/common/portal/store';
+import useUserStore from '@/features/common/store';
 import React, { FC } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import SectionTitle from '../../components/SectionTitle';

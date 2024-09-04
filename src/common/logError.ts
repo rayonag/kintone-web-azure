@@ -1,6 +1,6 @@
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import { ErrorLogsAPIKey, ErrorLogsAppID, KintonePassword, KintoneUserName } from './env';
-import useUserStore from '@/features/common/portal/store';
+import useUserStore from '@/features/common/store';
 
 const logError = (e: any, records?: any, functionName?: string) => {
     console.log('logError', e);

@@ -10,23 +10,18 @@ import { DashboardUserContext, DashboardUser } from '@/common/context/dashboardU
 import { LoadingContext } from '@/common/context/loading';
 import fetchUserApplicationMaster from '@/common/fetchUserApplicationMaster';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
-import useUserStore from '@/features/common/portal/store';
+import useUserStore from '@/features/common/store';
 import { useShallow } from 'zustand/react/shallow';
 const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
     const router = useRouter();
     const cookies = parseCookies(ctx);
     //
-    const { username, name, initUser } = useUserStore(
-        useShallow((state) => ({
-            username: state.username,
-            name: state.name,
-            initUser: state.initUser
-        }))
-    );
-    // useEffect(() => {
-    //     console.log('inituser', username);
-    //     initUser();
-    // }, []);
+    const username = cookies.auth || undefined;
+    const ref = cookies.ref || undefined;
+    const initUser = useUserStore((state) => state.initUser);
+    useEffect(() => {
+        if (username && ref) initUser(username, ref);
+    }, []);
     //
     const DashboardUserProvider: ({ children }: { children: JSX.Element }) => JSX.Element = ({ children }) => {
         const [dashboardUser, setDashboardUser] = useState<DashboardUser>({

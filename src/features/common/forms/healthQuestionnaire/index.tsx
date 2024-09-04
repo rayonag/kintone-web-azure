@@ -18,7 +18,7 @@ import ThirdPage from './views/Step3';
 import ConfirmationModal from './views/Confirmation';
 
 import './i18n/translations/config'; //i18
-import useUserStore from '@/features/common/portal/store';
+import useUserStore from '@/features/common/store';
 import { useShallow } from 'zustand/react/shallow';
 import healthQuestionnaire_en from './i18n/translations/en.json';
 import Step1 from './views/Step1';
@@ -102,7 +102,7 @@ const HealthQuestionnaire = (props: { repo: any }) => {
     return (
         <form className="flex flex-col px-10 pb-10 text-center">
             {page === 0 && <Step1 register={register} errors={formatError} getValues={getValues} t={t} control={control} />}
-            {page === 1 && <Step2 register={register} errors={formatError} getValues={getValues} t={t} />}
+            {page === 1 && <Step2 register={register} errors={formatError} getValues={getValues} t={t} control={control} />}
             {page === 2 && <Step3 register={register} errors={formatError} t={t} control={control} />}
             <ConfirmationModal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} getValues={getValues} t={t} />
             {page != 2 && (

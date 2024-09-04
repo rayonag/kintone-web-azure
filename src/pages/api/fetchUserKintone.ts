@@ -6,6 +6,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 type Data = {
     ok: boolean;
     name?: any;
+    knownAs?: any;
     ref?: any;
     username?: any;
     documents?: any;
@@ -43,6 +44,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 res.status(200).json({
                     ok: true,
                     name: user['name'].value,
+                    knownAs: user['knownAs'].value,
                     ref: user['ref'].value,
                     username: user['email'].value,
                     documents: user['documents'].value,
