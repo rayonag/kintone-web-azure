@@ -28,7 +28,7 @@ const Step7: FC<Step7Props> = ({ register, errors, getValues, control, t }) => {
                 <div className="font-semibold mt-2 text-black">{t('skillIntroduction')}</div>
 
                 <div className="flex justify-center items-center bg-gray-200 h-40 w-full rounded-lg">
-                    <video src="/images/slider.webm" height={200} width={300} loop autoPlay />
+                    <video src="/images/slider.webm" height={200} width={300} loop autoPlay playsInline />
                 </div>
                 <div className="font-semibold mt-2 text-black">{t('skillSectionA')}</div>
                 <Row>

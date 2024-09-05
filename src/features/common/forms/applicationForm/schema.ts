@@ -135,10 +135,10 @@ const hasVisitedIsraelDates = string_optional;
 const listForeignCountries = string_optional;
 
 // 6
-const churchName = string50;
-const christianExperience = string50;
-const christianJewishUnderstanding = string50;
-const interestIsrael = string50;
+const churchName = string2000;
+const christianExperience = string2000;
+const christianJewishUnderstanding = string2000;
+const interestIsrael = string2000;
 
 // 7
 const skillInventory = z.string();
