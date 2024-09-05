@@ -84,6 +84,8 @@ const convertPrefilledFormRecord = (record: SavedVolunteerApplicationForm, setVa
             employLeavingReason: emp.value.employLeavingReason.value
         }))
     );
+    addFieldIfValid('employProfession', record.employProfession.value);
+    addFieldIfValid('employAccreditation', record.employAccreditation.value);
     addFieldIfValid('hobby', record.hobby.value);
     addFieldIfValid('clubs', record.clubs.value);
     addFieldIfValid(

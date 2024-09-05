@@ -22,6 +22,8 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
     useEffect(() => {
         if (username && ref) initUser(username, ref);
     }, []);
+    const user = useUserStore();
+    console.log('user', user);
     //
     const DashboardUserProvider: ({ children }: { children: JSX.Element }) => JSX.Element = ({ children }) => {
         const [dashboardUser, setDashboardUser] = useState<DashboardUser>({

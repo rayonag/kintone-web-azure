@@ -64,9 +64,9 @@ export const notificationApplicationUpdated = async (res: any, updatedField: Upd
         const office = record['office'].value as EmailNationalOffice;
         const documents = record['documents'].value;
         const this_necessaryDocuments =
-            record['visaType'].value === 'USA'
+            record['office'].value === 'USA'
                 ? necessaryDocumentsUSA
-                : record['visaType'].value === 'Short Term'
+                : record['type'].value === 'Short Term'
                 ? necessaryDocumentsShortTerm
                 : necessaryDocuments;
         if (!office) throw new Error('Invalid office');

@@ -58,6 +58,7 @@ const useUserStore = create<State & Action>((set, get) => ({
             name: user.name,
             knownAs: user.knownAs,
             applicationRef: userApplicationRef || undefined,
+            returnRef: user.returnRef,
             documents: user.documents,
             formSubmission: user.formSubmission,
             nationalOffice: user.office as NationalOffice,

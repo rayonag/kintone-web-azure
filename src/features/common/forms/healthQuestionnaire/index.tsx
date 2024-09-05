@@ -24,6 +24,7 @@ import healthQuestionnaire_en from './i18n/translations/en.json';
 import Step1 from './views/Step1';
 import Step2 from './views/Step2';
 import Step3 from './views/Step3';
+import convertPrefilledFormRecord from './hooks/convertPrefilledFormRecord';
 
 const HealthQuestionnaire = (props: { repo: any }) => {
     const [page, setPage] = useState(0);
@@ -90,13 +91,7 @@ const HealthQuestionnaire = (props: { repo: any }) => {
         if (props.repo.prefilledFormRecord) {
             const data = props.repo.prefilledFormRecord;
             console.log('data', data);
-            Object.keys(data).forEach((key: any) => {
-                if (formFields.includes(key)) {
-                    if (data[key].type === 'DROP_DOWN') setValue(key, [data[key].value]);
-                    //if (data[key].type === 'RADIO_BUTTON') setValue(key, [data[key].value]);
-                    else setValue(key, data[key].value);
-                }
-            });
+            convertPrefilledFormRecord(data, setValue);
         }
     }, [props]);
     return (

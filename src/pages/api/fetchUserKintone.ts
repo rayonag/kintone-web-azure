@@ -7,6 +7,7 @@ type Data = {
     ok: boolean;
     name?: any;
     knownAs?: any;
+    returnRef?: any;
     ref?: any;
     username?: any;
     documents?: any;
@@ -43,10 +44,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
                 res.status(200).json({
                     ok: true,
+                    username: user['email'].value,
+                    ref: user['ref'].value,
                     name: user['name'].value,
                     knownAs: user['knownAs'].value,
-                    ref: user['ref'].value,
-                    username: user['email'].value,
+                    returnRef: user['returnRef'].value,
                     documents: user['documents'].value,
                     formSubmission: user['formSubmission'].value,
                     office: user['office'].value,
