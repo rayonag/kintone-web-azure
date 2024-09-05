@@ -35,13 +35,13 @@ export type EmailNationalOffice = keyof typeof emailNationalOffice;
 export const emailNationalOffice = {
     // add National Office email
     Australia: 'ronaga@bridgesforpeace.com',
-    Canada: 'ronaga@bridgesforpeace.com',
+    Canada: 'bettyw@bfpcan.org',
     Japan: 'ronaga@bridgesforpeace.com',
     'New Zealand': 'ronaga@bridgesforpeace.com',
     'South Africa': 'ronaga@bridgesforpeace.com',
     'South Korea': 'ronaga@bridgesforpeace.com',
     'United Kingdom': 'ronaga@bridgesforpeace.com',
-    USA: 'ronaga@bridgesforpeace.com',
+    USA: 'lschoeman@bfpusa.org',
     Other: 'ronaga@bridgesforpeace.com'
 } as const;
 

@@ -284,10 +284,13 @@ export const getServerSideProps = (async (context) => {
             }
         }
         // documents submission
-        const documents = resp.record['office'].value == 'USA' ? resp.record['documentsUSA'].value : resp.record['documents'].value;
+        // TODO: add USA and ssn
+        //const documents = resp.record['office'].value == 'USA' ? resp.record['documentsUSA'].value : resp.record['documents'].value;
+        const documents = resp.record['documents'].value;
         // required documents length
         const documentsLength = (() => {
-            if (resp.record['office'].value == 'USA') return 5; // discuss if need ssn
+            // TODO: USA and ssn
+            //if (resp.record['office'].value == 'USA') return 5; // discuss if need ssn
             if (resp.record['type'].value == 'Short Term') return 4;
             else return 5;
         })();
