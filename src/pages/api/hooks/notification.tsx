@@ -63,11 +63,17 @@ export const notificationApplicationUpdated = async (res: any, updatedField: Upd
         const name = record['name'].value;
         const office = record['office'].value as EmailNationalOffice;
         const documents = record['documents'].value;
+        const this_necessaryDocuments =
+            record['visaType'].value === 'USA'
+                ? necessaryDocumentsUSA
+                : record['visaType'].value === 'Short Term'
+                ? necessaryDocumentsShortTerm
+                : necessaryDocuments;
         if (!office) throw new Error('Invalid office');
         const to = emailNationalOffice[office] == undefined ? 'intl.personnel@bridgesforpeace.com' : emailNationalOffice[office];
         const mailTitle =
             submitType === 'documentSubmission'
-                ? `[Online Application] Document submitted by ${name} (${documents.length}/${Object.keys(necessaryDocuments).length})`
+                ? `[Online Application] Document submitted by ${name} (${documents.length}/${Object.keys(this_necessaryDocuments).length})`
                 : submitType === 'applicationSubmission'
                 ? `[Online Application] New application submitted by ${name}`
                 : submitType === 'healthQuestionnaireSubmission'
