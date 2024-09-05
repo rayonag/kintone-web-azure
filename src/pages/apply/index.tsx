@@ -285,7 +285,12 @@ export const getServerSideProps = (async (context) => {
         }
         // documents submission
         const documents = resp.record['office'].value == 'USA' ? resp.record['documentsUSA'].value : resp.record['documents'].value;
-        const documentsLength = resp.record['office'].value == 'USA' ? 6 : 5; // required documents length
+        // required documents length
+        const documentsLength = (() => {
+            if (resp.record['office'].value == 'USA') return 5; // discuss if need ssn
+            if (resp.record['type'].value == 'Short Term') return 4;
+            else return 5;
+        })();
         const isAllDocumentsSubmitted = documents.length == documentsLength;
         if (isAllDocumentsSubmitted) {
             // update status
