@@ -78,7 +78,6 @@ const convertPrefilledFormRecord = (record: SavedVolunteerApplicationForm, setVa
         record.employTable.value.map((emp: any) => ({
             employName: emp.value.employName.value,
             employDate: emp.value.employDate.value,
-            employPhone: emp.value.employPhone.value,
             employDuties: emp.value.employDuties.value,
             employAddress: emp.value.employAddress.value,
             employLeavingReason: emp.value.employLeavingReason.value

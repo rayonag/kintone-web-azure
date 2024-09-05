@@ -105,7 +105,6 @@ const postTempApplicationForm = async (data: ApplicationFormType, ref: string | 
                                 value: {
                                     employName: { value: emp.employName },
                                     employDate: { value: emp.employDate },
-                                    employPhone: { value: emp.employPhone },
                                     employDuties: { value: emp.employDuties },
                                     employAddress: { value: emp.employAddress },
                                     employLeavingReason: { value: emp.employLeavingReason }

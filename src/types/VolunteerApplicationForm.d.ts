@@ -166,7 +166,6 @@ export interface VolunteerApplicationForm {
             id: string;
             value: {
                 employName: kintone.fieldTypes.SingleLineText;
-                employPhone: kintone.fieldTypes.SingleLineText;
                 employDate: kintone.fieldTypes.Date;
                 employDuties: kintone.fieldTypes.SingleLineText;
                 employAddress: kintone.fieldTypes.SingleLineText;
@@ -378,7 +377,6 @@ export type REST_VolunteerApplicationForm = {
             id: string;
             value: {
                 employName: KintoneRecordField.SingleLineText;
-                employPhone: KintoneRecordField.SingleLineText;
                 employDate: KintoneRecordField.Date;
                 employDuties: KintoneRecordField.SingleLineText;
                 employAddress: KintoneRecordField.SingleLineText;

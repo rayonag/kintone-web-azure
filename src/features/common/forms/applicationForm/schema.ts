@@ -111,7 +111,6 @@ const employTable = z.array(
         employDate: string_optional,
         employName: string_optional,
         employAddress: string_optional,
-        employPhone: string_optional,
         employDuties: string_optional,
         employLeavingReason: string_optional
     })

@@ -78,7 +78,6 @@ const postApplicationForm = async (data: ApplicationFormType, ref: string | unde
                     value: {
                         employName: { value: emp.employName },
                         employDate: { value: emp.employDate },
-                        employPhone: { value: '' },
                         employDuties: { value: emp.employDuties },
                         employAddress: { value: emp.employAddress },
                         employLeavingReason: { value: emp.employLeavingReason }
