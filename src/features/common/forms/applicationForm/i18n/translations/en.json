@@ -19,7 +19,7 @@
     "address": "Address",
     "street": "Street/PO Box",
     "city": "City",
-    "state": "State/Provice",
+    "state": "State/Province",
     "zip": "Zip/Postal Code",
     "country": "Country",
     "phone": "Phone",
@@ -30,7 +30,7 @@
     "passportIssued": "Issued at",
     "age": "Age",
     "birthday": "Date of Birth",
-    "ssn": "SSN",
+    "ssn": "Social Security Number",
     "sex": {
         "title": "Sex",
         "options": {
