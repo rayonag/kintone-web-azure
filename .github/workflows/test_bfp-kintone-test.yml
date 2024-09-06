@@ -69,5 +69,5 @@ jobs:
               with:
                   app-name: 'bfp-kintone-test'
                   slot-name: 'Production'
-                  publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_3CAF07EDB21B4692B96A3FF8863613EA }}
+                  publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_TEST }}
                   package: .
