@@ -12,7 +12,7 @@ const postApplicationForm = async (data: ApplicationFormType, ref: string | unde
     try {
         const record: Partial<any> = {
             ref: { value: parseInt(data.ref) },
-            office: { value: data.office },
+            office: { value: data.office.office },
             firstName: { value: data.firstName },
             middleName: { value: data.middleName },
             lastName: { value: data.lastName },
@@ -28,7 +28,7 @@ const postApplicationForm = async (data: ApplicationFormType, ref: string | unde
             passportIssued: { value: data.passportIssued },
             age: { value: parseInt(data.age) },
             birthday: { value: DateTime.fromFormat(data.birthday, 'dd/MM/yyyy').toISODate() },
-            ssnNumber: { value: data.ssnNumber },
+            ssnNumber: { value: data.office.ssnNumber },
             sex: { value: data.sex },
             maritalStatus: { value: data.maritalStatus },
             childrenNames: { value: data.childrenNames },

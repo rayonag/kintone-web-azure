@@ -52,7 +52,7 @@ const FirstTimeTips: FC<FirstTimeTipsProps> = ({ type, handleContinueOnFirstTime
             {page != 0 && (
                 <div ref={scrollRef} className="overflow-y-scroll h-full min-w-80 w-full p-[5%] md:px-[20%]">
                     {page == 1 && <DoctrinalStatement />}
-                    {page == 2 && <TermsAndConditions />}
+                    {page == 2 && <TermsAndConditions type={type} />}
                     <div className="flex justify-center flex-col">
                         {page == 1 && (
                             <>
@@ -96,17 +96,18 @@ const FirstTimeTips: FC<FirstTimeTipsProps> = ({ type, handleContinueOnFirstTime
 
 export default FirstTimeTips;
 
-const TermsAndConditions = () => {
+const TermsAndConditions = (props: { type: string | null }) => {
     return (
         <div className="p-4">
             <section className="mb-5">
-                <div className="text-2xl m-5 font-serif italic text-center">BRIDGES FOR PEACEーOUR VISION</div>
-                <div className="mb-3 text-2xl">MISSION STATEMENT</div>
+                <div className="text-2xl md:text-3xl m-1 font-serif text-center">OUR VISION</div>
+                <div className="text-2xl m-5 font-serif italic text-center">MISSION STATEMENT</div>
+                <div className="mb-3 text-2xl"></div>
                 <div className="m-3 mb-8 text-justify">
                     Bridges For Peace (BFP): Christians supporting Israel and building relationships between Christians and Jews in Israel and around
                     the world.
                 </div>
-                <div className="mb-3 text-2xl">EXPANDED VISION</div>
+                <div className="text-2xl m-5 font-serif italic text-center">EXPANDED VISION</div>
                 <div className="m-3 text-justify">
                     It is our desire to see Christians and Jews working side by side for better understanding and a more secure Israel.
                 </div>
@@ -121,7 +122,7 @@ const TermsAndConditions = () => {
                 </div>
             </section>
             <section className="mb-5 text-justify">
-                <div className="text-2xl m-5 font-serif italic text-center">WE ARE COMMITTED TO THE FOLLOWING GOALS:</div>
+                <div className="mb-3 text-left text-xl md:text-2xl">WE ARE COMMITTED TO THE FOLLOWING GOALS:</div>
                 <div className="mb-3">
                     1. To encourage meaningful and supportive relationships between Christians and Jews in Israel and around the world.
                 </div>
@@ -139,7 +140,7 @@ const TermsAndConditions = () => {
                     5. To counter anti-Semitism worldwide and support Israel’s divine, God-given right to exist in her Godgiven land.
                 </div>
                 <div className="text-2xl m-5 font-serif italic text-center">BASIC VOLUNTEER REQUIREMENTS</div>
-                <div className="mb-3 text-2xl">WHO IS A BFP VOLUNTEER?</div>
+                <div className="mb-3 text-left text-xl md:text-2xl">WHO IS A BFP VOLUNTEER?</div>
                 <div className="m-3">
                     The prophets of Israel knew that one day Gentile people would come to the land of Israel and help in its restoration. The prophet
                     Isaiah mentions these Gentiles on several occasions. He refers to them as “servants” in Isaiah 56:6. They are called “servants and
@@ -157,7 +158,7 @@ const TermsAndConditions = () => {
                     demanding and requires much patience and love. But in the end, it is also greatly rewarding.
                 </div>
             </section>
-            <section className="mb-5 text-justify">
+            <section className="mb-10 text-justify">
                 <div className="text-2xl m-5 font-serif italic text-center">A VOLUNTEER WITH BRIDGES FOR PEACE IS REQUIRED TO:</div>
                 <div className="m-3">1. Have a servant’s heart. </div>
                 <div className="m-3">2. Be a committed Christian.</div>
@@ -197,11 +198,13 @@ const TermsAndConditions = () => {
                     Several factors affect the processing time, including length of service time requested, availability of positions and when
                     references are received.
                 </div>
-                <div className="mb-3">
-                    <span className="font-bold">Please note:</span> All applicants who are applying to serve for over three months are required to
-                    submit a Criminal Record Check/Police Clearance Certificate (contact BFP National Office for assistance). The Criminal Record
-                    Check must be done at the Federal Level.
-                </div>
+                {props.type == 'Short Term' || (
+                    <div className="mb-3">
+                        <span className="font-bold">Please note:</span> All applicants who are applying to serve for over three months are required to
+                        submit a Criminal Record Check/Police Clearance Certificate (contact BFP National Office for assistance). The Criminal Record
+                        Check must be done at the Federal Level.
+                    </div>
+                )}
             </section>
         </div>
     );
@@ -216,11 +219,11 @@ const DoctrinalStatement = () => {
             <div className="text-2xl md:text-3xl m-1 font-serif text-center">BRIDGES FOR PEACE</div>
             <div className="text-xl md:text-2xl m-5 font-serif italic text-center">DOCTRINAL STATEMENT</div>
             <div className={statementTitleStyle}>THE BIBLE</div>
-            <ul className="m-3 mb-8">
+            <ul className="m-3 mb-8 list-disc">
                 <li>The Bible is the inspired Word of God {italicVerse('(2 Tim. 3:16)')}</li>
             </ul>
             <div className={statementTitleStyle}>GOD</div>
-            <ul className="m-3 mb-8">
+            <ul className="m-3 mb-8 list-disc">
                 <li className="mb-2">God is one {italicVerse('(Deut. 6:4; 1 Cor. 8:6)')}</li>
                 <li className="mb-2">The Father, Son and Holy Spirit exist in unity {italicVerse('(Matt. 28:19)')}</li>
                 <li className="mb-2">Jesus the Messiah is God’s only begotten Son {italicVerse('(Matt. 16:16; John 3:16)')}</li>
@@ -228,7 +231,7 @@ const DoctrinalStatement = () => {
                 <li className="mb-2">Jesus the Messiah is eternal and fully God and fully man {italicVerse('(John 8:58; John 14:9; John 10:30)')}</li>
             </ul>
             <div className={statementTitleStyle}>MAN</div>
-            <ul className="m-3 mb-8">
+            <ul className="m-3 mb-8 list-disc">
                 <li className="mb-2">All men have sinned and come short of the glory of God {italicVerse('(Rom. 3:23)')}</li>
                 <li className="mb-2">
                     The wages of sin is death, but the gift of God is eternal life through Jesus the Messiah our Lord{' '}
@@ -236,7 +239,7 @@ const DoctrinalStatement = () => {
                 </li>
             </ul>
             <div className={statementTitleStyle}>SALVATION</div>
-            <ul className="m-3 mb-8">
+            <ul className="m-3 mb-8 list-disc">
                 <li className="mb-2">Salvation is by grace through faith as a gift of God {italicVerse('(Eph. 2:8)')}</li>
                 <li className="mb-2">
                     Repentance and baptism in the name of the Father, Son and Holy Spirit are outward signs of an inward faith{' '}
@@ -245,23 +248,28 @@ const DoctrinalStatement = () => {
                 <li className="mb-2">Faith is exhibited by a consecrated and holy life; faith without works is dead {italicVerse('(James 2:18)')}</li>
             </ul>
             <div className={statementTitleStyle}>ISRAEL</div>
-            <ul className="m-3 mb-8">
-                <li>The nation of Israel is the apple of God’s eye {italicVerse('(Zech. 2:8)')}</li>
-                <li>God will not break His covenant with Israel {italicVerse('(Jer. 31:35–37)')}</li>
-                <li>God is restoring the Jewish people to Israel, their Promised Land {italicVerse('(Jer. 23:7–8)')}</li>
-                <li>Believers from Gentile backgrounds have a debt to the Jewish people {italicVerse('(Rom. 11)')}</li>
-                <li>God blesses those who bless Israel and curses those who curse Israel {italicVerse('(Gen. 12:3; Isa. 60:12)')}</li>
-                <li>Blessing is promised to those who pray for Jerusalem’s peace {italicVerse('(Ps. 122:6)')}</li>
+            <ul className="m-3 mb-8 list-disc">
+                <li className="mb-2">The nation of Israel is the apple of God’s eye {italicVerse('(Zech. 2:8)')}</li>
+                <li className="mb-2">God will not break His covenant with Israel {italicVerse('(Jer. 31:35–37)')}</li>
+                <li className="mb-2">God is restoring the Jewish people to Israel, their Promised Land {italicVerse('(Jer. 23:7–8)')}</li>
+                <li className="mb-2">Believers from Gentile backgrounds have a debt to the Jewish people {italicVerse('(Rom. 11)')}</li>
+                <li className="mb-2">
+                    God blesses those who bless Israel and curses those who curse Israel {italicVerse('(Gen. 12:3; Isa. 60:12)')}
+                </li>
+                <li className="mb-2">Blessing is promised to those who pray for Jerusalem’s peace {italicVerse('(Ps. 122:6)')}</li>
             </ul>
             <div className={statementTitleStyle}>THE FUTURE</div>
-            <ul className="m-3 mb-8">
-                <li>The bodily return of Jesus the Messiah is imminent {italicVerse('(Acts. 1:11)')}</li>
-                <li>There will be a literal resurrection of the dead {italicVerse('(John 5:28)')}</li>
-                <li>Those in the Messiah shall be immortalized {italicVerse('(1 Cor. 15:53–54)')}</li>
-                <li>The wicked shall be placed in hell for eternity {italicVerse('(Rev. 20:10)')}</li>
-                <li>Israel will be restored under the Kingship of Messiah Jesus {italicVerse('(Luke 1:32)')}</li>
-                <li>All believers shall be joint heirs with the Messiah {italicVerse('(Rom. 8:17)')}</li>
+            <ul className="m-3 mb-8 list-disc">
+                <li className="mb-2">The bodily return of Jesus the Messiah is imminent {italicVerse('(Acts. 1:11)')}</li>
+                <li className="mb-2">There will be a literal resurrection of the dead {italicVerse('(John 5:28)')}</li>
+                <li className="mb-2">Those in the Messiah shall be immortalized {italicVerse('(1 Cor. 15:53–54)')}</li>
+                <li className="mb-2">The wicked shall be placed in hell for eternity {italicVerse('(Rev. 20:10)')}</li>
+                <li className="mb-2">Israel will be restored under the Kingship of Messiah Jesus {italicVerse('(Luke 1:32)')}</li>
+                <li className="mb-2">All believers shall be joint heirs with the Messiah {italicVerse('(Rom. 8:17)')}</li>
             </ul>
+            <a href="/files/BFP-Doctrinal-Statement.pdf" download="BFP-Doctrinal-Statement.pdf" className="m-3 underline">
+                Download BFP Doctrinal Statement
+            </a>
             <div className="text-xl md:text-2xl m-5 font-serif italic text-center">POSITION ON EVANGELISM</div>
             <div className="m-3 mb-8 text-justify">
                 <div className="mb-3">
@@ -308,11 +316,6 @@ const DoctrinalStatement = () => {
                     opportunity to assess the reputation of the various congregations in the eyes of the Jewish majority and the senior leadership
                     team determines that the image of Bridges for Peace will not suffer.
                 </div>
-            </div>
-            <div className="flex justify-center">
-                <a href="/files/BFP-Doctrinal-Statement.pdf" download="BFP-Doctrinal-Statement.pdf" className="underline">
-                    Download BFP Doctrinal Statement
-                </a>
             </div>
         </div>
     );

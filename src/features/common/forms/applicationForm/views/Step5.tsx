@@ -24,7 +24,7 @@ const Step5: FC<Step5Props> = ({ register, errors, getValues, t, control }) => {
         <div>
             <section>
                 <SectionTitle title={t('sectionTitle.5')} />
-                <div className="font-semibold mt-2 text-black">{t('educationTable.title')}</div>
+                <div className="font-bold mt-2 text-xl text-black text-center">{t('educationTable.title')}</div>
                 <Row>
                     {/* TODO: come back to table 
                         <EducationTable
@@ -37,7 +37,7 @@ const Step5: FC<Step5Props> = ({ register, errors, getValues, t, control }) => {
                     /> */}
 
                     <div className="font-semibold mt-2 text-black">{t('educationTable.description')}</div>
-                    <div className="font-semibold mt-2">
+                    <div className="font-semibold mt-2 text-[1rem] md:text-lg overflow-x-scroll w-full">
                         <table>
                             <thead>
                                 <tr>
@@ -54,12 +54,22 @@ const Step5: FC<Step5Props> = ({ register, errors, getValues, t, control }) => {
                                                 {...register(`educationTable.${index}.educationSchoolName`)}
                                                 className="w-full h-[2rem] p-1 outline-none"
                                             />
+                                            {errors.educationTable?.[index]?.educationSchoolName && (
+                                                <div className="text-red-500 pl-1 py-1 text-xs h-4">
+                                                    {errors.educationTable?.[index]?.educationSchoolName.message}
+                                                </div>
+                                            )}
                                         </td>
                                         <td className="border border-collapse text-black">
                                             <input
                                                 {...register(`educationTable.${index}.educationDegree`)}
                                                 className="w-full h-[2rem] p-1 outline-none"
                                             />
+                                            {errors.educationTable?.[index]?.educationDegree && (
+                                                <div className="text-red-500 pl-1 py-1 text-xs h-4">
+                                                    {errors.educationTable?.[index]?.educationDegree.message}
+                                                </div>
+                                            )}
                                         </td>
                                         <td className="border border-collapse text-black">
                                             <ReactInputMask
@@ -69,6 +79,11 @@ const Step5: FC<Step5Props> = ({ register, errors, getValues, t, control }) => {
                                                 placeholder="dd/mm/yyyy"
                                                 className="w-32 h-[2rem] p-1 outline-none"
                                             />
+                                            {errors.educationTable?.[index]?.educationDate && (
+                                                <div className="text-red-500 pl-1 py-1 text-xs h-4">
+                                                    {errors.educationTable?.[index]?.educationDate.message}
+                                                </div>
+                                            )}
                                         </td>
                                     </tr>
                                 ))}
@@ -77,6 +92,8 @@ const Step5: FC<Step5Props> = ({ register, errors, getValues, t, control }) => {
                     </div>
                 </Row>
                 <Row>
+                    {/* TODO: review hard coded */}
+                    <div className="font-bold mt-2 text-xl text-black text-center">Employment History:</div>
                     <Input
                         label={t('employProfession')}
                         register={register('employProfession')}
@@ -98,7 +115,7 @@ const Step5: FC<Step5Props> = ({ register, errors, getValues, t, control }) => {
                         error={errors.employHistory || undefined}
                     /> */}
                     <div className="font-semibold mt-2 text-black">{t('employTable.title')}</div>
-                    <div className="font-semibold mt-2 mb-2">
+                    <div className="font-semibold mt-2 mb-2 text-[1rem] md:text-lg overflow-x-scroll w-full">
                         <table>
                             <thead>
                                 <tr>
@@ -170,7 +187,7 @@ const Step5: FC<Step5Props> = ({ register, errors, getValues, t, control }) => {
                         error={errors.educationTable || undefined}
                     /> */}
                     <div className="font-semibold mt-2 text-black">{t('serviceTable.title')}</div>
-                    <div className="font-semibold mt-2">
+                    <div className="font-semibold mt-2 text-[1rem] md:text-lg overflow-x-scroll w-full">
                         <table>
                             <thead>
                                 <tr>

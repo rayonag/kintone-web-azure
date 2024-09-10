@@ -5,7 +5,8 @@ const validateCheckbox = (val: string[]) => {
     return val.length > 0;
 };
 const validateRadio = (value: string | null) => value !== null;
-const validateDate = (value: string) => {
+const validateDate = (value: string | undefined) => {
+    if (!value) return true;
     if (!DateTime.fromFormat(value, 'dd/MM/yyyy').isValid) return false;
     else if (DateTime.fromFormat(value, 'dd/MM/yyyy') >= DateTime.now().plus({ years: 100 })) return false;
     else if (DateTime.fromFormat(value, 'dd/MM/yyyy') <= DateTime.now().minus({ years: 100 })) return false;
@@ -23,16 +24,37 @@ const validateNumber = (value: string) => {
         !isNaN(numberValue) && numberValue >= 0 && Number.isInteger(numberValue * 100) && Number((numberValue * 100).toFixed(0)) === numberValue * 100
     );
 };
+const validateSSN = (value: string | undefined, ctx: any, hi: any, s: any) => {
+    debugger;
+    if (ctx.parent['office'] === 'USA' && !value) {
+        ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: 'SSN is required if office is in the USA'
+        });
+    }
+};
 // system
 const ref: z.ZodString = z.string().min(1).max(50);
-const office: z.ZodString = z.string().min(1).max(50);
+const nationalOffice = z.discriminatedUnion('office', [
+    // 1 ssnNumber is required if office is USA
+    z.object({
+        office: z.literal('USA'),
+        ssnNumber: z.string().min(1).max(50)
+    }),
+    z.object({
+        office: z.enum(['Australia', 'Canada', 'Japan', 'New Zealand', 'South Africa', 'South Korea', 'United Kingdom', 'Other']),
+        ssnNumber: z.string().optional()
+    })
+]);
 
 // common
 const yesNo: z.ZodEffects<z.ZodNullable<z.ZodString>> = z.string().nullable().refine(validateRadio, error_required);
 const date: z.ZodEffects<z.ZodString> = z.string().min(1).max(50).refine(validateDate, error_invalidDate);
+const date_optional: z.ZodEffects<z.ZodOptional<z.ZodString>> = z.string().optional().refine(validateDate, error_invalidDate);
 const string50: z.ZodString = z.string().min(1).max(50);
 const string300: z.ZodString = z.string().min(1).max(300);
 const string2000: z.ZodString = z.string().min(1).max(2000);
+const string4000: z.ZodString = z.string().min(1).max(4000);
 const string_optional: z.ZodOptional<z.ZodString> = z.string().optional();
 
 // 1
@@ -51,7 +73,7 @@ const passportNumber = string50;
 const passportIssued = string50;
 const age = string50;
 const birthday = string50;
-const ssnNumber = string_optional;
+const ssnNumber = string50;
 const sex: z.ZodEffects<z.ZodNullable<z.ZodString>> = z.string().nullable().refine(validateRadio, error_required);
 const maritalStatus = string50;
 const spouseFullName = string_optional;
@@ -90,10 +112,6 @@ const areaInterested = z.array(z.string()).refine(
     { message: 'You must select at least one' }
 );
 const otherAreaInterested = string_optional;
-const minAvailability = string50;
-const maxAvailability = string50;
-const preferredStartDate = string_optional;
-const preferredStartDate2 = string_optional;
 const ifNoPosition = yesNo;
 
 // 5
@@ -101,7 +119,7 @@ const educationTable = z.array(
     z.object({
         educationSchoolName: string_optional,
         educationDegree: string_optional,
-        educationDate: string_optional
+        educationDate: date_optional
     })
 );
 const employProfession = string_optional;
@@ -135,10 +153,10 @@ const hasVisitedIsraelDates = string_optional;
 const listForeignCountries = string_optional;
 
 // 6
-const churchName = string2000;
-const christianExperience = string2000;
-const christianJewishUnderstanding = string2000;
-const interestIsrael = string2000;
+const churchName = string4000;
+const christianExperience = string4000;
+const christianJewishUnderstanding = string4000;
+const interestIsrael = string4000;
 
 // 7
 const skillInventory = z.string();
@@ -190,7 +208,7 @@ export const customErrorMap =
 export const ApplicationFormSchema = z.object({
     // system
     ref: ref,
-    office: office,
+    office: nationalOffice,
 
     // 1
     firstName: firstName,
@@ -207,7 +225,7 @@ export const ApplicationFormSchema = z.object({
     passportExpiration: date,
     passportIssued: passportIssued,
     age: age,
-    birthday: birthday,
+    birthday: date,
     ssnNumber: ssnNumber,
     sex: sex,
     maritalStatus: maritalStatus,
@@ -243,10 +261,10 @@ export const ApplicationFormSchema = z.object({
     describeMotivation: describeMotivation,
     areaInterested: areaInterested,
     otherAreaInterested: otherAreaInterested,
-    minAvailability: minAvailability,
-    maxAvailability: maxAvailability,
-    preferredStartDate: preferredStartDate,
-    preferredStartDate2: preferredStartDate2,
+    minAvailability: string_optional,
+    maxAvailability: string_optional,
+    preferredStartDate: date_optional,
+    preferredStartDate2: date_optional,
     ifNoPosition: ifNoPosition,
 
     // 5
@@ -426,6 +444,7 @@ export const ApplicationFormFields = [
     ['ref', 'office'],
     // Step 1: Personal Information
     [
+        'office',
         'firstName',
         'middleName',
         'lastName',
@@ -441,7 +460,7 @@ export const ApplicationFormFields = [
         'passportIssued',
         'age',
         'birthday',
-        'ssnNumber',
+        //'ssnNumber',
         'sex',
         'maritalStatus',
         'spouseFullName',

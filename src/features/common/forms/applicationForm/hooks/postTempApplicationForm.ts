@@ -14,7 +14,7 @@ const postTempApplicationForm = async (data: ApplicationFormType, ref: string | 
                     return {
                         currentStep: { value: step },
                         ref: { value: parseInt(data.ref) },
-                        office: { value: data.office },
+                        office: { value: data.office.office },
                         firstName: { value: data.firstName },
                         middleName: { value: data.middleName },
                         lastName: { value: data.lastName },
@@ -30,7 +30,7 @@ const postTempApplicationForm = async (data: ApplicationFormType, ref: string | 
                         passportIssued: { value: data.passportIssued },
                         age: { value: parseInt(data.age) },
                         birthday: { value: convertDate(data.birthday) },
-                        ssnNumber: { value: data.ssnNumber },
+                        ssnNumber: { value: data.office.ssnNumber },
                         sex: { value: data.sex },
                         maritalStatus: { value: data.maritalStatus },
                         spouseFullName: { value: data.spouseFullName },

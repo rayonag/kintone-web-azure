@@ -4,19 +4,22 @@ import { DateTime } from 'luxon';
 
 const convertPrefilledFormRecord = (record: SavedVolunteerApplicationForm, setValue: any): Partial<ApplicationFormType> => {
     const convertedForm: Partial<ApplicationFormType> = {};
-
-    const addFieldIfValid = (key: keyof ApplicationFormType, value: any) => {
+    // type for office.office
+    const addFieldIfValid = (key: keyof ApplicationFormType | any, value: any) => {
         if (value !== undefined && value !== null && value !== '') {
             setValue(key, value);
         }
     };
 
     const convertDate = (isoDate: string) => {
+        if (!isoDate) {
+            return '';
+        }
         return DateTime.fromISO(isoDate).toFormat('dd/MM/yyyy');
     };
 
     addFieldIfValid('ref', record.ref.value);
-    addFieldIfValid('office', record.office.value);
+    addFieldIfValid('office.office', record.office.value);
     addFieldIfValid('firstName', record.firstName.value);
     addFieldIfValid('middleName', record.middleName.value);
     addFieldIfValid('lastName', record.lastName.value);
@@ -32,7 +35,7 @@ const convertPrefilledFormRecord = (record: SavedVolunteerApplicationForm, setVa
     addFieldIfValid('passportIssued', record.passportIssued.value);
     addFieldIfValid('age', record.age.value);
     addFieldIfValid('birthday', convertDate(record.birthday.value));
-    addFieldIfValid('ssnNumber', record.ssnNumber.value);
+    addFieldIfValid('office.ssnNumber', record.ssnNumber.value);
     addFieldIfValid('sex', record.sex.value);
     addFieldIfValid('maritalStatus', record.maritalStatus.value);
     addFieldIfValid('spouseFullName', record.spouseFullName.value);

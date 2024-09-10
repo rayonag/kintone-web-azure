@@ -7,11 +7,12 @@ type InputProps = {
     placeholder?: string;
     error: FieldError | undefined;
     optional?: boolean;
+    theme?: string;
 };
-const Input: FC<InputProps> = ({ label, register, placeholder, error, optional }) => {
+const Input: FC<InputProps> = ({ label, register, placeholder, error, optional, theme }) => {
     return (
         <label className="flex flex-col my-2 w-40 me-5 grow md:max-w-sm">
-            <div className="font-semibold mb-1 text-black">
+            <div className={`${theme == 'dark' ? '' : 'text-black'} font-semibold mb-1 text-black`}>
                 {label}
                 {optional && <span className="text-gray-500 text-sm"> (optional)</span>}
             </div>

@@ -49,16 +49,11 @@ const Step4: FC<Step4Props> = ({ register, errors, getValues, t, control }) => (
             />
         </Row>
         <Row>
-            <Input
-                label={t('minAvailability')}
-                register={register('minAvailability')}
-                placeholder={'1 week, 30 days, etc'}
-                error={errors.minAvailability || undefined}
-            />
+            <Input label={t('minAvailability')} register={register('minAvailability')} placeholder={''} error={errors.minAvailability || undefined} />
             <Input
                 label={t('maxAvailability')}
                 register={register('maxAvailability')}
-                placeholder={'3 months, 6 months, etc'}
+                placeholder={'up to 3 months'}
                 error={errors.maxAvailability || undefined}
             />
         </Row>

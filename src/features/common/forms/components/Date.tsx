@@ -2,11 +2,18 @@ import { FC } from 'react';
 import { UseFormRegisterReturn, FieldError } from 'react-hook-form';
 import ReactInputMask from 'react-input-mask';
 
-type DateProps = { label: string | null; register: UseFormRegisterReturn; placeholder?: string; error: FieldError | undefined; optional?: boolean };
-const Date: FC<DateProps> = ({ label, register, placeholder, error, optional }) => {
+type DateProps = {
+    label: string | null;
+    register: UseFormRegisterReturn;
+    placeholder?: string;
+    error: FieldError | undefined;
+    optional?: boolean;
+    theme?: string;
+};
+const Date: FC<DateProps> = ({ label, register, placeholder, error, optional, theme }) => {
     return (
         <label className="flex flex-col my-2 w-40 me-5 grow md:max-w-sm">
-            <div className="font-semibold mb-1 text-black">
+            <div className={`${theme == 'dark' ? '' : 'text-black'} font-semibold mb-1`}>
                 {label}
                 {optional && <span className="text-gray-500 text-sm"> (optional)</span>}
             </div>

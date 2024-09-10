@@ -73,11 +73,13 @@ const ApplicationForm = (props: any) => {
 
     const validate = async () => {
         const values = getValues();
+        console.log('values', values);
         const isValid = await trigger(ApplicationFormFields[step] as any); // TODO: review type
         if (isValid) return true;
         else {
             const firstErrorField = Object.keys(formatError)[0];
             const errorElement = document.querySelector(`[name="${firstErrorField}"]`);
+            console.log('errorElement', firstErrorField);
             if (errorElement) {
                 errorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
@@ -87,7 +89,7 @@ const ApplicationForm = (props: any) => {
 
     useEffect(() => {
         if (dashboardUser.ref) setValue('ref', dashboardUser.ref);
-        if (dashboardUser.office) setValue('office', dashboardUser.office);
+        if (dashboardUser.office) setValue('office.office', dashboardUser.office);
     }, [dashboardUser]);
 
     useEffect(() => {
@@ -124,6 +126,7 @@ const ApplicationForm = (props: any) => {
         } else if (isResume) {
             const data = props.repo.prefilledFormRecord;
             convertPrefilledFormRecord(data, setValue);
+            debugger;
             setStep(parseInt(data['currentStep'].value) || 1);
             setIsModalOpen(false);
         } else {

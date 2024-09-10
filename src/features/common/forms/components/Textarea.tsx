@@ -7,11 +7,12 @@ type TextareaProps = {
     placeholder?: string | null;
     error: FieldError | undefined;
     optional?: boolean;
+    theme?: string;
 };
-const Textarea: FC<TextareaProps> = ({ label, register, placeholder, error, optional }) => {
+const Textarea: FC<TextareaProps> = ({ label, register, placeholder, error, optional, theme }) => {
     return (
         <label className="flex flex-col justify-center my-2 w-40 me-5 grow">
-            <div className="font-semibold mb-1 text-black">{label}</div>
+            <div className={`${theme == 'dark' ? '' : 'text-black'} font-semibold mb-1`}>{label}</div>
             <textarea
                 {...register}
                 className={

@@ -5,10 +5,11 @@ type VerifyProps = {
     label: string | null;
     register: UseFormRegisterReturn;
     error: Merge<FieldError, (FieldError | undefined)[]> | undefined;
+    theme?: string;
 };
-const Verify: FC<VerifyProps> = ({ label, register, error }) => {
+const Verify: FC<VerifyProps> = ({ label, register, error, theme }) => {
     return (
-        <div className="my-1 me-5 text-black">
+        <div className={`${theme == 'dark' ? '' : 'text-black'} my-1 me-5`}>
             <label className="my-1">
                 <input type="checkbox" {...register} className="mt-2 mr-2 w-6 h-6" />
                 <span className="ml-1 mr-2 text-xl">{label}</span>

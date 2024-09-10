@@ -7,13 +7,14 @@ type RadioProps = {
     options: { [key: number]: string };
     error: FieldError | undefined;
     optional?: boolean;
+    theme?: string;
 };
 
-export const Radio: FC<RadioProps> = ({ label, register, options, error, optional }) => {
+export const Radio: FC<RadioProps> = ({ label, register, options, error, optional, theme }) => {
     return (
         <label className="flex flex-col my-2 w-40 me-5 grow">
             {label && (
-                <div className="font-semibold mb-1 text-black">
+                <div className={`${theme == 'dark' ? '' : 'text-black'} font-semibold mb-1`}>
                     {label}
                     {optional && <span className="text-gray-500 text-sm"> (optional)</span>}
                 </div>
@@ -22,7 +23,7 @@ export const Radio: FC<RadioProps> = ({ label, register, options, error, optiona
                 {Object.entries(options).map(([key, value]) => {
                     return (
                         <div key={key}>
-                            <label className="text-black">
+                            <label className={`${theme == 'dark' ? '' : 'text-black'}`}>
                                 <input type="radio" value={key} {...register} />
                                 {value}
                             </label>

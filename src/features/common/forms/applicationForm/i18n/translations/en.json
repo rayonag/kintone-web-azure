@@ -71,7 +71,7 @@
     "hasHandicap": "Do you have a physical handicap?",
     "hasHandicapExplain": "If yes, please describe briefly:",
     "doSmoke": "Do you smoke?",
-    "canLift33lbs": "Can you lift 33 lbs?",
+    "canLift33lbs": "Can you lift 33 lbs (15 kg)? (required for certain positions)",
     "personalDoctor": "Personal Doctor",
     "personalDoctorPhone": "Personal Doctor's Phone",
 
@@ -127,7 +127,7 @@
         "employName": ""
     },
     "hobby": "Please describe your hobbies and interests:",
-    "clubs": "Please list which clubs,societies,lodges or other organizations you belong to:",
+    "clubs": "Please list which clubs, societies, lodges or other organizations you belong to:",
     "serviceTable": {
         "title": "Please list civic/social/ministry service projects you have been involved with:",
         "serviceOrganizationName": "Organization Name",
