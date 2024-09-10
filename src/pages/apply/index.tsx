@@ -123,11 +123,12 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
             <GreenCheckMark height={30} width={30} />
         </div>
     );
-    const { username, knownAs, name, initUser } = useUserStore(
+    const { username, knownAs, name, type, initUser } = useUserStore(
         useShallow((state) => ({
             username: state.username,
             name: state.name,
             knownAs: state.knownAs,
+            type: state.applicationType,
             initUser: state.initUser
         }))
     );
@@ -169,6 +170,14 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                             </Link>
                             {dashboardUser.formSubmission?.includes('Application Form Completed') && <Check />}
                         </div>
+                        {type == 'Zealous' && (
+                            <div className="relative flex items-center">
+                                <Link href="/apply/financial-obligation" {...buttonProps('submitApplication')}>
+                                    Financial Obligation Policy
+                                </Link>
+                                {dashboardUser.formSubmission?.includes('Application Form Completed') && <Check />}
+                            </div>
+                        )}
                         <div className="relative flex items-center">
                             <Link href="/apply/health-questionnaire" {...buttonProps('submitApplication')}>
                                 Personal Health Questionnaire
