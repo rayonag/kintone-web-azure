@@ -28,9 +28,6 @@ type Login = {
 };
 export type Section = 'Top' | 'Email' | 'Password' | 'CreatePassword';
 const Login: React.FC = () => {
-    useEffect(() => {
-        window.alert('login');
-    });
     const [username, setUsername] = useState<Login['userName']>({ value: '' });
     const [password, setPassword] = useState<Login['password']>({ value: '' });
     const [confirmPassword, setConfirmPassword] = useState('');
