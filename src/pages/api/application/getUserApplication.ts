@@ -48,7 +48,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 return;
             }
         } catch (e: any) {
-            console.log('hell');
             logError(e, null, 'getUserApplicationRef');
             res.json({
                 res: 'Something went wrong.'

@@ -40,7 +40,6 @@ const FinancialObligation = (props: { repo: any }) => {
             username: state.username
         }))
     );
-    console.log('username', username);
     // temp disable i18n
     // const { t } = useTranslation();
     const tStore = { ...healthQuestionnaire_en };
@@ -91,7 +90,6 @@ const FinancialObligation = (props: { repo: any }) => {
     useEffect(() => {
         if (props.repo.prefilledFormRecord) {
             const data = props.repo.prefilledFormRecord;
-            console.log('data', data);
             convertPrefilledFormRecord(data, setValue);
         }
     }, [props]);

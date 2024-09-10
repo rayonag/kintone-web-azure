@@ -27,7 +27,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 return;
             }
             const record = data.record;
-            console.log('record', record);
             if (!record) {
                 handleNullOrEmpty({ res: res, errorMessage: 'No userRef' });
                 return;

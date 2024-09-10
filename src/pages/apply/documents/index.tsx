@@ -10,7 +10,6 @@ import GreenCheckMark from '@/components/icons/GreenCheckMark';
 const Page: React.FC = () => {
     const dashboardUser = useDashboardUser();
     const loginUser = dashboardUser;
-    console.log('loginUser', loginUser);
     const Check = () => (
         <div className="absolute right-[-2.5rem]">
             <GreenCheckMark height={30} />

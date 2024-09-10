@@ -35,7 +35,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 if (recordArray.length > 1) console.log('Found more than one user with the same email.'); // TODO: add verification
 
                 const user = recordArray[0];
-                //console.log('user', user);
                 // type guard
                 if (typeof user['$id'].value !== 'string') {
                     res.status(505);
@@ -56,9 +55,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 });
             }
         } catch (e: any) {
-            console.log('error', e);
-            console.log(e.errors);
-            logError(e, null, 'fetchUserKintone');
+            logError(e, req.body, 'fetchUserKintone');
             res.status(505);
         }
     } else {

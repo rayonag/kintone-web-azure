@@ -48,7 +48,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                         data: fs.createReadStream(file[0].filepath)
                     }
                 });
-                console.log('fileKey', fileKey);
                 res.status(200).json({
                     res: fileKey
                 });

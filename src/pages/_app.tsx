@@ -21,9 +21,8 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
     const initUser = useUserStore((state) => state.initUser);
     useEffect(() => {
         if (username && ref) initUser(username, ref);
-    }, []);
+    }, [username, ref]);
     const user = useUserStore();
-    console.log('user', user);
     //
     const DashboardUserProvider: ({ children }: { children: JSX.Element }) => JSX.Element = ({ children }) => {
         const [dashboardUser, setDashboardUser] = useState<DashboardUser>({
@@ -40,7 +39,6 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
     useEffect(() => {
         // CSR用認証チェック
         router.beforePopState(({ url, as, options }) => {
-            console.log('url', url);
             // ログイン画面とエラー画面遷移時のみ認証チェックを行わない
             if (url.startsWith('/apply') && url !== '/apply/login' && url !== '/_error') {
                 if (typeof cookies.auth === 'undefined') {
@@ -87,12 +85,10 @@ App.getInitialProps = async (appContext: any) => {
             // SSR or CSRを判定
             const isServer = typeof window === 'undefined';
             if (isServer) {
-                console.log('in ServerSide');
                 appContext.ctx.res.statusCode = 302;
                 appContext.ctx.res.setHeader('Location', '/apply/login');
                 return {};
             } else {
-                console.log('in ClientSide');
             }
         }
     } else if (appContext.ctx.pathname == '/apply/login' && typeof cookies.auth !== 'undefined') {
@@ -102,7 +98,6 @@ App.getInitialProps = async (appContext: any) => {
             appContext.ctx.res.setHeader('Location', '/apply/');
             return {};
         } else {
-            console.log('in ClientSide');
         }
     }
     return {

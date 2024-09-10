@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import notificationApplicationUpdated from '../hooks/notification';
 import { REST_OnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
 import { VolunteerApplicationMasterAppID } from '@/common/env';
+import logError from '@/common/logError';
 
 type Data = {
     username?: any;
@@ -51,7 +52,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 password: addRecord
             });
         } catch (e: any) {
-            console.log(e.errors);
+            logError(e, req.body, 'postPersonalHealthQuestionnaire');
             res.status(505);
         }
     } else {

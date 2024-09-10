@@ -45,9 +45,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 handleNullOrEmpty({ res: res, errorMessage: 'No data' });
                 return;
             }
-            console.log('data', data.userApplicationRef);
-            console.log('data.field', data.field);
-            console.log('data.fileKey', data.fileKey);
             const userApplicationRef = data.userApplicationRef;
             const userRef = data.userRef;
             const field = data.field;
@@ -79,8 +76,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 .catch((e) => {
                     throw new Error('currentRecord:' + e);
                 });
-            console.log('currentRecord[0]', currentRecord[0]);
-            console.log('currentRecord[0][field]', currentRecord[0][field]);
             const resp = await client.record.updateRecord({
                 app: VolunteerApplicationAppID as string,
                 id: userApplicationRef,
@@ -100,8 +95,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     throw new Error('oilRecord:' + e);
                 });
             const documents = oldRecord.record['documents'].value as string[];
-            console.log('oldRecord', oldRecord);
-            console.log('documents', documents);
             if (!documents.includes(updated[field])) {
                 const updatedDocuments = [...(oldRecord.record['documents'].value as string[]), updated[field]];
                 const necDoc =
@@ -134,11 +127,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     throw new Error('newRecord:' + e);
                 });
             const resp2 = await notificationApplicationUpdated(res, field as any, newRecord.record, 'documentSubmission');
-            // console.log('resp2', resp2);
-            // res.status(200).json({
-            //     res: resp,
-            //     resp2: resp2 || 'No notification sent'
-            // });
             res.end();
             return;
         } catch (e: any) {

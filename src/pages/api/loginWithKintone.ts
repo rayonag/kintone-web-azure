@@ -27,11 +27,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 condition: `email="${username}"`,
                 orderBy: 'ref desc'
             });
-            console.log('recordArray', recordArray);
             if (recordArray.length == 0) throw new Error('No user found');
             else {
                 if (recordArray.length > 1) console.log('More than one user found'); // TODO: add verification
-                console.log('recordArray[0]', recordArray[0]);
                 const user = recordArray[0];
                 res.status(200).json({
                     username: user['email'],

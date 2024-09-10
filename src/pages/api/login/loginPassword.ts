@@ -25,7 +25,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 orderBy: 'ref desc'
             });
             if (recordArray.length == 0) {
-                console.log('recordArray', recordArray);
                 res.status(501).json({ ref: undefined });
             } else if (recordArray.length > 1) {
                 // throw new Error('More than one user found');

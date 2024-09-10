@@ -205,7 +205,6 @@ export const getServerSideProps = (async (context) => {
         //     });
         //     if (resp3) prefilledFormURL = getPrefilledFormURL(resp3[0]);
         // }
-        //console.log('resp', resp);
         const repo: Repo = {
             isFirstTimeOnForm: resp.record['isFirstTimeOnForm'].value == 'true',
             type: resp.record['type'].value || null,
@@ -213,12 +212,10 @@ export const getServerSideProps = (async (context) => {
             office: resp.record['office'].value,
             prefilledFormRecord: prefilledFormRecord
         };
-        console.log('repo', repo);
         // Pass data to the page via props
         return { props: { repo } };
     } catch (e: any) {
         logError(e, e.errors || null, 'apply/form/getServerSideProps');
-        console.log('error');
         return { props: {} };
     }
 }) satisfies GetServerSideProps<{ repo: Repo } | {}>;

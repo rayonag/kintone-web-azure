@@ -185,7 +185,6 @@ const postApplicationForm = async (data: ApplicationFormType, ref: string | unde
             character3: { value: data.character3 },
             character4: { value: data.character4 }
         };
-        console.log('submit', record);
         const body = {
             record: record
         };

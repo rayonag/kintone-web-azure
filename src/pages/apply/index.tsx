@@ -69,7 +69,6 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const dashboardUser = useDashboardUser();
     const userRef = dashboardUser.ref;
-    console.log('dashboardUser', dashboardUser);
     useEffect(() => {
         if (dashboardUser.isLoggedIn) setIsLoaded(true);
     }, [dashboardUser]);
@@ -123,7 +122,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
             <GreenCheckMark height={30} width={30} />
         </div>
     );
-    const { username, knownAs, name, type, initUser } = useUserStore(
+    const { username, name, type, initUser } = useUserStore(
         useShallow((state) => ({
             username: state.username,
             name: state.name,
@@ -132,9 +131,9 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
             initUser: state.initUser
         }))
     );
+    const knownAs = useUserStore((state) => state.knownAs);
     const all = useUserStore();
     console.log('all', all);
-    // console.log('username', username);
     return (
         <Layout>
             <div className="flex flex-col items-center justify-center min-h-[95vh] text-white overflow-hidden">

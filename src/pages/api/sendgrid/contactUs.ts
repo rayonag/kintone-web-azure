@@ -18,7 +18,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
         const office = data.office as EmailNationalOffice;
         const to = emailNationalOffice[office] == undefined ? 'intl.personnel@bridgesforpeace.com' : emailNationalOffice[office];
         sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
-        console.log('office', office);
         const msg = {
             to: to, // Change to your recipient
             cc: to == 'intl.personnel@bridgesforpeace.com' ? '' : 'intl.personnel@bridgesforpeace.com',

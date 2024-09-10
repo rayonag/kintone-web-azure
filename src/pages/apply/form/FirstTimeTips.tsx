@@ -208,51 +208,61 @@ const TermsAndConditions = () => {
 };
 
 const DoctrinalStatement = () => {
+    const statementTitleStyle = 'mb-3 text-xl md:text-2xl';
+    const textStyle = 'm-3 mb-8';
+    const italicVerse = (verse: string) => <span className="italic">{verse}</span>;
     return (
-        <div className="p-4">
-            <div className="text-2xl m-5 font-serif italic text-center">BRIDGES FOR PEACEーDOCTRINAL STATEMENT</div>
-            <div className="mb-3 text-2xl">THE BIBLE</div>
+        <div className="p-4 md:text-lg">
+            <div className="text-2xl md:text-3xl m-1 font-serif text-center">BRIDGES FOR PEACE</div>
+            <div className="text-xl md:text-2xl m-5 font-serif italic text-center">DOCTRINAL STATEMENT</div>
+            <div className={statementTitleStyle}>THE BIBLE</div>
             <ul className="m-3 mb-8">
-                <li>The Bible is the inspired Word of God (2 Tim. 3:16)</li>
+                <li>The Bible is the inspired Word of God {italicVerse('(2 Tim. 3:16)')}</li>
             </ul>
-            <div className="mb-3 text-2xl">GOD</div>
+            <div className={statementTitleStyle}>GOD</div>
             <ul className="m-3 mb-8">
-                <li>God is one (Deut. 6:4; 1 Cor. 8:6)</li>
-                <li>The Father, Son and Holy Spirit exist in unity (Matt. 28:19)</li>
-                <li>Jesus the Messiah is God’s only begotten Son (Matt. 16:16; John 3:16)</li>
-                <li>Jesus the Messiah is the only Mediator between God and man (1 Tim. 2:5)</li>
-                <li>Jesus the Messiah is eternal and fully God and fully man (John 8:58; John 14:9; John 10:30)</li>
+                <li className="mb-2">God is one {italicVerse('(Deut. 6:4; 1 Cor. 8:6)')}</li>
+                <li className="mb-2">The Father, Son and Holy Spirit exist in unity {italicVerse('(Matt. 28:19)')}</li>
+                <li className="mb-2">Jesus the Messiah is God’s only begotten Son {italicVerse('(Matt. 16:16; John 3:16)')}</li>
+                <li className="mb-2">Jesus the Messiah is the only Mediator between God and man {italicVerse('(1 Tim. 2:5)')}</li>
+                <li className="mb-2">Jesus the Messiah is eternal and fully God and fully man {italicVerse('(John 8:58; John 14:9; John 10:30)')}</li>
             </ul>
-            <div className="mb-3 text-2xl">MAN</div>
+            <div className={statementTitleStyle}>MAN</div>
             <ul className="m-3 mb-8">
-                <li>All men have sinned and come short of the glory of God (Rom. 3:23)</li>
-                <li>The wages of sin is death, but the gift of God is eternal life through Jesus the Messiah our Lord (Rom. 6:23; John 3:16,36)</li>
+                <li className="mb-2">All men have sinned and come short of the glory of God {italicVerse('(Rom. 3:23)')}</li>
+                <li className="mb-2">
+                    The wages of sin is death, but the gift of God is eternal life through Jesus the Messiah our Lord{' '}
+                    {italicVerse('(Rom. 6:23; John 3:16,36)')}
+                </li>
             </ul>
-            <div className="mb-3 text-2xl">SALVATION</div>
+            <div className={statementTitleStyle}>SALVATION</div>
             <ul className="m-3 mb-8">
-                <li>Salvation is by grace through faith as a gift of God (Eph. 2:8)</li>
-                <li>Repentance and baptism in the name of the Father, Son and Holy Spirit are outward signs of an inward faith (Eph. 4:4,5)</li>
-                <li>Faith is exhibited by a consecrated and holy life; faith without works is dead (James 2:18)</li>
+                <li className="mb-2">Salvation is by grace through faith as a gift of God {italicVerse('(Eph. 2:8)')}</li>
+                <li className="mb-2">
+                    Repentance and baptism in the name of the Father, Son and Holy Spirit are outward signs of an inward faith{' '}
+                    {italicVerse('(Eph.4:4,5)')}
+                </li>
+                <li className="mb-2">Faith is exhibited by a consecrated and holy life; faith without works is dead {italicVerse('(James 2:18)')}</li>
             </ul>
-            <div className="mb-3 text-2xl">ISRAEL</div>
+            <div className={statementTitleStyle}>ISRAEL</div>
             <ul className="m-3 mb-8">
-                <li>The nation of Israel is the apple of God’s eye (Zech. 2:8)</li>
-                <li>God will not break His covenant with Israel (Jer. 31:35–37)</li>
-                <li>God is restoring the Jewish people to Israel, their Promised Land (Jer. 23:7–8)</li>
-                <li>Believers from Gentile backgrounds have a debt to the Jewish people (Rom. 11)</li>
-                <li>God blesses those who bless Israel and curses those who curse Israel (Gen. 12:3; Isa. 60:12)</li>
-                <li>Blessing is promised to those who pray for Jerusalem’s peace (Ps. 122:6)</li>
+                <li>The nation of Israel is the apple of God’s eye {italicVerse('(Zech. 2:8)')}</li>
+                <li>God will not break His covenant with Israel {italicVerse('(Jer. 31:35–37)')}</li>
+                <li>God is restoring the Jewish people to Israel, their Promised Land {italicVerse('(Jer. 23:7–8)')}</li>
+                <li>Believers from Gentile backgrounds have a debt to the Jewish people {italicVerse('(Rom. 11)')}</li>
+                <li>God blesses those who bless Israel and curses those who curse Israel {italicVerse('(Gen. 12:3; Isa. 60:12)')}</li>
+                <li>Blessing is promised to those who pray for Jerusalem’s peace {italicVerse('(Ps. 122:6)')}</li>
             </ul>
-            <div className="mb-3 text-2xl">THE FUTURE</div>
+            <div className={statementTitleStyle}>THE FUTURE</div>
             <ul className="m-3 mb-8">
-                <li>The bodily return of Jesus the Messiah is imminent (Acts. 1:11)</li>
-                <li>There will be a literal resurrection of the dead (John 5:28)</li>
-                <li>Those in the Messiah shall be immortalized (1 Cor. 15:53–54)</li>
-                <li>The wicked shall be placed in hell for eternity (Rev. 20:10)</li>
-                <li>Israel will be restored under the Kingship of Messiah Jesus (Luke 1:32)</li>
-                <li>All believers shall be joint heirs with the Messiah (Rom. 8:17)</li>
+                <li>The bodily return of Jesus the Messiah is imminent {italicVerse('(Acts. 1:11)')}</li>
+                <li>There will be a literal resurrection of the dead {italicVerse('(John 5:28)')}</li>
+                <li>Those in the Messiah shall be immortalized {italicVerse('(1 Cor. 15:53–54)')}</li>
+                <li>The wicked shall be placed in hell for eternity {italicVerse('(Rev. 20:10)')}</li>
+                <li>Israel will be restored under the Kingship of Messiah Jesus {italicVerse('(Luke 1:32)')}</li>
+                <li>All believers shall be joint heirs with the Messiah {italicVerse('(Rom. 8:17)')}</li>
             </ul>
-            <div className="mb-3 text-2xl">POSITION ON EVANGELISM</div>
+            <div className="text-xl md:text-2xl m-5 font-serif italic text-center">POSITION ON EVANGELISM</div>
             <div className="m-3 mb-8 text-justify">
                 <div className="mb-3">
                     Bridges for Peace is a Jerusalem-based, Bible-believing Christian organization supporting Israel and building relationships
@@ -271,8 +281,8 @@ const DoctrinalStatement = () => {
                     past may be healed and doors of communication can be opened between Christians and Jews.
                 </div>
             </div>
-            <div className="mb-3 text-2xl">STATEMENT ON MESSIANIC JUDAISM</div>
-            <div className="m-3 mb-8 text-justify">
+            <div className="text-xl md:text-2xl m-5 font-serif italic text-center">STATEMENT ON MESSIANIC JUDAISM</div>
+            <div className="m-3 mb-8 text-left md:text-justify">
                 <div className="mb-3">
                     Recognizing the variety of callings within the body of Christ (e.g. of Paul as an apostle to the Gentiles; James and Peter to “the
                     circumcision”) we believe it is unwise to appear to be promoting the Messianic movement as Bridges for Peace’s mandate, while our

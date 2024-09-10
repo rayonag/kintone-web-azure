@@ -240,7 +240,6 @@ const postTempApplicationForm = async (data: ApplicationFormType, ref: string | 
                     return {};
             }
         })();
-        console.log('submit', record);
         const body = {
             record: record
         };

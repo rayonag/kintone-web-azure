@@ -43,7 +43,6 @@ const updateVolunteerProfile = async (res: NextApiResponse) => {
             // vacation update on Jan 1 every year
             const today = new Date();
             if (today.getMonth() == 0 && today.getDate() == 1) {
-                console.log('started');
                 // refresh vacation taken
                 Object.assign(returnRecord, {
                     vacationTaken: { value: await calcVacationDeputationTaken(record, 'Vacation') },

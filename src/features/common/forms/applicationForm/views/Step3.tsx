@@ -23,7 +23,6 @@ const Step3: FC<Step3Props> = ({ register, errors, getValues, t }) => {
             initUser: state.initUser
         }))
     );
-    console.log('username', username);
     return (
         <div>
             <section>

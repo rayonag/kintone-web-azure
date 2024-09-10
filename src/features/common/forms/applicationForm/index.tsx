@@ -48,7 +48,6 @@ const ApplicationForm = (props: any) => {
     //const initialLang = 'en';
     //const [locale, dispatch] = useReducer<(state: string, actions: string) => string>(langReducer, initialLang);
     const form = props.repo;
-    console.log('form', form);
     const dashboardUser = useDashboardUser();
     // const { username } = useUserStore(
     //     useShallow((state) => ({
@@ -74,12 +73,10 @@ const ApplicationForm = (props: any) => {
 
     const validate = async () => {
         const values = getValues();
-        console.log('values', values);
         const isValid = await trigger(ApplicationFormFields[step] as any); // TODO: review type
         if (isValid) return true;
         else {
             const firstErrorField = Object.keys(formatError)[0];
-            console.log('firstErrorField', formatError);
             const errorElement = document.querySelector(`[name="${firstErrorField}"]`);
             if (errorElement) {
                 errorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -126,7 +123,6 @@ const ApplicationForm = (props: any) => {
             }
         } else if (isResume) {
             const data = props.repo.prefilledFormRecord;
-            console.log('data', data);
             convertPrefilledFormRecord(data, setValue);
             setStep(parseInt(data['currentStep'].value) || 1);
             setIsModalOpen(false);
@@ -146,7 +142,6 @@ const ApplicationForm = (props: any) => {
         if (!valid) return;
         if (!window.confirm('Do you want to submit?')) return;
         const values = getValues();
-        console.log('values', values);
         setIsLoading(true);
         postTempApplicationForm(values, dashboardUser.ref || '0', step);
         const res = await postApplicationForm(values, dashboardUser.ref || undefined);

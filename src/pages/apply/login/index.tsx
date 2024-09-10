@@ -1,5 +1,5 @@
 'use client';
-import { ChangeEvent, FormEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, FormEvent, KeyboardEvent, use, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { setCookie } from 'nookies';
@@ -28,6 +28,9 @@ type Login = {
 };
 export type Section = 'Top' | 'Email' | 'Password' | 'CreatePassword';
 const Login: React.FC = () => {
+    useEffect(() => {
+        window.alert('login');
+    });
     const [username, setUsername] = useState<Login['userName']>({ value: '' });
     const [password, setPassword] = useState<Login['password']>({ value: '' });
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -101,7 +104,6 @@ const Login: React.FC = () => {
                 },
                 body: JSON.stringify({ username: username.value, password: password.value }) // Replace with your data
             });
-            console.log(res);
             if (res.ok) {
                 const data = await res.json();
                 setCookie(null, 'auth', username.value.toLowerCase(), {
@@ -114,13 +116,12 @@ const Login: React.FC = () => {
                 });
                 router.push('/apply');
             } else {
-                console.log('Error: password not created');
                 alert('Something wrong. Please start from the top.');
                 router.push('/apply');
                 return;
             }
         } catch (e) {
-            console.log('Error on creating password', e);
+            logError(e, password.value, 'handleCreatePassword');
         }
     };
     const loginPassword = async () => {

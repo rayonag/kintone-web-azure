@@ -4,7 +4,6 @@ import getUserApplicationRef from './getUserApplicationRef';
 const fetchUserApplicationMaster = (dashboardUser: DashboardUser, setDashboardUser: React.Dispatch<React.SetStateAction<DashboardUser>>) => {
     const username = dashboardUser.username;
     const ref = dashboardUser.ref;
-    console.log('refhere', ref);
 
     if (!ref) return;
     const fetchUser = (async () => {
@@ -15,10 +14,8 @@ const fetchUserApplicationMaster = (dashboardUser: DashboardUser, setDashboardUs
             },
             body: JSON.stringify({ username: username })
         });
-        console.log('res', res);
         const user = await res.json();
         const userApplicationRef = await getUserApplicationRef({ ref: ref });
-        console.log('user', user);
         await setDashboardUser((prev) => ({
             username: username,
             ref: ref,

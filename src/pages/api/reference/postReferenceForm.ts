@@ -64,7 +64,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     return;
                 });
             // update
-            //console.log('resp2', resp2);
             res.status(200).json({});
         } catch (e: any) {
             logError(e, req.body || null, 'postReferenceForm');

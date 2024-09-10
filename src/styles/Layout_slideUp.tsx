@@ -10,7 +10,6 @@ interface Layout_slideUpProps {
 }
 
 const Layout_slideUp: FC<Layout_slideUpProps> = ({ key, children }) => {
-    console.log(key);
     return (
         <motion.div key={key || 'page'} initial={{ opacity: 0, y: '10%' }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2 }}>
             <Header />

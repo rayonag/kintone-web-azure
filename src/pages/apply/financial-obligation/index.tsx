@@ -81,7 +81,6 @@ export const getServerSideProps = (async (context) => {
                 });
             if (resp3) prefilledFormRecord = resp3[0];
         }
-        //console.log('resp', resp);
         const repo: Repo = {
             prefilledFormRecord: prefilledFormRecord,
             formSubmitted: resp.record['formSubmission'].value.findIndex((arr) => arr == 'Personal Health Questionnaire') > -1

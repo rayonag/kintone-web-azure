@@ -6,7 +6,6 @@ type getUserApplicationRefProps = {
 const getUserApplicationRef: (props: getUserApplicationRefProps) => Promise<string | undefined | null> = async ({ ref }) => {
     if (!ref) throw new Error('Something went wrong: User not found');
     try {
-        console.log('here');
         const res = await fetch('/api/application/getUserApplicationRef', {
             method: 'POST',
             body: ref

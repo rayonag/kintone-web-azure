@@ -38,10 +38,8 @@
                     });
                     // TODO: better validation to continue
                     if (!tableRowValue[tableCodes[tableCode][0]].value) continue;
-                    console.log('tableRowValue', tableRowValue);
                     tableValue.push({ value: tableRowValue });
                 }
-                console.log('tableValue', tableValue);
                 state.record[tableCode].value = tableValue;
             });
             // return if prefilled form is loaded

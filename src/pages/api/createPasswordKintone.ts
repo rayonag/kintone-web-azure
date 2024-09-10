@@ -1,3 +1,4 @@
+import logError from '@/common/logError';
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
@@ -42,7 +43,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 });
             }
         } catch (e: any) {
-            console.log(e.errors);
+            logError(e, req.body, 'createPasswordKintone');
             res.status(505);
         }
     } else {

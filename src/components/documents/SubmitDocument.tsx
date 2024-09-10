@@ -27,12 +27,10 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
     const userRef = dashboardUser.ref;
     // early return. TODO: review validation
     if (!userRef) {
-        console.log('no user ref');
         return <></>;
     }
     // TODO: review validation and return val
     if (!dashboardUser.applicationRef) {
-        console.log('no application ref');
     }
 
     // upload from input
@@ -41,7 +39,6 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
         handleUploadFiles(files);
     };
     const handleUploadFiles = (files: any) => {
-        console.log('files', files);
         if (files.length > 0) {
             const file = files[0];
             setFileData(files);
@@ -54,7 +51,6 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
     };
     const handleSubmit = async () => {
         const files = fileData;
-        console.log(files);
         if (files == undefined) return;
         if (files.length > 0) {
             setIsLoading(true);

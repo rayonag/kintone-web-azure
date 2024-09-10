@@ -137,7 +137,6 @@ export const notificationReferenceSubmitted = async (res: any, record: REST_Save
                 return;
             })
             .catch((error) => {
-                console.log('error', error.response.body.errors);
                 res.status(200).json({ resp2: error });
                 return;
             });

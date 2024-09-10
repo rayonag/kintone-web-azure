@@ -1,5 +1,6 @@
 import postFormSubmission from '@/common/checklist/postFormSubmission';
 import { HealthQuestionnaireType } from '../schema';
+import logError from '@/common/logError';
 
 const postPersonalHealthQuestionnaire = async (data: HealthQuestionnaireType, ref: string) => {
     try {
@@ -63,7 +64,6 @@ const postPersonalHealthQuestionnaire = async (data: HealthQuestionnaireType, re
             body: JSON.stringify(record) // Replace with your data
         });
         const res2 = await postFormSubmission(ref);
-        console.log(res);
         if (res.ok) {
             return res;
         } else {
@@ -71,7 +71,7 @@ const postPersonalHealthQuestionnaire = async (data: HealthQuestionnaireType, re
             return;
         }
     } catch (e) {
-        console.log('Error on postToKintone', e);
+        logError(e, data, 'postPersonalHealthQuestionnaire');
     }
 };
 export default postPersonalHealthQuestionnaire;

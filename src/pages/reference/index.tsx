@@ -4,13 +4,13 @@ import { useRouter } from 'next/router';
 import { referenceFormURL } from '@/common/env';
 import Layout_fadeIn from '@/styles/Layout_fadeIn';
 import { useLoading } from '@/common/context/loading';
+import logError from '@/common/logError';
 
 const ApplicationForm = () => {
     // State to track whether the iframe content is loading
     const { setIsLoading } = useLoading();
     const [ref, setRef] = useState<string | number | null>('');
     const [office, setOffice] = useState<string | number | null>('');
-    console.log('ref', ref);
     const router = useRouter();
     const iframeLink = referenceFormURL;
     // Function to handle iframe load event
@@ -48,48 +48,7 @@ const ApplicationForm = () => {
             setOffice(office);
         }
     }, []);
-    // back to top after receiving postmessage from FormBridge
-    useEffect(() => {
-        const receiveMessage = async (event: any) => {
-            // if not from https://f62c12b3.form.kintoneapp.com return
-            if (event.origin !== 'https://f62c12b3.form.kintoneapp.com') return;
-            let data = null;
-            try {
-                if (!event.data) return;
-                // Check if event.data is a string and try to parse it
-                if (typeof event.data === 'string') {
-                    data = JSON.parse(event.data);
-                } else {
-                    // If event.data is already an object, use it directly
-                    data = event.data;
-                }
-            } catch (e) {
-                console.log('error', e);
-                return;
-            }
-            console.log(data); // This will log the message data
-            console.log('form', data?.form);
-            console.log('public', data?.form?.publicCode); // This will log the message data
-            const ref = new URL(window.location.href).searchParams.get('ref');
-            if (data?.form?.publicCode) {
-                const res = await fetch('/api/reference/postReferenceForm', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ ref: ref }) // Replace with your data
-                });
-                console.log('res', res);
-                alert('Thank you for submitting the reference form.');
-                router.push('/reference/complete');
-            }
-        };
-        window.addEventListener('message', receiveMessage);
-        // Cleanup function to remove the event listener when the component unmounts
-        return () => {
-            window.removeEventListener('message', receiveMessage);
-        };
-    }, []);
+
     return (
         // Use a wrapper div for the entire page
         <Layout_fadeIn>

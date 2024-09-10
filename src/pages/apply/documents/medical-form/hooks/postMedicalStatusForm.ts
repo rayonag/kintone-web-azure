@@ -28,7 +28,6 @@ const postMedicalStatusForm: (props: postMedicalStatusFormProps) => any = async 
             field: 'medicalStatusForm',
             fileKey: fileKey.res
         };
-        console.log('updateBody', updateBody);
         const resp = await fetch('/api/reference/updateFileKintone', {
             method: 'POST',
             body: JSON.stringify(updateBody)
