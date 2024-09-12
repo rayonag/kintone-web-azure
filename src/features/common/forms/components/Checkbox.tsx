@@ -18,6 +18,7 @@ const Checkbox: FC<CheckboxProps> = ({ label, name, control, options, error, the
                     name={name}
                     control={control}
                     render={({ field }) => {
+                        if (!field) return <></>;
                         return (
                             <div>
                                 {Object.entries(options).map(([key, value]) => (

@@ -2,20 +2,14 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+
 import Link from 'next/link';
 
-import { HealthQuestionnaireDefaultValues, HealthQuestionnaireSchema, HealthQuestionnaireType, formFields } from './schema';
 import { useDashboardUser } from '@/common/context/dashboardUser';
-import { useTranslation } from 'react-i18next';
+
 import { useReducer } from 'react';
 import { langReducer } from './i18n/lang';
-import { customErrorMap } from './schema';
-
-import FirstPage from './views/Step1';
-import SecondPage from './views/Step2';
-import ThirdPage from './views/Step3';
-import ConfirmationModal from './views/Confirmation';
+import { ReferenceFormDefaultValues, ReferenceFormFields, ReferenceFormSchema, ReferenceFormType } from './schema';
 
 import './i18n/translations/config'; //i18
 import useUserStore from '@/features/common/store';
@@ -24,9 +18,13 @@ import healthQuestionnaire_en from './i18n/translations/en.json';
 import Step1 from './views/Step1';
 import Step2 from './views/Step2';
 import Step3 from './views/Step3';
-import convertPrefilledFormRecord from './hooks/convertPrefilledFormRecord';
+import { useRouter } from 'next/router';
+import { useLoading } from '@/common/context/loading';
+import Step4 from './views/Step4';
+import Step5 from './views/Step5';
+import postReferenceForm from './hooks/postReferenceForm';
 
-const HealthQuestionnaire = (props: { repo: any }) => {
+const ReferenceForm = () => {
     const [page, setPage] = useState(0);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     // for future use on multi language
@@ -53,19 +51,19 @@ const HealthQuestionnaire = (props: { repo: any }) => {
         setValue,
         register,
         control
-    } = useForm<HealthQuestionnaireType>({
+    } = useForm<ReferenceFormType>({
         mode: 'onChange',
-        defaultValues: HealthQuestionnaireDefaultValues,
-        resolver: zodResolver(HealthQuestionnaireSchema)
+        defaultValues: ReferenceFormDefaultValues,
+        resolver: zodResolver(ReferenceFormSchema)
     });
 
-    z.setErrorMap(customErrorMap(t));
+    //z.setErrorMap(customErrorMap(t));
 
-    const validate = async (page: number) => {
-        const isValid = await trigger(formFields[page]);
-        if (isValid) return true;
-        else return false;
-    };
+    // const validate = async (page: number) => {
+    //     const isValid = await trigger(formFields[page]);
+    //     if (isValid) return true;
+    //     else return false;
+    // };
 
     useEffect(() => {
         if (dashboardUser.ref) setValue('ref', dashboardUser.ref);
@@ -86,54 +84,98 @@ const HealthQuestionnaire = (props: { repo: any }) => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
     }, []);
-    useEffect(() => {
-        if (props.repo.prefilledFormRecord) {
-            const data = props.repo.prefilledFormRecord;
-            convertPrefilledFormRecord(data, setValue);
+    const validate = async () => {
+        const values = getValues();
+        console.log('values', values);
+        const isValid = await trigger(ReferenceFormFields[step] as any); // TODO: review type
+        if (isValid) return true;
+        else {
+            const firstErrorField = Object.keys(formatError)[0];
+            const errorElement = document.querySelector(`[name="${firstErrorField}"]`);
+            console.log('errorElement', firstErrorField);
+            if (errorElement) {
+                errorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            return false;
         }
-    }, [props]);
+    };
+    const [step, setStep] = useState(1);
+    const { setIsLoading } = useLoading();
+    useEffect(() => {
+        document.querySelector('#section-title')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, [step]);
+    // useEffect(() => {
+    //     // for modal
+    //     ReactModal.setAppElement('#__next');
+    // }, []);
+    const router = useRouter();
+    const onSubmit = async (e: any) => {
+        e.preventDefault();
+        const valid = await validate();
+        if (!valid) return;
+        if (!window.confirm('Do you want to submit?')) return;
+        const values = getValues();
+        setIsLoading(true);
+        const res = await postReferenceForm(values);
+        if (res) {
+            router.push('/reference/complete');
+        } else {
+            alert('Failed to submit the form. Please try again.');
+            setIsLoading(false);
+        }
+        //??
+        // const res = await postPersonalHealthQuestionnaire(values, dashboardUser.ref || '0');
+        // if (res) setModalIsOpen(true);
+    };
     return (
-        <form className="flex flex-col px-10 pb-10 text-center">
-            {page === 0 && <Step1 register={register} errors={formatError} getValues={getValues} t={t} control={control} />}
-            {page === 1 && <Step2 register={register} errors={formatError} getValues={getValues} t={t} control={control} />}
-            {page === 2 && <Step3 register={register} errors={formatError} t={t} control={control} />}
-            <ConfirmationModal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} getValues={getValues} t={t} />
-            {page != 2 && (
-                <button
-                    type="button"
-                    onClick={async () => {
-                        const valid = await validate(page);
-                        if (valid) setPage(page + 1);
-                    }}
-                    className="btn-wide"
-                >
-                    {t('system.next')}
-                </button>
-            )}
-            {page == 2 && (
-                <button
-                    type="button"
-                    onClick={async () => {
-                        const valid = await validate(page);
-                        if (valid) setModalIsOpen(true);
-                    }}
-                    className="btn-wide"
-                >
-                    {t('system.submit')}
-                </button>
-            )}
-            {page != 0 && (
-                <button type="button" onClick={() => setPage(page - 1)} className="btn-wide">
-                    {t('system.back')}
-                </button>
-            )}
-            {page == 0 && (
-                <Link type="button" href="/apply" className="btn-wide">
-                    Back to Top
-                </Link>
-            )}
-        </form>
+        <div className="grid justify-center px-10 pb-10 max-h-screen overflow-y-scroll">
+            <form
+                onSubmit={(e) => onSubmit(e)}
+                className="flex flex-col my-14 p-10 max-w-[95vw] md:w-[50rem] md:max-w-screen bg-gray-50 border rounded-md"
+            >
+                {step === 1 && <Step1 register={register} errors={formatError} getValues={getValues} t={t} control={control} />}
+                {step === 2 && <Step2 register={register} errors={formatError} getValues={getValues} t={t} control={control} />}
+                {step === 3 && <Step3 register={register} errors={formatError} getValues={getValues} t={t} control={control} />}
+                {step === 4 && <Step4 register={register} errors={formatError} getValues={getValues} t={t} control={control} />}
+                {step === 5 && <Step5 register={register} errors={formatError} getValues={getValues} t={t} control={control} />}
+                {/* <ConfirmationModal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} getValues={getValues} t={t} /> */}
+                {step != 5 && (
+                    <button
+                        type="button"
+                        onClick={async () => {
+                            const valid = await validate();
+                            if (valid) setStep(step + 1);
+                        }}
+                        className="btn-wide"
+                    >
+                        {t('system.next')}
+                    </button>
+                )}
+                {step == 5 && (
+                    <button
+                        type="submit"
+                        onClick={async () => {
+                            const valid = await validate();
+                            if (valid) setModalIsOpen(true);
+                        }}
+                        className="btn-wide"
+                    >
+                        {t('system.submit')}
+                    </button>
+                )}
+                {step != 1 && (
+                    <button type="button" onClick={() => setStep(step - 1)} className="btn-wide">
+                        {t('system.back')}
+                    </button>
+                )}
+                {/* {step == 0 && (
+                    <Link type="button" href="/apply" className="btn-wide">
+                        Back to Top
+                    </Link>
+                )} */}
+            </form>
+        </div>
     );
 };
 
-export default HealthQuestionnaire;
+export default ReferenceForm;

@@ -39,11 +39,13 @@ export const AreaInterested = (t: Translation) => ({
 
 export const SkillSystem = (t: Translation) => ({
     PC: t('skillSystem.options.PC'),
-    MAC: t('skillSystem.options.MAC')
+    MAC: t('skillSystem.options.MAC'),
+    Networking: t('skillSystem.options.Networking')
 });
 export const SkillSoftware = (t: Translation) => ({
     SAP: t('skillSoftware.options.SAP'),
-    QuickBooks: t('skillSoftware.options.QuickBooks')
+    QuickBooks: t('skillSoftware.options.QuickBooks'),
+    'Software Development': t('skillSoftware.options.softwareDevelopment')
 });
 
 export const Character1 = (t: Translation) => ({

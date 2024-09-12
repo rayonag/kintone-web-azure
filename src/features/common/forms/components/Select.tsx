@@ -11,7 +11,7 @@ type SelectProps = {
 };
 export const Select: FC<SelectProps> = ({ label, register, options, error, optional, theme }) => {
     return (
-        <label className="flex flex-col my-2 w-40 me-5 grow md:max-w-sm">
+        <label className={`${theme == 'dark' ? '' : 'text-black'} flex flex-col my-2 w-40 me-5 grow md:max-w-sm`}>
             <div className={`${theme == 'dark' ? '' : 'text-black'} font-semibold mb-1`}>
                 {label}
                 {optional && <span className="text-gray-500 text-sm"> (optional)</span>}

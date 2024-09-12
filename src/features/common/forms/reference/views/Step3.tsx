@@ -1,37 +1,97 @@
-'use client';
-
-import { useTranslation } from 'react-i18next';
-import Input from '../components/Input';
-import Number from '../components/Number';
-import Checkbox from '../components/Checkbox';
-import { Control, FieldErrors, UseFormGetValues, UseFormRegister } from 'react-hook-form';
-import { HealthQuestionnaireType } from '../schema';
-import { FC } from 'react';
+import React, { FC } from 'react';
+import { useShallow } from 'zustand/react/shallow';
+import SectionTitle from '../../components/SectionTitle';
+import Input from '../../components/Input';
 import { TFunction } from 'i18next';
-import Textarea from '../components/Textarea';
-import Verify from '../components/Verify';
+import { UseFormRegister, FieldErrors, UseFormGetValues, Control, useWatch } from 'react-hook-form';
+import { ReferenceFormType } from '../schema';
+import Row from '../../components/Row';
+import { Radio } from '../../components/Radio';
+import { Select } from '../../components/Select';
+import Textarea from '../../components/Textarea';
+import { IndicationDesire, Rate, Relationship, YesNo } from '../enums';
 
 type Step3Props = {
-    register: UseFormRegister<HealthQuestionnaireType>;
-    errors: FieldErrors<HealthQuestionnaireType>;
+    register: UseFormRegister<ReferenceFormType>;
+    errors: FieldErrors<ReferenceFormType>;
+    getValues: UseFormGetValues<ReferenceFormType>;
     t: any;
-    control: Control<HealthQuestionnaireType>;
+    control: Control<ReferenceFormType>;
 };
-const Step3: FC<Step3Props> = ({ register, errors, t }) => {
+const Step3: FC<Step3Props> = ({ register, errors, getValues, t, control }) => {
+    const relationshipField = useWatch({ control, name: 'relationship' });
+    const isOther = relationshipField == 'Other';
     return (
-        <>
-            <div className="text-2xl font-bold my-10">
-                <div>BRIDGES FOR PEACE</div>
-                <div>PERSONAL HEALTH QUESTIONNAIRE</div>
-            </div>
-            <Textarea label={t('q1')} register={register('q1')} placeholder={t('system.typeHere')} error={errors.q1 || undefined} />
-            <Textarea label={t('q2')} register={register('q2')} placeholder={t('system.typeHere')} error={errors.q2 || undefined} />
-            <Textarea label={t('q3')} register={register('q3')} placeholder={t('system.typeHere')} error={errors.q3 || undefined} />
-            <Textarea label={t('q4')} register={register('q4')} placeholder={t('system.typeHere')} error={errors.q4 || undefined} />
-            <Textarea label={t('q5')} register={register('q5')} placeholder={t('system.typeHere')} error={errors.q5 || undefined} />
-            <Textarea label={t('q6')} register={register('q6')} placeholder={t('system.typeHere')} error={errors.q6 || undefined} />
-            <Verify label={t('verify')} register={register('verify')} error={errors.verify || undefined} />
-        </>
+        <div>
+            <section>
+                <SectionTitle title={''} />
+                <Row>
+                    <Textarea
+                        label={t('demonstratedServantHeart')}
+                        register={register('demonstratedServantHeart')}
+                        placeholder="Enter here"
+                        error={errors.demonstratedServantHeart || undefined}
+                    />
+                </Row>
+                <Row>
+                    <Textarea
+                        label={t('dealtProblem')}
+                        register={register('dealtProblem')}
+                        placeholder="Enter here"
+                        error={errors.dealtProblem || undefined}
+                    />
+                </Row>
+                <Row>
+                    <Textarea
+                        label={t('familyRelationship')}
+                        register={register('familyRelationship')}
+                        placeholder="Enter here"
+                        error={errors.familyRelationship || undefined}
+                    />
+                </Row>
+                <Row>
+                    <Radio label={t('guest')} register={register('guest')} options={YesNo(t)} error={errors.guest} />
+                    <Textarea
+                        label={t('guestExplain')}
+                        register={register('guestExplain')}
+                        placeholder="Enter here"
+                        error={errors.guestExplain || undefined}
+                    />
+                </Row>
+                <Row>
+                    <Radio label={t('showInterest')} register={register('showInterest')} options={YesNo(t)} error={errors.showInterest} />
+                    <Textarea
+                        label={t('showInterestComment')}
+                        register={register('showInterestComment')}
+                        placeholder="Enter here"
+                        error={errors.showInterestComment || undefined}
+                    />
+                </Row>
+                <Row>
+                    <Radio
+                        label={t('christianJewishRelations')}
+                        register={register('christianJewishRelations')}
+                        options={YesNo(t)}
+                        error={errors.christianJewishRelations}
+                    />
+                    <Textarea
+                        label={t('christianJewishRelationsComment')}
+                        register={register('christianJewishRelationsComment')}
+                        placeholder="Enter here"
+                        error={errors.christianJewishRelationsComment || undefined}
+                    />
+                </Row>
+                <Row>
+                    <Textarea
+                        label={t('aptitudes')}
+                        register={register('aptitudes')}
+                        placeholder="Enter here"
+                        error={errors.aptitudes || undefined}
+                    />
+                </Row>
+            </section>
+        </div>
     );
 };
+
 export default Step3;

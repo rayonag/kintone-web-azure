@@ -25,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             const resp = await client.record
                 .getRecord<REST_SavedOnlineVolunteerApplication>({
                     app: VolunteerApplicationMasterAppID as string,
-                    id: data['ref']
+                    id: data['ref'].value
                 })
                 .catch((e) => {
                     logError(e, req.body || null, 'postReferenceForm resp');
@@ -38,12 +38,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             }
             // send notification
             //const resp2 = await notificationReferenceSubmitted(res, resp.record);
-
+            console.log('hey');
+            console.log('data', data);
+            console.log('ReferenceFormAppID', ReferenceFormAppID);
+            // save reference form
+            const resp3 = await client.record.addRecord({
+                app: ReferenceFormAppID as string,
+                record: data
+            });
+            if (!resp3) {
+                res.status(501).json({});
+                return;
+            }
             // update reference count
             const resp4 = await client.record
                 .getAllRecords({
                     app: ReferenceFormAppID as string,
-                    condition: `ref=${data['ref']}`
+                    condition: `ref=${data['ref'].value}`
                 })
                 .catch((e) => {
                     logError(e, req.body || null, 'postReferenceForm resp4');

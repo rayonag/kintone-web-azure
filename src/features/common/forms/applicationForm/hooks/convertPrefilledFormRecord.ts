@@ -19,7 +19,7 @@ const convertPrefilledFormRecord = (record: SavedVolunteerApplicationForm, setVa
     };
 
     addFieldIfValid('ref', record.ref.value);
-    addFieldIfValid('office.office', record.office.value);
+    //addFieldIfValid('office.office', record.office.value); TODO: needed here? or always refer to userStore?
     addFieldIfValid('firstName', record.firstName.value);
     addFieldIfValid('middleName', record.middleName.value);
     addFieldIfValid('lastName', record.lastName.value);
@@ -161,10 +161,10 @@ const convertPrefilledFormRecord = (record: SavedVolunteerApplicationForm, setVa
     addFieldIfValid('skillForeignLanguage', record.skillForeignLanguage.value);
     addFieldIfValid('skillComputer', record.skillComputer.value);
     addFieldIfValid('skillSpecialTraining', record.skillSpecialTraining.value);
-    addFieldIfValid('character1', record.character1.value);
-    addFieldIfValid('character2', record.character2.value);
-    addFieldIfValid('character3', record.character3.value);
-    addFieldIfValid('character4', record.character4.value);
+    addFieldIfValid('characters.character1', record.character1.value);
+    addFieldIfValid('characters.character2', record.character2.value);
+    addFieldIfValid('characters.character3', record.character3.value);
+    addFieldIfValid('characters.character4', record.character4.value);
     addFieldIfValid('refPastorName', record.refPastorName.value);
     addFieldIfValid('refPastorAddress', record.refPastorAddress.value);
     addFieldIfValid('refPastorPhone', record.refPastorPhone.value);
@@ -177,11 +177,11 @@ const convertPrefilledFormRecord = (record: SavedVolunteerApplicationForm, setVa
     addFieldIfValid('refFriendAddress', record.refFriendAddress.value);
     addFieldIfValid('refFriendPhone', record.refFriendPhone.value);
     addFieldIfValid('refFriendEmail', record.refFriendEmail.value);
-    addFieldIfValid('refOtherName', record.refOtherName.value);
-    addFieldIfValid('refOtherAddress', record.refOtherAddress.value);
-    addFieldIfValid('refOtherPhone', record.refOtherPhone.value);
-    addFieldIfValid('refOtherEmail', record.refOtherEmail.value);
-    addFieldIfValid('refOtherRelationship', record.refOtherRelationship.value);
+    addFieldIfValid('type.refOtherName', record.refOtherName.value);
+    addFieldIfValid('type.refOtherAddress', record.refOtherAddress.value);
+    addFieldIfValid('type.refOtherPhone', record.refOtherPhone.value);
+    addFieldIfValid('type.refOtherEmail', record.refOtherEmail.value);
+    addFieldIfValid('type.refOtherRelationship', record.refOtherRelationship.value);
     addFieldIfValid('hasFriendsIsrael', record.hasFriendsIsrael.value);
     addFieldIfValid('hasFriendsIsraelExplain', record.hasFriendsIsraelExplain.value);
 

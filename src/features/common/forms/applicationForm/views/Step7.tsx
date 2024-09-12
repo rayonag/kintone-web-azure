@@ -12,6 +12,7 @@ import SkillRangeInput from '../../components/SkillRangeInput';
 import { Radio } from '../../components/Radio';
 import Image from 'next/image';
 import Checkbox from '../../components/Checkbox';
+import Textarea from '../../components/Textarea';
 
 type Step7Props = {
     register: UseFormRegister<ApplicationFormType>;
@@ -225,12 +226,6 @@ const Step7: FC<Step7Props> = ({ register, errors, getValues, control, t }) => {
                         options={SkillSoftware(t)}
                         error={errors.skillSoftware || undefined}
                     />
-                    {/* <SkillRangeInput
-                        control={control}
-                        label={t('skillOperatingSystems')}
-                        register={register('skillOperatingSystems')}
-                        error={errors.skillOperatingSystems || undefined}
-                    /> */}
                 </Row>
                 <Row>
                     <SkillRangeInput
@@ -333,7 +328,7 @@ const Step7: FC<Step7Props> = ({ register, errors, getValues, control, t }) => {
                     />
                 </Row>
                 <Row>
-                    <Input
+                    <Textarea
                         label={t('skillForeignLanguage')}
                         register={register('skillForeignLanguage')}
                         placeholder={'Enter here'}
@@ -341,7 +336,7 @@ const Step7: FC<Step7Props> = ({ register, errors, getValues, control, t }) => {
                     />
                 </Row>
                 <Row>
-                    <Input
+                    <Textarea
                         label={t('skillComputer')}
                         register={register('skillComputer')}
                         placeholder={'Enter here'}
@@ -349,7 +344,7 @@ const Step7: FC<Step7Props> = ({ register, errors, getValues, control, t }) => {
                     />
                 </Row>
                 <Row>
-                    <Input
+                    <Textarea
                         label={t('skillSpecialTraining')}
                         register={register('skillSpecialTraining')}
                         placeholder={'Enter here'}

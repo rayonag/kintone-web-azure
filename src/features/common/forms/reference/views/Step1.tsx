@@ -1,40 +1,63 @@
-'use client';
-
-import Input from '../components/Input';
-import Number from '../components/Number';
-import { Control, FieldErrors, UseFormGetValues, UseFormRegister } from 'react-hook-form';
-import { HealthQuestionnaireType } from '../schema';
-import { FC } from 'react';
-import { HeightUnit, WeightUnit } from '../enums';
-import { Radio } from '../components/Radio';
+import React, { FC } from 'react';
+import { useShallow } from 'zustand/react/shallow';
+import SectionTitle from '../../components/SectionTitle';
+import Input from '../../components/Input';
+import { TFunction } from 'i18next';
+import { UseFormRegister, FieldErrors, UseFormGetValues, Control, useWatch } from 'react-hook-form';
+import { ReferenceFormType } from '../schema';
+import Row from '../../components/Row';
+import { Radio } from '../../components/Radio';
+import { Select } from '../../components/Select';
+import Textarea from '../../components/Textarea';
+import { Relationship, YesNo } from '../enums';
 
 type Step1Props = {
-    register: UseFormRegister<HealthQuestionnaireType>;
-    errors: FieldErrors<HealthQuestionnaireType>;
-    getValues: UseFormGetValues<HealthQuestionnaireType>;
+    register: UseFormRegister<ReferenceFormType>;
+    errors: FieldErrors<ReferenceFormType>;
+    getValues: UseFormGetValues<ReferenceFormType>;
     t: any;
-    control: Control<HealthQuestionnaireType>;
+    control: Control<ReferenceFormType>;
 };
 const Step1: FC<Step1Props> = ({ register, errors, getValues, t, control }) => {
+    const relationshipField = useWatch({ control, name: 'relationship' });
+    const isOther = relationshipField == 'Other';
     return (
-        <>
-            <div className="text-2xl font-bold my-10">
-                <div>BRIDGES FOR PEACE</div>
-                <div>PERSONAL HEALTH QUESTIONNAIRE</div>
-            </div>
-            <div className="flex flex-wrap">
-                <Input label={t('name')} register={register('name')} placeholder={t('name')} error={errors.name || undefined} />
-                <Number label={t('age')} register={register('age')} placeholder={t('age')} error={errors.age || undefined} />
-            </div>
-            <div className="flex flex-wrap items-end text-white">
-                <Number label={t('height')} register={register('height')} placeholder={t('height')} error={errors.height || undefined} />
-                <Radio register={register('heightUnit')} options={HeightUnit(t)} error={errors.heightUnit || undefined} />
-            </div>
-            <div className="flex flex-wrap items-end">
-                <Number label={t('weight')} register={register('weight')} placeholder={t('weight')} error={errors.weight || undefined} />
-                <Radio register={register('weightUnit')} options={WeightUnit(t)} error={errors.weightUnit || undefined} />
-            </div>
-        </>
+        <div>
+            <section>
+                <SectionTitle title={''} />
+                <Row>
+                    <Input
+                        label={t('applicantName')}
+                        register={register('applicantName')}
+                        placeholder={t('applicantName')}
+                        error={errors.applicantName || undefined}
+                    />
+                    <Input
+                        label={t('refereeName')}
+                        register={register('refereeName')}
+                        placeholder={t('refereeName')}
+                        error={errors.refereeName || undefined}
+                    />
+                </Row>
+                <Row>
+                    <Radio
+                        label={t('relationship.title')}
+                        register={register('relationship')}
+                        options={Relationship(t)}
+                        error={errors.relationship}
+                    />
+                    {isOther && (
+                        <Input
+                            label={t('relationshipExplain')}
+                            register={register('relationshipExplain')}
+                            placeholder={t('relationshipExplain')}
+                            error={errors.relationshipExplain || undefined}
+                        />
+                    )}
+                </Row>
+            </section>
+        </div>
     );
 };
+
 export default Step1;

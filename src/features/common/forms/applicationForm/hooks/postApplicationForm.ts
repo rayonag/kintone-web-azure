@@ -13,6 +13,7 @@ const postApplicationForm = async (data: ApplicationFormType, ref: string | unde
         const record: Partial<any> = {
             ref: { value: parseInt(data.ref) },
             office: { value: data.office.office },
+            type: { value: data.type.type },
             firstName: { value: data.firstName },
             middleName: { value: data.middleName },
             lastName: { value: data.lastName },
@@ -127,11 +128,11 @@ const postApplicationForm = async (data: ApplicationFormType, ref: string | unde
             refFriendPhone: { value: data.refFriendPhone },
             refFriendEmail: { value: data.refFriendEmail },
             refFriendAddress: { value: data.refFriendAddress },
-            refOtherName: { value: data.refOtherName },
-            refOtherPhone: { value: data.refOtherPhone },
-            refOtherEmail: { value: data.refOtherEmail },
-            refOtherAddress: { value: data.refOtherAddress },
-            refOtherRelationship: { value: data.refOtherRelationship },
+            refOtherName: { value: data.type.refOtherName },
+            refOtherPhone: { value: data.type.refOtherPhone },
+            refOtherEmail: { value: data.type.refOtherEmail },
+            refOtherAddress: { value: data.type.refOtherAddress },
+            refOtherRelationship: { value: data.type.refOtherRelationship },
             hasFriendsIsrael: { value: data.hasFriendsIsrael },
             hasFriendsIsraelExplain: { value: data.hasFriendsIsraelExplain },
             skillCarpentry: { value: nullIfZero(parseInt(data.skillCarpentry)) },
@@ -163,8 +164,8 @@ const postApplicationForm = async (data: ApplicationFormType, ref: string | unde
             skillAdministration: { value: nullIfZero(parseInt(data.skillAdministration)) },
             skillBookkeeping: { value: nullIfZero(parseInt(data.skillBookkeeping)) },
             skillOperatingSystem: { value: nullIfZero(parseInt(data.skillOperatingSystems)) },
-            skillSystem: { value: [] }, //TODO
-            skillSoftware: { value: [] }, //TODO
+            skillSystem: { value: data.skillSystem },
+            skillSoftware: { value: data.skillSoftware },
             skillOfficeSuite: { value: nullIfZero(parseInt(data.skillOfficeSuite)) },
             skillExcel: { value: nullIfZero(parseInt(data.skillExcel)) },
             skillTyping: { value: nullIfZero(parseInt(data.skillTyping)) },
@@ -180,10 +181,20 @@ const postApplicationForm = async (data: ApplicationFormType, ref: string | unde
             skillMusicalInstrument: { value: nullIfZero(parseInt(data.skillMusicalInstrument)) },
             skillJanitorial: { value: nullIfZero(parseInt(data.skillJanitorial)) },
             skillCooking: { value: nullIfZero(parseInt(data.skillCooking)) },
-            character1: { value: data.character1 },
-            character2: { value: data.character2 },
-            character3: { value: data.character3 },
-            character4: { value: data.character4 }
+            character1: { value: data.characters.character1 },
+            character2: { value: data.characters.character2 },
+            character3: { value: data.characters.character3 },
+            character4: { value: data.characters.character4 },
+            // step 10
+            verify1: { value: data.verify1 ? ['Yes'] : ['No'] },
+            verify2: { value: data.verify2 ? ['Yes'] : ['No'] },
+            verify3: { value: data.verify3 ? ['Yes'] : ['No'] },
+            verify4: { value: data.verify4 ? ['Yes'] : ['No'] },
+            verify5: { value: data.verify5 ? ['Yes'] : ['No'] },
+            verify6: { value: data.verify6 ? ['Yes'] : ['No'] },
+            verify7: { value: data.verify7 ? ['Yes'] : ['No'] },
+            signature: { value: data.signature },
+            signatureDate: { value: convertDate(data.signatureDate) }
         };
         const body = {
             record: record

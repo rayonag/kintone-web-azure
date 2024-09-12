@@ -169,7 +169,7 @@
     "hasHeavyLicense": "Heavy duty license",
     "skillSectionB": "B. Communication",
     "skillWebsite": "Website maintenance",
-    "skillWebDesign": "Website Layout and design (WordPress)",
+    "skillWebDesign": "Website Layout and design",
     "skillIT": "IT support",
     "skillVideo": "Video/editing (Premiere Pro/Final Cut)",
     "skillComputerDesign": "Computer layout & design",
@@ -186,22 +186,24 @@
     "skillBookkeeping": "Bookkeeping",
     "skillOperatingSystems": "Operating Systems",
     "skillSystem": {
-        "title": "Systems",
+        "title": "Operating Systems",
         "options": {
             "PC": "PC",
-            "MAC": "MAC"
+            "MAC": "MAC",
+            "Networking": "Networking"
         }
     },
     "skillSoftware": {
         "title": "Software",
         "options": {
             "SAP": "SAP",
-            "QuickBooks": "QuickBooks"
+            "QuickBooks": "QuickBooks",
+            "softwareDevelopment": "Software Development"
         }
     },
     "skillOfficeSuite": "Microsoft Office Suite",
     "skillExcel": "Microsoft Office Excel",
-    "skillTyping": "Typing-Words/Minute",
+    "skillTyping": "Typing",
     "skillGoogleDrive": "Google Drive",
     "skillSecretarial": "Secretarial",
     "skillOrganizing": "Organizing",
@@ -342,6 +344,8 @@
     },
     "verify6": "I acknowledge that any visa granted to me through BFP is issued according to BFP's legal standing with the Government of Israel and on the basis of its good reputation since its establishment in 1976. I furthermore acknowledge that any such visa is granted solely for the purpose of volunteering with BFP and I will leave Israel upon termination of my time of voluntary service with BFP. I recognize that should I fail to do so, this could have legal ramifications for BFP.",
     "verify7": "I hereby certify that I have verified all the information given above, and that it is true and correct. Should I be accepted and placed as a volunteer in Israel, I agree to place myself under the authority of BFP during my term of service, and to abide by accepted Christian standards of conduct and BFP organizational purposes. I understand that should I act otherwise, I will be requested to leave Israel and return home immediately.",
+    "signature": "Applicant's Signature",
+    "signatureDate": "Date",
     "system": {
         "next": "Save & Continue",
         "back": "Back",

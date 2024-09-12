@@ -23,6 +23,7 @@ import RateUs from '@/components/modal/RateUs';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import useUserStore from '@/features/common/store';
 import { useShallow } from 'zustand/react/shallow';
+import Vara from 'vara';
 // application steps that matches the kintone app
 export type ApplicationStepsMasterApp =
     | 'Applying'
@@ -134,70 +135,161 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
     const knownAs = useUserStore((state) => state.knownAs);
     const all = useUserStore();
     console.log('all', all);
+
+    function VaraText() {
+        let fontSize = 72;
+        if (window.screen.width < 700) fontSize = 32;
+        else if (window.screen.width < 1200) fontSize = 56;
+        useEffect(() => {
+            if (type == 'Zealous')
+                new Vara('#vara-container', 'fonts/test4.json', [
+                    {
+                        text: 'Zealous 8:2',
+                        fontSize: fontSize,
+                        strokeWidth: 1.5,
+                        color: '#fff',
+                        delay: 20000,
+                        textAlign: 'center'
+                    },
+                    {
+                        text: 'Thus says the Lord of hosts:',
+                        fontSize: fontSize * 0.85,
+                        strokeWidth: 1.5,
+                        color: '#fff',
+                        delay: 1000,
+                        textAlign: 'center'
+                    },
+                    {
+                        text: '"I am zealous for Zion with great zeal;',
+                        fontSize: fontSize * 0.85,
+                        strokeWidth: 1.5,
+                        color: '#fff',
+                        textAlign: 'center'
+                    },
+                    {
+                        text: 'with great fervor I am zealous for her."',
+                        fontSize: fontSize * 0.85,
+                        strokeWidth: 1.5,
+                        color: '#fff',
+                        textAlign: 'center'
+                    },
+                    {
+                        text: 'Zechariah 8:2',
+                        fontSize: fontSize * 0.85,
+                        strokeWidth: 1.5,
+                        color: '#fff',
+                        textAlign: 'center'
+                    }
+                ]).animationEnd((i, o) => {
+                    if (typeof i == 'number') {
+                        //console.log('time', (5 - i) * 2);
+                        o.container.style.transition = `opacity 2s ${(5 - i) * 2}s ease-in-out`;
+                        o.container.style.opacity = '0';
+                    }
+                });
+            else
+                new Vara('#vara-container', 'fonts/test4.json', [
+                    {
+                        text: 'Bridges for Peace',
+                        fontSize: fontSize,
+                        strokeWidth: 1,
+                        color: '#fff',
+                        delay: 200,
+                        textAlign: 'center'
+                    },
+                    {
+                        text: '...Your Israel Connection',
+                        fontSize: fontSize * 0.85,
+                        strokeWidth: 1,
+                        delay: 5000,
+                        color: '#fff',
+                        textAlign: 'center'
+                    }
+                ]).animationEnd((i, o) => {
+                    if (typeof i == 'number') {
+                        //console.log('time', (5 - i) * 2);
+                        o.container.style.transition = `all 20s ${i == 0 ? 5 : 0}s ease-in-out`;
+                        o.container.style.opacity = '0';
+                        o.container.style.transform = 'translate(20vw, 20vh)';
+                    }
+                });
+        }, []);
+
+        return <div id="vara-container" className="min-w-[80%] pt-[20vh]"></div>;
+    }
+
     return (
         <Layout>
+            {/* TODO: vara text on background
+            {isLoaded && (
+                <div className="fixed h-full w-full flex justify-center z-[-1]">
+                    <VaraText />
+                </div>
+            )} */}
             <div className="flex flex-col items-center justify-center min-h-[95vh] text-white overflow-hidden">
                 {isLoaded && userRef ? (
-                    <div className="flex flex-col items-center justify-center">
-                        <div>
-                            <h1 className="text-xl my-10">
-                                Welcome{currentStep != 'reviewWebsite' && ' back'} <span>{knownAs || name || ''}</span>!
-                                {/* TODO: review welcome message */}
-                            </h1>
-                        </div>
-                        <Link
-                            href="https://www.bridgesforpeace.com/meet-us/our-vision/"
-                            className="btn flex"
-                            target="_blank"
-                            onClick={async () => await handleCheckListClick('reviewAbout', userRef)}
-                        >
-                            About Bridges for Peace
-                            <ArrowUpRight />
-                        </Link>
-                        <Link
-                            href="https://www.bridgesforpeace.com/get-involved/volunteer/faqs/"
-                            className="btn flex"
-                            target="_blank"
-                            onClick={async () => await handleCheckListClick('reviewFaq', userRef)}
-                        >
-                            Frequently Asked Questions
-                            <ArrowUpRight />
-                        </Link>
-                        <div className="relative flex items-center">
-                            <Link href="/apply/form" {...buttonProps('submitApplication')}>
-                                Online Application Form
+                    <>
+                        <div className="flex flex-col items-center justify-center">
+                            <div>
+                                <h1 className="text-xl my-10">
+                                    Welcome{currentStep != 'reviewWebsite' && ' back'} <span>{knownAs || name || ''}</span>!
+                                    {/* TODO: review welcome message */}
+                                </h1>
+                            </div>
+                            <Link
+                                href="https://www.bridgesforpeace.com/meet-us/our-vision/"
+                                className="btn flex"
+                                target="_blank"
+                                onClick={async () => await handleCheckListClick('reviewAbout', userRef)}
+                            >
+                                About Bridges for Peace
+                                <ArrowUpRight />
                             </Link>
-                            {dashboardUser.formSubmission?.includes('Application Form Completed') && <Check />}
-                        </div>
-                        {type == 'Zealous' && (
+                            <Link
+                                href="https://www.bridgesforpeace.com/get-involved/volunteer/faqs/"
+                                className="btn flex"
+                                target="_blank"
+                                onClick={async () => await handleCheckListClick('reviewFaq', userRef)}
+                            >
+                                Frequently Asked Questions
+                                <ArrowUpRight />
+                            </Link>
                             <div className="relative flex items-center">
-                                <Link href="/apply/financial-obligation" {...buttonProps('submitApplication')}>
-                                    Financial Obligation Policy
+                                <Link href="/apply/form" {...buttonProps('submitApplication')}>
+                                    Online Application Form
                                 </Link>
                                 {dashboardUser.formSubmission?.includes('Application Form Completed') && <Check />}
                             </div>
-                        )}
-                        <div className="relative flex items-center">
-                            <Link href="/apply/health-questionnaire" {...buttonProps('submitApplication')}>
-                                Personal Health Questionnaire
+                            {type == 'Zealous' && (
+                                <div className="relative flex items-center">
+                                    <Link href="/apply/financial-obligation" {...buttonProps('submitApplication')}>
+                                        Financial Obligation Policy
+                                    </Link>
+                                    {dashboardUser.formSubmission?.includes('Application Form Completed') && <Check />}
+                                </div>
+                            )}
+                            <div className="relative flex items-center">
+                                <Link href="/apply/health-questionnaire" {...buttonProps('submitApplication')}>
+                                    Personal Health Questionnaire
+                                </Link>
+                                {dashboardUser.formSubmission?.includes('Personal Health Questionnaire') && <Check />}
+                            </div>
+                            <div className="relative flex items-center">
+                                <Link href="/apply/documents" {...buttonProps('submitDocuments')}>
+                                    Submit Necessary Documents
+                                </Link>
+                                {repo?.allDocumentsSubmitted && <Check />}
+                            </div>
+                            <Helper currentStep={currentStep} userRef={userRef} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+                            {currentStep == 'complete' && <RateUs />}
+                            <Link href="/contact" className="btn">
+                                Contact Us
                             </Link>
-                            {dashboardUser.formSubmission?.includes('Personal Health Questionnaire') && <Check />}
+                            <button className="btn" onClick={handleLogout}>
+                                Log out
+                            </button>
                         </div>
-                        <div className="relative flex items-center">
-                            <Link href="/apply/documents" {...buttonProps('submitDocuments')}>
-                                Submit Necessary Documents
-                            </Link>
-                            {repo?.allDocumentsSubmitted && <Check />}
-                        </div>
-                        <Helper currentStep={currentStep} userRef={userRef} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
-                        {currentStep == 'complete' && <RateUs />}
-                        <Link href="/contact" className="btn">
-                            Contact Us
-                        </Link>
-                        <button className="btn" onClick={handleLogout}>
-                            Log out
-                        </button>
-                    </div>
+                    </>
                 ) : (
                     <>
                         <LoadingSpinner />

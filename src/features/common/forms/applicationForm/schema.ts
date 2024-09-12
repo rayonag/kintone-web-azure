@@ -1,5 +1,6 @@
+import { sign } from 'crypto';
 import { DateTime } from 'luxon';
-import { z } from 'zod';
+import { string, z } from 'zod';
 
 const validateCheckbox = (val: string[]) => {
     return val.length > 0;
@@ -25,7 +26,6 @@ const validateNumber = (value: string) => {
     );
 };
 const validateSSN = (value: string | undefined, ctx: any, hi: any, s: any) => {
-    debugger;
     if (ctx.parent['office'] === 'USA' && !value) {
         ctx.addIssue({
             code: z.ZodIssueCode.custom,
@@ -33,6 +33,17 @@ const validateSSN = (value: string | undefined, ctx: any, hi: any, s: any) => {
         });
     }
 };
+
+// common
+const yesNo: z.ZodEffects<z.ZodNullable<z.ZodString>> = z.string().nullable().refine(validateRadio, error_required);
+const date: z.ZodEffects<z.ZodString> = z.string().min(1).max(50).refine(validateDate, error_invalidDate);
+const date_optional: z.ZodEffects<z.ZodOptional<z.ZodString>> = z.string().optional().refine(validateDate, error_invalidDate);
+const string50: z.ZodString = z.string().min(1).max(50);
+const string300: z.ZodString = z.string().min(1).max(300);
+const string2000: z.ZodString = z.string().min(1).max(2000);
+const string4000: z.ZodString = z.string().min(1).max(4000);
+const string_optional: z.ZodOptional<z.ZodString> = z.string().optional();
+
 // system
 const ref: z.ZodString = z.string().min(1).max(50);
 const nationalOffice = z.discriminatedUnion('office', [
@@ -46,16 +57,25 @@ const nationalOffice = z.discriminatedUnion('office', [
         ssnNumber: z.string().optional()
     })
 ]);
-
-// common
-const yesNo: z.ZodEffects<z.ZodNullable<z.ZodString>> = z.string().nullable().refine(validateRadio, error_required);
-const date: z.ZodEffects<z.ZodString> = z.string().min(1).max(50).refine(validateDate, error_invalidDate);
-const date_optional: z.ZodEffects<z.ZodOptional<z.ZodString>> = z.string().optional().refine(validateDate, error_invalidDate);
-const string50: z.ZodString = z.string().min(1).max(50);
-const string300: z.ZodString = z.string().min(1).max(300);
-const string2000: z.ZodString = z.string().min(1).max(2000);
-const string4000: z.ZodString = z.string().min(1).max(4000);
-const string_optional: z.ZodOptional<z.ZodString> = z.string().optional();
+const type = z.discriminatedUnion('type', [
+    // 9 reference Other is required if type is Long Term or Zealous
+    z.object({
+        type: z.literal('Short Term'),
+        refOtherName: string_optional,
+        refOtherAddress: string_optional,
+        refOtherPhone: string_optional,
+        refOtherEmail: string_optional,
+        refOtherRelationship: string_optional
+    }),
+    z.object({
+        type: z.enum(['Long Term', 'Zealous']),
+        refOtherName: string50,
+        refOtherAddress: string50,
+        refOtherPhone: string50,
+        refOtherEmail: string50.email(),
+        refOtherRelationship: string50
+    })
+]);
 
 // 1
 const firstName = string50;
@@ -160,7 +180,24 @@ const interestIsrael = string4000;
 
 // 7
 const skillInventory = z.string();
+
 // 8
+const characters = z
+    .object({
+        character1: z.array(z.string()),
+        character2: z.array(z.string()),
+        character3: z.array(z.string()),
+        character4: z.array(z.string())
+    })
+    .refine(
+        (obj) => {
+            return Object.keys(obj).some((key) => {
+                const typedKey = key as keyof typeof obj;
+                return obj[typedKey].some((str) => str.trim() !== '');
+            });
+        },
+        { message: 'You must select at least one' }
+    );
 const checkBox: z.ZodArray<z.ZodString> = z.array(z.string());
 
 // 9
@@ -176,13 +213,6 @@ const refFriendName: z.ZodString = z.string().min(1).max(50);
 const refFriendAddress: z.ZodString = z.string().min(1).max(50);
 const refFriendPhone: z.ZodString = z.string().min(1).max(50);
 const refFriendEmail: z.ZodString = z.string().email();
-const refOtherName: z.ZodString = z.string().min(1).max(50);
-const refOtherAddress: z.ZodString = z.string().min(1).max(50);
-const refOtherPhone: z.ZodString = z.string().min(1).max(50);
-const refOtherEmail: z.ZodString = z.string().email();
-const refOtherRelationship: z.ZodString = z.string().min(1).max(50);
-const hasFriendsIsrael: z.ZodEffects<z.ZodArray<z.ZodString>> = z.string().array().refine(validateCheckbox, error_required);
-const hasFriendsIsraelExplain: z.ZodOptional<z.ZodString> = z.string().optional();
 
 // 10
 const verify: z.ZodEffects<z.ZodBoolean> = z.boolean().refine((value) => value === true, {
@@ -209,6 +239,7 @@ export const ApplicationFormSchema = z.object({
     // system
     ref: ref,
     office: nationalOffice,
+    type: type,
 
     // 1
     firstName: firstName,
@@ -226,7 +257,7 @@ export const ApplicationFormSchema = z.object({
     passportIssued: passportIssued,
     age: age,
     birthday: date,
-    ssnNumber: ssnNumber,
+    //ssnNumber is under office object
     sex: sex,
     maritalStatus: maritalStatus,
     spouseFullName: spouseFullName,
@@ -265,7 +296,7 @@ export const ApplicationFormSchema = z.object({
     maxAvailability: string_optional,
     preferredStartDate: date_optional,
     preferredStartDate2: date_optional,
-    ifNoPosition: ifNoPosition,
+    ifNoPosition: string_optional, // making optional for Zealous
 
     // 5
     educationTable: educationTable,
@@ -348,6 +379,7 @@ export const ApplicationFormSchema = z.object({
     skillSpecialTraining: string_optional,
 
     // 8
+    characters: characters,
     character1: checkBox,
     character2: checkBox,
     character3: checkBox,
@@ -366,11 +398,7 @@ export const ApplicationFormSchema = z.object({
     refFriendAddress: refFriendAddress,
     refFriendPhone: refFriendPhone,
     refFriendEmail: refFriendEmail,
-    refOtherName: string_optional,
-    refOtherAddress: string_optional,
-    refOtherPhone: string_optional,
-    refOtherEmail: string_optional,
-    refOtherRelationship: string_optional,
+    // refOther is under type object
     hasFriendsIsrael: yesNo,
     hasFriendsIsraelExplain: string_optional,
 
@@ -381,7 +409,9 @@ export const ApplicationFormSchema = z.object({
     verify4: verify,
     verify5: verify,
     verify6: verify,
-    verify7: verify
+    verify7: verify,
+    signature: string50,
+    signatureDate: date
 });
 
 export type ApplicationFormType = z.infer<typeof ApplicationFormSchema>;
@@ -580,7 +610,7 @@ export const ApplicationFormFields = [
         'skillSpecialTraining'
     ],
     // Step 8: Character References
-    ['character1', 'character2', 'character3', 'character4'],
+    ['characters', 'character1', 'character2', 'character3', 'character4'],
     // Step 9: References
     [
         'refPastorName',
@@ -595,14 +625,15 @@ export const ApplicationFormFields = [
         'refFriendAddress',
         'refFriendPhone',
         'refFriendEmail',
-        'refOtherName',
-        'refOtherAddress',
-        'refOtherPhone',
-        'refOtherEmail',
-        'refOtherRelationship',
+        // 'refOtherName',
+        // 'refOtherAddress',
+        // 'refOtherPhone',
+        // 'refOtherEmail',
+        // 'refOtherRelationship',
+        'type',
         'hasFriendsIsrael',
         'hasFriendsIsraelExplain'
     ],
     // Step 10: Verification
-    ['verify1', 'verify2', 'verify3', 'verify4', 'verify5', 'verify6', 'verify7']
+    ['verify1', 'verify2', 'verify3', 'verify4', 'verify5', 'verify6', 'verify7', 'signature', 'signatureDate']
 ] as const;

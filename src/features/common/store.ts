@@ -1,4 +1,5 @@
 import getUserApplicationRef from '@/common/getUserApplicationRef';
+import { ApplicationTypes } from '@/constants/applicationTypes';
 import { NationalOffice } from '@/constants/nationalOffices';
 import { create } from 'zustand';
 
@@ -12,7 +13,7 @@ type State = {
     documents: string[];
     formSubmission: string[];
     nationalOffice: NationalOffice | null;
-    applicationType: string;
+    applicationType: ApplicationTypes | null;
 };
 
 type Action = {
@@ -38,7 +39,7 @@ const useUserStore = create<State & Action>((set, get) => ({
     documents: [],
     formSubmission: [],
     nationalOffice: null,
-    applicationType: '',
+    applicationType: null,
     initUser: async (username, ref) => {
         if (!username || !ref) return;
         if (typeof window === 'undefined') return;

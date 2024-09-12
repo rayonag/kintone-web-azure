@@ -5,6 +5,8 @@ import { referenceFormURL } from '@/common/env';
 import Layout_fadeIn from '@/styles/Layout_fadeIn';
 import { useLoading } from '@/common/context/loading';
 import logError from '@/common/logError';
+import ReferenceForm from '@/features/common/forms/reference';
+import Layout_fadeIn_reference from '@/styles/Layout_fadeIn_reference';
 
 const ApplicationForm = () => {
     // State to track whether the iframe content is loading
@@ -51,8 +53,8 @@ const ApplicationForm = () => {
 
     return (
         // Use a wrapper div for the entire page
-        <Layout_fadeIn>
-            <div style={{ height: '100vh', width: '100vw', display: 'flex', flexDirection: 'column' }}>
+        <Layout_fadeIn_reference>
+            {/* <div style={{ height: '100vh', width: '100vw', display: 'flex', flexDirection: 'column' }}>
                 <>
                     {ref && (
                         <iframe
@@ -63,8 +65,9 @@ const ApplicationForm = () => {
                         ></iframe>
                     )}
                 </>
-            </div>
-        </Layout_fadeIn>
+            </div> */}
+            <ReferenceForm />
+        </Layout_fadeIn_reference>
     );
 };
 

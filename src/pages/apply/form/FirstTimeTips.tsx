@@ -51,7 +51,13 @@ const FirstTimeTips: FC<FirstTimeTipsProps> = ({ type, handleContinueOnFirstTime
             {page == 0 && <ConfirmType />}
             {page != 0 && (
                 <div ref={scrollRef} className="overflow-y-scroll h-full min-w-80 w-full p-[5%] md:px-[20%]">
-                    {page == 1 && <DoctrinalStatement />}
+                    {page == 1 && (
+                        <>
+                            <DoctrinalStatement />
+                            <EvangelismStatement />
+                            <MessianicJudaismStatement />
+                        </>
+                    )}
                     {page == 2 && <TermsAndConditions type={type} />}
                     <div className="flex justify-center flex-col">
                         {page == 1 && (
@@ -96,6 +102,30 @@ const FirstTimeTips: FC<FirstTimeTipsProps> = ({ type, handleContinueOnFirstTime
 
 export default FirstTimeTips;
 
+// for step10
+export const MissionStatement = () => (
+    <>
+        <div className="text-2xl m-5 font-serif italic text-center">MISSION STATEMENT</div>
+        <div className="mb-3 text-2xl"></div>
+        <div className="m-3 mb-8 text-justify">
+            Bridges For Peace (BFP): Christians supporting Israel and building relationships between Christians and Jews in Israel and around the
+            world.
+        </div>
+        <div className="text-2xl m-5 font-serif italic text-center">EXPANDED VISION</div>
+        <div className="m-3 text-justify">
+            It is our desire to see Christians and Jews working side by side for better understanding and a more secure Israel.
+        </div>
+        <div className="m-3 text-justify">
+            Founded in 1976, Bridges for Peace seeks to be a ministry of hope and reconciliation. Through programs both in Israel and worldwide, we
+            are giving Christians the opportunity to actively express their biblical responsibility before God to be faithful to Israel and the Jewish
+            community.
+        </div>
+        <div className="m-3 mb-8 text-justify">
+            For too long Christians have been silent. For too long the Jewish community has had to fight its battles alone. It is time Christian
+            individuals and congregations speak up for the people who gave us the Bible.
+        </div>
+    </>
+);
 const TermsAndConditions = (props: { type: string | null }) => {
     return (
         <div className="p-4">
@@ -210,7 +240,7 @@ const TermsAndConditions = (props: { type: string | null }) => {
     );
 };
 
-const DoctrinalStatement = () => {
+export const DoctrinalStatement = () => {
     const statementTitleStyle = 'mb-3 text-xl md:text-2xl';
     const textStyle = 'm-3 mb-8';
     const italicVerse = (verse: string) => <span className="italic">{verse}</span>;
@@ -270,53 +300,62 @@ const DoctrinalStatement = () => {
             <a href="/files/BFP-Doctrinal-Statement.pdf" download="BFP-Doctrinal-Statement.pdf" className="m-3 underline">
                 Download BFP Doctrinal Statement
             </a>
-            <div className="text-xl md:text-2xl m-5 font-serif italic text-center">POSITION ON EVANGELISM</div>
-            <div className="m-3 mb-8 text-justify">
-                <div className="mb-3">
-                    Bridges for Peace is a Jerusalem-based, Bible-believing Christian organization supporting Israel and building relationships
-                    between Jews and Christians worldwide through education and practical deeds, expressing God’s love and mercy.
-                </div>
-                <div className="mb-3">
-                    The history of Christian–Jewish relationships is seriously marred by the anti-Semitic behavior of Christians toward Jews. The
-                    Crusades, the Inquisition, the pogroms, the Holocaust and other such persecutions have left a deep wound in the Jewish soul.
-                    Tragically, established Christian denominations and institutions participated, either actively or by turning a blind eye, in these
-                    atrocities. This has created an atmosphere of fear and distrust that has made honest communication between the two communities
-                    nearly impossible.
-                </div>
-                <div className="mb-3">
-                    Bridges for Peace is a Bible-believing Christian organization that does not proselytize. We are committed to being living
-                    witnesses of the love of God in the name of Jesus through unconditional friendship and support, in order that the wounds of the
-                    past may be healed and doors of communication can be opened between Christians and Jews.
-                </div>
-            </div>
-            <div className="text-xl md:text-2xl m-5 font-serif italic text-center">STATEMENT ON MESSIANIC JUDAISM</div>
-            <div className="m-3 mb-8 text-left md:text-justify">
-                <div className="mb-3">
-                    Recognizing the variety of callings within the body of Christ (e.g. of Paul as an apostle to the Gentiles; James and Peter to “the
-                    circumcision”) we believe it is unwise to appear to be promoting the Messianic movement as Bridges for Peace’s mandate, while our
-                    calling is building bridges between the Jewish community and the wider body of Christ. This is not meant to restrict your personal
-                    choices of worship, it just means that Bridges for Peace, as an organization, is not to be identified with or promote Messianic
-                    Jewish activities.
-                </div>
-                <div className="mb-3">
-                    Our ministry seeks to repair centuries of Jewish pain, as members of the worldwide Church. Our calling is unique and specialized.
-                    We walk a fine line between the Jewish world and the Christian world.
-                </div>
-                <div className="mb-3">
-                    In light of this, it is necessary that all of the Bridges for Peace staff be in complete agreement with the vision, calling and
-                    style of Bridges for Peace. It is not possible or permissible for a person to be a staff member of Bridges for Peace, sharing our
-                    calling, vision and values during working hours and then be involved in activities during off hours that are not in full agreement
-                    with our calling, vision and values. A staff member must commit to follow the vision 24/7. While a staff member may attend a
-                    congregation which is not in full agreement, that staff member should not be in leadership, frontline involvement or participate
-                    in any outreach programs which could jeopardize the ministry of Bridges for Peace in Israel.
-                </div>
-                <div className="mb-3">
-                    When a Bridges for Peace center opens in a new region of Israel, any staff members attached to that center will not attend local
-                    congregations until such time as a positive reputation has been developed in the community, Bridges for Peace leadership has an
-                    opportunity to assess the reputation of the various congregations in the eyes of the Jewish majority and the senior leadership
-                    team determines that the image of Bridges for Peace will not suffer.
-                </div>
-            </div>
         </div>
     );
 };
+
+export const EvangelismStatement = () => (
+    <>
+        <div className="text-xl md:text-2xl m-5 font-serif italic text-center">POSITION ON EVANGELISM</div>
+        <div className="m-3 mb-8 text-justify">
+            <div className="mb-3">
+                Bridges for Peace is a Jerusalem-based, Bible-believing Christian organization supporting Israel and building relationships between
+                Jews and Christians worldwide through education and practical deeds, expressing God’s love and mercy.
+            </div>
+            <div className="mb-3">
+                The history of Christian–Jewish relationships is seriously marred by the anti-Semitic behavior of Christians toward Jews. The
+                Crusades, the Inquisition, the pogroms, the Holocaust and other such persecutions have left a deep wound in the Jewish soul.
+                Tragically, established Christian denominations and institutions participated, either actively or by turning a blind eye, in these
+                atrocities. This has created an atmosphere of fear and distrust that has made honest communication between the two communities nearly
+                impossible.
+            </div>
+            <div className="mb-3">
+                Bridges for Peace is a Bible-believing Christian organization that does not proselytize. We are committed to being living witnesses of
+                the love of God in the name of Jesus through unconditional friendship and support, in order that the wounds of the past may be healed
+                and doors of communication can be opened between Christians and Jews.
+            </div>
+        </div>
+    </>
+);
+export const MessianicJudaismStatement = () => (
+    <>
+        <div className="text-xl md:text-2xl m-5 font-serif italic text-center">STATEMENT ON MESSIANIC JUDAISM</div>
+        <div className="m-3 mb-8 text-left md:text-justify">
+            <div className="mb-3">
+                Recognizing the variety of callings within the body of Christ (e.g. of Paul as an apostle to the Gentiles; James and Peter to “the
+                circumcision”) we believe it is unwise to appear to be promoting the Messianic movement as Bridges for Peace’s mandate, while our
+                calling is building bridges between the Jewish community and the wider body of Christ. This is not meant to restrict your personal
+                choices of worship, it just means that Bridges for Peace, as an organization, is not to be identified with or promote Messianic Jewish
+                activities.
+            </div>
+            <div className="mb-3">
+                Our ministry seeks to repair centuries of Jewish pain, as members of the worldwide Church. Our calling is unique and specialized. We
+                walk a fine line between the Jewish world and the Christian world.
+            </div>
+            <div className="mb-3">
+                In light of this, it is necessary that all of the Bridges for Peace staff be in complete agreement with the vision, calling and style
+                of Bridges for Peace. It is not possible or permissible for a person to be a staff member of Bridges for Peace, sharing our calling,
+                vision and values during working hours and then be involved in activities during off hours that are not in full agreement with our
+                calling, vision and values. A staff member must commit to follow the vision 24/7. While a staff member may attend a congregation which
+                is not in full agreement, that staff member should not be in leadership, frontline involvement or participate in any outreach programs
+                which could jeopardize the ministry of Bridges for Peace in Israel.
+            </div>
+            <div className="mb-3">
+                When a Bridges for Peace center opens in a new region of Israel, any staff members attached to that center will not attend local
+                congregations until such time as a positive reputation has been developed in the community, Bridges for Peace leadership has an
+                opportunity to assess the reputation of the various congregations in the eyes of the Jewish majority and the senior leadership team
+                determines that the image of Bridges for Peace will not suffer.
+            </div>
+        </div>
+    </>
+);

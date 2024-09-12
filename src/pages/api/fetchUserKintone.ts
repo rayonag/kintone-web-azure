@@ -32,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             const recordArray = await client.record.getAllRecords({ app: '121', condition: `email="${username}"`, orderBy: 'ref desc' });
             if (recordArray.length == 0) res.status(501).json({ ok: false });
             else {
-                if (recordArray.length > 1) console.log('Found more than one user with the same email.'); // TODO: add verification
+                //if (recordArray.length > 1) console.log('Found more than one user with the same email.'); // TODO: add verification
 
                 const user = recordArray[0];
                 // type guard
