@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import { UseFormRegisterReturn, FieldError } from 'react-hook-form';
 
-type NumebrProps = { label: string; register: UseFormRegisterReturn; placeholder?: string; error: FieldError | undefined };
-const Number: FC<NumebrProps> = ({ label, register, placeholder, error }) => {
+type NumebrProps = { label: string; register: UseFormRegisterReturn; placeholder?: string; error: FieldError | undefined; theme?: string };
+const Number: FC<NumebrProps> = ({ label, register, placeholder, error, theme }) => {
     return (
-        <label className="flex flex-col my-2 w-40 me-5 grow md:max-w-sm">
+        <label className={`${theme == 'dark' ? '' : 'text-black'} flex flex-col my-2 w-40 me-5 grow md:max-w-sm`}>
             <div className="font-semibold mb-1">{label}</div>
             <input
                 type="number"

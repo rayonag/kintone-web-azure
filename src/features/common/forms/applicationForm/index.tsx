@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useReducer, useState } from 'react';
 import Step1 from './views/Step1';
 import { useDashboardUser } from '@/common/context/dashboardUser';
@@ -36,6 +37,15 @@ import common_en from '@/libs/i18n/common/en.json';
 const ApplicationForm = (props: any) => {
     const [step, setStep] = useState(1);
     const { setIsLoading } = useLoading();
+    const { username, name, type, initUser } = useUserStore(
+        useShallow((state) => ({
+            username: state.username,
+            name: state.name,
+            knownAs: state.knownAs,
+            type: state.applicationType,
+            initUser: state.initUser
+        }))
+    );
     //const [modalIsOpen, setModalIsOpen] = useState(false);
     // for future use on multi language
     // currently disabled
@@ -49,11 +59,6 @@ const ApplicationForm = (props: any) => {
     //const [locale, dispatch] = useReducer<(state: string, actions: string) => string>(langReducer, initialLang);
     const form = props.repo;
     const dashboardUser = useDashboardUser();
-    // const { username } = useUserStore(
-    //     useShallow((state) => ({
-    //         username: state.username
-    //     }))
-    // );
     const {
         formState: { errors: formatError },
         trigger,
@@ -70,14 +75,15 @@ const ApplicationForm = (props: any) => {
     });
 
     z.setErrorMap(customErrorMap(t));
-
     const validate = async () => {
         const values = getValues();
+        console.log('values', values);
         const isValid = await trigger(ApplicationFormFields[step] as any); // TODO: review type
         if (isValid) return true;
         else {
             const firstErrorField = Object.keys(formatError)[0];
             const errorElement = document.querySelector(`[name="${firstErrorField}"]`);
+            console.log('errorElement', firstErrorField);
             if (errorElement) {
                 errorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
@@ -87,8 +93,11 @@ const ApplicationForm = (props: any) => {
 
     useEffect(() => {
         if (dashboardUser.ref) setValue('ref', dashboardUser.ref);
-        if (dashboardUser.office) setValue('office', dashboardUser.office);
+        if (dashboardUser.office) setValue('office.office', dashboardUser.office);
     }, [dashboardUser]);
+    useEffect(() => {
+        if (type) setValue('type.type', type);
+    }, [type]);
 
     useEffect(() => {
         document.querySelector('#section-title')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -124,6 +133,7 @@ const ApplicationForm = (props: any) => {
         } else if (isResume) {
             const data = props.repo.prefilledFormRecord;
             convertPrefilledFormRecord(data, setValue);
+            //debugger;
             setStep(parseInt(data['currentStep'].value) || 1);
             setIsModalOpen(false);
         } else {
@@ -143,9 +153,9 @@ const ApplicationForm = (props: any) => {
         if (!window.confirm('Do you want to submit?')) return;
         const values = getValues();
         setIsLoading(true);
-        postTempApplicationForm(values, dashboardUser.ref || '0', step);
         const res = await postApplicationForm(values, dashboardUser.ref || undefined);
         if (res) {
+            postTempApplicationForm(values, dashboardUser.ref || '0', step);
             alert('Your form has been submitted!');
             setIsLoading(false);
             router.push('/apply');
@@ -190,7 +200,7 @@ const ApplicationForm = (props: any) => {
                     {step == 1 && <Step1 register={register} getValues={getValues} errors={formatError} t={t} control={control} />}
                     {step == 2 && <Step2 register={register} getValues={getValues} errors={formatError} t={t} />}
                     {step == 3 && <Step3 register={register} getValues={getValues} errors={formatError} t={t} />}
-                    {step == 4 && <Step4 register={register} getValues={getValues} errors={formatError} t={t} control={control} />}
+                    {step == 4 && <Step4 register={register} getValues={getValues} errors={formatError} t={t} control={control} type={type} />}
                     {step == 5 && <Step5 register={register} getValues={getValues} errors={formatError} t={t} control={control} />}
                     {step == 6 && <Step6 register={register} getValues={getValues} errors={formatError} t={t} />}
                     {step == 7 && <Step7 register={register} getValues={getValues} errors={formatError} t={t} control={control} />}

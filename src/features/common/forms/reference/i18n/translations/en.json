@@ -1,61 +1,177 @@
 {
-    "name": "Name",
-    "age": "Age",
-    "height": "Height",
-    "heightUnit": {
-        "ft": "ft",
-        "cm": "cm"
+    "comment": "### Step1 ###",
+    "applicantName": "Appicant's Name",
+    "refereeName": "Referee Name",
+    "relationship": {
+        "title": "Describe your relationship with the applicant",
+        "options": {
+            "pastor": "Pastor",
+            "friend": "Friend",
+            "employer": "Employer",
+            "professor": "Professor",
+            "other": "Other"
+        }
     },
-    "weight": "Weight",
-    "weightUnit": {
-        "lbs": "lbs",
-        "kg": "kg"
+    "relationshipExplain": "If other, please explain",
+
+    "comment2": "### Step2 ###",
+    "indicationDesire": {
+        "title": "Is there any indication that the applicant’s desire to enter this program has been significantly influenced by",
+        "options": {
+            "travel": "A desire for travel, adventure or cultural development",
+            "escape": "Escape from difficult personal, family or work situation",
+            "none": "None of the above"
+        }
     },
-    "migranes": "Migranes",
-    "headInjury": "Head Injury",
-    "weakness": "Weakness",
-    "backProblems": "Back Problems",
-    "asthma": "Asthma",
-    "lossHearing": "Loss Hearing",
-    "epilepsy": "Epilepsy",
-    "anxiety": "Anxiety",
-    "fatigue": "Fatigue",
-    "diabetes": "Diabetes",
-    "hemorrhoids": "Hemorrhoids",
-    "hepatitis": "Hepatitis",
-    "stroke": "Stroke",
-    "emphysema": "Emphysema",
-    "anemia": "Anemia",
-    "neckPain": "Neck Pain",
-    "fainting": "Fainting",
-    "dizziness": "Dizziness",
-    "heartProblems": "Heart Problems",
-    "tuberculosis": "Tuberculosis",
-    "lossVision": "Loss of Vision",
-    "depression": "Depression",
-    "shortBreath": "Shortness of Breath",
-    "arthritis": "Arthritis",
-    "vomiting": "Vomiting",
-    "hiv": "HIV/AIDS",
-    "abnormalBleeding": "Abnormal Bleeding",
-    "cancer": "Cancer",
-    "brokenBones": "Broken Bones",
-    "highBloodPressure": "High Blood Pressure",
-    "error": {
-        "required": "This field is required",
-        "too_big": "Answer exceeds the limit"
+    "indicationDesireExplain": "If so, please explain:",
+    "doctrinalPoint": "Do you know any doctrinal point on which the applicant is not well balanced? If so, please describe:",
+    "ethics": " To the best of your knowledge, does the applicant uphold a Christian code of ethics? (Galatians 5:22–23)",
+    "ethicsExplain": "If not, please explain:",
+    "comeAcross": "How does this person's Christianity come across to you?",
+    "rateFollowInstructions": "How would you rate the applicant's ability to follow instructions and do apparently menial work?",
+    "rateAttitude": "How would you rate the applicant's attitude toward serving others?",
+    "rateVocation": "How would you estimate the applicant's ability in his/her chosen vocation or avocation?",
+
+    "comment3": "### Step3 ###",
+    "demonstratedServantHeart": "Briefly share a situation where the applicant demonstrated a loving, humble servant's heart.",
+    "dealtProblem": "If possible, share a situation where the applicant has dealt with problems. How did he or she work through the situation?",
+    "familyRelationship": "If the applicant is married, how would you describe the family relationship?",
+    "guest": "Would you be happy for this person/couple to be a guest in your home?",
+    "guestExplain": "If not, please explain:",
+    "showInterest": "Has the applicant shown an interest in Israel?",
+    "showInterestComment": "Additional comments:",
+    "christianJewishRelations": "Has the applicant been involved in or expressed a desire to develop Christian-Jewish relations?",
+    "christianJewishRelationsComment": "Additional comments:",
+    "aptitudes": "Does the applicant have any special aptitudes or accomplishments you wish to mention? If so, please describe:",
+
+    "comment4": "### Step4 ###",
+    "traitTitle": "Please give your evaluation of the following traits of the applicant. Read through the list, marking 1 through 5 with:",
+    "traitPhysicalCondition": "Physical condition",
+    "traitEmotionalStability": "Emotional stability",
+    "traitSelfDiscipline": "Self-discipline",
+    "traitFinancialStewardship": "Financial stewardship",
+    "traitSelflessness": "Selflessness",
+    "traitFriendliness": "Friendliness",
+    "traitSocialAcceptability": "Social acceptability",
+    "traitServanthood": "Servanthood",
+    "traitLeadership": "Leadership",
+    "traitTeamwork": "Teamwork",
+    "traitJudgment": "Judgment & common sense",
+    "traitPersonalAppearance": "Personal appearance",
+    "traitWorkmanship": "Workmanship",
+    "traitFollowingOrders": "Following orders",
+    "traitSensitivity": "Sensitivity to others",
+    "traitAdaptability": "Adaptability",
+    "traitIndustry": "Industry & achievement",
+    "traitPerseverance": "Perseverance",
+    "traitOrderliness": "Orderliness",
+    "traitPersonalBibleStudy": "Personal Bible study",
+    "traitPersonalPrayerLife": "Personal prayer life",
+    "traitTeachableSpirit": "Teachable spirit",
+
+    "characterTitle": "Please read through the list of character strengths below and check those that describe a consistent character trait of the applicant.",
+    "character1": {
+        "title": "",
+        "options": {
+            "takeCharge": "Take charge",
+            "determined": "Determined",
+            "bold": "Bold",
+            "firm": "Firm",
+            "purposeful": "Purposeful",
+            "assertive": "Assertive",
+            "enterprising": "Enterprising",
+            "leader": "Leader",
+            "competitive": "Competitive",
+            "decisionMaker": "Decision maker",
+            "selfReliant": "Self-reliant",
+            "adventurous": "Adventurous",
+            "goalDriven": "Goal-driven",
+            "enjoyChallenge": "Enjoy a challenge"
+        }
     },
-    "q1": "If you answered Yes to any of the previous page, please explain:",
-    "q2": "Prescription medications you are currently taking:",
-    "q3": "Allergies: (Medicines[drugs], Foods, Animals, or Pollens)",
-    "q4": "List dates and purposes of any hospitalizations:",
-    "q5": "Is there any possibility that you are pregnant?",
-    "q6": "Are there any other health problems that you have at this time?",
-    "verify": "I verify that all of the above is correct to the best of my knowledge.",
+    "character2": {
+        "title": "Character Reference 2",
+        "options": {
+            "visionary": "Visionary",
+            "takeRisk": "Take risks",
+            "energetic": "Energetic",
+            "motivator": "Motivator",
+            "likeVariety": "Like variety",
+            "promoter": "Promoter",
+            "funLoving": "Fun-loving",
+            "verbal": "Verbal",
+            "creative": "Creative",
+            "enjoyChange": "Enjoy change",
+            "groupOriented": "Group-oriented",
+            "avoidDetails": "Avoid details",
+            "mixEasily": "Mix easily",
+            "openToNewIdeas": "Open to new ideas"
+        }
+    },
+    "character3": {
+        "title": "Character Reference 3",
+        "options": {
+            "loyal": "Loyal",
+            "evenKeeled": "Even-keeled",
+            "nonDemanding": "Non-demanding",
+            "avoidConflict": "Avoid conflict",
+            "optimistic": "Optimistic",
+            "enjoyRoutine": "Enjoy routine",
+            "goodListener": "Good listener",
+            "enjoyDeepRelationships": "Enjoy deep Relationships",
+            "adaptable": "Adaptable",
+            "sympathetic": "Sympathetic",
+            "thoughtful": "Thoughtful",
+            "tolerant": "Tolerant",
+            "nurturing": "Nurturing",
+            "patient": "Patient"
+        }
+    },
+    "character4": {
+        "title": "Character Reference 4",
+        "options": {
+            "deliberate": "Deliberate",
+            "controlled": "Controlled",
+            "reserved": "Reserved",
+            "practical": "Practical",
+            "orderly": "Orderly",
+            "discerning": "Discerning",
+            "predictable": "Predictable",
+            "factual": "Factual",
+            "inquisitive": "Inquisitive",
+            "detailed": "Detailed",
+            "analytical": "Analytical",
+            "persistent": "Persistent",
+            "scheduled": "Scheduled",
+            "precise": "Precise"
+        }
+    },
+
+    "comment5": "### Step5 ###",
+    "standpoint": "From the standpoint of Christian service, do you consider the applicant to be:",
+    "recommend": "Do you recommend the applicant as a Bridges for Peace volunteer?",
+    "address": "Referee address",
+    "phone": "Referee telephone",
+    "email": "Referee email",
+    "signature": "Referee's Signature",
+    "signatureDate": "Date",
+    "verse": "Pray for the peace of Jerusalem. “May they prosper who love you.” Psalm 122:6",
+
     "system": {
         "next": "Next",
         "back": "Back",
         "submit": "Save & Submit",
         "typeHere": "Type your answer here"
+    },
+    "yesNo": {
+        "Yes": "Yes",
+        "No": "No"
+    },
+    "rate": {
+        "strong": "Strong",
+        "aboveAverage": "Above Average",
+        "average": "Average",
+        "belowAverage": "Below Average",
+        "weak": "Weak"
     }
 }

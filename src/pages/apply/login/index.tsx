@@ -232,6 +232,7 @@ const Login: React.FC = () => {
                                 onChange={(e) => {
                                     setConfirmPassword(e.target.value);
                                 }}
+                                onKeyDown={(e) => allowEnterKeydown(e, handleCreatePassword)}
                                 placeholder="Re-enter Password"
                                 className="mt-5 p-2 border rounded bg-gray-600 w-72 max-w-full"
                             />

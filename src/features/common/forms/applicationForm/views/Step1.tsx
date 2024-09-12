@@ -27,11 +27,12 @@ const Step1: FC<Step1Props> = ({ register, errors, getValues, t, control }) => {
     const isMarried = maritalStatusField === 'Married';
     const hasChildrenField = useWatch({ control, name: 'hasChildren' });
     const hasChildren = hasChildrenField === 'Yes';
-    const { username, name, initUser } = useUserStore(
+    const { username, name, initUser, office } = useUserStore(
         useShallow((state) => ({
             username: state.username,
             name: state.name,
-            initUser: state.initUser
+            initUser: state.initUser,
+            office: state.nationalOffice
         }))
     );
     return (
@@ -76,7 +77,14 @@ const Step1: FC<Step1Props> = ({ register, errors, getValues, t, control }) => {
                     <Number label={t('age')} register={register('age')} placeholder={t('age')} error={errors.age || undefined} />
                 </Row>
                 <Row>
-                    <Input optional label={t('ssn')} register={register('ssnNumber')} placeholder={t('ssn')} error={errors.ssnNumber || undefined} />
+                    {office == 'USA' && (
+                        <Input
+                            label={t('ssn')}
+                            register={register('office.ssnNumber')}
+                            placeholder={t('ssn')}
+                            error={errors.office?.ssnNumber || undefined}
+                        />
+                    )}
                     <Radio label={t('sex.title')} options={Sex(t)} register={register('sex')} error={errors.sex || undefined} />
                 </Row>
                 <Row>

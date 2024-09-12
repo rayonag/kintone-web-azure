@@ -24,10 +24,36 @@ const Step8: FC<Step8Props> = ({ register, errors, getValues, t, control }) => {
                 <SectionTitle title={t('sectionTitle.8')} />
                 <div className="font-semibold mt-2 text-black">{t('characterDescription')}</div>
                 <Row>
-                    <Checkbox label={null} name={'character1'} control={control} options={Character1(t)} error={errors.character1 || undefined} />
-                    <Checkbox label={null} name={'character2'} control={control} options={Character2(t)} error={errors.character2 || undefined} />
-                    <Checkbox label={null} name={'character3'} control={control} options={Character3(t)} error={errors.character3 || undefined} />
-                    <Checkbox label={null} name={'character4'} control={control} options={Character4(t)} error={errors.character4 || undefined} />
+                    <Checkbox
+                        label={null}
+                        name={'characters.character1'}
+                        control={control}
+                        options={Character1(t)}
+                        error={errors.character1 || undefined}
+                    />
+                    <Checkbox
+                        label={null}
+                        name={'characters.character2'}
+                        control={control}
+                        options={Character2(t)}
+                        error={errors.character2 || undefined}
+                    />
+                </Row>
+                <Row>
+                    <Checkbox
+                        label={null}
+                        name={'characters.character3'}
+                        control={control}
+                        options={Character3(t)}
+                        error={errors.character3 || undefined}
+                    />
+                    <Checkbox
+                        label={null}
+                        name={'characters.character4'}
+                        control={control}
+                        options={Character4(t)}
+                        error={errors.characters || undefined}
+                    />
                 </Row>
             </section>
         </div>

@@ -1,5 +1,5 @@
 // components/Layout.tsx
-
+'use client';
 import { FC, ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import Header from '@/components/header menu/Header';

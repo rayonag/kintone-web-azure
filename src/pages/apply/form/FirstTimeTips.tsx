@@ -51,8 +51,14 @@ const FirstTimeTips: FC<FirstTimeTipsProps> = ({ type, handleContinueOnFirstTime
             {page == 0 && <ConfirmType />}
             {page != 0 && (
                 <div ref={scrollRef} className="overflow-y-scroll h-full min-w-80 w-full p-[5%] md:px-[20%]">
-                    {page == 1 && <DoctrinalStatement />}
-                    {page == 2 && <TermsAndConditions />}
+                    {page == 1 && (
+                        <>
+                            <DoctrinalStatement />
+                            <EvangelismStatement />
+                            <MessianicJudaismStatement />
+                        </>
+                    )}
+                    {page == 2 && <TermsAndConditions type={type} />}
                     <div className="flex justify-center flex-col">
                         {page == 1 && (
                             <>
@@ -96,17 +102,42 @@ const FirstTimeTips: FC<FirstTimeTipsProps> = ({ type, handleContinueOnFirstTime
 
 export default FirstTimeTips;
 
-const TermsAndConditions = () => {
+// for step10
+export const MissionStatement = () => (
+    <>
+        <div className="text-2xl m-5 font-serif italic text-center">MISSION STATEMENT</div>
+        <div className="mb-3 text-2xl"></div>
+        <div className="m-3 mb-8 text-justify">
+            Bridges For Peace (BFP): Christians supporting Israel and building relationships between Christians and Jews in Israel and around the
+            world.
+        </div>
+        <div className="text-2xl m-5 font-serif italic text-center">EXPANDED VISION</div>
+        <div className="m-3 text-justify">
+            It is our desire to see Christians and Jews working side by side for better understanding and a more secure Israel.
+        </div>
+        <div className="m-3 text-justify">
+            Founded in 1976, Bridges for Peace seeks to be a ministry of hope and reconciliation. Through programs both in Israel and worldwide, we
+            are giving Christians the opportunity to actively express their biblical responsibility before God to be faithful to Israel and the Jewish
+            community.
+        </div>
+        <div className="m-3 mb-8 text-justify">
+            For too long Christians have been silent. For too long the Jewish community has had to fight its battles alone. It is time Christian
+            individuals and congregations speak up for the people who gave us the Bible.
+        </div>
+    </>
+);
+const TermsAndConditions = (props: { type: string | null }) => {
     return (
         <div className="p-4">
             <section className="mb-5">
-                <div className="text-2xl m-5 font-serif italic text-center">BRIDGES FOR PEACEーOUR VISION</div>
-                <div className="mb-3 text-2xl">MISSION STATEMENT</div>
+                <div className="text-2xl md:text-3xl m-1 font-serif text-center">OUR VISION</div>
+                <div className="text-2xl m-5 font-serif italic text-center">MISSION STATEMENT</div>
+                <div className="mb-3 text-2xl"></div>
                 <div className="m-3 mb-8 text-justify">
                     Bridges For Peace (BFP): Christians supporting Israel and building relationships between Christians and Jews in Israel and around
                     the world.
                 </div>
-                <div className="mb-3 text-2xl">EXPANDED VISION</div>
+                <div className="text-2xl m-5 font-serif italic text-center">EXPANDED VISION</div>
                 <div className="m-3 text-justify">
                     It is our desire to see Christians and Jews working side by side for better understanding and a more secure Israel.
                 </div>
@@ -121,7 +152,7 @@ const TermsAndConditions = () => {
                 </div>
             </section>
             <section className="mb-5 text-justify">
-                <div className="text-2xl m-5 font-serif italic text-center">WE ARE COMMITTED TO THE FOLLOWING GOALS:</div>
+                <div className="mb-3 text-left text-xl md:text-2xl">WE ARE COMMITTED TO THE FOLLOWING GOALS:</div>
                 <div className="mb-3">
                     1. To encourage meaningful and supportive relationships between Christians and Jews in Israel and around the world.
                 </div>
@@ -139,7 +170,7 @@ const TermsAndConditions = () => {
                     5. To counter anti-Semitism worldwide and support Israel’s divine, God-given right to exist in her Godgiven land.
                 </div>
                 <div className="text-2xl m-5 font-serif italic text-center">BASIC VOLUNTEER REQUIREMENTS</div>
-                <div className="mb-3 text-2xl">WHO IS A BFP VOLUNTEER?</div>
+                <div className="mb-3 text-left text-xl md:text-2xl">WHO IS A BFP VOLUNTEER?</div>
                 <div className="m-3">
                     The prophets of Israel knew that one day Gentile people would come to the land of Israel and help in its restoration. The prophet
                     Isaiah mentions these Gentiles on several occasions. He refers to them as “servants” in Isaiah 56:6. They are called “servants and
@@ -157,7 +188,7 @@ const TermsAndConditions = () => {
                     demanding and requires much patience and love. But in the end, it is also greatly rewarding.
                 </div>
             </section>
-            <section className="mb-5 text-justify">
+            <section className="mb-10 text-justify">
                 <div className="text-2xl m-5 font-serif italic text-center">A VOLUNTEER WITH BRIDGES FOR PEACE IS REQUIRED TO:</div>
                 <div className="m-3">1. Have a servant’s heart. </div>
                 <div className="m-3">2. Be a committed Christian.</div>
@@ -197,17 +228,19 @@ const TermsAndConditions = () => {
                     Several factors affect the processing time, including length of service time requested, availability of positions and when
                     references are received.
                 </div>
-                <div className="mb-3">
-                    <span className="font-bold">Please note:</span> All applicants who are applying to serve for over three months are required to
-                    submit a Criminal Record Check/Police Clearance Certificate (contact BFP National Office for assistance). The Criminal Record
-                    Check must be done at the Federal Level.
-                </div>
+                {props.type == 'Short Term' || (
+                    <div className="mb-3">
+                        <span className="font-bold">Please note:</span> All applicants who are applying to serve for over three months are required to
+                        submit a Criminal Record Check/Police Clearance Certificate (contact BFP National Office for assistance). The Criminal Record
+                        Check must be done at the Federal Level.
+                    </div>
+                )}
             </section>
         </div>
     );
 };
 
-const DoctrinalStatement = () => {
+export const DoctrinalStatement = () => {
     const statementTitleStyle = 'mb-3 text-xl md:text-2xl';
     const textStyle = 'm-3 mb-8';
     const italicVerse = (verse: string) => <span className="italic">{verse}</span>;
@@ -216,11 +249,11 @@ const DoctrinalStatement = () => {
             <div className="text-2xl md:text-3xl m-1 font-serif text-center">BRIDGES FOR PEACE</div>
             <div className="text-xl md:text-2xl m-5 font-serif italic text-center">DOCTRINAL STATEMENT</div>
             <div className={statementTitleStyle}>THE BIBLE</div>
-            <ul className="m-3 mb-8">
+            <ul className="m-3 mb-8 list-disc">
                 <li>The Bible is the inspired Word of God {italicVerse('(2 Tim. 3:16)')}</li>
             </ul>
             <div className={statementTitleStyle}>GOD</div>
-            <ul className="m-3 mb-8">
+            <ul className="m-3 mb-8 list-disc">
                 <li className="mb-2">God is one {italicVerse('(Deut. 6:4; 1 Cor. 8:6)')}</li>
                 <li className="mb-2">The Father, Son and Holy Spirit exist in unity {italicVerse('(Matt. 28:19)')}</li>
                 <li className="mb-2">Jesus the Messiah is God’s only begotten Son {italicVerse('(Matt. 16:16; John 3:16)')}</li>
@@ -228,7 +261,7 @@ const DoctrinalStatement = () => {
                 <li className="mb-2">Jesus the Messiah is eternal and fully God and fully man {italicVerse('(John 8:58; John 14:9; John 10:30)')}</li>
             </ul>
             <div className={statementTitleStyle}>MAN</div>
-            <ul className="m-3 mb-8">
+            <ul className="m-3 mb-8 list-disc">
                 <li className="mb-2">All men have sinned and come short of the glory of God {italicVerse('(Rom. 3:23)')}</li>
                 <li className="mb-2">
                     The wages of sin is death, but the gift of God is eternal life through Jesus the Messiah our Lord{' '}
@@ -236,7 +269,7 @@ const DoctrinalStatement = () => {
                 </li>
             </ul>
             <div className={statementTitleStyle}>SALVATION</div>
-            <ul className="m-3 mb-8">
+            <ul className="m-3 mb-8 list-disc">
                 <li className="mb-2">Salvation is by grace through faith as a gift of God {italicVerse('(Eph. 2:8)')}</li>
                 <li className="mb-2">
                     Repentance and baptism in the name of the Father, Son and Holy Spirit are outward signs of an inward faith{' '}
@@ -245,75 +278,84 @@ const DoctrinalStatement = () => {
                 <li className="mb-2">Faith is exhibited by a consecrated and holy life; faith without works is dead {italicVerse('(James 2:18)')}</li>
             </ul>
             <div className={statementTitleStyle}>ISRAEL</div>
-            <ul className="m-3 mb-8">
-                <li>The nation of Israel is the apple of God’s eye {italicVerse('(Zech. 2:8)')}</li>
-                <li>God will not break His covenant with Israel {italicVerse('(Jer. 31:35–37)')}</li>
-                <li>God is restoring the Jewish people to Israel, their Promised Land {italicVerse('(Jer. 23:7–8)')}</li>
-                <li>Believers from Gentile backgrounds have a debt to the Jewish people {italicVerse('(Rom. 11)')}</li>
-                <li>God blesses those who bless Israel and curses those who curse Israel {italicVerse('(Gen. 12:3; Isa. 60:12)')}</li>
-                <li>Blessing is promised to those who pray for Jerusalem’s peace {italicVerse('(Ps. 122:6)')}</li>
+            <ul className="m-3 mb-8 list-disc">
+                <li className="mb-2">The nation of Israel is the apple of God’s eye {italicVerse('(Zech. 2:8)')}</li>
+                <li className="mb-2">God will not break His covenant with Israel {italicVerse('(Jer. 31:35–37)')}</li>
+                <li className="mb-2">God is restoring the Jewish people to Israel, their Promised Land {italicVerse('(Jer. 23:7–8)')}</li>
+                <li className="mb-2">Believers from Gentile backgrounds have a debt to the Jewish people {italicVerse('(Rom. 11)')}</li>
+                <li className="mb-2">
+                    God blesses those who bless Israel and curses those who curse Israel {italicVerse('(Gen. 12:3; Isa. 60:12)')}
+                </li>
+                <li className="mb-2">Blessing is promised to those who pray for Jerusalem’s peace {italicVerse('(Ps. 122:6)')}</li>
             </ul>
             <div className={statementTitleStyle}>THE FUTURE</div>
-            <ul className="m-3 mb-8">
-                <li>The bodily return of Jesus the Messiah is imminent {italicVerse('(Acts. 1:11)')}</li>
-                <li>There will be a literal resurrection of the dead {italicVerse('(John 5:28)')}</li>
-                <li>Those in the Messiah shall be immortalized {italicVerse('(1 Cor. 15:53–54)')}</li>
-                <li>The wicked shall be placed in hell for eternity {italicVerse('(Rev. 20:10)')}</li>
-                <li>Israel will be restored under the Kingship of Messiah Jesus {italicVerse('(Luke 1:32)')}</li>
-                <li>All believers shall be joint heirs with the Messiah {italicVerse('(Rom. 8:17)')}</li>
+            <ul className="m-3 mb-8 list-disc">
+                <li className="mb-2">The bodily return of Jesus the Messiah is imminent {italicVerse('(Acts. 1:11)')}</li>
+                <li className="mb-2">There will be a literal resurrection of the dead {italicVerse('(John 5:28)')}</li>
+                <li className="mb-2">Those in the Messiah shall be immortalized {italicVerse('(1 Cor. 15:53–54)')}</li>
+                <li className="mb-2">The wicked shall be placed in hell for eternity {italicVerse('(Rev. 20:10)')}</li>
+                <li className="mb-2">Israel will be restored under the Kingship of Messiah Jesus {italicVerse('(Luke 1:32)')}</li>
+                <li className="mb-2">All believers shall be joint heirs with the Messiah {italicVerse('(Rom. 8:17)')}</li>
             </ul>
-            <div className="text-xl md:text-2xl m-5 font-serif italic text-center">POSITION ON EVANGELISM</div>
-            <div className="m-3 mb-8 text-justify">
-                <div className="mb-3">
-                    Bridges for Peace is a Jerusalem-based, Bible-believing Christian organization supporting Israel and building relationships
-                    between Jews and Christians worldwide through education and practical deeds, expressing God’s love and mercy.
-                </div>
-                <div className="mb-3">
-                    The history of Christian–Jewish relationships is seriously marred by the anti-Semitic behavior of Christians toward Jews. The
-                    Crusades, the Inquisition, the pogroms, the Holocaust and other such persecutions have left a deep wound in the Jewish soul.
-                    Tragically, established Christian denominations and institutions participated, either actively or by turning a blind eye, in these
-                    atrocities. This has created an atmosphere of fear and distrust that has made honest communication between the two communities
-                    nearly impossible.
-                </div>
-                <div className="mb-3">
-                    Bridges for Peace is a Bible-believing Christian organization that does not proselytize. We are committed to being living
-                    witnesses of the love of God in the name of Jesus through unconditional friendship and support, in order that the wounds of the
-                    past may be healed and doors of communication can be opened between Christians and Jews.
-                </div>
-            </div>
-            <div className="text-xl md:text-2xl m-5 font-serif italic text-center">STATEMENT ON MESSIANIC JUDAISM</div>
-            <div className="m-3 mb-8 text-left md:text-justify">
-                <div className="mb-3">
-                    Recognizing the variety of callings within the body of Christ (e.g. of Paul as an apostle to the Gentiles; James and Peter to “the
-                    circumcision”) we believe it is unwise to appear to be promoting the Messianic movement as Bridges for Peace’s mandate, while our
-                    calling is building bridges between the Jewish community and the wider body of Christ. This is not meant to restrict your personal
-                    choices of worship, it just means that Bridges for Peace, as an organization, is not to be identified with or promote Messianic
-                    Jewish activities.
-                </div>
-                <div className="mb-3">
-                    Our ministry seeks to repair centuries of Jewish pain, as members of the worldwide Church. Our calling is unique and specialized.
-                    We walk a fine line between the Jewish world and the Christian world.
-                </div>
-                <div className="mb-3">
-                    In light of this, it is necessary that all of the Bridges for Peace staff be in complete agreement with the vision, calling and
-                    style of Bridges for Peace. It is not possible or permissible for a person to be a staff member of Bridges for Peace, sharing our
-                    calling, vision and values during working hours and then be involved in activities during off hours that are not in full agreement
-                    with our calling, vision and values. A staff member must commit to follow the vision 24/7. While a staff member may attend a
-                    congregation which is not in full agreement, that staff member should not be in leadership, frontline involvement or participate
-                    in any outreach programs which could jeopardize the ministry of Bridges for Peace in Israel.
-                </div>
-                <div className="mb-3">
-                    When a Bridges for Peace center opens in a new region of Israel, any staff members attached to that center will not attend local
-                    congregations until such time as a positive reputation has been developed in the community, Bridges for Peace leadership has an
-                    opportunity to assess the reputation of the various congregations in the eyes of the Jewish majority and the senior leadership
-                    team determines that the image of Bridges for Peace will not suffer.
-                </div>
-            </div>
-            <div className="flex justify-center">
-                <a href="/files/BFP-Doctrinal-Statement.pdf" download="BFP-Doctrinal-Statement.pdf" className="underline">
-                    Download BFP Doctrinal Statement
-                </a>
-            </div>
+            <a href="/files/BFP-Doctrinal-Statement.pdf" download="BFP-Doctrinal-Statement.pdf" className="m-3 underline">
+                Download BFP Doctrinal Statement
+            </a>
         </div>
     );
 };
+
+export const EvangelismStatement = () => (
+    <>
+        <div className="text-xl md:text-2xl m-5 font-serif italic text-center">POSITION ON EVANGELISM</div>
+        <div className="m-3 mb-8 text-justify">
+            <div className="mb-3">
+                Bridges for Peace is a Jerusalem-based, Bible-believing Christian organization supporting Israel and building relationships between
+                Jews and Christians worldwide through education and practical deeds, expressing God’s love and mercy.
+            </div>
+            <div className="mb-3">
+                The history of Christian–Jewish relationships is seriously marred by the anti-Semitic behavior of Christians toward Jews. The
+                Crusades, the Inquisition, the pogroms, the Holocaust and other such persecutions have left a deep wound in the Jewish soul.
+                Tragically, established Christian denominations and institutions participated, either actively or by turning a blind eye, in these
+                atrocities. This has created an atmosphere of fear and distrust that has made honest communication between the two communities nearly
+                impossible.
+            </div>
+            <div className="mb-3">
+                Bridges for Peace is a Bible-believing Christian organization that does not proselytize. We are committed to being living witnesses of
+                the love of God in the name of Jesus through unconditional friendship and support, in order that the wounds of the past may be healed
+                and doors of communication can be opened between Christians and Jews.
+            </div>
+        </div>
+    </>
+);
+export const MessianicJudaismStatement = () => (
+    <>
+        <div className="text-xl md:text-2xl m-5 font-serif italic text-center">STATEMENT ON MESSIANIC JUDAISM</div>
+        <div className="m-3 mb-8 text-left md:text-justify">
+            <div className="mb-3">
+                Recognizing the variety of callings within the body of Christ (e.g. of Paul as an apostle to the Gentiles; James and Peter to “the
+                circumcision”) we believe it is unwise to appear to be promoting the Messianic movement as Bridges for Peace’s mandate, while our
+                calling is building bridges between the Jewish community and the wider body of Christ. This is not meant to restrict your personal
+                choices of worship, it just means that Bridges for Peace, as an organization, is not to be identified with or promote Messianic Jewish
+                activities.
+            </div>
+            <div className="mb-3">
+                Our ministry seeks to repair centuries of Jewish pain, as members of the worldwide Church. Our calling is unique and specialized. We
+                walk a fine line between the Jewish world and the Christian world.
+            </div>
+            <div className="mb-3">
+                In light of this, it is necessary that all of the Bridges for Peace staff be in complete agreement with the vision, calling and style
+                of Bridges for Peace. It is not possible or permissible for a person to be a staff member of Bridges for Peace, sharing our calling,
+                vision and values during working hours and then be involved in activities during off hours that are not in full agreement with our
+                calling, vision and values. A staff member must commit to follow the vision 24/7. While a staff member may attend a congregation which
+                is not in full agreement, that staff member should not be in leadership, frontline involvement or participate in any outreach programs
+                which could jeopardize the ministry of Bridges for Peace in Israel.
+            </div>
+            <div className="mb-3">
+                When a Bridges for Peace center opens in a new region of Israel, any staff members attached to that center will not attend local
+                congregations until such time as a positive reputation has been developed in the community, Bridges for Peace leadership has an
+                opportunity to assess the reputation of the various congregations in the eyes of the Jewish majority and the senior leadership team
+                determines that the image of Bridges for Peace will not suffer.
+            </div>
+        </div>
+    </>
+);

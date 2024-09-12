@@ -103,39 +103,39 @@ const Step9: FC<Step9Props> = ({ register, errors, getValues, t, type }) => {
                         error={errors.refFriendAddress || undefined}
                     />
                 </Row>
-                {type == 'Long Term' && (
+                {(type == 'Long Term' || type == 'Zealous') && (
                     <>
                         <div className="font-semibold mt-2 text-black">{t('refOtherTitle')}</div>
                         <Row>
                             <Input
                                 label={null}
-                                register={register('refOtherName')}
+                                register={register('type.refOtherName')}
                                 placeholder={t('refOtherName')}
-                                error={errors.refOtherName || undefined}
+                                error={errors.type?.refOtherName || undefined}
                             />
                             <Input
                                 label={null}
-                                register={register('refOtherPhone')}
+                                register={register('type.refOtherPhone')}
                                 placeholder={t('refOtherPhone')}
-                                error={errors.refOtherPhone || undefined}
+                                error={errors.type?.refOtherPhone || undefined}
                             />
                             <Input
                                 label={null}
-                                register={register('refOtherEmail')}
+                                register={register('type.refOtherEmail')}
                                 placeholder={t('refOtherEmail')}
-                                error={errors.refOtherEmail || undefined}
+                                error={errors.type?.refOtherEmail || undefined}
                             />
                             <Input
                                 label={null}
-                                register={register('refOtherAddress')}
+                                register={register('type.refOtherAddress')}
                                 placeholder={t('refOtherAddress')}
-                                error={errors.refOtherAddress || undefined}
+                                error={errors.type?.refOtherAddress || undefined}
                             />
                             <Input
                                 label={null}
-                                register={register('refOtherRelationship')}
+                                register={register('type.refOtherRelationship')}
                                 placeholder={t('refOtherRelationship')}
-                                error={errors.refOtherRelationship || undefined}
+                                error={errors.type?.refOtherRelationship || undefined}
                             />
                         </Row>
                     </>

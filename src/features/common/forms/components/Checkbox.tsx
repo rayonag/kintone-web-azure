@@ -7,16 +7,18 @@ type CheckboxProps = {
     control: Control<any>;
     options: { [key: number]: string };
     error: Merge<FieldError, (FieldError | undefined)[]> | undefined;
+    theme?: string;
 };
-const Checkbox: FC<CheckboxProps> = ({ label, name, control, options, error }) => {
+const Checkbox: FC<CheckboxProps> = ({ label, name, control, options, error, theme }) => {
     return (
-        <div className="my-1 w-40 me-5 text-black grow">
+        <div className={`${theme == 'dark' ? '' : 'text-black'} my-1 w-40 me-5 grow`}>
             <div className="my-1 flex-wrap">
                 {label && <div className="font-semibold mb-1">{label}</div>}
                 <Controller
                     name={name}
                     control={control}
                     render={({ field }) => {
+                        if (!field) return <></>;
                         return (
                             <div>
                                 {Object.entries(options).map(([key, value]) => (

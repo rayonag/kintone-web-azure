@@ -14,7 +14,7 @@ const postTempApplicationForm = async (data: ApplicationFormType, ref: string | 
                     return {
                         currentStep: { value: step },
                         ref: { value: parseInt(data.ref) },
-                        office: { value: data.office },
+                        office: { value: data.office.office },
                         firstName: { value: data.firstName },
                         middleName: { value: data.middleName },
                         lastName: { value: data.lastName },
@@ -30,7 +30,7 @@ const postTempApplicationForm = async (data: ApplicationFormType, ref: string | 
                         passportIssued: { value: data.passportIssued },
                         age: { value: parseInt(data.age) },
                         birthday: { value: convertDate(data.birthday) },
-                        ssnNumber: { value: data.ssnNumber },
+                        ssnNumber: { value: data.office.ssnNumber },
                         sex: { value: data.sex },
                         maritalStatus: { value: data.maritalStatus },
                         spouseFullName: { value: data.spouseFullName },
@@ -201,10 +201,10 @@ const postTempApplicationForm = async (data: ApplicationFormType, ref: string | 
                     return {
                         currentStep: { value: step },
                         ref: { value: parseInt(data.ref) },
-                        character1: { value: data.character1 },
-                        character2: { value: data.character2 },
-                        character3: { value: data.character3 },
-                        character4: { value: data.character4 }
+                        character1: { value: data.characters.character1 },
+                        character2: { value: data.characters.character2 },
+                        character3: { value: data.characters.character3 },
+                        character4: { value: data.characters.character4 }
                     };
                 case 9:
                     return {
@@ -222,11 +222,11 @@ const postTempApplicationForm = async (data: ApplicationFormType, ref: string | 
                         refFriendAddress: { value: data.refFriendAddress },
                         refFriendPhone: { value: data.refFriendPhone },
                         refFriendEmail: { value: data.refFriendEmail },
-                        refOtherName: { value: data.refOtherName },
-                        refOtherAddress: { value: data.refOtherAddress },
-                        refOtherPhone: { value: data.refOtherPhone },
-                        refOtherEmail: { value: data.refOtherEmail },
-                        refOtherRelationship: { value: data.refOtherRelationship },
+                        refOtherName: { value: data.type.refOtherName },
+                        refOtherAddress: { value: data.type.refOtherAddress },
+                        refOtherPhone: { value: data.type.refOtherPhone },
+                        refOtherEmail: { value: data.type.refOtherEmail },
+                        refOtherRelationship: { value: data.type.refOtherRelationship },
                         hasFriendsIsrael: { value: data.hasFriendsIsrael },
                         hasFriendsIsraelExplain: { value: data.hasFriendsIsraelExplain }
                     };
