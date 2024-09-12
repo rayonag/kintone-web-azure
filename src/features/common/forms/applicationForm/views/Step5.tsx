@@ -91,9 +91,9 @@ const Step5: FC<Step5Props> = ({ register, errors, getValues, t, control }) => {
                         </table>
                     </div>
                 </Row>
+                <div className="font-bold mt-2 text-xl text-black text-center">Employment History:</div>
                 <Row>
                     {/* TODO: review hard coded */}
-                    <div className="font-bold mt-2 text-xl text-black text-center">Employment History:</div>
                     <Input
                         label={t('employProfession')}
                         register={register('employProfession')}

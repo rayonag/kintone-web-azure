@@ -20,7 +20,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
         sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
         const msg = {
             to: to, // Change to your recipient
-            cc: to == 'intl.personnel@bridgesforpeace.com' ? '' : 'intl.personnel@bridgesforpeace.com',
+            cc: '', // 'intl.personnel@bridgesforpeace.com'
             bcc: '',
             from: 'BFP Noreply<noreply@bridgesforpeace.com>', // Change to your verified sender
             subject: '[Online Volunteer Application]New message from Contact Us Form',
