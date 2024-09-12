@@ -36,16 +36,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 res.status(501).json({});
                 return;
             }
-            // send notification
-            //const resp2 = await notificationReferenceSubmitted(res, resp.record);
-            console.log('hey');
-            console.log('data', data);
-            console.log('ReferenceFormAppID', ReferenceFormAppID);
             // save reference form
-            const resp3 = await client.record.addRecord({
-                app: ReferenceFormAppID as string,
-                record: data
-            });
+            const resp3 = await client.record
+                .addRecord({
+                    app: ReferenceFormAppID as string,
+                    record: data
+                })
+                .catch((e) => {
+                    logError(e, req.body || null, 'postReferenceForm resp3');
+                    res.status(501).json({});
+                    return undefined;
+                });
             if (!resp3) {
                 res.status(501).json({});
                 return;
@@ -66,7 +67,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     app: VolunteerApplicationMasterAppID as string,
                     id: resp.record['$id'].value as string,
                     record: {
-                        referenceCount: { value: resp4.length + 1 }
+                        referenceCount: { value: resp4.length }
                     }
                 })
                 .catch((e) => {
@@ -75,6 +76,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     return;
                 });
             // update
+            // send notification
+            const resp2 = await notificationReferenceSubmitted(res, resp.record);
+
             res.status(200).json({});
         } catch (e: any) {
             logError(e, req.body || null, 'postReferenceForm');

@@ -54,9 +54,9 @@ const Step5: FC<Step5Props> = ({ register, errors, getValues, t, control }) => {
                                                 {...register(`educationTable.${index}.educationSchoolName`)}
                                                 className="w-full h-[2rem] p-1 outline-none"
                                             />
-                                            {errors.educationTable?.[index]?.educationSchoolName && (
+                                            {errors?.educationTable?.[index]?.educationSchoolName && (
                                                 <div className="text-red-500 pl-1 py-1 text-xs h-4">
-                                                    {errors.educationTable?.[index]?.educationSchoolName.message}
+                                                    {errors?.educationTable?.[index]?.educationSchoolName?.message}
                                                 </div>
                                             )}
                                         </td>
@@ -65,9 +65,9 @@ const Step5: FC<Step5Props> = ({ register, errors, getValues, t, control }) => {
                                                 {...register(`educationTable.${index}.educationDegree`)}
                                                 className="w-full h-[2rem] p-1 outline-none"
                                             />
-                                            {errors.educationTable?.[index]?.educationDegree && (
+                                            {errors?.educationTable?.[index]?.educationDegree && (
                                                 <div className="text-red-500 pl-1 py-1 text-xs h-4">
-                                                    {errors.educationTable?.[index]?.educationDegree.message}
+                                                    {errors?.educationTable?.[index]?.educationDegree?.message}
                                                 </div>
                                             )}
                                         </td>
@@ -79,9 +79,9 @@ const Step5: FC<Step5Props> = ({ register, errors, getValues, t, control }) => {
                                                 placeholder="dd/mm/yyyy"
                                                 className="w-32 h-[2rem] p-1 outline-none"
                                             />
-                                            {errors.educationTable?.[index]?.educationDate && (
+                                            {errors?.educationTable?.[index]?.educationDate && (
                                                 <div className="text-red-500 pl-1 py-1 text-xs h-4">
-                                                    {errors.educationTable?.[index]?.educationDate.message}
+                                                    {errors?.educationTable?.[index]?.educationDate?.message}
                                                 </div>
                                             )}
                                         </td>

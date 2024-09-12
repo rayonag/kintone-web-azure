@@ -12,7 +12,7 @@ const postReferenceForm = async (data: ReferenceFormType) => {
         const record = {
             // system
             ref: { value: data.ref },
-            office: { value: [{ code: data.office }] },
+            office: { value: data.office },
             // 1
             applicantName: { value: data.applicantName },
             refereeName: { value: data.refereeName },
@@ -61,12 +61,11 @@ const postReferenceForm = async (data: ReferenceFormType) => {
             traitPersonalBibleStudy: { value: data.traitPersonalBibleStudy },
             traitPersonalPrayerLife: { value: data.traitPersonalPrayerLife },
             traitTeachableSpirit: { value: data.traitTeachableSpirit },
-            characters: {
-                character1: { value: data.characters.character1 },
-                character2: { value: data.characters.character2 },
-                character3: { value: data.characters.character3 },
-                character4: { value: data.characters.character4 }
-            },
+            character1: { value: data.characters.character1 },
+            character2: { value: data.characters.character2 },
+            character3: { value: data.characters.character3 },
+            character4: { value: data.characters.character4 },
+
             // 4
             standpoint: { value: data.standpoint },
             recommend: { value: data.recommend },

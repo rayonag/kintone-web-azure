@@ -118,15 +118,15 @@ export const notificationReferenceSubmitted = async (res: any, record: REST_Save
         const to = emailNationalOffice[office];
         const mailTitle = `[Online Application] Reference Form submitted for ${name}`;
         const mailBody = `There is new Reference Form submitted for ${name}`;
-        const cc = 'onaga.ray@gmail.com'; //'intl.personnel@bridgesforpeace.com'; // add SDD email
+        const cc = ''; //'intl.personnel@bridgesforpeace.com'; // add SDD email?
         //const bcc = data.bcc;
         const mailHTML = render(<NotificationDocument mailBody={mailBody} applicationRef={record['$id'].value} />);
         sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
         const msg = {
-            to: ['noreply@bridgesforpeace.com', to], // Change to your recipient
+            to: to, // Change to your recipient
             from: 'BFP Noreply<noreply@bridgesforpeace.com>', // Change to your verified sender
             cc: cc,
-            bcc: '',
+            bcc: 'ronaga@bridgesforpeace.com',
             subject: mailTitle,
             html: mailHTML
         };
