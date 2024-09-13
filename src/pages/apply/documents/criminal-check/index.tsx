@@ -1,16 +1,22 @@
 'use client';
 import Link from 'next/link';
-import SubmitDocument from '@/components/documents/SubmitDocument';
+import SubmitDocument from '@/features/common/documents/SubmitDocument';
+import useUserStore from '@/features/common/store';
 
 const CriminalCheck = () => {
+    const office = useUserStore((state) => state.nationalOffice);
     const Help = () => (
         <Link href="./criminal-check/example" className="link">
-            What is a Criminal Background Check?
+            {office == 'USA' ? 'What is FBI Records Check?' : 'What is Criminal Check?'}
         </Link>
     );
     return (
         <>
-            <SubmitDocument document="criminalCheck" title="Please Upload Your Criminal Check document" Help={Help}></SubmitDocument>
+            <SubmitDocument
+                document="criminalCheck"
+                title={`Please Upload Your ${office == 'USA' ? 'FBI Records Check' : 'Criminal Check document'}`}
+                Help={Help}
+            ></SubmitDocument>
         </>
     );
 };

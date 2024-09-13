@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import SubmitDocument from '@/components/documents/SubmitDocument';
+import SubmitDocument from '@/features/common/documents/SubmitDocument';
 
 const RecentPhoto = () => {
     const Help = () => (

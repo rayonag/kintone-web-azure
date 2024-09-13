@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Layout from '@/styles/Layout_fadeIn';
 import { useDashboardUser } from '@/common/context/dashboardUser';
 import GreenCheckMark from '@/components/icons/GreenCheckMark';
+import useUserStore from '@/features/common/store';
 
 // Define the functional component Page
 const Page: React.FC = () => {
@@ -16,6 +17,20 @@ const Page: React.FC = () => {
         </div>
     );
     const isSubmitted = (document: string) => loginUser.documents?.includes(document);
+    const office = useUserStore((state) => state.nationalOffice);
+    const type = useUserStore((state) => state.applicationType);
+    const requiredDocumentsCount = () => {
+        if (!type || !office) return '-';
+        if (office == 'USA') {
+            if (type == 'Short Term') return 5;
+            if (type == 'Long Term' || type == 'Zealous') return 6;
+        } else {
+            if (type == 'Short Term') return 4;
+            if (type == 'Long Term' || type == 'Zealous') return 5;
+        }
+    };
+
+    if (!office) return <></>;
     return (
         <Layout>
             <div className="relative flex flex-col items-center justify-center min-h-[95vh] text-white overflow-hidden">
@@ -24,19 +39,7 @@ const Page: React.FC = () => {
                     <div>
                         <h1 className="text-xl my-10">Documents Submission</h1>
                         <h1 className="text-xl my-10">
-                            {/* TODO: review */}
-                            {loginUser.documents?.length || '-'}/
-                            {/* {!loginUser['type']
-                                ? '-'
-                                : loginUser['type'] == 'Short Term'
-                                ? loginUser['office'] == 'USA'
-                                    ? 5
-                                    : 4
-                                : loginUser['office'] == 'USA'
-                                ? 6
-                                : 5} */}
-                            {!loginUser['type'] ? '-' : loginUser['type'] == 'Short Term' ? 4 : 5}
-                            Completed
+                            {loginUser.documents?.length || '-'}/{requiredDocumentsCount()} Completed
                         </h1>
                     </div>
                     <div className="relative flex items-center">
@@ -66,12 +69,21 @@ const Page: React.FC = () => {
                         {isSubmitted('Recent Photo') && <Check />}
                     </div>
 
-                    {(dashboardUser['type'] == 'Long Term' || dashboardUser['type'] == 'Zealous') && (
+                    {(type == 'Long Term' || type == 'Zealous') && (
                         <div className="relative flex items-center">
                             <Link href="./documents/criminal-check" className="btn">
-                                Criminal Check
+                                {office == 'USA' ? 'FBI Records Check' : 'Criminal Check'}
                             </Link>
                             {isSubmitted('Criminal Check') && <Check />}
+                        </div>
+                    )}
+
+                    {office == 'USA' && (
+                        <div className="relative flex items-center">
+                            <Link href="./documents/social-security-card" className="btn">
+                                Social Security Card
+                            </Link>
+                            {isSubmitted('Social Security Card') && <Check />}
                         </div>
                     )}
 

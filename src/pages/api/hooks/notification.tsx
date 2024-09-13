@@ -56,7 +56,7 @@ export const updated = {
     application: 'Online Application',
     healthQuestionnaire: 'Health Questionnaire',
     criminalCheck: 'Criminal Check',
-    ssn: 'Copy of Social Security Card'
+    ssn: 'Social Security Card'
 };
 export const notificationApplicationUpdated = async (res: any, updatedField: Updated, record: any, submitType: SubmitType) => {
     try {
