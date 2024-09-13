@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -109,6 +109,12 @@ const ReferenceForm = () => {
     //     ReactModal.setAppElement('#__next');
     // }, []);
     const router = useRouter();
+    useEffect(() => {
+        const query = router.query;
+        console.log('query', query);
+        setValue('ref', query.ref as string);
+        setValue('office', query.office as string);
+    }, [router]);
     const onSubmit = async (e: any) => {
         e.preventDefault();
         const valid = await validate();

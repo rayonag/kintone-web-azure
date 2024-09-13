@@ -39,10 +39,12 @@ const indicationDesireExplain = z.string().optional();
 const doctrinalPoint = z.string().optional();
 const ethics = radio;
 const ethicsExplain = z.string().optional();
-const comeAcross = z.string().min(1, requiredErrorMessage);
+const comeAcross = z.string().optional();
 const rateFollowInstructions = z.string().min(1, requiredErrorMessage);
 const rateAttitude = z.string().min(1, requiredErrorMessage);
 const rateVocation = z.string().min(1, requiredErrorMessage);
+
+// 3
 const demonstratedServantHeart = z.string().optional();
 const dealtProblem = z.string().optional();
 const familyRelationship = z.string().optional();
@@ -54,31 +56,29 @@ const christianJewishRelations = radio;
 const christianJewishRelationsComment = z.string().optional();
 const aptitudes = z.string().optional();
 
-// 3
-const traitPhysicalCondition = z.string().min(1, requiredErrorMessage);
-const traitEmotionalStability = z.string().min(1, requiredErrorMessage);
-const traitSelfDiscipline = z.string().min(1, requiredErrorMessage);
-const traitFinancialStewardship = z.string().min(1, requiredErrorMessage);
-const traitSelflessness = z.string().min(1, requiredErrorMessage);
-const traitFriendliness = z.string().min(1, requiredErrorMessage);
-const traitSocialAcceptability = z.string().min(1, requiredErrorMessage);
-const traitServanthood = z.string().min(1, requiredErrorMessage);
-const traitLeadership = z.string().min(1, requiredErrorMessage);
-const traitTeamwork = z.string().min(1, requiredErrorMessage);
-const traitJudgment = z.string().min(1, requiredErrorMessage);
-const traitPersonalAppearance = z.string().min(1, requiredErrorMessage);
-const traitWorkmanship = z.string().min(1, requiredErrorMessage);
-const traitFollowingOrders = z.string().min(1, requiredErrorMessage);
-const traitSensitivity = z.string().min(1, requiredErrorMessage);
-const traitAdaptability = z.string().min(1, requiredErrorMessage);
-const traitIndustry = z.string().min(1, requiredErrorMessage);
-const traitPerseverance = z.string().min(1, requiredErrorMessage);
-const traitOrderliness = z.string().min(1, requiredErrorMessage);
-const traitPersonalBibleStudy = z.string().min(1, requiredErrorMessage);
-const traitPersonalPrayerLife = z.string().min(1, requiredErrorMessage);
-const traitTeachableSpirit = z.string().min(1, requiredErrorMessage);
-
 // 4
+const traitPhysicalCondition = z.string().optional();
+const traitEmotionalStability = z.string().optional();
+const traitSelfDiscipline = z.string().optional();
+const traitFinancialStewardship = z.string().optional();
+const traitSelflessness = z.string().optional();
+const traitFriendliness = z.string().optional();
+const traitSocialAcceptability = z.string().optional();
+const traitServanthood = z.string().optional();
+const traitLeadership = z.string().optional();
+const traitTeamwork = z.string().optional();
+const traitJudgment = z.string().optional();
+const traitPersonalAppearance = z.string().optional();
+const traitWorkmanship = z.string().optional();
+const traitFollowingOrders = z.string().optional();
+const traitSensitivity = z.string().optional();
+const traitAdaptability = z.string().optional();
+const traitIndustry = z.string().optional();
+const traitPerseverance = z.string().optional();
+const traitOrderliness = z.string().optional();
+const traitPersonalBibleStudy = z.string().optional();
+const traitPersonalPrayerLife = z.string().optional();
+const traitTeachableSpirit = z.string().optional();
 const characters = z.object({
     character1: z.array(z.string()).optional(),
     character2: z.array(z.string()).optional(),
@@ -176,7 +176,13 @@ export const ReferenceFormDefaultValues: Partial<z.infer<typeof ReferenceFormSch
     guestExplain: '',
     showInterestComment: '',
     christianJewishRelationsComment: '',
-    aptitudes: ''
+    aptitudes: '',
+    characters: {
+        character1: [],
+        character2: [],
+        character3: [],
+        character4: []
+    }
 };
 
 // Export the schema and default values
@@ -243,21 +249,21 @@ export const ReferenceFormFields = [
 ] as const;
 
 export const ReferenceFormDefaultValuess: ReferenceFormType = {
-    ref: '12345',
-    office: 'Main Office',
+    ref: '58',
+    office: 'Japan',
     applicantName: 'John Doe',
     refereeName: 'Jane Smith',
-    relationship: 'Colleague',
+    relationship: 'Friend',
     relationshipExplain: 'Worked together for 5 years',
-    indicationDesire: 'Yes',
+    indicationDesire: 'None of the above',
     indicationDesireExplain: 'Highly motivated',
     doctrinalPoint: 'Agrees with core values',
-    ethics: 'High',
+    ethics: 'Yes',
     ethicsExplain: 'Always follows ethical guidelines',
     comeAcross: 'Professional',
-    rateFollowInstructions: 'Excellent',
-    rateAttitude: 'Positive',
-    rateVocation: 'Dedicated',
+    rateFollowInstructions: 'Strong',
+    rateAttitude: 'Strong',
+    rateVocation: 'Strong',
     demonstratedServantHeart: 'Always willing to help',
     dealtProblem: 'Handles conflicts well',
     familyRelationship: 'Good',
@@ -265,38 +271,38 @@ export const ReferenceFormDefaultValuess: ReferenceFormType = {
     guestExplain: 'Visited multiple times',
     showInterest: 'Yes',
     showInterestComment: 'Shows great interest in the work',
-    christianJewishRelations: 'Good',
+    christianJewishRelations: 'Yes',
     christianJewishRelationsComment: 'Respects all beliefs',
     aptitudes: 'Skilled in various areas',
-    traitPhysicalCondition: 'Excellent',
-    traitEmotionalStability: 'Stable',
-    traitSelfDiscipline: 'Disciplined',
-    traitFinancialStewardship: 'Responsible',
-    traitSelflessness: 'Selfless',
-    traitFriendliness: 'Friendly',
-    traitSocialAcceptability: 'Acceptable',
-    traitServanthood: 'Servant-hearted',
-    traitLeadership: 'Strong leader',
-    traitTeamwork: 'Team player',
-    traitJudgment: 'Good judgment',
-    traitPersonalAppearance: 'Neat',
-    traitWorkmanship: 'High quality',
-    traitFollowingOrders: 'Follows orders well',
-    traitSensitivity: 'Sensitive to others',
-    traitAdaptability: 'Adaptable',
-    traitIndustry: 'Industrious',
-    traitPerseverance: 'Perseverant',
-    traitOrderliness: 'Orderly',
-    traitPersonalBibleStudy: 'Regular',
-    traitPersonalPrayerLife: 'Consistent',
-    traitTeachableSpirit: 'Teachable',
+    traitPhysicalCondition: 'X',
+    traitEmotionalStability: 'X',
+    traitSelfDiscipline: 'X',
+    traitFinancialStewardship: 'X',
+    traitSelflessness: 'X',
+    traitFriendliness: 'X',
+    traitSocialAcceptability: 'X',
+    traitServanthood: 'X',
+    traitLeadership: '',
+    traitTeamwork: '',
+    traitJudgment: '',
+    traitPersonalAppearance: '',
+    traitWorkmanship: '',
+    traitFollowingOrders: '',
+    traitSensitivity: '',
+    traitAdaptability: '',
+    traitIndustry: '',
+    traitPerseverance: '',
+    traitOrderliness: '',
+    traitPersonalBibleStudy: '',
+    traitPersonalPrayerLife: '',
+    traitTeachableSpirit: '4',
     characters: {
-        character1: ['Honest', 'Reliable'],
-        character2: ['Punctual', 'Hardworking'],
-        character3: ['Creative', 'Innovative'],
-        character4: ['Team player', 'Leader']
+        character1: ['Take charge', 'Determined'],
+        character2: ['Visionary', 'Take risks'],
+        character3: ['Loyal', 'Even-keeled'],
+        character4: []
     },
-    standpoint: 'Strongly recommend',
+    standpoint: 'Average',
     recommend: 'Yes',
     address: '123 Main St, Anytown, USA',
     phone: '123-456-7890',

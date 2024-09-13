@@ -142,7 +142,7 @@ const Step4: FC<Step4Props> = ({ register, errors, getValues, t, control }) => {
                     />
                 </Row>
                 <div className="font-semibold mt-2 text-black">{t('characterTitle')}</div>
-                {/* <Row>
+                <Row>
                     <Checkbox
                         label={null}
                         name={'characters.character1'}
@@ -173,7 +173,7 @@ const Step4: FC<Step4Props> = ({ register, errors, getValues, t, control }) => {
                         options={Character4(t)}
                         error={errors.characters?.character4 || undefined}
                     />
-                </Row> */}
+                </Row>
             </section>
         </div>
     );

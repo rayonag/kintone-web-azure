@@ -17,6 +17,7 @@ const Checkbox: FC<CheckboxProps> = ({ label, name, control, options, error, the
                 <Controller
                     name={name}
                     control={control}
+                    defaultValue={[]}
                     render={({ field }) => {
                         if (!field) return <></>;
                         return (
