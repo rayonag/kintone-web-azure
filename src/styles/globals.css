@@ -24,6 +24,12 @@ html {
         font-size: 18px;
     }
 }
+@media (max-width: 768px) {
+    html,
+    body {
+        overflow: hidden;
+    }
+}
 
 .btn {
     @apply bg-[#012c66] border border-[#012c66] rounded-full text-white px-5 py-1.5 self-center m-6 delay-75 ease-out duration-75 font-bold mt-6 max-w-full md:max-w-xs cursor-pointer;
