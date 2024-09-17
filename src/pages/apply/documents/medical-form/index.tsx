@@ -1,4 +1,4 @@
-import SubmitDocument from '@/components/documents/SubmitDocument';
+import SubmitDocument from '@/features/common/documents/SubmitDocument';
 import Link from 'next/link';
 import React from 'react';
 

@@ -1,10 +1,10 @@
 'use client';
 import Link from 'next/link';
-import SubmitDocument from '@/components/documents/SubmitDocument';
+import SubmitDocument from '@/features/common/documents/SubmitDocument';
 
 const SocialSecurityCard = () => {
     const Help = () => (
-        <Link href="./social-security/example" className="link">
+        <Link href="./social-security-card/example" className="link">
             Social Security Card Requirement
         </Link>
     );

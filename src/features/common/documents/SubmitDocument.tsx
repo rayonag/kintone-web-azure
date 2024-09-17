@@ -7,6 +7,8 @@ import postDocument from '@/common/documents/postDocument';
 import Layout_fadeIn from '@/styles/Layout_fadeIn';
 import { useRouter } from 'next/router';
 import { NecessaryDocuments, NecessaryDocumentsShortTerm, NecessaryDocumentsUSA } from '@/pages/api/hooks/notification';
+import { useShallow } from 'zustand/react/shallow';
+import useUserStore from '../store';
 
 type SubmitDocumentProps = {
     document: NecessaryDocuments | NecessaryDocumentsUSA | NecessaryDocumentsShortTerm;
@@ -14,24 +16,26 @@ type SubmitDocumentProps = {
     Help?: FC<any>;
 };
 const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
+    const { ref, username, name, type, initUser, applicationRef } = useUserStore(
+        useShallow((state) => ({
+            ref: state.ref,
+            username: state.username,
+            name: state.name,
+            knownAs: state.knownAs,
+            type: state.applicationType,
+            initUser: state.initUser,
+            applicationRef: state.applicationRef
+        }))
+    );
+
     const dashboardUser = useDashboardUser();
     const { setIsLoading } = useLoading();
     const router = useRouter();
 
     const [fileData, setFileData] = useState<any>([]);
-    const [userApplicationRef, setUserApplicationRef] = useState('');
     const [isDragging, setIsDragging] = useState(false);
     // Does it need preview?
     //const [filePreview, setFilePreview] = useState();
-
-    const userRef = dashboardUser.ref;
-    // early return. TODO: review validation
-    if (!userRef) {
-        return <></>;
-    }
-    // TODO: review validation and return val
-    if (!dashboardUser.applicationRef) {
-    }
 
     // upload from input
     const handleUpload = (e: any) => {
@@ -50,22 +54,24 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
         }
     };
     const handleSubmit = async () => {
-        const files = fileData;
-        if (files == undefined) return;
-        if (files.length > 0) {
-            setIsLoading(true);
-            const file = files[0];
-            const formData = new FormData();
-            formData.append('file', file);
-            // TODO: applicationRef validation
-            if (!dashboardUser.applicationRef) {
-                alert('Something went wrong. Could not upload your document');
-                throw new Error('applicationRef undefined');
+        try {
+            const files = fileData;
+            if (files == undefined) return;
+            if (files.length > 0) {
+                setIsLoading(true);
+                const file = files[0];
+                const formData = new FormData();
+                formData.append('file', file);
+                await postDocument({ document: document, formData: formData, applicationRef: applicationRef, userRef: ref });
+                setIsLoading(false);
+                router.push('/apply/documents/complete');
+            } else {
+                setIsLoading(false);
+                return;
             }
-            await postDocument({ document: document, formData: formData, applicationRef: dashboardUser.applicationRef, userRef: userRef });
-            setIsLoading(false);
-            router.push('/apply/documents/complete');
-        } else {
+        } catch (e) {
+            console.log(e);
+            alert('Something went wrong. Please try again.');
             setIsLoading(false);
             return;
         }
@@ -132,7 +138,7 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
     return (
         <>
             <Layout_fadeIn>
-                <div className="relative flex flex-col items-center justify-center text-center min-h-screen text-white overflow-hidden">
+                <div className="relative flex flex-col items-center justify-center pt-10 text-center min-h-screen text-white overflow-hidden">
                     <span style={{ fontSize: '2rem' }}>{title}</span>
                     <div className="md:hidden m-5">
                         <label htmlFor="pdfInput" className="btn">

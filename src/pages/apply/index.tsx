@@ -217,7 +217,6 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
 
         return <div id="vara-container" className="min-w-[80%] pt-[20vh]"></div>;
     }
-
     return (
         <Layout>
             {/* TODO: vara text on background
@@ -384,17 +383,20 @@ export const getServerSideProps = (async (context) => {
             }
         }
         // documents submission
-        // TODO: add USA and ssn
-        //const documents = resp.record['office'].value == 'USA' ? resp.record['documentsUSA'].value : resp.record['documents'].value;
+        const type = resp.record['type'].value;
+        const office = resp.record['office'].value;
         const documents = resp.record['documents'].value;
-        // required documents length
-        const documentsLength = (() => {
-            // TODO: USA and ssn
-            //if (resp.record['office'].value == 'USA') return 5; // discuss if need ssn
-            if (resp.record['type'].value == 'Short Term') return 4;
-            else return 5;
-        })();
-        const isAllDocumentsSubmitted = documents.length == documentsLength;
+        const requiredDocumentsCount = () => {
+            if (!type || !office) return '-';
+            if (office == 'USA') {
+                if (type == 'Short Term') return 5;
+                if (type == 'Long Term' || type == 'Zealous') return 6;
+            } else {
+                if (type == 'Short Term') return 4;
+                if (type == 'Long Term' || type == 'Zealous') return 5;
+            }
+        };
+        const isAllDocumentsSubmitted = documents.length == requiredDocumentsCount();
         if (isAllDocumentsSubmitted) {
             // update status
             if (
