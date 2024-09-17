@@ -26,6 +26,7 @@ import Step2 from './views/Step2';
 import Step3 from './views/Step3';
 import convertPrefilledFormRecord from './hooks/convertPrefilledFormRecord';
 import Image from 'next/image';
+import Component from './thisPage';
 
 const FinancialObligation = (props: { repo: any }) => {
     const [page, setPage] = useState(0);
@@ -95,14 +96,15 @@ const FinancialObligation = (props: { repo: any }) => {
     }, [props]);
     return (
         <form className="flex flex-col px-10 pb-10 text-center">
-            <Image priority={true} src="/images/zealous-financial.jpg" width={500} height={400} alt="First Time Tips" />
+            {/* <Image priority={true} src="/images/zealous-financial.jpg" width={500} height={400} alt="First Time Tips" />
 
             <select className="bg-blue-200 text-black text-center m-4 p-4">
                 <option value="0">--Select--</option>
                 <option value="1">Option 1</option>
                 <option value="2">Option 2</option>
                 <option value="3">Option 3</option>
-            </select>
+            </select> */}
+            <Component />
             <button
                 type="button"
                 onClick={async () => {
