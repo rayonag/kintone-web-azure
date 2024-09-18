@@ -1,19 +1,23 @@
 import Image from 'next/image';
+import { Archivo_Black } from 'next/font/google';
+
+const gfont = Archivo_Black({ subsets: ['latin'], weight: '400' });
 
 export default function Component() {
     return (
         <div className="bg-sky-100 min-h-screen p-8 text-black">
-            <div className="relative flex max-w-6xl mx-auto shadow-lg rounded-lg overflow-hidden border-4 border-white">
+            <div className="relative flex max-w-6xl mx-auto shadow-lg rounded-lg border-4 border-white">
                 <div className="absolute w-[95%] h-[95%] p-[5%] border-4 border-blue-200"></div>
                 <div className="grid md:grid-cols-2 gap-0">
                     {/* Left Column */}
                     <div>
                         <div className="p-6 border-4 border-white">
-                            <h1 className="text-4xl font-script">the ZEALOUS</h1>
+                            <span className="text-3xl font-script italic">the </span>
+                            <span className={`${gfont.className} text-5xl`}>ZEALOUS</span>
                             <h2 className="text-3xl font-script italic">Israel Project</h2>
                             <h3 className="text-2xl font-bold">Financial Obligation Policy</h3>
                         </div>
-                        <div className="p-6 border-4 border-white bg-green-200">
+                        <div className="p-6 border-4 border-white bg-green-200 text-left">
                             <p className="text-sm mb-4">
                                 Please read this document carefully to ensure you understand your financial commitment. Choose your preferred payment
                                 option and initial in the relevant box, then sign and date at the bottom.
@@ -24,30 +28,30 @@ export default function Component() {
                                 portion of this amount is due by June 21, 2024, depending on the payment option chosen.
                             </p>
 
-                            <p className="text-sm font-semibold mb-4">
+                            <p className="text-sm underline mb-4">
                                 All payments and monthly support monies must be given or sent directly to your national office. These arrangements
                                 will be made upon your acceptance to the program and can be done through debit/credit card.
                             </p>
 
                             <div className="mb-4">
                                 <h4 className="text-xl font-bold mb-2">Price Includes:</h4>
-                                <ul className="list-disc list-inside text-sm space-y-1">
-                                    <li>One-year furnished housing in gender-separate, shared accommodations (two or three people per room).</li>
-                                    <li>
+                                <div className="text-sm space-y-1">
+                                    <div>One-year furnished housing in gender-separate, shared accommodations (two or three people per room).</div>
+                                    <div>
                                         A food allowance to shop for groceries and prepare meals together. The food allowance will be for three meals
                                         per day.
-                                    </li>
-                                    <li>A public transportation pass for travel in Jerusalem.</li>
-                                    <li>All expenses for program-related events, activities, studies and travel.</li>
-                                    <li>
+                                    </div>
+                                    <div>A pubdivc transportation pass for travel in Jerusalem.</div>
+                                    <div>All expenses for program-related events, activities, studies and travel.</div>
+                                    <div>
                                         The Call to Zion tour, a twelve-day Israel experience for young adults. This includes accommodations, most
                                         meals and travel in Israel.
-                                    </li>
-                                    <li>
+                                    </div>
+                                    <div>
                                         The Bridges for Peace Institute of Israel Studies, a two-week training seminar in 2025, featuring key speakers
                                         from both the Jewish and Christian worlds.
-                                    </li>
-                                </ul>
+                                    </div>
+                                </div>
                             </div>
 
                             <div className="mb-4">
@@ -89,7 +93,7 @@ export default function Component() {
                     </div>
 
                     {/* Right Column */}
-                    <div className="p-6">
+                    <div className="p-6 text-left">
                         <Image
                             src="/placeholder.svg"
                             alt="Group photo of Zealous Israel Project participants"
