@@ -5,9 +5,9 @@ const gfont = Archivo_Black({ subsets: ['latin'], weight: '400' });
 
 export default function Component() {
     return (
-        <div className="bg-sky-100 min-h-screen p-8 text-black">
+        <div className="bg-sky-100 min-h-screen p-8 text-black overflow-auto">
             <div className="relative flex max-w-6xl mx-auto shadow-lg rounded-lg border-4 border-white">
-                <div className="absolute w-[95%] h-[95%] p-[5%] border-4 border-blue-200"></div>
+                {/* <div className="absolute w-[95%] h-[95%] p-[5%] border-4 border-blue-200"></div> */}
                 <div className="grid md:grid-cols-2 gap-0">
                     {/* Left Column */}
                     <div>
@@ -95,7 +95,7 @@ export default function Component() {
                     {/* Right Column */}
                     <div className="p-6 text-left">
                         <Image
-                            src="/placeholder.svg"
+                            src="/images/zealous-image.jpg"
                             alt="Group photo of Zealous Israel Project participants"
                             width={600}
                             height={300}
@@ -170,7 +170,7 @@ export default function Component() {
                         </div>
 
                         <div className="flex justify-center mt-6">
-                            <Image src="/placeholder.svg" alt="Zealous 82 Logo" width={200} height={100} className="w-auto h-16" />
+                            <Image src="/images/zealous-logo-white.png" alt="Zealous 82 Logo" width={100} height={100} />
                         </div>
                     </div>
                 </div>

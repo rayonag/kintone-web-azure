@@ -230,6 +230,9 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                     <>
                         <div className="flex flex-col items-center justify-center">
                             <div>
+                                <h1 className="text-xl my-10">Long Term Volunteer Application Checklist</h1>
+                            </div>
+                            <div>
                                 <h1 className="text-xl my-10">
                                     Welcome{currentStep != 'reviewWebsite' && ' back'} <span>{knownAs || name || ''}</span>!
                                     {/* TODO: review welcome message */}

@@ -95,16 +95,16 @@ const FinancialObligation = (props: { repo: any }) => {
         }
     }, [props]);
     return (
-        <form className="flex flex-col px-10 pb-10 text-center">
-            {/* <Image priority={true} src="/images/zealous-financial.jpg" width={500} height={400} alt="First Time Tips" />
-
+        <form className="flex flex-col p-10 text-center">
+            <Component />
             <select className="bg-blue-200 text-black text-center m-4 p-4">
-                <option value="0">--Select--</option>
+                <option disabled value="0">
+                    --Please Select--
+                </option>
                 <option value="1">Option 1</option>
                 <option value="2">Option 2</option>
                 <option value="3">Option 3</option>
-            </select> */}
-            <Component />
+            </select>
             <button
                 type="button"
                 onClick={async () => {
