@@ -3,8 +3,7 @@
 import React, { use, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { destroyCookie, parseCookies } from 'nookies';
-
-import Layout from '@/styles/Layout_fadeIn';
+import Layout_fadeIn_home from '@/styles/Layout_fadeIn_home';
 
 import postReview from '@/common/checklist/postReview';
 import { useDashboardUser } from '@/common/context/dashboardUser';
@@ -24,6 +23,7 @@ import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import useUserStore from '@/features/common/store';
 import { useShallow } from 'zustand/react/shallow';
 import Vara from 'vara';
+
 // application steps that matches the kintone app
 export type ApplicationStepsMasterApp =
     | 'Applying'
@@ -221,7 +221,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
         <>
             {repo && (
                 <>
-                    <Layout repo={repo}>
+                    <Layout_fadeIn_home repo={repo}>
                         {/* TODO: vara text on background
             {isLoaded && (
                 <div className="fixed h-full w-full flex justify-center z-[-1]">
@@ -328,7 +328,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                                 </>
                             )}
                         </div>
-                    </Layout>
+                    </Layout_fadeIn_home>
                 </>
             )}
         </>
