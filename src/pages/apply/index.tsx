@@ -218,109 +218,120 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
         return <div id="vara-container" className="min-w-[80%] pt-[20vh]"></div>;
     }
     return (
-        <Layout>
-            {/* TODO: vara text on background
+        <>
+            {repo && (
+                <>
+                    <Layout repo={repo}>
+                        {/* TODO: vara text on background
             {isLoaded && (
                 <div className="fixed h-full w-full flex justify-center z-[-1]">
                     <VaraText />
                 </div>
             )} */}
-            <div className="flex flex-col items-center justify-center min-h-[95vh] text-white overflow-hidden">
-                {isLoaded && userRef ? (
-                    <>
-                        <div className="flex flex-col items-center justify-center">
-                            <div>
-                                <h1 className="text-xl my-10">
-                                    Welcome{currentStep != 'reviewWebsite' && ' back'} <span>{knownAs || name || ''}</span>!
-                                    {/* TODO: review welcome message */}
-                                </h1>
-                            </div>
-                            {type == 'Zealous' ? (
+                        <div className="flex flex-col items-center justify-center min-h-[95vh] text-white overflow-hidden">
+                            {isLoaded && userRef ? (
                                 <>
-                                    <Link
-                                        href="https://zealous82.bridgesforpeace.com/about/"
-                                        className="btn flex"
-                                        target="_blank"
-                                        onClick={async () => await handleCheckListClick('reviewAbout', userRef)}
-                                    >
-                                        About Zealous Project
-                                        <ArrowUpRight />
-                                    </Link>
-                                    <Link
-                                        href="https://zealous82.bridgesforpeace.com/zproject-faq/"
-                                        className="btn flex"
-                                        target="_blank"
-                                        onClick={async () => await handleCheckListClick('reviewFaq', userRef)}
-                                    >
-                                        ZProject FAQ
-                                        <ArrowUpRight />
-                                    </Link>
+                                    <div className="flex flex-col items-center justify-center">
+                                        <div>
+                                            <h1 className="text-xl my-10">
+                                                Welcome{currentStep != 'reviewWebsite' && ' back'} <span>{knownAs || name || ''}</span>!
+                                                {/* TODO: review welcome message */}
+                                            </h1>
+                                        </div>
+                                        {type == 'Zealous' ? (
+                                            <>
+                                                <Link
+                                                    href="https://zealous82.bridgesforpeace.com/about/"
+                                                    className="btn flex"
+                                                    target="_blank"
+                                                    onClick={async () => await handleCheckListClick('reviewAbout', userRef)}
+                                                >
+                                                    About Zealous Project
+                                                    <ArrowUpRight />
+                                                </Link>
+                                                <Link
+                                                    href="https://zealous82.bridgesforpeace.com/zproject-faq/"
+                                                    className="btn flex"
+                                                    target="_blank"
+                                                    onClick={async () => await handleCheckListClick('reviewFaq', userRef)}
+                                                >
+                                                    ZProject FAQ
+                                                    <ArrowUpRight />
+                                                </Link>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Link
+                                                    href="https://www.bridgesforpeace.com/meet-us/our-vision/"
+                                                    className="btn flex"
+                                                    target="_blank"
+                                                    onClick={async () => await handleCheckListClick('reviewAbout', userRef)}
+                                                >
+                                                    About Bridges for Peace
+                                                    <ArrowUpRight />
+                                                </Link>
+                                                <Link
+                                                    href="https://www.bridgesforpeace.com/get-involved/volunteer/faqs/"
+                                                    className="btn flex"
+                                                    target="_blank"
+                                                    onClick={async () => await handleCheckListClick('reviewFaq', userRef)}
+                                                >
+                                                    Frequently Asked Questions
+                                                    <ArrowUpRight />
+                                                </Link>
+                                            </>
+                                        )}
+                                        <div className="relative flex items-center">
+                                            <Link href="/apply/form" {...buttonProps('submitApplication')}>
+                                                Online Application Form
+                                            </Link>
+                                            {dashboardUser.formSubmission?.includes('Application Form Completed') && <Check />}
+                                        </div>
+                                        {type == 'Zealous' && (
+                                            <div className="relative flex items-center">
+                                                <Link href="/apply/financial-obligation" {...buttonProps('submitApplication')}>
+                                                    Financial Obligation Policy
+                                                </Link>
+                                                {repo?.financialObligationSubmitted && <Check />}
+                                            </div>
+                                        )}
+                                        <div className="relative flex items-center">
+                                            <Link href="/apply/health-questionnaire" {...buttonProps('submitApplication')}>
+                                                Personal Health Questionnaire
+                                            </Link>
+                                            {dashboardUser.formSubmission?.includes('Personal Health Questionnaire') && <Check />}
+                                        </div>
+                                        <div className="relative flex items-center">
+                                            <Link href="/apply/documents" {...buttonProps('submitDocuments')}>
+                                                Submit Necessary Documents
+                                            </Link>
+                                            {repo?.allDocumentsSubmitted && <Check />}
+                                        </div>
+                                        <Helper
+                                            currentStep={currentStep}
+                                            userRef={userRef}
+                                            isModalOpen={isModalOpen}
+                                            setIsModalOpen={setIsModalOpen}
+                                        />
+                                        {currentStep == 'complete' && <RateUs />}
+                                        <Link href="/contact" className="btn">
+                                            Contact Us
+                                        </Link>
+                                        <button className="btn" onClick={handleLogout}>
+                                            Log out
+                                        </button>
+                                    </div>
                                 </>
                             ) : (
                                 <>
-                                    <Link
-                                        href="https://www.bridgesforpeace.com/meet-us/our-vision/"
-                                        className="btn flex"
-                                        target="_blank"
-                                        onClick={async () => await handleCheckListClick('reviewAbout', userRef)}
-                                    >
-                                        About Bridges for Peace
-                                        <ArrowUpRight />
-                                    </Link>
-                                    <Link
-                                        href="https://www.bridgesforpeace.com/get-involved/volunteer/faqs/"
-                                        className="btn flex"
-                                        target="_blank"
-                                        onClick={async () => await handleCheckListClick('reviewFaq', userRef)}
-                                    >
-                                        Frequently Asked Questions
-                                        <ArrowUpRight />
-                                    </Link>
+                                    <LoadingSpinner />
                                 </>
                             )}
-                            <div className="relative flex items-center">
-                                <Link href="/apply/form" {...buttonProps('submitApplication')}>
-                                    Online Application Form
-                                </Link>
-                                {dashboardUser.formSubmission?.includes('Application Form Completed') && <Check />}
-                            </div>
-                            {type == 'Zealous' && (
-                                <div className="relative flex items-center">
-                                    <Link href="/apply/financial-obligation" {...buttonProps('submitApplication')}>
-                                        Financial Obligation Policy
-                                    </Link>
-                                    {repo?.financialObligationSubmitted && <Check />}
-                                </div>
-                            )}
-                            <div className="relative flex items-center">
-                                <Link href="/apply/health-questionnaire" {...buttonProps('submitApplication')}>
-                                    Personal Health Questionnaire
-                                </Link>
-                                {dashboardUser.formSubmission?.includes('Personal Health Questionnaire') && <Check />}
-                            </div>
-                            <div className="relative flex items-center">
-                                <Link href="/apply/documents" {...buttonProps('submitDocuments')}>
-                                    Submit Necessary Documents
-                                </Link>
-                                {repo?.allDocumentsSubmitted && <Check />}
-                            </div>
-                            <Helper currentStep={currentStep} userRef={userRef} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
-                            {currentStep == 'complete' && <RateUs />}
-                            <Link href="/contact" className="btn">
-                                Contact Us
-                            </Link>
-                            <button className="btn" onClick={handleLogout}>
-                                Log out
-                            </button>
                         </div>
-                    </>
-                ) : (
-                    <>
-                        <LoadingSpinner />
-                    </>
-                )}
-            </div>
-        </Layout>
+                    </Layout>
+                </>
+            )}
+        </>
     );
 };
 
@@ -333,6 +344,7 @@ type Repo = {
     allDocumentsSubmitted: boolean;
     isComplete: boolean;
     financialObligationSubmitted: boolean;
+    isZealous: boolean;
 };
 export const getServerSideProps = (async (context) => {
     try {
@@ -453,7 +465,8 @@ export const getServerSideProps = (async (context) => {
             reviewFaq: resp.record['reviewFaq'].value[0] || null,
             allDocumentsSubmitted: isAllDocumentsSubmitted,
             isComplete: resp.record['isComplete'].value == 'true' || false,
-            financialObligationSubmitted: resp3.length > 0 ? true : false
+            financialObligationSubmitted: resp3.length > 0 ? true : false,
+            isZealous: resp.record['type'].value == 'Zealous'
         };
 
         // Pass data to the page via props
