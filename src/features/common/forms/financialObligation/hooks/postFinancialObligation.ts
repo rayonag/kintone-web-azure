@@ -1,5 +1,3 @@
-import postFormSubmission from '@/common/checklist/postFormSubmission';
-import { HealthQuestionnaireType } from '../schema';
 import logError from '@/common/logError';
 
 const postFinancialObligation = async (data: any) => {
