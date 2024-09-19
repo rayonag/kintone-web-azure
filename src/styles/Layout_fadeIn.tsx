@@ -3,6 +3,7 @@
 import { FC, ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import Header from '@/components/header menu/Header';
+import useUserStore from '@/features/common/store';
 
 interface Layout_fadeInProps {
     key?: string;
@@ -10,6 +11,8 @@ interface Layout_fadeInProps {
 }
 
 const Layout_fadeIn: FC<Layout_fadeInProps> = ({ key, children }) => {
+    const type = useUserStore((state) => state.applicationType);
+    const isZealous = type === 'Zealous';
     return (
         <motion.div
             key={key || 'page'}
@@ -18,7 +21,7 @@ const Layout_fadeIn: FC<Layout_fadeInProps> = ({ key, children }) => {
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
         >
-            <Header />
+            <Header isZealous />
             {children}
         </motion.div>
     );

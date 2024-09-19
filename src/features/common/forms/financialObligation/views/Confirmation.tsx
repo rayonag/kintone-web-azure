@@ -3,7 +3,7 @@ import { SubmitHandler, UseFormGetValues } from 'react-hook-form';
 import Modal from 'react-modal';
 import { HealthQuestionnaireType, formFields } from '../schema';
 import { TFunction } from 'i18next';
-import postPersonalHealthQuestionnaire from '../hooks/postPersonalHealthQuestionnaire';
+import postPersonalHealthQuestionnaire from '../hooks/postFinancialObligation';
 import { useRouter } from 'next/router';
 import { useDashboardUser } from '@/common/context/dashboardUser';
 import Link from 'next/link';

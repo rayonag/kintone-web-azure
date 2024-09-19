@@ -170,7 +170,7 @@ export default function Component() {
                         </div>
 
                         <div className="flex justify-center mt-6">
-                            <Image src="/images/zealous-logo-white.png" alt="Zealous 82 Logo" width={100} height={100} />
+                            <Image src="/images/zealous-logo-white.png" alt="Zealous 82 Logo" width={350} height={100} />
                         </div>
                     </div>
                 </div>

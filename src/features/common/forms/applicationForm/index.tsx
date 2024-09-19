@@ -163,8 +163,6 @@ const ApplicationForm = (props: any) => {
             alert('Failed to submit the form. Please try again.');
             setIsLoading(false);
         }
-        // const res = await postPersonalHealthQuestionnaire(values, dashboardUser.ref || '0');
-        // if (res) setModalIsOpen(true);
     };
     const customStyles = {
         content: {

@@ -230,32 +230,54 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                     <>
                         <div className="flex flex-col items-center justify-center">
                             <div>
-                                <h1 className="text-xl my-10">Long Term Volunteer Application Checklist</h1>
-                            </div>
-                            <div>
                                 <h1 className="text-xl my-10">
                                     Welcome{currentStep != 'reviewWebsite' && ' back'} <span>{knownAs || name || ''}</span>!
                                     {/* TODO: review welcome message */}
                                 </h1>
                             </div>
-                            <Link
-                                href="https://www.bridgesforpeace.com/meet-us/our-vision/"
-                                className="btn flex"
-                                target="_blank"
-                                onClick={async () => await handleCheckListClick('reviewAbout', userRef)}
-                            >
-                                About Bridges for Peace
-                                <ArrowUpRight />
-                            </Link>
-                            <Link
-                                href="https://www.bridgesforpeace.com/get-involved/volunteer/faqs/"
-                                className="btn flex"
-                                target="_blank"
-                                onClick={async () => await handleCheckListClick('reviewFaq', userRef)}
-                            >
-                                Frequently Asked Questions
-                                <ArrowUpRight />
-                            </Link>
+                            {type == 'Zealous' ? (
+                                <>
+                                    <Link
+                                        href="https://zealous82.bridgesforpeace.com/about/"
+                                        className="btn flex"
+                                        target="_blank"
+                                        onClick={async () => await handleCheckListClick('reviewAbout', userRef)}
+                                    >
+                                        About Zealous Project
+                                        <ArrowUpRight />
+                                    </Link>
+                                    <Link
+                                        href="https://zealous82.bridgesforpeace.com/zproject-faq/"
+                                        className="btn flex"
+                                        target="_blank"
+                                        onClick={async () => await handleCheckListClick('reviewFaq', userRef)}
+                                    >
+                                        ZProject FAQ
+                                        <ArrowUpRight />
+                                    </Link>
+                                </>
+                            ) : (
+                                <>
+                                    <Link
+                                        href="https://www.bridgesforpeace.com/meet-us/our-vision/"
+                                        className="btn flex"
+                                        target="_blank"
+                                        onClick={async () => await handleCheckListClick('reviewAbout', userRef)}
+                                    >
+                                        About Bridges for Peace
+                                        <ArrowUpRight />
+                                    </Link>
+                                    <Link
+                                        href="https://www.bridgesforpeace.com/get-involved/volunteer/faqs/"
+                                        className="btn flex"
+                                        target="_blank"
+                                        onClick={async () => await handleCheckListClick('reviewFaq', userRef)}
+                                    >
+                                        Frequently Asked Questions
+                                        <ArrowUpRight />
+                                    </Link>
+                                </>
+                            )}
                             <div className="relative flex items-center">
                                 <Link href="/apply/form" {...buttonProps('submitApplication')}>
                                     Online Application Form
@@ -267,7 +289,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                                     <Link href="/apply/financial-obligation" {...buttonProps('submitApplication')}>
                                         Financial Obligation Policy
                                     </Link>
-                                    {dashboardUser.formSubmission?.includes('Application Form Completed') && <Check />}
+                                    {repo?.financialObligationSubmitted && <Check />}
                                 </div>
                             )}
                             <div className="relative flex items-center">
@@ -310,6 +332,7 @@ type Repo = {
     reviewFaq: string | null;
     allDocumentsSubmitted: boolean;
     isComplete: boolean;
+    financialObligationSubmitted: boolean;
 };
 export const getServerSideProps = (async (context) => {
     try {
@@ -385,6 +408,7 @@ export const getServerSideProps = (async (context) => {
                     });
             }
         }
+        // if not yet completed the documents
         // documents submission
         const type = resp.record['type'].value;
         const office = resp.record['office'].value;
@@ -419,11 +443,17 @@ export const getServerSideProps = (async (context) => {
                     });
             }
         }
+        // financial obligation for zealous
+        const resp3 = await client.record.getAllRecords({
+            app: 82,
+            condition: `ref="${cookies.ref}"`
+        });
         const repo: Repo = {
             reviewAbout: resp.record['reviewAbout'].value[0] || null,
             reviewFaq: resp.record['reviewFaq'].value[0] || null,
             allDocumentsSubmitted: isAllDocumentsSubmitted,
-            isComplete: resp.record['isComplete'].value == 'true' || false
+            isComplete: resp.record['isComplete'].value == 'true' || false,
+            financialObligationSubmitted: resp3.length > 0 ? true : false
         };
 
         // Pass data to the page via props

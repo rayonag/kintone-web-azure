@@ -3,6 +3,7 @@ import { color } from 'framer-motion';
 import React, { useState, ChangeEvent, FC, ReactElement } from 'react';
 import Modal from 'react-modal';
 import Link from 'next/link';
+import useUserStore from '@/features/common/store';
 
 interface HelperProps {
     currentStep: ApplicationSteps;
@@ -24,27 +25,53 @@ const Helper: React.FC<HelperProps> = ({ currentStep, userRef, isModalOpen, setI
         }
     };
 
+    const type = useUserStore((state) => state.applicationType);
+
     const helperSteps: { [key in ApplicationSteps]: ReactElement } = {
         reviewWebsite: (
             <div>
                 For those visiting our website for the first time, a great starting point would be to review the{' '}
-                <Link
-                    className="text-blue-500 underline"
-                    href="https://www.bridgesforpeace.com/meet-us/our-vision/"
-                    onClick={async () => await handleCheckListClick('reviewAbout', userRef)}
-                    target="_blank"
-                >
-                    About Us
-                </Link>{' '}
-                and{' '}
-                <Link
-                    className="text-blue-500 underline"
-                    href="https://www.bridgesforpeace.com/get-involved/volunteer/faqs/"
-                    onClick={async () => await handleCheckListClick('reviewFaq', userRef)}
-                    target="_blank"
-                >
-                    Frequently Asked Questions
-                </Link>{' '}
+                {type === 'Zealous' ? (
+                    <>
+                        <Link
+                            className="text-blue-500 underline"
+                            href="https://zealous82.bridgesforpeace.com/about/"
+                            onClick={async () => await handleCheckListClick('reviewAbout', userRef)}
+                            target="_blank"
+                        >
+                            About Zealous Project
+                        </Link>{' '}
+                        and{' '}
+                        <Link
+                            className="text-blue-500 underline"
+                            href="https://zealous82.bridgesforpeace.com/zproject-faq/"
+                            onClick={async () => await handleCheckListClick('reviewFaq', userRef)}
+                            target="_blank"
+                        >
+                            ZProject FAQ
+                        </Link>{' '}
+                    </>
+                ) : (
+                    <>
+                        <Link
+                            className="text-blue-500 underline"
+                            href="https://www.bridgesforpeace.com/meet-us/our-vision/"
+                            onClick={async () => await handleCheckListClick('reviewAbout', userRef)}
+                            target="_blank"
+                        >
+                            About Us
+                        </Link>{' '}
+                        and{' '}
+                        <Link
+                            className="text-blue-500 underline"
+                            href="https://www.bridgesforpeace.com/get-involved/volunteer/faqs/"
+                            onClick={async () => await handleCheckListClick('reviewFaq', userRef)}
+                            target="_blank"
+                        >
+                            Frequently Asked Questions
+                        </Link>{' '}
+                    </>
+                )}
                 sections to gain insight into our organization and requirements for volunteers.
             </div>
         ),

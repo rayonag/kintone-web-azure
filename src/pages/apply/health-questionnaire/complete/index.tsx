@@ -7,7 +7,7 @@ import GreenCheckMark from '@/components/icons/GreenCheckMark';
 const Complete = () => {
     return (
         <Layout_fadeIn>
-            <div className="relative flex flex-col items-center justify-center min-h-screen bg-black text-white overflow-hidden">
+            <div className="relative flex flex-col items-center justify-center min-h-screen text-white overflow-hidden">
                 <GreenCheckMark />
                 <div className="text-2xl">Your answers were submitted successfully</div>
                 <Link href="/apply" className="btn">

@@ -1,8 +1,12 @@
 'use client';
-import React from 'react';
+import React, { FC } from 'react';
 import BridgesLogo from './BridgesLogo';
+import ZealousLogo from './ZealousLogo';
 
-const Header = () => {
+type HeaderProps = {
+    isZealous?: boolean;
+};
+const Header: FC<HeaderProps> = ({ isZealous }) => {
     const handleHomeClick = () => {
         location.href = '/apply';
     };
@@ -20,7 +24,7 @@ const Header = () => {
         <>
             <header className="hidden h-[5vh] md:flex justify-around content-center">
                 <button onClick={handleHomeClick} className="z-10">
-                    <BridgesLogo />
+                    {isZealous ? <ZealousLogo /> : <BridgesLogo />}
                 </button>
             </header>
             {/* TODO: responsive header
