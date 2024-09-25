@@ -65,16 +65,16 @@ const FinancialObligation = (props: { repo: any }) => {
                 <option value="Option 3">Option 3</option>
             </select>
             <div className="flex justify-center items-center text-start w-full">
-                <label className="flex w-2/3">
-                    <input
-                        className="w-8 h-8 m-2"
-                        type="checkbox"
-                        id="agree"
-                        name="agree"
-                        checked={isChecked}
-                        value="agree"
-                        onChange={(e) => setIsChecked(!isChecked)}
-                    />
+                <input
+                    className="w-8 h-8 m-2"
+                    type="checkbox"
+                    id="agree"
+                    name="agree"
+                    checked={isChecked}
+                    value="agree"
+                    onChange={(e) => setIsChecked(!isChecked)}
+                />
+                <label htmlFor="agree" className="flex w-2/3">
                     <span>
                         I have read and understand my financial commitment to Bridges for Peace upon acceptance to the Zealous Israel Project.
                     </span>
