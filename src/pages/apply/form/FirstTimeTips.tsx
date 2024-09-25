@@ -21,19 +21,16 @@ const FirstTimeTips: FC<FirstTimeTipsProps> = ({ type, handleContinueOnFirstTime
         return (
             <>
                 <div className="flex flex-col items-center justify-center min-h-screen">
-                    {type == 'Zealous' ? (
-                        <Image priority={true} src="/images/zealous-front1.jpg" width={500} height={400} alt="First Time Tips" />
-                    ) : (
-                        <>
-                            <div className="text-3xl m-5">Before you begin...</div>
-                            <div className="m-3 mb-8">
-                                This is a volunteer application for: <span className="text-2xl">{type}</span>
-                            </div>
-                            <div className="m-3 mb-8">
-                                If you're not intending for <span className="text-2xl">{type}</span> please let us know.
-                            </div>
-                        </>
-                    )}
+                    <>
+                        <div className="text-3xl m-5">Before you begin...</div>
+                        <div className="m-3 mb-8">
+                            This is a volunteer application for: <span className="text-2xl">{type}</span>
+                        </div>
+                        <div className="m-3 mb-8">
+                            If you're not intending for <span className="text-2xl">{type}</span> please let us know.
+                        </div>
+                    </>
+
                     <div className="flex justify-center flex-col">
                         <button onClick={() => setPage(1)} className="btn-wide">
                             Next

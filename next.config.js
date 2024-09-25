@@ -10,7 +10,7 @@ const cspHeader = `
     upgrade-insecure-requests;
 `;
 const nextConfig = {
-    reactStrictMode: true,
+    reactStrictMode: true, // false for Vara.js double render issue
     output: 'standalone',
     async headers() {
         return [

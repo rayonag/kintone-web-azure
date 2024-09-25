@@ -1,160 +1,159 @@
 import Image from 'next/image';
 import { Archivo_Black } from 'next/font/google';
+import localFont from 'next/font/local';
 
 const gfont = Archivo_Black({ subsets: ['latin'], weight: '400' });
 
+const euroStyleFont = localFont({ src: 'fonts/eurostile.woff', display: 'swap', weight: '800', style: 'normal' });
 export default function Component() {
     return (
-        <div className="bg-sky-100 min-h-screen p-8 text-black overflow-auto">
-            <div className="relative flex max-w-6xl mx-auto shadow-lg rounded-lg border-4 border-white">
+        <div className="bg-white min-h-screen text-black overflow-auto font-[afacad]">
+            <div className="relative flex max-w-6xl mx-auto shadow-lg rounded-lg border-white">
                 {/* <div className="absolute w-[95%] h-[95%] p-[5%] border-4 border-blue-200"></div> */}
                 <div className="grid md:grid-cols-2 gap-0">
                     {/* Left Column */}
                     <div>
-                        <div className="p-6 border-4 border-white">
-                            <span className="text-3xl font-script italic">the </span>
-                            <span className={`${gfont.className} text-5xl`}>ZEALOUS</span>
-                            <h2 className="text-3xl font-script italic">Israel Project</h2>
-                            <h3 className="text-2xl font-bold">Financial Obligation Policy</h3>
-                        </div>
-                        <div className="p-6 border-4 border-white bg-green-200 text-left">
-                            <p className="text-sm mb-4">
-                                Please read this document carefully to ensure you understand your financial commitment. Choose your preferred payment
-                                option and initial in the relevant box, then sign and date at the bottom.
-                            </p>
-
-                            <p className="text-sm mb-4">
-                                The total cost of the Zealous Israel Project beginning July 21, 2024 and ending June 20, 2025 is US $7,995. Some
-                                portion of this amount is due by June 21, 2024, depending on the payment option chosen.
-                            </p>
-
-                            <p className="text-sm underline mb-4">
-                                All payments and monthly support monies must be given or sent directly to your national office. These arrangements
-                                will be made upon your acceptance to the program and can be done through debit/credit card.
-                            </p>
-
-                            <div className="mb-4">
-                                <h4 className="text-xl font-bold mb-2">Price Includes:</h4>
-                                <div className="text-sm space-y-1">
-                                    <div>One-year furnished housing in gender-separate, shared accommodations (two or three people per room).</div>
-                                    <div>
-                                        A food allowance to shop for groceries and prepare meals together. The food allowance will be for three meals
-                                        per day.
-                                    </div>
-                                    <div>A pubdivc transportation pass for travel in Jerusalem.</div>
-                                    <div>All expenses for program-related events, activities, studies and travel.</div>
-                                    <div>
-                                        The Call to Zion tour, a twelve-day Israel experience for young adults. This includes accommodations, most
-                                        meals and travel in Israel.
-                                    </div>
-                                    <div>
-                                        The Bridges for Peace Institute of Israel Studies, a two-week training seminar in 2025, featuring key speakers
-                                        from both the Jewish and Christian worlds.
-                                    </div>
+                        <div className={`border-white text-left`}>
+                            <div className="flex flex-col justify-center items-center p-6 border-white bg-[rgb(25,25,21)] text-white">
+                                <div className="flex justify-center">
+                                    <div className="font-[arid-itc] text-4xl flex items-center italic mr-4 w-fit">the </div>
+                                    <div className={`${gfont.className} text-5xl w-fit`}>ZEALOUS</div>
                                 </div>
+                                <h2 className="font-[arid-itc] text-4xl text-end font-script italic w-96 max-w-[280px]">Israel Project</h2>
+                                <h3 className={`text-red-500 text-3xl font-bold`}>Financial Obligation Policy</h3>
                             </div>
-
-                            <div className="mb-4">
-                                <h4 className="text-xl font-bold mb-2">Not Included:</h4>
-                                <ul className="list-disc list-inside text-sm space-y-1">
-                                    <li>Airfare to and from Israel</li>
-                                    <li>Spending money for personal items</li>
-                                    <li>Three lunches during the 12-day tour (about US $60 total)</li>
-                                    <li>Visa fees before beginning the program</li>
-                                    <li>Medical insurance (required)</li>
-                                </ul>
-                            </div>
-
-                            <div className="mb-4">
-                                <h4 className="text-xl font-bold mb-2">Refunds:</h4>
-                                <p className="text-sm">
-                                    The funds received for participation in the Zealous Israel Project have been evaluated and set to provide a
-                                    quality experience. The initial overhead and expenditures for the program are incurred in the beginning phase of
-                                    the Zealous Israel Project. Refunds are given only due to personal hardship and in approved circumstances. Bridges
-                                    for Peace will retain the US $500 nonrefundable deposit in all cases except for those involving extreme
-                                    circumstances (for instance cancellation of the ZProject due to COVID-19). Please note that the Israeli government
-                                    may impose restrictions on travel, entry into Israel or general activities at any time before or during your
-                                    volunteer service that could affect the ZProject program and your time with the ZProject. Neither Bridges for
-                                    Peace nor Zealous can be held accountable for the changing restrictions, but we will do our best to ensure the
-                                    success of the program. In case you are unable to enter Israel due to COVID-related restrictions, you will receive
-                                    a refund for your tuition, minus the US $500 down payment.
+                            <section className="flex flex-wrap p-8 ">
+                                <p className="text-md mb-4">
+                                    Please read this document carefully to ensure you understand your financial commitment. Choose your preferred
+                                    payment option and click <span className=" font-bold">Save & Submit</span> at the bottom.
                                 </p>
-                            </div>
 
-                            <p className="text-sm italic mb-4">
-                                I have read and understand my financial commitment to Bridges for Peace upon acceptance to the Zealous Israel Project.
-                            </p>
+                                <p className="text-md mb-4">
+                                    The total cost of the Zealous Israel Project beginning July 20, 2025 and ending June 18, 2026 is US{' '}
+                                    <span className="font-bold">$7,995</span>. Some portion of this amount is due by{' '}
+                                    <span className="font-bold">June 20, 2025, depending on the payment option chosen.</span>
+                                </p>
 
-                            <div className="flex justify-between">
-                                <div>Signature: ____________________</div>
-                                <div>Date: ____________________</div>
-                            </div>
+                                <p className="text-md underline mb-4">
+                                    All payments and monthly support monies must be given or sent directly to your national office. These arrangements
+                                    will be made upon your acceptance to the program and can be done through debit/credit card.
+                                </p>
+
+                                <div className="mb-4">
+                                    <h4 className="text-2xl font-sans text-red-500 font-bold mb-2">Price Includes:</h4>
+                                    <ul className="text-md space-y-1 list-disc list-inside">
+                                        <li>One-year furnished housing in gender-separate, shared accommodations (two or three people per room).</li>
+                                        <li>
+                                            A food allowance to shop for groceries and prepare meals together. The food allowance will be for three
+                                            meals per day.
+                                        </li>
+                                        <li>A public transportation pass for travel in Jerusalem.</li>
+                                        <li>All expenses for program-related events, activities, studies and travel.</li>
+                                        <li>
+                                            The Call to Zion tour, a twelve-day Israel experience for young adults. This includes accommodations, most
+                                            meals and travel in Israel.
+                                        </li>
+                                        <li>
+                                            The Bridges for Peace Institute of Israel Studies, a two-week training seminar in 2026, featuring key
+                                            speakers from both the Jewish and Christian worlds.
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div className="mb-4">
+                                    <h4 className="text-xl font-bold mb-2">Not Included:</h4>
+                                    <ul className="list-disc list-inside text-md space-y-1">
+                                        <li>Airfare to and from Israel</li>
+                                        <li>Spending money for personal items</li>
+                                        <li>Three lunches during the 12-day tour (about US $60 total)</li>
+                                        <li>Visa fees before beginning the program</li>
+                                        <li>Medical insurance (required)</li>
+                                    </ul>
+                                </div>
+
+                                <div className="mb-4">
+                                    <h4 className="text-2xl font-sans text-red-500 font-bold mb-2">Refunds:</h4>
+                                    <p className="text-md">
+                                        The funds received for participation in the Zealous Israel Project have been evaluated and set to provide a
+                                        quality experience. The initial overhead and expenditures for the program are incurred in the beginning phase
+                                        of the Zealous Israel Project. Refunds are given only due to personal hardship and in approved circumstances.
+                                        Bridges for Peace will retain the US $500 nonrefundable deposit in all cases except for those involving
+                                        extreme circumstances (for instance cancellation of the ZProject due to COVID-19). Please note that the
+                                        Israeli government may impose restrictions on travel, entry into Israel or general activities at any time
+                                        before or during your volunteer service that could affect the ZProject program and your time with the
+                                        ZProject. Neither Bridges for Peace nor Zealous can be held accountable for the changing restrictions, but we
+                                        will do our best to ensure the success of the program. In case you are unable to enter Israel due to
+                                        COVID-related restrictions, you will receive a refund for your tuition, minus the US $500 down payment.
+                                    </p>
+                                </div>
+                            </section>
                         </div>
                     </div>
-
                     {/* Right Column */}
-                    <div className="p-6 text-left">
+                    <div className="text-left bg-red-50">
                         <Image
-                            src="/images/zealous-image.jpg"
+                            src="/images/zealous-image4.jpg"
                             alt="Group photo of Zealous Israel Project participants"
-                            width={600}
-                            height={300}
-                            className="w-full h-auto rounded-lg mb-6"
+                            width={1000}
+                            height={1000}
+                            className="w-full h-auto mb-6"
                         />
 
-                        <div className="mb-4">
-                            <h4 className="text-xl font-bold mb-2">Payment Options</h4>
-                            <p className="text-sm">
+                        <div className="mb-4 px-6">
+                            <h4 className="text-2xl font-sans text-red-500 font-bold mb-4">Payment Options</h4>
+                            <p className="text-md pb-4 border-b-2 border-red-200">
                                 Please select the payment option that works best for you and initial in the relevant box. All payment options will be
                                 arranged through your national office and will be finalized before arrival to Israel. All prices are shown in US
                                 dollars.
                             </p>
                         </div>
 
-                        <div className="space-y-4">
-                            <div className="bg-sky-200 border border-sky-300 p-4 rounded">
-                                <h5 className="font-bold">Option 1</h5>
-                                <p className="text-sm">
+                        <div className="space-y-4 px-6">
+                            <div className=" border-b-2 border-red-200 p-4 rounded">
+                                <h5 className="font-bold text-2xl mb-4">Option 1</h5>
+                                <p className="text-md">
                                     US $500 nonrefundable deposit due immediately upon acceptance. This is used to secure your place in the housing
                                     facilities.
                                 </p>
-                                <p className="text-sm font-bold">US $7,495 due June 21, 2024</p>
+                                <p className="text-md font-bold mt-4">US $7,495 due June 20, 2025</p>
                             </div>
 
-                            <div className="bg-sky-200 border border-sky-300 p-4 rounded">
-                                <h5 className="font-bold">Option 2</h5>
-                                <p className="text-sm">
+                            <div className=" border-b-2 border-red-200 p-4 rounded">
+                                <h5 className="font-bold text-2xl mb-4">Option 2</h5>
+                                <p className="text-md">
                                     US $500 nonrefundable deposit due immediately upon acceptance. This is used to secure your place in the housing
                                     facilities.
                                 </p>
-                                <p className="text-sm font-bold">US $4,000 due June 21, 2024</p>
-                                <p className="text-sm">
-                                    Seven US $500 monthly payments. This program requires automatic withdrawal from a checking debit or credit card
-                                    account. This must be set up through your national office.
+                                <p className="text-md font-bold my-5">US $4,000 due June 20, 2025</p>
+                                <p className="text-md">
+                                    <span className="text-md font-bold">Seven</span> US $500 monthly payments. This program requires{' '}
+                                    <span className="text-md font-bold">automatic withdrawal</span> from a checking debit or credit card account. This
+                                    must be set up through your national office.
                                 </p>
-                                <div className="grid grid-cols-2 gap-2 text-sm">
-                                    <p>US $500 due Aug. 1, 2024</p>
-                                    <p>US $500 due Nov. 1, 2024</p>
-                                    <p>US $500 due Sept. 1, 2024</p>
-                                    <p>US $500 due Dec. 1, 2024</p>
-                                    <p>US $500 due Oct. 1, 2024</p>
-                                    <p>US $500 due Jan. 1, 2025</p>
-                                    <p>US $495 due Feb. 1, 2025</p>
+                                <div className="grid grid-cols-2 gap-2 text-md">
+                                    <p>US $500 due Aug. 1, 2025</p>
+                                    <p>US $500 due Nov. 1, 2025</p>
+                                    <p>US $500 due Sept. 1, 2025</p>
+                                    <p>US $500 due Dec. 1, 2025</p>
+                                    <p>US $500 due Oct. 1, 2025</p>
+                                    <p>US $500 due Jan. 1, 2026</p>
                                 </div>
+                                <p className="flex justify-center w-full mt-2">US $495 due Feb. 1, 2026</p>
                             </div>
 
-                            <div className="bg-sky-200 border border-sky-300 p-4 rounded">
-                                <h5 className="font-bold">Option 3</h5>
-                                <p className="text-sm">
+                            <div className="p-4 rounded">
+                                <h5 className="font-bold text-2xl mb-4">Option 3</h5>
+                                <p className="text-md">
                                     US $500 nonrefundable deposit due immediately upon acceptance. This is used to secure your place in the housing
                                     facilities.
                                 </p>
-                                <p className="text-sm font-bold">US $3,995 due June 21, 2024</p>
-                                <p className="text-sm">
-                                    Ten US $350 monthly payments. This program requires automatic withdrawal from a checking debit or credit card
-                                    account. This must be set up through your national office.
+                                <p className="text-md font-bold my-5">US $3.995 due June 20, 2025</p>
+                                <p className="text-md">
+                                    <span className="text-md font-bold">Ten</span> US $350 monthly payments. This program requires{' '}
+                                    <span className="text-md font-bold">automatic withdrawal</span> from a checking debit or credit card account. This
+                                    must be set up through your national office.
                                 </p>
-                                <div className="grid grid-cols-2 gap-2 text-sm">
+                                <div className="grid grid-cols-2 gap-2 text-md">
                                     <p>US $350 due Aug. 1, 2024</p>
                                     <p>US $350 due Jan. 1, 2025</p>
                                     <p>US $350 due Sept. 1, 2024</p>
@@ -169,8 +168,9 @@ export default function Component() {
                             </div>
                         </div>
 
-                        <div className="flex justify-center mt-6">
-                            <Image src="/images/zealous-logo-white.png" alt="Zealous 82 Logo" width={350} height={100} />
+                        <div className="flex justify-center mt-6 w-full bg-[rgb(25,25,21)]">
+                            <span className="mx-6 text-white flex justify-center items-center">www.zealous82.com</span>
+                            <Image src="/images/zealous-82.jpg" alt="Zealous 82 Logo" width={350} height={100} />
                         </div>
                     </div>
                 </div>

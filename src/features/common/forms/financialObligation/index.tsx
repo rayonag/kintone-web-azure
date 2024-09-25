@@ -49,7 +49,7 @@ const FinancialObligation = (props: { repo: any }) => {
                 value={selectedOption}
                 defaultValue={selectedOption || '0'}
                 onChange={(e) => setSelectedOption(e.currentTarget.value)}
-                className="bg-blue-200 text-black text-center m-4 p-4"
+                className="bg-blue-200 text-black text-center self-center flex w-96 m-4 p-4"
             >
                 <option disabled value="0">
                     --Please Select--
@@ -58,6 +58,14 @@ const FinancialObligation = (props: { repo: any }) => {
                 <option value="Option 2">Option 2</option>
                 <option value="Option 3">Option 3</option>
             </select>
+            <div className="flex justify-center items-center text-start w-full">
+                <label className="flex w-2/3">
+                    <input className="w-8 h-8 m-2" type="checkbox" id="agree" name="agree" value="agree" />
+                    <p className="text-md italic">
+                        I have read and understand my financial commitment to Bridges for Peace upon acceptance to the Zealous Israel Project.
+                    </p>
+                </label>
+            </div>
             {isError && <div className="text-red-500">Please select an option</div>}
             <button type="button" onClick={handleSubmit} className="btn-wide">
                 Save & Submit

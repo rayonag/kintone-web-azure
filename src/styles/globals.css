@@ -24,12 +24,12 @@ html {
         font-size: 18px;
     }
 }
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
     html,
     body {
         overflow: hidden;
     }
-}
+} */
 
 .btn {
     @apply bg-[#012c66] border border-[#012c66] rounded-full text-white px-5 py-1.5 self-center m-6 delay-75 ease-out duration-75 font-bold mt-6 max-w-full md:max-w-xs cursor-pointer;
@@ -266,4 +266,57 @@ input[type='number'] {
     -webkit-transform: translateX(-50%);
     ms-transform: translateX(-50%);
     white-space: nowrap;
+}
+
+/* scroll bar */
+/* WebKit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Firefox */
+div {
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+}
+
+/* fonts */
+@font-face {
+    font-family: 'arid-itc';
+    src: url('/fonts/arid_itc.ttf');
+}
+@font-face {
+    font-family: 'afacad-bold';
+    src: url('/fonts/Afacad-Bold.ttf');
+}
+@font-face {
+    font-family: 'afacad';
+    src: url('/fonts/Afacad-Regular.ttf');
+}
+@font-face {
+    font-family: 'Eurostile Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: url('/eurostile.woff');
+}
+@font-face {
+    font-family: 'EuroStyle Normal';
+    font-style: normal;
+    font-weight: normal;
+    src: local('EuroStyle Normal'), url('/fonts/EuroStyle Normal.woff') format('woff');
 }

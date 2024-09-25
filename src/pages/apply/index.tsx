@@ -23,6 +23,8 @@ import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import useUserStore from '@/features/common/store';
 import { useShallow } from 'zustand/react/shallow';
 import Vara from 'vara';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 // application steps that matches the kintone app
 export type ApplicationStepsMasterApp =
@@ -217,8 +219,48 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
 
         return <div id="vara-container" className="min-w-[80%] pt-[20vh]"></div>;
     }
+    const [isVisible, setIsVisible] = useState(false);
+    interface ModalProps {
+        isVisible: boolean;
+        onClose: () => void;
+        children: React.ReactNode;
+    }
+
+    const Modal: React.FC<ModalProps> = ({ isVisible, onClose, children }) => {
+        if (!isVisible) return null;
+
+        return (
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+                onClick={onClose}
+            >
+                <motion.div
+                    initial={{ scale: 0.8 }}
+                    animate={{ scale: 1 }}
+                    exit={{ scale: 0.8 }}
+                    className="rounded flex flex-col justify-center items-center"
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    <button onClick={onClose} className="mt-4 p-2 bg-red-500 text-white rounded-full w-10 h-10">
+                        ✕
+                    </button>
+                    {children}
+                </motion.div>
+            </motion.div>
+        );
+    };
     return (
         <>
+            <Modal isVisible={isVisible} onClose={() => setIsVisible(false)}>
+                <div className="p-4 max-h-[90vh] overflow-auto">
+                    <Image src="/images/zealous_front2.jpg" alt="info" width={1000} height={1000} />
+                    <Image src="/images/zealous_cover.jpg" alt="info" width={1000} height={1000} />
+                </div>
+            </Modal>
+            {/* <div className=" font-[font-name]">zealous project</div> */}
             {repo && (
                 <>
                     <Layout_fadeIn_home repo={repo}>
@@ -231,9 +273,47 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                         <div className="flex flex-col items-center justify-center min-h-[95vh] text-white overflow-hidden">
                             {isLoaded && userRef ? (
                                 <>
-                                    <div className="flex flex-col items-center justify-center">
+                                    <div className="flex flex-col items-center justify-center w-full">
+                                        {type == 'Zealous' && (
+                                            <div className="flex pt-10">
+                                                <h1 className="text-xl font-mono">ZProject Application </h1>
+                                                <div className="relative">
+                                                    <div className="absolute pl-1 cursor-pointer" onClick={() => setIsVisible(true)}>
+                                                        <svg
+                                                            width="32px"
+                                                            height="32px"
+                                                            viewBox="0 0 24 24"
+                                                            fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            //stroke="#ffffff"
+                                                        >
+                                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                                            <g id="SVGRepo_iconCarrier">
+                                                                <path
+                                                                    fill-rule="evenodd"
+                                                                    clip-rule="evenodd"
+                                                                    d="M10.661 7.86213C10.4142 8.04749 10.25 8.31328 10.25 8.75C10.25 9.30228 9.80229 9.75 9.25 9.75C8.69772 9.75 8.25 9.30228 8.25 8.75C8.25 7.68672 8.70818 6.82751 9.46005 6.26288C10.1787 5.72317 11.0967 5.5 12 5.5C13.0779 5.5 13.987 5.82418 14.6436 6.44499C15.2951 7.06101 15.6046 7.88116 15.6531 8.7005C15.7483 10.3042 14.864 12.0687 13.2461 12.9932C13.099 13.0773 13.008 13.1462 12.9529 13.1958C13.0783 13.5886 12.9509 14.0345 12.6034 14.2974C12.163 14.6307 11.5359 14.5438 11.2026 14.1034C11.2026 14.1034 11.2031 14.1041 11.2016 14.1021L11.2005 14.1007C10.9606 13.778 10.865 13.355 10.9137 12.9585C10.9974 12.277 11.4727 11.7031 12.2539 11.2568C13.2157 10.7071 13.7065 9.65911 13.6567 8.8189C13.6328 8.41625 13.4898 8.10656 13.2695 7.89822C13.0542 7.69468 12.6721 7.5 12 7.5C11.3981 7.5 10.9411 7.65183 10.661 7.86213Z"
+                                                                    fill="#ffffff"
+                                                                ></path>{' '}
+                                                                <path
+                                                                    d="M12 18.5C12.8284 18.5 13.5 17.8284 13.5 17C13.5 16.1716 12.8284 15.5 12 15.5C11.1716 15.5 10.5 16.1716 10.5 17C10.5 17.8284 11.1716 18.5 12 18.5Z"
+                                                                    fill="#ffffff"
+                                                                ></path>{' '}
+                                                                <path
+                                                                    fill-rule="evenodd"
+                                                                    clip-rule="evenodd"
+                                                                    d="M1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12ZM12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3Z"
+                                                                    fill="#ffffff"
+                                                                ></path>{' '}
+                                                            </g>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
                                         <div>
-                                            <h1 className="text-xl my-10">
+                                            <h1 className="text-xl my-8">
                                                 Welcome{currentStep != 'reviewWebsite' && ' back'} <span>{knownAs || name || ''}</span>!
                                                 {/* TODO: review welcome message */}
                                             </h1>
