@@ -9,7 +9,9 @@ import { useLoading } from '@/common/context/loading';
 
 const FinancialObligation = (props: { repo: any }) => {
     const paymentOption = props.repo?.selectedOption || undefined;
+    const [isChecked, setIsChecked] = useState(false);
     const [isError, setIsError] = useState(false);
+    const [isCheckError, setIsCheckError] = useState(false);
     const [selectedOption, setSelectedOption] = useState(paymentOption);
     const router = useRouter();
     const { setIsLoading } = useLoading();
@@ -20,6 +22,10 @@ const FinancialObligation = (props: { repo: any }) => {
             setIsError(true);
             return;
         } else setIsError(false);
+        if (!isChecked) {
+            setIsCheckError(true);
+            return;
+        } else setIsCheckError(false);
         setIsLoading(true);
         const res = await postFinancialObligation({ selectedOption, ref });
         if (res) {
@@ -49,7 +55,7 @@ const FinancialObligation = (props: { repo: any }) => {
                 value={selectedOption}
                 defaultValue={selectedOption || '0'}
                 onChange={(e) => setSelectedOption(e.currentTarget.value)}
-                className="bg-blue-200 text-black text-center self-center flex w-96 m-4 p-4"
+                className="bg-red-50 text-black text-center self-center flex w-96 h-16 m-4 p-4"
             >
                 <option disabled value="0">
                     --Please Select--
@@ -60,13 +66,22 @@ const FinancialObligation = (props: { repo: any }) => {
             </select>
             <div className="flex justify-center items-center text-start w-full">
                 <label className="flex w-2/3">
-                    <input className="w-8 h-8 m-2" type="checkbox" id="agree" name="agree" value="agree" />
-                    <p className="text-md italic">
+                    <input
+                        className="w-8 h-8 m-2"
+                        type="checkbox"
+                        id="agree"
+                        name="agree"
+                        checked={isChecked}
+                        value="agree"
+                        onChange={(e) => setIsChecked(!isChecked)}
+                    />
+                    <span>
                         I have read and understand my financial commitment to Bridges for Peace upon acceptance to the Zealous Israel Project.
-                    </p>
+                    </span>
                 </label>
             </div>
             {isError && <div className="text-red-500">Please select an option</div>}
+            {isCheckError && <div className="text-red-500">Please check the box</div>}
             <button type="button" onClick={handleSubmit} className="btn-wide">
                 Save & Submit
             </button>

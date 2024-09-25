@@ -256,8 +256,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
         <>
             <Modal isVisible={isVisible} onClose={() => setIsVisible(false)}>
                 <div className="p-4 max-h-[90vh] overflow-auto">
-                    <Image src="/images/zealous_front2.jpg" alt="info" width={1000} height={1000} />
-                    <Image src="/images/zealous_cover.jpg" alt="info" width={1000} height={1000} />
+                    <Image src="/images/zealous/cover.jpg" alt="info" width={1000} height={1000} />
                 </div>
             </Modal>
             {/* <div className=" font-[font-name]">zealous project</div> */}

@@ -4,7 +4,8 @@ import localFont from 'next/font/local';
 
 const gfont = Archivo_Black({ subsets: ['latin'], weight: '400' });
 
-const euroStyleFont = localFont({ src: 'fonts/eurostile.woff', display: 'swap', weight: '800', style: 'normal' });
+const euroStyleBoldFont = localFont({ src: 'fonts/EurostileLTStd-Bold.otf', display: 'swap', weight: '200', style: 'normal' });
+const euroStyleFont = localFont({ src: 'fonts/eurostile.woff', display: 'swap', weight: '500', style: 'normal' });
 export default function Component() {
     return (
         <div className="bg-white min-h-screen text-black overflow-auto font-[afacad]">
@@ -14,13 +15,19 @@ export default function Component() {
                     {/* Left Column */}
                     <div>
                         <div className={`border-white text-left`}>
-                            <div className="flex flex-col justify-center items-center p-6 border-white bg-[rgb(25,25,21)] text-white">
-                                <div className="flex justify-center">
-                                    <div className="font-[arid-itc] text-4xl flex items-center italic mr-4 w-fit">the </div>
-                                    <div className={`${gfont.className} text-5xl w-fit`}>ZEALOUS</div>
+                            <div className="items-center p-6 border-white bg-[rgb(25,25,21)] text-white">
+                                <div className="max-w-[500px] flex flex-col justify-center items-center p-6 border-white bg-[rgb(25,25,21)] text-white">
+                                    <div className="flex justify-center relative">
+                                        <div className="font-[arid-itc] text-4xl flex items-center italic -left-20 w-fit absolute">the </div>
+                                        <div style={{ transform: 'scale(1.4,1)' }} className={`${euroStyleBoldFont.className} text-4xl w-fit`}>
+                                            ZEALOUS
+                                        </div>
+                                    </div>
+                                    <h2 className="font-[arid-itc] text-4xl text-end self-end font-script italic w-96 max-w-[280px]">
+                                        Israel Project
+                                    </h2>
+                                    <h3 className={`${euroStyleBoldFont.className} text-red-500 text-xl`}>Financial Obligation Policy</h3>
                                 </div>
-                                <h2 className="font-[arid-itc] text-4xl text-end font-script italic w-96 max-w-[280px]">Israel Project</h2>
-                                <h3 className={`text-red-500 text-3xl font-bold`}>Financial Obligation Policy</h3>
                             </div>
                             <section className="flex flex-wrap p-8 ">
                                 <p className="text-md mb-4">
@@ -40,7 +47,9 @@ export default function Component() {
                                 </p>
 
                                 <div className="mb-4">
-                                    <h4 className="text-2xl font-sans text-red-500 font-bold mb-2">Price Includes:</h4>
+                                    <h4 className={`${euroStyleBoldFont.className} text-xl font-sans text-red-500 font-bold mb-2`}>
+                                        Price Includes:
+                                    </h4>
                                     <ul className="text-md space-y-1 list-disc list-inside">
                                         <li>One-year furnished housing in gender-separate, shared accommodations (two or three people per room).</li>
                                         <li>
@@ -61,7 +70,7 @@ export default function Component() {
                                 </div>
 
                                 <div className="mb-4">
-                                    <h4 className="text-xl font-bold mb-2">Not Included:</h4>
+                                    <h4 className={`font-sans text-xl font-sans text-red-500 font-bold mb-2`}>Not Included:</h4>
                                     <ul className="list-disc list-inside text-md space-y-1">
                                         <li>Airfare to and from Israel</li>
                                         <li>Spending money for personal items</li>
@@ -72,7 +81,7 @@ export default function Component() {
                                 </div>
 
                                 <div className="mb-4">
-                                    <h4 className="text-2xl font-sans text-red-500 font-bold mb-2">Refunds:</h4>
+                                    <h4 className={`text-xl font-serif text-red-500 font-bold mb-2`}>Refunds:</h4>
                                     <p className="text-md">
                                         The funds received for participation in the Zealous Israel Project have been evaluated and set to provide a
                                         quality experience. The initial overhead and expenditures for the program are incurred in the beginning phase
@@ -100,7 +109,7 @@ export default function Component() {
                         />
 
                         <div className="mb-4 px-6">
-                            <h4 className="text-2xl font-sans text-red-500 font-bold mb-4">Payment Options</h4>
+                            <h4 className={`${euroStyleBoldFont.className} text-xl font-sans text-red-500 font-bold mb-2`}>Payment Options</h4>
                             <p className="text-md pb-4 border-b-2 border-red-200">
                                 Please select the payment option that works best for you and initial in the relevant box. All payment options will be
                                 arranged through your national office and will be finalized before arrival to Israel. All prices are shown in US
@@ -110,7 +119,7 @@ export default function Component() {
 
                         <div className="space-y-4 px-6">
                             <div className=" border-b-2 border-red-200 p-4 rounded">
-                                <h5 className="font-bold text-2xl mb-4">Option 1</h5>
+                                <h5 className={`${euroStyleBoldFont.className} text-xl mb-4`}>Option 1</h5>
                                 <p className="text-md">
                                     US $500 nonrefundable deposit due immediately upon acceptance. This is used to secure your place in the housing
                                     facilities.
@@ -142,7 +151,7 @@ export default function Component() {
                             </div>
 
                             <div className="p-4 rounded">
-                                <h5 className="font-bold text-2xl mb-4">Option 3</h5>
+                                <h5 className="font-serif font-bold text-2xl mb-4">Option 3</h5>
                                 <p className="text-md">
                                     US $500 nonrefundable deposit due immediately upon acceptance. This is used to secure your place in the housing
                                     facilities.
@@ -169,8 +178,14 @@ export default function Component() {
                         </div>
 
                         <div className="flex justify-center mt-6 w-full bg-[rgb(25,25,21)]">
-                            <span className="mx-6 text-white flex justify-center items-center">www.zealous82.com</span>
-                            <Image src="/images/zealous-82.jpg" alt="Zealous 82 Logo" width={350} height={100} />
+                            <span className="text-white flex justify-center items-center">www.zealous82.com</span>
+                            <Image
+                                src="/images/zealous-82.jpg"
+                                alt="Zealous 82 Logo"
+                                width={350}
+                                height={100}
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 10vw"
+                            />
                         </div>
                     </div>
                 </div>
