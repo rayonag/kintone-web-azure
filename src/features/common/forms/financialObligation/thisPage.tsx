@@ -2,8 +2,6 @@ import Image from 'next/image';
 import { Archivo_Black } from 'next/font/google';
 import localFont from 'next/font/local';
 
-const gfont = Archivo_Black({ subsets: ['latin'], weight: '400' });
-
 const euroStyleBoldFont = localFont({ src: 'fonts/EurostileLTStd-Bold.otf', display: 'swap', weight: '200', style: 'normal' });
 const euroStyleFont = localFont({ src: 'fonts/eurostile.woff', display: 'swap', weight: '500', style: 'normal' });
 export default function Component() {
