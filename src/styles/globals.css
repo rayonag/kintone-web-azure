@@ -125,7 +125,7 @@ input[type='number'] {
 
 /* spinner */
 .spinner-container {
-    height: 100vh;
+    height: 100svh;
     position: fixed;
     top: 0;
     left: 0;

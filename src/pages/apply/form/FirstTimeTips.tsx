@@ -228,8 +228,11 @@ const TermsAndConditions = (props: { type: string | null }) => {
                 {props.type == 'Short Term' || (
                     <div className="mb-3">
                         <span className="font-bold">Please note:</span> All applicants who are applying to serve for over three months are required to
-                        submit a Criminal Record Check/Police Clearance Certificate (contact BFP National Office for assistance). The Criminal Record
-                        Check must be done at the Federal Level.
+                        submit a Criminal Record Check/Police Clearance Certificate (
+                        <Link className="underline text-blue-500" href={'/apply/contact-us'}>
+                            Contact Us
+                        </Link>{' '}
+                        for assitance). The Criminal Record Check must be done at the Federal Level.
                     </div>
                 )}
             </section>

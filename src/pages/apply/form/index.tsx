@@ -30,6 +30,12 @@ import ViewMyForm from './ViewMyForm';
 import ApplicationForm from '@/features/common/forms/applicationForm';
 
 import i18n from '@/features/common/forms/healthQuestionnaire/i18n/translations/config';
+import ViewApplicationForm from '@/features/common/viewForms/applicationForm/ViewApplicationForm';
+import dynamic from 'next/dynamic';
+
+const PDFViewer = dynamic(() => import('@react-pdf/renderer').then((mod) => mod.PDFViewer), {
+    ssr: false
+});
 
 const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const [ref, setRef] = useState('');
@@ -57,7 +63,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
         await postIsFirstTime(dashboardUser.ref);
         setIsFirstTimeOnForm(false);
     };
-
+    const [viewMyForm, setViewMyForm] = useState(false);
     return (
         <>
             {formSubmitted ? (
@@ -65,6 +71,23 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                     <Layout_fadeIn key="page">
                         <div className="flex flex-col items-center justify-center h-[95vh]">
                             <div>Thank you for submitting {type} application form.</div>
+                            {viewMyForm ? (
+                                <>
+                                    <button className="mt-4 p-2 bg-red-500 text-white rounded-full w-10 h-10" onClick={() => setViewMyForm(false)}>
+                                        ✕
+                                    </button>
+                                    <PDFViewer width="80%" height="80%">
+                                        <ViewApplicationForm />
+                                    </PDFViewer>
+                                </>
+                            ) : (
+                                <>
+                                    <button className="btn" onClick={() => setViewMyForm(true)}>
+                                        View Your Response
+                                    </button>
+                                </>
+                            )}
+
                             {/* {viewMyForm ? (
                                     <ViewMyForm />
                                 ) : 

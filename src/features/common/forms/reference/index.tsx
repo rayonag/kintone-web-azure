@@ -31,12 +31,6 @@ const ReferenceForm = () => {
     const initialLang = 'en';
     const [locale, dispatch] = useReducer<(state: string, actions: string) => string>(langReducer, initialLang);
 
-    const dashboardUser = useDashboardUser();
-    const { username } = useUserStore(
-        useShallow((state) => ({
-            username: state.username
-        }))
-    );
     // temp disable i18n
     // const { t } = useTranslation();
     const tStore = { ...healthQuestionnaire_en };
@@ -56,19 +50,6 @@ const ReferenceForm = () => {
         defaultValues: ReferenceFormDefaultValues,
         resolver: zodResolver(ReferenceFormSchema)
     });
-
-    //z.setErrorMap(customErrorMap(t));
-
-    // const validate = async (page: number) => {
-    //     const isValid = await trigger(formFields[page]);
-    //     if (isValid) return true;
-    //     else return false;
-    // };
-
-    useEffect(() => {
-        if (dashboardUser.ref) setValue('ref', dashboardUser.ref);
-        if (dashboardUser.office) setValue('office', dashboardUser.office);
-    }, [dashboardUser]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -108,12 +89,15 @@ const ReferenceForm = () => {
     //     // for modal
     //     ReactModal.setAppElement('#__next');
     // }, []);
+
+    // add param from url to form
     const router = useRouter();
     useEffect(() => {
         const query = router.query;
         console.log('query', query);
         setValue('ref', query.ref as string);
         setValue('office', query.office as string);
+        setValue('applicantName', query.name as string);
     }, [router]);
     const onSubmit = async (e: any) => {
         e.preventDefault();

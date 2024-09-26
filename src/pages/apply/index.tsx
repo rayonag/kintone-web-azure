@@ -255,7 +255,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
     return (
         <>
             <Modal isVisible={isVisible} onClose={() => setIsVisible(false)}>
-                <div className="p-4 max-h-[90vh] overflow-auto">
+                <div className="p-4 max-h-[90vh] max-w-[1000px] overflow-auto">
                     <Image src="/images/zealous/cover.jpg" alt="info" width={1000} height={1000} />
                 </div>
             </Modal>
@@ -269,7 +269,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                     <VaraText />
                 </div>
             )} */}
-                        <div className="flex flex-col items-center justify-center min-h-[95vh] text-white overflow-hidden">
+                        <>
                             {isLoaded && userRef ? (
                                 <>
                                     <div className="flex flex-col items-center justify-center w-full">
@@ -406,7 +406,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                                     <LoadingSpinner />
                                 </>
                             )}
-                        </div>
+                        </>
                     </Layout_fadeIn_home>
                 </>
             )}

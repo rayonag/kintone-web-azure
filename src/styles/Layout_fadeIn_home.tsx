@@ -24,13 +24,13 @@ const Layout_fadeIn_home: FC<Layout_fadeIn_homeProps> = ({ key, children, repo }
             {repo ? (
                 <motion.div
                     key={key || 'page'}
-                    className="h-screen w-[98vh] relative" // w-screen has issues with horizontal scroll bar
+                    className="h-screen w-screen relative" // w-screen has issues with horizontal scroll bar
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1 }}
                 >
                     <Header isZealous={repo.isZealous} />
-                    {children}
+                    <div className="flex flex-col items-center justify-center h-[95svh] text-white">{children}</div>
                 </motion.div>
             ) : (
                 <></>

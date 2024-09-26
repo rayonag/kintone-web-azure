@@ -10,6 +10,7 @@ import StartButton from './StartButton';
 import Layout_fadeIn from '@/styles/Layout_fadeIn';
 import { set } from 'zod';
 import logError from '@/common/logError';
+import Layout_fadeIn_zealous from '@/styles/Layout_fadeIn_zealous';
 
 type Login = {
     userName: {
@@ -27,12 +28,14 @@ type Login = {
     };
 };
 export type Section = 'Top' | 'Email' | 'Password' | 'CreatePassword';
+type TopType = 'main' | 'zealous';
 const Login: React.FC = () => {
     const [username, setUsername] = useState<Login['userName']>({ value: '' });
     const [password, setPassword] = useState<Login['password']>({ value: '' });
     const [confirmPassword, setConfirmPassword] = useState('');
     const [kintoneUser, setKintoneUser] = useState<Login>();
     const [section, setSection] = useState<Section>('Top');
+    const [topType, setTopType] = useState<TopType>('main');
     const [transitioning, setTransitioning] = useState(false);
     const router = useRouter();
 
@@ -158,15 +161,36 @@ const Login: React.FC = () => {
         <div className="flex flex-col items-center justify-center">
             <AnimatePresence>
                 {section == 'Top' && (
-                    <Layout_fadeIn key="top">
-                        <div className="flex flex-col h-[95vh] justify-center">
-                            <div className="text-center text-3xl italic font-serif">Bridges for Peace Volunteer Application Portal</div>
-                            <StartButton setSection={setSection} transitioning={transitioning} setTransitioning={setTransitioning} />
-                            <button className="btn" onClick={() => router.push('/contact')}>
-                                Need help? Contact us
-                            </button>
-                        </div>
-                    </Layout_fadeIn>
+                    <>
+                        {topType == 'main' ? (
+                            <Layout_fadeIn key="top">
+                                <div className="flex flex-col h-[95vh] justify-center">
+                                    <div className="text-center text-3xl italic font-serif">Bridges for Peace Volunteer Application Portal</div>
+                                    <StartButton setSection={setSection} transitioning={transitioning} setTransitioning={setTransitioning} />
+                                    <button className="btn" onClick={() => router.push('/contact')}>
+                                        Need help? Contact us
+                                    </button>
+                                    <button className="relative -bottom-20 hover:underline" onClick={() => setTopType('zealous')}>
+                                        Switch to Zealous Application
+                                    </button>
+                                </div>
+                            </Layout_fadeIn>
+                        ) : (
+                            <Layout_fadeIn_zealous key="top">
+                                <div className="flex flex-col h-[95vh] justify-center">
+                                    <div className="text-center text-3xl italic font-serif">Zealous Israel Project Application Portal</div>
+
+                                    <StartButton setSection={setSection} transitioning={transitioning} setTransitioning={setTransitioning} />
+                                    <button className="btn" onClick={() => router.push('/contact')}>
+                                        Need help? Contact us
+                                    </button>
+                                    <button className="relative -bottom-20 hover:underline" onClick={() => setTopType('main')}>
+                                        Switch to Volunteer Application
+                                    </button>
+                                </div>
+                            </Layout_fadeIn_zealous>
+                        )}
+                    </>
                 )}
                 {section == 'Email' && (
                     <Layout_fadeIn key="email">

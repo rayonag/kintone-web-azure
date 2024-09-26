@@ -45,9 +45,7 @@ export default function Component() {
                                 </p>
 
                                 <div className="mb-4">
-                                    <h4 className={`${euroStyleBoldFont.className} text-xl font-sans text-red-500 font-bold mb-2`}>
-                                        Price Includes:
-                                    </h4>
+                                    <h4 className={`font-sans text-xl text-red-500 font-bold mb-2`}>Price Includes:</h4>
                                     <ul className="text-md space-y-1 list-disc list-inside">
                                         <li>One-year furnished housing in gender-separate, shared accommodations (two or three people per room).</li>
                                         <li>
@@ -68,7 +66,7 @@ export default function Component() {
                                 </div>
 
                                 <div className="mb-4">
-                                    <h4 className={`font-sans text-xl font-sans text-red-500 font-bold mb-2`}>Not Included:</h4>
+                                    <h4 className={`font-sans text-xl text-red-500 font-bold mb-2`}>Not Included:</h4>
                                     <ul className="list-disc list-inside text-md space-y-1">
                                         <li>Airfare to and from Israel</li>
                                         <li>Spending money for personal items</li>
@@ -79,7 +77,7 @@ export default function Component() {
                                 </div>
 
                                 <div className="mb-4">
-                                    <h4 className={`text-xl font-serif text-red-500 font-bold mb-2`}>Refunds:</h4>
+                                    <h4 className={`text-xl font-sans text-red-500 font-bold mb-2`}>Refunds:</h4>
                                     <p className="text-md">
                                         The funds received for participation in the Zealous Israel Project have been evaluated and set to provide a
                                         quality experience. The initial overhead and expenditures for the program are incurred in the beginning phase
@@ -107,7 +105,7 @@ export default function Component() {
                         />
 
                         <div className="mb-4 px-6">
-                            <h4 className={`${euroStyleBoldFont.className} text-xl font-sans text-red-500 font-bold mb-2`}>Payment Options</h4>
+                            <h4 className={`text-xl font-sans text-red-500 font-bold mb-2`}>Payment Options</h4>
                             <p className="text-md pb-4 border-b-2 border-red-200">
                                 Please select the payment option that works best for you and initial in the relevant box. All payment options will be
                                 arranged through your national office and will be finalized before arrival to Israel. All prices are shown in US
@@ -117,7 +115,7 @@ export default function Component() {
 
                         <div className="space-y-4 px-6">
                             <div className=" border-b-2 border-red-200 p-4 rounded">
-                                <h5 className={`${euroStyleBoldFont.className} text-xl mb-4`}>Option 1</h5>
+                                <h5 className={`font-bold text-2xl mb-4`}>Option 1</h5>
                                 <p className="text-md">
                                     US $500 nonrefundable deposit due immediately upon acceptance. This is used to secure your place in the housing
                                     facilities.
@@ -149,7 +147,7 @@ export default function Component() {
                             </div>
 
                             <div className="p-4 rounded">
-                                <h5 className="font-serif font-bold text-2xl mb-4">Option 3</h5>
+                                <h5 className="font-bold text-2xl mb-4">Option 3</h5>
                                 <p className="text-md">
                                     US $500 nonrefundable deposit due immediately upon acceptance. This is used to secure your place in the housing
                                     facilities.

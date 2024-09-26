@@ -78,7 +78,7 @@ export const getServerSideProps = (async (context) => {
                 .catch((e) => {
                     throw new Error('resp3:' + e);
                 });
-            if (resp3) prefilledFormRecord = resp3[0];
+            if (resp3) prefilledFormRecord = resp3[0] || null; // possibly undefined
         }
         const repo: Repo = {
             prefilledFormRecord: prefilledFormRecord,

@@ -22,7 +22,7 @@ const Header: FC<HeaderProps> = ({ isZealous }) => {
     );
     return (
         <>
-            <header className="hidden h-[5vh] md:flex justify-around content-center">
+            <header className="hidden h-[5svh] md:flex justify-around content-center">
                 <button onClick={handleHomeClick} className="z-10">
                     {isZealous ? <ZealousLogo /> : <BridgesLogo />}
                 </button>

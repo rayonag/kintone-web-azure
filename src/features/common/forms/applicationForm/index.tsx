@@ -46,6 +46,17 @@ const ApplicationForm = (props: any) => {
             initUser: state.initUser
         }))
     );
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+    useEffect(() => {
+        if (isDialogOpen) {
+            (async () => {
+                setTimeout(() => {
+                    setIsDialogOpen(false);
+                }, 3000);
+            })();
+        }
+    }, [isDialogOpen]);
     //const [modalIsOpen, setModalIsOpen] = useState(false);
     // for future use on multi language
     // currently disabled
@@ -158,7 +169,7 @@ const ApplicationForm = (props: any) => {
             postTempApplicationForm(values, dashboardUser.ref || '0', step);
             alert('Your form has been submitted!');
             setIsLoading(false);
-            router.push('/apply');
+            window.location.reload();
         } else {
             alert('Failed to submit the form. Please try again.');
             setIsLoading(false);
@@ -174,11 +185,18 @@ const ApplicationForm = (props: any) => {
             transform: 'translate(-50%, -50%)'
         }
     };
+
     return (
         <>
             <div className="grid justify-center px-10 pb-10 max-h-screen overflow-y-scroll">
                 <Header />
-
+                <div
+                    className={`absolute top-20 right-20 bg-[#012c66] font-bold opacity-80 rounded-md text-white p-4 ${
+                        isDialogOpen ? 'max-w-40 block' : 'max-w-0 hidden'
+                    } transition-all duration-500 ease-in overflow-hidden`}
+                >
+                    <p>Progress Saved</p>
+                </div>
                 <Modal isOpen={isModalOpen} style={customStyles}>
                     <div className="text-black flex flex-col text-center">
                         <h1 className="text-xl font-semibold">There is a saved record of your progress.</h1>
@@ -213,6 +231,7 @@ const ApplicationForm = (props: any) => {
                                 if (valid) {
                                     // temp save
                                     postTempApplicationForm(getValues(), dashboardUser.ref || '0', step);
+                                    setIsDialogOpen(true);
                                     setStep(step + 1);
                                 }
                             }}
@@ -231,11 +250,11 @@ const ApplicationForm = (props: any) => {
                             {t('system.back')}
                         </button>
                     )}
-                    {step == 1 && (
-                        <Link href="/apply" className="text-center btn-wide">
-                            Back to Top
-                        </Link>
-                    )}
+                    {/* {step == 1 && ( */}
+                    <Link href="/apply" className="text-center btn-wide">
+                        Back to Top
+                    </Link>
+                    {/* )} */}
                 </form>
             </div>
         </>

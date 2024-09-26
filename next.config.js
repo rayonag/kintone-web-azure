@@ -1,10 +1,11 @@
 /** @type {import('next').NextConfig} */
 
 const cspHeader = `
-    default-src 'self' https://f62c12b3.form.kintoneapp.com/;
+    default-src 'self' http://localhost:3000/;
     script-src 'self' 'unsafe-eval' 'unsafe-inline';
     style-src 'self' 'unsafe-inline';
     object-src 'none';
+    frame-src 'self' blob:;
     frame-ancestors 'none';
     block-all-mixed-content;
     upgrade-insecure-requests;
