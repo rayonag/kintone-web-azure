@@ -5,7 +5,6 @@ import { setCookie } from 'nookies';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import StartButton from './StartButton';
-import Layout_fadeIn from '@/styles/Layout_fadeIn';
 import logError from '@/common/logError';
 import Layout_fadeIn_zealous from '@/styles/Layout_fadeIn_zealous';
 
@@ -167,7 +166,7 @@ const Login: React.FC = () => {
                     </Layout_fadeIn_zealous>
                 )}
                 {section == 'Email' && (
-                    <Layout_fadeIn key="email">
+                    <Layout_fadeIn_zealous key="top">
                         <div className="flex flex-col h-[95vh] justify-center items-center">
                             <div className="text-center w-72">Enter your email</div>
                             <input
@@ -185,10 +184,10 @@ const Login: React.FC = () => {
                                 </button>
                             </div>
                         </div>
-                    </Layout_fadeIn>
+                    </Layout_fadeIn_zealous>
                 )}
                 {section == 'Password' && (
-                    <Layout_fadeIn key="password">
+                    <Layout_fadeIn_zealous key="top">
                         <div className="flex flex-col h-[95vh] justify-center items-center">
                             <div className="m-4 w-52">Email: {username?.value}</div>
                             <div className="text-center">Enter your password</div>
@@ -208,10 +207,10 @@ const Login: React.FC = () => {
                                 </button>
                             </div>
                         </div>
-                    </Layout_fadeIn>
+                    </Layout_fadeIn_zealous>
                 )}
                 {section == 'CreatePassword' && (
-                    <Layout_fadeIn key="createPassword">
+                    <Layout_fadeIn_zealous key="top">
                         <div className="flex flex-col h-[95vh] justify-center items-center">
                             <div className="m-4 w-52">Email: {username?.value}</div>
                             <div className="text-center">Enter your password</div>
@@ -241,7 +240,7 @@ const Login: React.FC = () => {
                                 </button>
                             </div>
                         </div>
-                    </Layout_fadeIn>
+                    </Layout_fadeIn_zealous>
                 )}
             </AnimatePresence>
         </div>
