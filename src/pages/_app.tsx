@@ -41,7 +41,13 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
         // CSR用認証チェック
         router.beforePopState(({ url, as, options }) => {
             // ログイン画面とエラー画面遷移時のみ認証チェックを行わない
-            if (url.startsWith('/apply') && url !== '/apply/login' && url !== '/_error') {
+            if (
+                url.startsWith('/apply') &&
+                url !== '/apply/login' &&
+                url !== '/apply/login/main' &&
+                url !== '/apply/login/zealous' &&
+                url !== '/_error'
+            ) {
                 if (typeof cookies.auth === 'undefined') {
                     // CSR用リダイレクト処理
                     window.location.href = '/apply/login';
@@ -81,7 +87,13 @@ App.getInitialProps = async (appContext: any) => {
 
     const cookies = parseCookies(appContext.ctx);
     // ログイン画面とエラー画面遷移時のみ認証チェックを行わない
-    if (appContext.ctx.pathname.startsWith('/apply') && appContext.ctx.pathname !== '/apply/login' && appContext.ctx.pathname !== '/_error') {
+    if (
+        appContext.ctx.pathname.startsWith('/apply') &&
+        appContext.ctx.pathname !== '/apply/login' &&
+        appContext.ctx.pathname !== '/apply/login/main' &&
+        appContext.ctx.pathname !== '/apply/login/zealous' &&
+        appContext.ctx.pathname !== '/_error'
+    ) {
         if (typeof cookies.auth === 'undefined') {
             // SSR or CSRを判定
             const isServer = typeof window === 'undefined';

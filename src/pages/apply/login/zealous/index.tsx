@@ -1,17 +1,13 @@
 'use client';
 import { ChangeEvent, FormEvent, KeyboardEvent, use, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
-import axios from 'axios';
 import { setCookie } from 'nookies';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import Layout from './Layout';
 import StartButton from './StartButton';
 import Layout_fadeIn from '@/styles/Layout_fadeIn';
-import { set } from 'zod';
 import logError from '@/common/logError';
 import Layout_fadeIn_zealous from '@/styles/Layout_fadeIn_zealous';
-import Link from 'next/link';
 
 type Login = {
     userName: {
@@ -157,37 +153,97 @@ const Login: React.FC = () => {
 
     return (
         <div className="flex flex-col items-center justify-center">
-            <Layout_fadeIn key="top">
-                <div className="flex flex-col h-[95vh] justify-center">
-                    <div className="text-center text-3xl italic font-serif mb-10">Please select:</div>
-                    <div className="flex">
-                        <Link href="/apply/login/main" className="flex flex-col justify-center m-4 cursor-pointer">
-                            <div
-                                className="h-40 w-40 rounded-full hover:scale-110 transition-transform duration-500 ease-in-out"
-                                style={{
-                                    backgroundImage: "url('/images/bridges-logo-round.png')",
-                                    backgroundSize: 'cover',
-                                    backgroundPosition: 'center'
+            <AnimatePresence>
+                {section == 'Top' && (
+                    <Layout_fadeIn_zealous key="top">
+                        <div className="flex flex-col h-[95vh] justify-center">
+                            <div className="text-center text-3xl italic font-serif">Zealous Israel Project Application Portal</div>
+
+                            <StartButton setSection={setSection} transitioning={transitioning} setTransitioning={setTransitioning} />
+                            <button className="btn" onClick={() => router.push('/contact')}>
+                                Need help? Contact us
+                            </button>
+                        </div>
+                    </Layout_fadeIn_zealous>
+                )}
+                {section == 'Email' && (
+                    <Layout_fadeIn key="email">
+                        <div className="flex flex-col h-[95vh] justify-center items-center">
+                            <div className="text-center w-72">Enter your email</div>
+                            <input
+                                value={username.value}
+                                onChange={(e) => setUsername({ value: e.target.value })}
+                                onKeyDown={(e) => allowEnterKeydown(e, handleUsername)}
+                                placeholder="Email"
+                                className="mt-5 p-2 border rounded bg-gray-600 w-72 max-w-full"
+                                autoFocus
+                            />
+                            {username.isError && <div className="text-red-600">Invalid Email Address</div>}
+                            <div className="text-center">
+                                <button className="btn" onClick={handleUsername}>
+                                    Next
+                                </button>
+                            </div>
+                        </div>
+                    </Layout_fadeIn>
+                )}
+                {section == 'Password' && (
+                    <Layout_fadeIn key="password">
+                        <div className="flex flex-col h-[95vh] justify-center items-center">
+                            <div className="m-4 w-52">Email: {username?.value}</div>
+                            <div className="text-center">Enter your password</div>
+                            <input
+                                type="password"
+                                value={password.value}
+                                onChange={(e) => setPassword({ value: e.target.value })}
+                                onKeyDown={(e) => allowEnterKeydown(e, loginPassword)}
+                                placeholder="Password"
+                                className="mt-5 p-2 border rounded bg-gray-600 w-72 max-w-full"
+                                autoFocus
+                            />
+                            {password.isError && <div className="text-red-600">Invalid Password</div>}
+                            <div className="text-center">
+                                <button className="btn" onClick={loginPassword}>
+                                    Login
+                                </button>
+                            </div>
+                        </div>
+                    </Layout_fadeIn>
+                )}
+                {section == 'CreatePassword' && (
+                    <Layout_fadeIn key="createPassword">
+                        <div className="flex flex-col h-[95vh] justify-center items-center">
+                            <div className="m-4 w-52">Email: {username?.value}</div>
+                            <div className="text-center">Enter your password</div>
+                            <input
+                                type="password"
+                                value={password.value}
+                                onChange={(e) => setPassword({ ...password, value: e.target.value })}
+                                placeholder="Password"
+                                className="my-5 p-2 border rounded bg-gray-600 w-72 max-w-full"
+                                autoFocus
+                            />
+                            <div className="text-center">Confirm your password</div>
+                            <input
+                                type="password"
+                                value={confirmPassword}
+                                onChange={(e) => {
+                                    setConfirmPassword(e.target.value);
                                 }}
-                            ></div>
-                            <div className="font-xl text-white text-center m-4 font-bold">・Long Term</div>{' '}
-                            <div className="font-xl text-white text-center m-4 font-bold">・Short Term</div>
-                        </Link>
-                        <Link href="/apply/login/zealous" className="flex flex-col justify-center m-4">
-                            <div
-                                className="h-40 w-40 rounded-full hover:scale-110 transition-transform duration-500 ease-in-out"
-                                style={{
-                                    backgroundImage: "url('/images/zealous/zealous-logo-round.png')",
-                                    backgroundSize: 'cover',
-                                    backgroundPosition: 'center'
-                                }}
-                            ></div>
-                            <div className="font-xl text-white text-center m-4 font-bold">・ZProject</div>
-                            <div className="font-xl text-white text-center m-4 font-bold h-4"></div>
-                        </Link>
-                    </div>
-                </div>
-            </Layout_fadeIn>
+                                onKeyDown={(e) => allowEnterKeydown(e, handleCreatePassword)}
+                                placeholder="Re-enter Password"
+                                className="mt-5 p-2 border rounded bg-gray-600 w-72 max-w-full"
+                            />
+                            {password.isError && <div className="text-red-600">{password.errorMessage}</div>}
+                            <div className="text-center">
+                                <button className="btn" onClick={handleCreatePassword}>
+                                    Create Password
+                                </button>
+                            </div>
+                        </div>
+                    </Layout_fadeIn>
+                )}
+            </AnimatePresence>
         </div>
     );
 };
