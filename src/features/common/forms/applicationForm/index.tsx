@@ -34,6 +34,12 @@ import postTempApplicationForm from './hooks/postTempApplicationForm';
 import applicationForm_en from './i18n/translations/en.json';
 import common_en from '@/libs/i18n/common/en.json';
 
+const tStore = { ...applicationForm_en, ...common_en };
+const getNestedProperty = (obj: any, path: string) => {
+    return path.split('.').reduce((acc, part) => acc && acc[part], obj);
+};
+export const t = (key: string) => getNestedProperty(tStore, key);
+
 const ApplicationForm = (props: any) => {
     const [step, setStep] = useState(1);
     const { setIsLoading } = useLoading();

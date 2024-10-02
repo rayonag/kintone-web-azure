@@ -27,6 +27,11 @@ const Step4: FC<Step4Props> = ({ register, errors, getValues, t, control }) => {
             <section>
                 <SectionTitle title={''} />
                 <div className="font-semibold mt-2 text-black">{t('traitTitle')}</div>
+                <div className="flex flex-wrap text-sm md:text-md justify-between mt-2 text-black">
+                    <div className="mr-2">5 = Strong</div> <div className="mr-2">4 = Above average</div> <div className="mr-2">3 = Average</div>
+                    <div className="mr-2">2 = Below average</div> <div>1 = Weak</div>
+                    <div className="mr-2">X = Not observed</div>
+                </div>
                 <Row>
                     <Select
                         label={t('traitPhysicalCondition')}

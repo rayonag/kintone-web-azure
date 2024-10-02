@@ -23,6 +23,7 @@ import { useLoading } from '@/common/context/loading';
 import Step4 from './views/Step4';
 import Step5 from './views/Step5';
 import postReferenceForm from './hooks/postReferenceForm';
+import StepProgressBar from '../components/ProgressBar';
 
 const ReferenceForm = () => {
     const [page, setPage] = useState(0);
@@ -123,6 +124,7 @@ const ReferenceForm = () => {
                 onSubmit={(e) => onSubmit(e)}
                 className="flex flex-col my-14 p-10 max-w-[95vw] md:w-[50rem] md:max-w-screen bg-gray-50 border rounded-md"
             >
+                <StepProgressBar steps={5} setStep={setStep} currentStep={step} />
                 {step === 1 && <Step1 register={register} errors={formatError} getValues={getValues} t={t} control={control} />}
                 {step === 2 && <Step2 register={register} errors={formatError} getValues={getValues} t={t} control={control} />}
                 {step === 3 && <Step3 register={register} errors={formatError} getValues={getValues} t={t} control={control} />}

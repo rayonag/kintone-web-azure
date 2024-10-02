@@ -27,6 +27,7 @@ const Step7: FC<Step7Props> = ({ register, errors, getValues, control, t }) => {
             <section>
                 <SectionTitle title={t('sectionTitle.7')} />
                 <div className="font-semibold mt-2 text-black">{t('skillIntroduction')}</div>
+                <div className="mt-2 text-black">1 - Little experience 3 - Moderate experience 5 - Extensive experience</div>
 
                 <div className="flex justify-center items-center bg-gray-200 h-40 w-full rounded-lg">
                     <video src="/images/slider.webm" height={200} width={300} loop autoPlay playsInline />
