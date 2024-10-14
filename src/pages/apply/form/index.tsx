@@ -1,20 +1,13 @@
 'use client';
-// Import necessary modules from React
+
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDashboardUser } from '@/common/context/dashboardUser';
-import {
-    KintoneUserName,
-    KintonePassword,
-    VolunteerApplicationMasterAppID,
-    VolunteerApplicationAppID,
-    TempVolunteerApplicationAppID
-} from '@/common/env';
+import { KintoneUserName, KintonePassword, VolunteerApplicationMasterAppID, VolunteerApplicationAppID } from '@/common/env';
 import { REST_OnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
 import { KintoneRecordField, KintoneRestAPIClient } from '@kintone/rest-api-client';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { parseCookies } from 'nookies';
-import { shortTermApplicationURL, volunteerApplicationURL, zealousAplicationURL } from '@/common/env';
 import postIsFirstTime from '@/common/checklist/postIsFirstTime';
 import Link from 'next/link';
 import Layout_fadeIn from '@/styles/Layout_fadeIn';
@@ -22,25 +15,22 @@ import { REST_VolunteerApplicationForm, REST_SavedVolunteerApplicationForm } fro
 import logError from '@/common/logError';
 import { NationalOffice } from '@/common/context/offices';
 import FirstTimeTips from './FirstTimeTips';
-import { useLoading } from '@/common/context/loading';
-
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-import ViewMyForm from './ViewMyForm';
 import ApplicationForm from '@/features/common/forms/applicationForm';
 
-import i18n from '@/features/common/forms/healthQuestionnaire/i18n/translations/config';
 import ViewApplicationForm from '@/features/common/viewForms/applicationForm/ViewApplicationForm';
 import dynamic from 'next/dynamic';
+
+// Dynamically import PDFDownloadLink to ensure it is only loaded on the client side
+const PDFDownloadLink = dynamic(() => import('@react-pdf/renderer').then((mod) => mod.PDFDownloadLink), { ssr: false });
 
 const PDFViewer = dynamic(() => import('@react-pdf/renderer').then((mod) => mod.PDFViewer), {
     ssr: false
 });
 
 const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-    const [ref, setRef] = useState('');
-    const [office, setOffice] = useState<NationalOffice | undefined>(undefined);
     const [isFirstTimeOnForm, setIsFirstTimeOnForm] = useState(false);
+    const [viewMyForm, setViewMyForm] = useState(false);
     const dashboardUser = useDashboardUser();
     const router = useRouter();
 
@@ -53,9 +43,6 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
             router.push('/apply');
             return;
         }
-        const office = repo?.office;
-        setRef(ref);
-        setOffice(office);
         setIsFirstTimeOnForm(repo?.isFirstTimeOnForm || false);
     }, [dashboardUser]);
     const handleContinueOnFirstTime = async () => {
@@ -63,7 +50,6 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
         await postIsFirstTime(dashboardUser.ref);
         setIsFirstTimeOnForm(false);
     };
-    const [viewMyForm, setViewMyForm] = useState(false);
     return (
         <>
             {formSubmitted ? (
@@ -77,26 +63,28 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                                         ✕
                                     </button>
                                     <PDFViewer width="80%" height="80%">
-                                        <ViewApplicationForm />
+                                        <ViewApplicationForm record={repo?.submittedFormRecord} />
                                     </PDFViewer>
                                 </>
                             ) : (
                                 <>
-                                    <button className="btn" onClick={() => setViewMyForm(true)}>
+                                    {/* <button className="btn" onClick={() => setViewMyForm(true)}>
                                         View Your Response
-                                    </button>
+                                    </button> */}
+                                    <PDFDownloadLink
+                                        document={<ViewApplicationForm record={repo?.submittedFormRecord} />}
+                                        fileName="application_form.pdf"
+                                    >
+                                        <div className="btn">Download Your Response</div>
+                                    </PDFDownloadLink>
+                                    {/* TODO: send via email?
+                                    <div>
+                                        <div className="mt-4">Send Your Response to:</div>
+                                        <input placeholder="example@mail.com" />
+                                        <button className="btns">Send</button>
+                                    </div> */}
                                 </>
                             )}
-
-                            {/* {viewMyForm ? (
-                                    <ViewMyForm />
-                                ) : 
-                                (
-                                    <button className="btn" onClick={() => setViewMyForm(true)}>
-                                        View Your Response
-                                    </button>
-                                )
-                                } */}
                             <Link href="/apply" className="btn">
                                 Go to Top
                             </Link>
@@ -128,6 +116,7 @@ type Repo = {
     formSubmitted: boolean;
     office: NationalOffice;
     prefilledFormRecord: REST_TempVolunteerApplicationForm | null;
+    submittedFormRecord: REST_VolunteerApplicationForm | null;
 };
 export const getServerSideProps = (async (context) => {
     try {
@@ -166,42 +155,6 @@ export const getServerSideProps = (async (context) => {
                 throw new Error('resp3:' + e);
             });
         let prefilledFormRecord = resp3[0] ? await resp3[0] : null;
-        // check if not yet
-        // const getPrefilledFormURL = (record: REST_SavedVolunteerApplicationForm) => {
-        //     let query = '';
-        //     Object.keys(record).forEach((key) => {
-        //         const typedKey = key as keyof REST_VolunteerApplicationForm;
-        //         // ref
-        //         if (key === 'ref') {
-        //             query += `${key}=${cookies.ref}&`;
-        //             return;
-        //         }
-        //         if (!Array.isArray(record[typedKey].value) || record[typedKey].value.length === 0) {
-        //             // if text box, radio, select, number, date
-        //             query += `${key}=${record[typedKey].value}&`;
-        //             return;
-        //         }
-        //         if (typeof record[typedKey].value[0] === 'object' && record[typedKey].value[0] !== null) {
-        //             // if tables
-        //             if (record[typedKey].value[0].value) {
-        //                 record[typedKey].value.forEach((table: any, index: number) => {
-        //                     Object.keys(table.value).forEach((tableKey) => {
-        //                         const typedTableKey = tableKey as keyof REST_VolunteerApplicationForm;
-        //                         query += `${key}-${index}-${tableKey}=${table.value[typedTableKey].value}&`;
-        //                     });
-        //                 });
-        //             }
-        //             // if files
-        //             return;
-        //         }
-        //         if (typeof record[typedKey].value[0] === 'string') {
-        //             // if checkbox array
-        //             query += `${key}=${record[typedKey].value.join(',')}&`;
-        //             return;
-        //         }
-        //     });
-        //     return `${getIframeLink(resp.record['type'].value)}?${query}`;
-        // };
         if (resp2.length > 0) {
             if (resp.record['formSubmission'].value.findIndex((arr) => arr == 'Application Form Completed') == -1) {
                 // check if form is submitted
@@ -221,19 +174,13 @@ export const getServerSideProps = (async (context) => {
                 }
             }
         }
-        // if (resp.record['returnRef'].value) {
-        //     const resp3 = await client.record.getAllRecords<REST_SavedVolunteerApplicationForm>({
-        //         app: VolunteerApplicationAppID as string,
-        //         condition: `ref=${resp.record['returnRef'].value}`
-        //     });
-        //     if (resp3) prefilledFormURL = getPrefilledFormURL(resp3[0]);
-        // }
         const repo: Repo = {
             isFirstTimeOnForm: resp.record['isFirstTimeOnForm'].value == 'true',
             type: resp.record['type'].value || null,
             formSubmitted: resp.record['formSubmission'].value.findIndex((arr) => arr == 'Application Form Completed') > -1,
             office: resp.record['office'].value,
-            prefilledFormRecord: prefilledFormRecord
+            prefilledFormRecord: prefilledFormRecord,
+            submittedFormRecord: resp2[0] || null
         };
         // Pass data to the page via props
         return { props: { repo } };
@@ -242,15 +189,3 @@ export const getServerSideProps = (async (context) => {
         return { props: {} };
     }
 }) satisfies GetServerSideProps<{ repo: Repo } | {}>;
-const getIframeLink = (type: string | null) => {
-    switch (type) {
-        case 'Long Term':
-            return volunteerApplicationURL;
-        case 'Short Term':
-            return shortTermApplicationURL;
-        case 'Zealous':
-            return zealousAplicationURL;
-        default:
-            return '';
-    }
-};

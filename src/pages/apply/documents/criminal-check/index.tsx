@@ -7,14 +7,14 @@ const CriminalCheck = () => {
     const office = useUserStore((state) => state.nationalOffice);
     const Help = () => (
         <Link href="./criminal-check/example" className="link">
-            {office == 'USA' ? 'What is FBI Records Check?' : 'What is Criminal Check?'}
+            {office == 'USA' ? 'What is FBI Criminal Background Check?' : 'What is Criminal Check?'}
         </Link>
     );
     return (
         <>
             <SubmitDocument
                 document="criminalCheck"
-                title={`Please Upload Your ${office == 'USA' ? 'FBI Records Check' : 'Criminal Check document'}`}
+                title={`Please Upload Your ${office == 'USA' ? 'FBI Criminal Background Check' : 'Criminal Check document'}`}
                 Help={Help}
             ></SubmitDocument>
         </>

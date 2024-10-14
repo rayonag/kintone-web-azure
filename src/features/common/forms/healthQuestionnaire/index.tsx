@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import Link from 'next/link';
@@ -25,7 +25,14 @@ import Step1 from './views/Step1';
 import Step2 from './views/Step2';
 import Step3 from './views/Step3';
 import convertPrefilledFormRecord from './hooks/convertPrefilledFormRecord';
-
+import router from 'next/router';
+import postPersonalHealthQuestionnaire from './hooks/postPersonalHealthQuestionnaire';
+import { useLoading } from '@/common/context/loading';
+const tStore = { ...healthQuestionnaire_en };
+const getNestedProperty = (obj: any, path: string) => {
+    return path.split('.').reduce((acc, part) => acc && acc[part], obj);
+};
+export const t = (key: string) => getNestedProperty(tStore, key);
 const HealthQuestionnaire = (props: { repo: any }) => {
     const [page, setPage] = useState(0);
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -39,13 +46,10 @@ const HealthQuestionnaire = (props: { repo: any }) => {
             username: state.username
         }))
     );
+    const { setIsLoading } = useLoading();
     // temp disable i18n
     // const { t } = useTranslation();
-    const tStore = { ...healthQuestionnaire_en };
-    const getNestedProperty = (obj: any, path: string) => {
-        return path.split('.').reduce((acc, part) => acc && acc[part], obj);
-    };
-    const t = (key: string) => getNestedProperty(tStore, key);
+
     const {
         formState: { errors: formatError },
         trigger,
@@ -92,12 +96,21 @@ const HealthQuestionnaire = (props: { repo: any }) => {
             convertPrefilledFormRecord(data, setValue);
         }
     }, [props]);
+    const onSubmit: SubmitHandler<HealthQuestionnaireType> = async () => {
+        setIsLoading(true);
+        const data = getValues();
+        // TODO: when undefined
+        const res = await postPersonalHealthQuestionnaire(data, dashboardUser.ref || '0');
+        setIsLoading(false);
+        if (!res) return alert('Something went wrong. Please try again later.');
+        window.location.reload();
+    };
     return (
         <form className="flex flex-col px-10 pb-10 text-center">
             {page === 0 && <Step1 register={register} errors={formatError} getValues={getValues} t={t} control={control} />}
             {page === 1 && <Step2 register={register} errors={formatError} getValues={getValues} t={t} control={control} />}
             {page === 2 && <Step3 register={register} errors={formatError} t={t} control={control} />}
-            <ConfirmationModal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} getValues={getValues} t={t} />
+            <ConfirmationModal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} getValues={getValues} t={t} onSubmit={onSubmit} />
             {page != 2 && (
                 <button
                     type="button"

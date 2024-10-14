@@ -18,6 +18,12 @@ import Layout_slideUp from '@/styles/Layout_slideUp';
 import Layout_fadeIn from '@/styles/Layout_fadeIn';
 import { REST_SavedVolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
 import logError from '@/common/logError';
+import { REST_PersonalHealthQuestionnaire } from '@/types/PersonalHealthQuestionnaire';
+import ViewHealthQuestionnaire from '@/features/common/viewForms/healthQuestionnaire/ViewHealthQuestionnaire';
+import dynamic from 'next/dynamic';
+// Dynamically import PDFDownloadLink to ensure it is only loaded on the client side
+const PDFDownloadLink = dynamic(() => import('@react-pdf/renderer').then((mod) => mod.PDFDownloadLink), { ssr: false });
+const PDFViewer = dynamic(() => import('@react-pdf/renderer').then((mod) => mod.PDFViewer), { ssr: false });
 
 const Dashboard = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const formSubmitted = repo?.formSubmitted;
@@ -28,6 +34,27 @@ const Dashboard = ({ repo }: InferGetServerSidePropsType<typeof getServerSidePro
                 <Layout_fadeIn>
                     <div className="flex flex-col items-center justify-center h-[95vh]">
                         <div>Thank you for submitting Personal Health Questionnaire.</div>
+                        <>
+                            {/* <button className="btn" onClick={() => setViewMyForm(true)}>
+                                        View Your Response
+                                    </button> */}
+                            <PDFDownloadLink
+                                document={<ViewHealthQuestionnaire record={repo?.submittedFormRecord} />}
+                                fileName="health_questionnaire.pdf"
+                            >
+                                <div className="btn">Download Your Response</div>
+                            </PDFDownloadLink>
+                            {/* dev 
+                            <PDFViewer width={1000} height={1000}>
+                                <ViewHealthQuestionnaire record={repo?.submittedFormRecord} />
+                            </PDFViewer> */}
+                            {/* TODO: send via email?
+                                    <div>
+                                        <div className="mt-4">Send Your Response to:</div>
+                                        <input placeholder="example@mail.com" />
+                                        <button className="btns">Send</button>
+                                    </div> */}
+                        </>
                         <Link href="/apply" className="btn">
                             Go to Top
                         </Link>
@@ -47,7 +74,8 @@ export default Dashboard;
 
 type Repo = {
     formSubmitted: boolean;
-    prefilledFormRecord: any;
+    prefilledFormRecord: REST_PersonalHealthQuestionnaire | null;
+    submittedFormRecord: REST_PersonalHealthQuestionnaire | null;
 };
 export const getServerSideProps = (async (context) => {
     try {
@@ -68,7 +96,7 @@ export const getServerSideProps = (async (context) => {
             .catch((e) => {
                 throw new Error('resp:' + e);
             });
-        let prefilledFormRecord = null;
+        let prefilledFormRecord;
         if (resp.record['returnRef'].value) {
             const resp3 = await client.record
                 .getAllRecords<any>({
@@ -78,11 +106,21 @@ export const getServerSideProps = (async (context) => {
                 .catch((e) => {
                     throw new Error('resp3:' + e);
                 });
-            if (resp3) prefilledFormRecord = resp3[0] || null; // possibly undefined
+            if (resp3) prefilledFormRecord = resp3[0];
+        }
+        const isFormSubmitted = resp.record['formSubmission'].value.findIndex((arr) => arr == 'Personal Health Questionnaire') > -1;
+        let submittedFormRecord;
+        if (isFormSubmitted) {
+            const resp2 = await client.record.getAllRecords<REST_PersonalHealthQuestionnaire>({
+                app: PersonalHealthQuestionnaireAppID as string,
+                condition: `ref=${cookies.ref}`
+            });
+            submittedFormRecord = resp2[0];
         }
         const repo: Repo = {
-            prefilledFormRecord: prefilledFormRecord,
-            formSubmitted: resp.record['formSubmission'].value.findIndex((arr) => arr == 'Personal Health Questionnaire') > -1
+            prefilledFormRecord: prefilledFormRecord || null,
+            formSubmitted: isFormSubmitted,
+            submittedFormRecord: submittedFormRecord || null
         };
         // Pass data to the page via props
         return { props: { repo } };

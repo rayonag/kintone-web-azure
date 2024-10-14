@@ -18,7 +18,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
         const msg = {
             to: 'intl.personnel@bridgesforpeace.com', // Change to your recipient
             cc: 'ronaga@bridgesforpeace.com',
-            from: 'BFP Noreply<noreply@bridgesforpeace.com>', // Change to your verified sender
+            from: 'BFP Online Application<onlineapplication@bridgesforpeace.com>', // Change to your verified sender
             subject: '[Online Volunteer Application]You got feedback',
             html: `<div>Name: ${name}</div><div>Rating: ${rating}</div><div>Comment: ${comment}</div>`
         };

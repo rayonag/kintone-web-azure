@@ -175,7 +175,7 @@
     "skillComputerDesign": "Computer layout & design",
     "skillAdobePhotoshop": "Adobe Photoshop",
     "skillAdobeInDesign": "Adobe InDesign",
-    "skillOtherPrograms": "Skills in Other Programs",
+    "skillOtherProgram": "Skills in Other Programs",
     "skillJournalism": "Journalism",
     "skillPublicSpeaking": "Public Speaking",
     "skillFilmmaking": "Filmmaking",
@@ -184,7 +184,7 @@
     "skillAccounting": "Accounting",
     "skillAdministration": "Administration",
     "skillBookkeeping": "Bookkeeping",
-    "skillOperatingSystems": "Operating Systems",
+    "skillOperatingSystem": "Operating Systems",
     "skillSystem": {
         "title": "Operating Systems",
         "options": {

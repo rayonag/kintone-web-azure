@@ -132,7 +132,7 @@ const convertPrefilledFormRecord = (record: SavedVolunteerApplicationForm, setVa
     addFieldIfValid('skillComputerDesign', record.skillComputerDesign.value);
     addFieldIfValid('skillAdobePhotoshop', record.skillAdobePhotoshop.value);
     addFieldIfValid('skillAdobeInDesign', record.skillAdobeInDesign.value);
-    addFieldIfValid('skillOtherPrograms', record.skillOtherProgram.value);
+    addFieldIfValid('skillOtherProgram', record.skillOtherProgram.value);
     addFieldIfValid('skillJournalism', record.skillJournalism.value);
     addFieldIfValid('skillPublicSpeaking', record.skillPublicSpeaking.value);
     addFieldIfValid('skillFilmmaking', record.skillFilmmaking.value);
@@ -140,7 +140,7 @@ const convertPrefilledFormRecord = (record: SavedVolunteerApplicationForm, setVa
     addFieldIfValid('skillAccounting', record.skillAccounting.value);
     addFieldIfValid('skillAdministration', record.skillAdministration.value);
     addFieldIfValid('skillBookkeeping', record.skillBookkeeping.value);
-    addFieldIfValid('skillOperatingSystems', record.skillOperatingSystem.value);
+    addFieldIfValid('skillOperatingSystem', record.skillOperatingSystem.value);
     addFieldIfValid('skillSystem', record.skillSystem.value);
     addFieldIfValid('skillSoftware', record.skillSoftware.value);
     addFieldIfValid('skillOfficeSuite', record.skillOfficeSuite.value);

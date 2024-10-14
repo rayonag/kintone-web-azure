@@ -69,10 +69,10 @@ const Page: React.FC = () => {
                         {isSubmitted('Recent Photo') && <Check />}
                     </div>
 
-                    {(type == 'Long Term' || type == 'Zealous') && (
+                    {type == 'Short Term' || (
                         <div className="relative flex items-center">
                             <Link href="./documents/criminal-check" className="btn">
-                                {office == 'USA' ? 'FBI Records Check' : 'Criminal Check'}
+                                {office == 'USA' ? 'FBI Criminal Background Check' : 'Criminal Check'}
                             </Link>
                             {isSubmitted('Criminal Check') && <Check />}
                         </div>

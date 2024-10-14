@@ -161,9 +161,9 @@ const Step7: FC<Step7Props> = ({ register, errors, getValues, control, t }) => {
                     />
                     <SkillRangeInput
                         control={control}
-                        label={t('skillOtherPrograms')}
-                        register={register('skillOtherPrograms')}
-                        error={errors.skillOtherPrograms || undefined}
+                        label={t('skillOtherProgram')}
+                        register={register('skillOtherProgram')}
+                        error={errors.skillOtherProgram || undefined}
                     />
                     <SkillRangeInput
                         control={control}

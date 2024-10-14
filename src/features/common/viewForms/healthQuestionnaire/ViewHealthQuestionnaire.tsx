@@ -1,118 +1,30 @@
 'use client';
 
-import { Document, StyleSheet } from '@react-pdf/renderer';
+import { Page, Text, View, Document, StyleSheet, Font } from '@react-pdf/renderer';
+import { record } from '../mockRecord';
+import { ApplicationFormFields } from '../../forms/applicationForm/schema';
 
 import applicationForm_en from '@/features/common/forms/applicationForm/i18n/translations/en.json';
 import common_en from '@/libs/i18n/common/en.json';
 import Page1 from './pages/All';
+import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import { REST_VolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
+import { REST_PersonalHealthQuestionnaire } from '@/types/PersonalHealthQuestionnaire';
 
-type PDFProps = {
-    record: REST_VolunteerApplicationForm | null | undefined;
-};
-export default function PDF(props: PDFProps) {
-    //const mockRecord = record.record;
-    const record = props.record;
-    if (!record) return null;
-    const tStore = { ...applicationForm_en, ...common_en };
-    const getNestedProperty = (obj: any, path: string) => {
-        return path.split('.').reduce((acc, part) => acc && acc[part], obj);
-    };
-    const t = (key: string) => getNestedProperty(tStore, key);
-    return (
-        <Document>
-            <Page1 record={record} />
-        </Document>
-    );
-}
-
-export const characterStrengthsTableStyle = {
+export const historyOfTableStyle = {
     table: {
         display: 'flex',
         flexDirection: 'row',
         width: 'auto',
-        borderStyle: 'solid',
-        marginBottom: 20,
-        borderWidth: 1,
-        borderRightWidth: 0,
-        borderBottomWidth: 0
-    },
-    tableColumn25: {
-        width: '25%',
-        borderStyle: 'solid',
-        borderWidth: 1,
-        textAlign: 'center',
-        borderLeftWidth: 0,
-        borderTopWidth: 0
-    },
-    tableRow: {
-        margin: '',
-        flexDirection: 'row'
-    },
-    tableColHeader: {
-        width: '100%',
-        borderStyle: 'solid',
-        borderWidth: 1,
-        textAlign: 'center',
-        borderLeftWidth: 0,
-        borderRightWidth: 0,
-        fontWeight: 'bold',
-        padding: 5
-    },
-    tableCell20: {
-        width: '20%',
-        textAlign: 'center',
-        textDecoration: 'underline',
-        borderLeftWidth: 0,
-        borderTopWidth: 0,
-        padding: 5,
-        backgroundColor: 'rgb(241,244,255)',
-        marginBottom: 5,
-        marginRight: 5,
-        fontWeight: 'bold'
-    },
-    tableCell80: {
-        width: '80%',
-        paddingTop: 5,
-        textAlign: 'left',
-        display: 'flex',
-        alignItems: 'flex-end',
-        borderLeftWidth: 0,
-        borderTopWidth: 0
-    }
-} as const;
-export const skillInventoryTableStyle = {
-    table: {
-        display: 'flex',
-        flexDirection: 'row',
-        width: 'auto',
-        borderStyle: 'solid',
-        marginBottom: 20,
-        borderWidth: 1,
-        borderRightWidth: 0,
-        borderBottomWidth: 0
+        marginBottom: 10
     },
     tableColumn2: {
         width: '50%',
-        borderStyle: 'solid',
-        borderWidth: 1,
-        textAlign: 'center',
-        borderLeftWidth: 0,
-        borderTopWidth: 0
+        textAlign: 'center'
     },
     tableRow: {
         margin: '',
         flexDirection: 'row'
-    },
-    tableColHeader: {
-        width: '100%',
-        borderStyle: 'solid',
-        borderWidth: 1,
-        textAlign: 'center',
-        borderLeftWidth: 0,
-        borderRightWidth: 0,
-        fontWeight: 'bold',
-        padding: 5
     },
     tableCell20: {
         width: '20%',
@@ -161,7 +73,7 @@ export const applicationFormPageStyle = StyleSheet.create({
     },
     row: { marginBottom: 5 },
     details: {
-        marginBottom: 30
+        marginBottom: 10
     },
     underline: {
         textDecoration: 'underline',
@@ -251,3 +163,22 @@ export const applicationFormPageStyle = StyleSheet.create({
         marginTop: 10
     }
 });
+
+type PDFProps = {
+    record: REST_PersonalHealthQuestionnaire | null | undefined;
+};
+export default function ViewHealthQuestionnaire(props: PDFProps) {
+    //const mockRecord = record.record;
+    const record = props.record;
+    if (!record) return null;
+    const tStore = { ...applicationForm_en, ...common_en };
+    const getNestedProperty = (obj: any, path: string) => {
+        return path.split('.').reduce((acc, part) => acc && acc[part], obj);
+    };
+    const t = (key: string) => getNestedProperty(tStore, key);
+    return (
+        <Document>
+            <Page1 record={record} />
+        </Document>
+    );
+}

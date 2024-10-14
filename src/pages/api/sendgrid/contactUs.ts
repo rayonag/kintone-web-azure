@@ -22,7 +22,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
             to: to, // Change to your recipient
             cc: '', // 'intl.personnel@bridgesforpeace.com'
             bcc: '',
-            from: 'BFP Noreply<noreply@bridgesforpeace.com>', // Change to your verified sender
+            from: 'BFP Online Application<onlineapplication@bridgesforpeace.com>', // Change to your verified sender
             subject: '[Online Volunteer Application]New message from Contact Us Form',
             html: `<div>Name: ${name}</div><div>Email: ${email}</div><div>Message: ${message}</div>`
         };

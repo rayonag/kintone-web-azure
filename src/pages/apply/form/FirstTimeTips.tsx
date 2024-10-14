@@ -213,18 +213,40 @@ const TermsAndConditions = (props: { type: string | null }) => {
                 <div className="m-3">12. Understand that luxuries found at “home” may be absent.</div>
             </section>
             <section className="mb-5 text-xl">
-                <div className="mb-3">
-                    Thank you for considering BFP as a place to volunteer your time and service in the land of Israel. We truly appreciate the desire
-                    God has placed in your heart to serve and to give comfort to His people.
-                </div>
-                <div className="mb-3">
-                    The application process usually takes between two to three months, from the time the application documents are submitted to
-                    receiving a definitive answer from the Jerusalem office.
-                </div>
-                <div className="mb-8">
-                    Several factors affect the processing time, including length of service time requested, availability of positions and when
-                    references are received.
-                </div>
+                {props.type == 'Zealous' ? (
+                    <>
+                        <div className="mb-3">
+                            Thank you for completing your application for the Zealous Israel Project. We truly appreciate the desire God has placed in
+                            your heart to serve and comfort His people while being intentionally discipled as well.
+                        </div>
+                        <div className="mb-3">
+                            The application deadline is March 31, 2025. After this date the applications will be reviewed and notification about
+                            whether or not you are accepted will be sent in May.
+                        </div>
+                        <div className="mb-3">
+                            Remember you can find more details about the timing and process on the{' '}
+                            <Link className="text-blue-500 underline" href="https://zealous82.bridgesforpeace.com/apply/">
+                                apply page of the website.
+                            </Link>
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        <div className="mb-3">
+                            Thank you for considering BFP as a place to volunteer your time and service in the land of Israel. We truly appreciate the
+                            desire God has placed in your heart to serve and to give comfort to His people.
+                        </div>
+                        <div className="mb-3">
+                            The application process usually takes between two to three months, from the time the application documents are submitted
+                            to receiving a definitive answer from the Jerusalem office.
+                        </div>
+                        <div className="mb-8">
+                            Several factors affect the processing time, including length of service time requested, availability of positions and when
+                            references are received.
+                        </div>
+                    </>
+                )}
+
                 {props.type == 'Short Term' || (
                     <div className="mb-3">
                         <span className="font-bold">Please note:</span> All applicants who are applying to serve for over three months are required to

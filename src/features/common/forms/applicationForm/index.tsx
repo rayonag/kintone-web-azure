@@ -74,7 +74,7 @@ const ApplicationForm = (props: any) => {
     const t = (key: string) => getNestedProperty(tStore, key);
     //const initialLang = 'en';
     //const [locale, dispatch] = useReducer<(state: string, actions: string) => string>(langReducer, initialLang);
-    const form = props.repo;
+
     const dashboardUser = useDashboardUser();
     const {
         formState: { errors: formatError },

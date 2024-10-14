@@ -36,12 +36,13 @@ type ConfirmationModalProps = {
     setModalIsOpen: Dispatch<SetStateAction<boolean>>;
     getValues: UseFormGetValues<HealthQuestionnaireType>;
     t: any;
+    onSubmit: SubmitHandler<HealthQuestionnaireType>;
 };
-const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIsOpen, getValues, t }) => {
+const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIsOpen, getValues, t, onSubmit }) => {
     const [isHoverSubmit, setIsHoverSubmit] = useState(false);
     const [isHoverCancel, setIsHoverCancel] = useState(false);
     const [isComplete, setIsComplete] = useState(false);
-    const { setIsLoading } = useLoading();
+
     const dashboardUser = useDashboardUser();
     const formData = getValues();
     const router = useRouter();
@@ -57,15 +58,7 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIs
             maxHeight: '80vh'
         }
     };
-    const onSubmit: SubmitHandler<HealthQuestionnaireType> = async () => {
-        setIsLoading(true);
-        const data = getValues();
-        // TODO: when undefined
-        const res = await postPersonalHealthQuestionnaire(data, dashboardUser.ref || '0');
-        if (res) setIsComplete(true);
-        setIsLoading(false);
-        router.push('/apply/health-questionnaire/complete');
-    };
+
     return (
         <div className="relative">
             <Modal
@@ -75,57 +68,48 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIs
                 shouldCloseOnOverlayClick={false}
                 ariaHideApp={false}
             >
-                {isComplete ? (
-                    <div className="flex flex-col justify-center">
-                        <div className="text-2xl m-5 mb-10 text-black font-bold">Response saved and submitted!</div>
-                        <Link href="/apply" className="btn">
-                            Go to Top
-                        </Link>
+                <>
+                    <h1
+                        style={{
+                            color: '#333',
+                            fontSize: '1.5rem',
+                            fontWeight: 'bold',
+                            marginBottom: '1rem'
+                        }}
+                    >
+                        Confirm your response
+                    </h1>
+                    <div className="text-black">
+                        {formFields[0].map((field) => {
+                            if (field === 'heightUnit' || field === 'weightUnit') return <div>{formData[field]}</div>;
+                            return (
+                                <div className="py-1">
+                                    {t(field)}:{' ' + formData[field]}
+                                    <hr />
+                                </div>
+                            );
+                        })}
+                        <label>Have History of: </label>
+                        {formFields[1].map((field) => {
+                            return <>{formData[field][0] == 'Yes' && <label className="text-black py-1">{t(field)}, </label>}</>;
+                        })}
+                        <hr />
+                        {/* pop() the last question */}
+                        {formFields[2].slice(0, -1).map((field) => {
+                            return (
+                                <div className="text-black py-1">
+                                    {t(field)}
+                                    <div>{' ' + formData[field]}</div>
+                                    <hr />
+                                </div>
+                            );
+                        })}
                     </div>
-                ) : (
-                    <>
-                        <h1
-                            style={{
-                                color: '#333',
-                                fontSize: '1.5rem',
-                                fontWeight: 'bold',
-                                marginBottom: '1rem'
-                            }}
-                        >
-                            Confirm your response
-                        </h1>
-                        <div className="text-black">
-                            {formFields[0].map((field) => {
-                                if (field === 'heightUnit' || field === 'weightUnit') return <div>{formData[field]}</div>;
-                                return (
-                                    <div className="py-1">
-                                        {t(field)}:{' ' + formData[field]}
-                                        <hr />
-                                    </div>
-                                );
-                            })}
-                            <label>Have History of: </label>
-                            {formFields[1].map((field) => {
-                                return <>{formData[field][0] == 'Yes' && <label className="text-black py-1">{t(field)}, </label>}</>;
-                            })}
-                            <hr />
-                            {/* pop() the last question */}
-                            {formFields[2].slice(0, -1).map((field) => {
-                                return (
-                                    <div className="text-black py-1">
-                                        {t(field)}
-                                        <div>{' ' + formData[field]}</div>
-                                        <hr />
-                                    </div>
-                                );
-                            })}
-                        </div>
-                        <div className="flex flex-col justify-center">
-                            <Button label="Submit" isHover={isHoverSubmit} setIsHover={setIsHoverSubmit} onclick={onSubmit} />
-                            <Button label="Back" isHover={isHoverCancel} setIsHover={setIsHoverCancel} onclick={() => setModalIsOpen(false)} />
-                        </div>
-                    </>
-                )}
+                    <div className="flex flex-col justify-center">
+                        <Button label="Submit" isHover={isHoverSubmit} setIsHover={setIsHoverSubmit} onclick={onSubmit} />
+                        <Button label="Back" isHover={isHoverCancel} setIsHover={setIsHoverCancel} onclick={() => setModalIsOpen(false)} />
+                    </div>
+                </>
             </Modal>
         </div>
     );

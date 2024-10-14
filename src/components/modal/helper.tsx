@@ -105,7 +105,21 @@ const Helper: React.FC<HelperProps> = ({ currentStep, userRef, isModalOpen, setI
                 </Link>
             </div>
         ),
-        complete: <div>You have completed all the steps. We will review your application and get back to you soon.</div>
+        complete: (
+            <div>
+                <div>You have completed all the steps. We will review your application and get back to you soon.</div>
+                <br />
+                <div className="text-sm">
+                    Note:{' '}
+                    {type == 'Zealous'
+                        ? `The application deadline is March 31, 2025. After this date the applications will be reviewed and notification about whether or
+                    not you are accepted will be sent in May.`
+                        : `The application process usually takes between two to three months, from the time the application documents are submitted
+                            to receiving a definitive answer from the Jerusalem office. Several factors affect the processing time, including length of service time requested, availability of positions and when
+                            references are received.`}
+                </div>
+            </div>
+        )
     };
 
     return (

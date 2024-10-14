@@ -86,7 +86,7 @@ export const notificationApplicationUpdated = async (res: any, updatedField: Upd
         sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
         const msg = {
             to: to, // Change to your recipient
-            from: 'BFP Noreply<noreply@bridgesforpeace.com>', // Change to your verified sender
+            from: 'BFP Online Application<onlineapplication@bridgesforpeace.com>', // Change to your verified sender
             cc: cc,
             bcc: '',
             subject: mailTitle,
@@ -124,7 +124,7 @@ export const notificationReferenceSubmitted = async (res: any, record: REST_Save
         sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
         const msg = {
             to: to, // Change to your recipient
-            from: 'BFP Noreply<noreply@bridgesforpeace.com>', // Change to your verified sender
+            from: 'BFP Online Application<onlineapplication@bridgesforpeace.com>', // Change to your verified sender
             cc: cc,
             bcc: 'ronaga@bridgesforpeace.com',
             subject: mailTitle,

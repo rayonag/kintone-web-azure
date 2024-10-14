@@ -1,14 +1,14 @@
 import { REST_SavedOnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
 import React, { FC } from 'react';
 import { Page, Text, View, Document, StyleSheet, Font, Line, Svg, Image } from '@react-pdf/renderer';
-import { applicationFormPageStyle } from '../ViewApplicationForm';
+import { applicationFormPageStyle, characterStrengthsTableStyle, skillInventoryTableStyle } from '../ViewApplicationForm';
 import { REST_SavedVolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
 import { t } from '@/features/common/forms/applicationForm';
 
-type Page1Props = {
+type AllProps = {
     record: any; //REST_SavedVolunteerApplicationForm;
 };
-const Page1: FC<Page1Props> = ({ record }) => {
+const All: FC<AllProps> = ({ record }) => {
     const skillsA = [
         'skillCarpentry',
         'skillConstruction',
@@ -27,44 +27,37 @@ const Page1: FC<Page1Props> = ({ record }) => {
     ];
     const skillsB = [
         'skillWebsite',
-        'skillWebDesign'
-        // 'skillIT',
-        // 'skillVideo',
-        // 'skillComputerDesign',
-        // 'skillAdobePhotoshop',
-        // 'skillAdobeInDesign',
-        // 'skillOtherPrograms',
-        // 'skillJournalism',
-        // 'skillPublicSpeaking',
-        // 'skillFilmmaking',
-        // 'skillPhotography'
+        'skillWebDesign',
+        'skillIT',
+        'skillVideo',
+        'skillComputerDesign',
+        'skillAdobePhotoshop',
+        'skillAdobeInDesign',
+        'skillOtherProgram',
+        'skillJournalism',
+        'skillPublicSpeaking',
+        'skillFilmmaking',
+        'skillPhotography'
     ];
     const skillsC = [
         'skillAccounting',
-        'skillAdministration'
-        // 'skillBookkeeping',
-        // 'skillOperatingSystems',
+        'skillAdministration',
+        'skillBookkeeping',
+        'skillOperatingSystem',
         // 'skillSystem',
         // 'skillSoftware',
-        // 'skillOfficeSuite',
-        // 'skillExcel',
-        // 'skillTyping',
-        // 'skillGoogleDrive',
-        // 'skillSecretarial',
-        // 'skillOrganizing',
-        // 'skillLibrary',
-        // 'skillReception'
+        'skillOfficeSuite',
+        'skillExcel',
+        'skillTyping',
+        'skillGoogleDrive',
+        'skillSecretarial',
+        'skillOrganizing',
+        'skillLibrary',
+        'skillReception'
     ];
     const skillsD = ['skillProofreading', 'skillCopyEditing', 'skillTranslation'];
-    const skillsE = [
-        'skillCounseling',
-        'skillMusicalInstrument',
-        'skillJanitorial',
-        'skillCooking',
-        'skillForeignLanguage',
-        'skillComputer',
-        'skillSpecialTraining'
-    ];
+    const skillsE = ['skillCounseling', 'skillMusicalInstrument', 'skillJanitorial', 'skillCooking'];
+
     return (
         <Page style={applicationFormPageStyle.page} size="A4">
             {/* <Svg height="210" width="1000">
@@ -429,35 +422,73 @@ const Page1: FC<Page1Props> = ({ record }) => {
                     all in a particular area.
                 </Text>
                 <Text style={applicationFormPageStyle.row}>1 - Little experience 3 - Moderate experience 5 - Extensive experience</Text>
-                <Text style={applicationFormPageStyle.row}>
-                    <Text>A. TRADE SKILLS</Text>
-                    {skillsA.map((skillName: any, index: number) => (
-                        <Text key={index}>
-                            <Text style={applicationFormPageStyle.underline}>{record[skillName].value || ' '}</Text>
-                            <Text style={applicationFormPageStyle.tableCol5}>{t(skillName)}</Text>
-                        </Text>
-                    ))}
-                    <View style={applicationFormPageStyle.textVertical}>
-                        <Text>B. COMMUNICATION</Text>
+                <Text style={applicationFormPageStyle.row}></Text>
+                <View style={skillInventoryTableStyle.table}>
+                    <View style={skillInventoryTableStyle.tableColumn2}>
+                        <Text style={skillInventoryTableStyle.tableColHeader}>A. TRADE SKILLS</Text>
+                        {skillsA.map((skillName: any, index: number) => (
+                            <>
+                                <View style={skillInventoryTableStyle.tableRow} key={index}>
+                                    <Text style={skillInventoryTableStyle.tableCell20}>{record[skillName].value || ' '}</Text>
+                                    <Text style={skillInventoryTableStyle.tableCell80}>{t(skillName)}</Text>
+                                </View>
+                            </>
+                        ))}
+                        <Text style={skillInventoryTableStyle.tableColHeader}>B. COMMUNICATION</Text>
                         {skillsB.map((skillName: any, index: number) => (
-                            <View key={index}>
-                                <Text style={applicationFormPageStyle.underline}>{record[skillName]?.value || ' '}</Text>
-                                <Text style={applicationFormPageStyle.tableCol5}>{t(skillName)}</Text>
-                            </View>
+                            <>
+                                <View style={skillInventoryTableStyle.tableRow} key={index}>
+                                    <Text style={skillInventoryTableStyle.tableCell20}>{record[skillName].value || ' '}</Text>
+                                    <Text style={skillInventoryTableStyle.tableCell80}>{t(skillName)}</Text>
+                                </View>
+                            </>
                         ))}
                     </View>
-                </Text>
-                <Text style={applicationFormPageStyle.row}>
-                    <View style={applicationFormPageStyle.textVertical}>
-                        <Text>C. ADMINISTRATIVE/BUSINESS</Text>
+                    <View style={skillInventoryTableStyle.tableColumn2}>
+                        <Text style={skillInventoryTableStyle.tableColHeader}>C. ADMINISTRATIVE/BUSINESS</Text>
                         {skillsC.map((skillName: any, index: number) => (
-                            <View key={index}>
-                                <Text style={applicationFormPageStyle.underline}>{record[skillName]?.value || ' '}</Text>
-                                <Text style={applicationFormPageStyle.tableCol5}>{t(skillName)}</Text>
-                            </View>
+                            <>
+                                <View style={skillInventoryTableStyle.tableRow} key={index}>
+                                    <Text style={skillInventoryTableStyle.tableCell20}>{record[skillName].value || ' '}</Text>
+                                    <Text style={skillInventoryTableStyle.tableCell80}>{t(skillName)}</Text>
+                                </View>
+                                {/* TODO: add this back in 
+                                {skillName == 'skillOperatingSystem' && (
+                                    <View style={skillInventoryTableStyle.tableRow} key={index}>
+                                        {['SAP', 'QuickBooks', 'Software Development'].map((systemName: any, i: number) => (
+                                            <Text style={skillInventoryTableStyle.tableCell20} key={i}>
+                                                {record['skillSystem'].value?.includes(systemName) ? '✅' : '🔲' + ' ' + systemName}
+                                            </Text>
+                                        ))}
+                                    </View>
+                                )}*/}
+                            </>
+                        ))}{' '}
+                        {/* TODO: add operating system here?
+                        <View style={skillInventoryTableStyle.tableRow}>
+                            <Text style={skillInventoryTableStyle.tableCell20}>{record['skillSystem'].value?.join(', ') || ' '}</Text>
+                            <Text style={skillInventoryTableStyle.tableCell80}>{t('skillSystem.title')}</Text>
+                        </View> */}
+                        <Text style={skillInventoryTableStyle.tableColHeader}>D. TRANSLATION/LINGUISTICS</Text>
+                        {skillsD.map((skillName: any, index: number) => (
+                            <>
+                                <View style={skillInventoryTableStyle.tableRow} key={index}>
+                                    <Text style={skillInventoryTableStyle.tableCell20}>{record[skillName].value || ' '}</Text>
+                                    <Text style={skillInventoryTableStyle.tableCell80}>{t(skillName)}</Text>
+                                </View>
+                            </>
+                        ))}
+                        <Text style={skillInventoryTableStyle.tableColHeader}>E. GENERAL SKILLS</Text>
+                        {skillsE.map((skillName: any, index: number) => (
+                            <>
+                                <View style={skillInventoryTableStyle.tableRow} key={index}>
+                                    <Text style={skillInventoryTableStyle.tableCell20}>{record[skillName].value || ' '}</Text>
+                                    <Text style={skillInventoryTableStyle.tableCell80}>{t(skillName)}</Text>
+                                </View>
+                            </>
                         ))}
                     </View>
-                </Text>
+                </View>
                 <Text style={applicationFormPageStyle.row}>
                     Please list all foreign languages you know and the proficiency with which you can read, write and speak them:{'  '}
                     <Text style={applicationFormPageStyle.underline}>{record['skillForeignLanguage'].value}</Text>
@@ -473,8 +504,163 @@ const Page1: FC<Page1Props> = ({ record }) => {
                     <Text style={applicationFormPageStyle.underline}>{record['skillSpecialTraining'].value}</Text>
                 </Text>
             </View>
+            {/* Step 8 */}
+            <View style={applicationFormPageStyle.details}>
+                <Text style={applicationFormPageStyle.sectionTitle}>8. CHARACTER STRENGTHS</Text>
+                <Text style={applicationFormPageStyle.row}>
+                    Read through the list of words or phrases below and mark(X) only those that describe a consistent character trait of yours.
+                </Text>
+                <View style={characterStrengthsTableStyle.table}>
+                    <View style={characterStrengthsTableStyle.tableColumn25}>
+                        {Object.keys(t('character1.options')).map((key: any, index: number) => (
+                            <>
+                                <View style={characterStrengthsTableStyle.tableRow} key={index}>
+                                    <Text style={characterStrengthsTableStyle.tableCell20}>
+                                        {record['character1'].value?.includes(t(`character1.options.${key}`)) ? 'X' : ' '}
+                                    </Text>
+                                    <Text style={characterStrengthsTableStyle.tableCell80}>{t(`character1.options.${key}`)}</Text>
+                                </View>
+                            </>
+                        ))}
+                    </View>
+                    <View style={characterStrengthsTableStyle.tableColumn25}>
+                        {Object.keys(t('character2.options')).map((key: any, index: number) => (
+                            <>
+                                <View style={characterStrengthsTableStyle.tableRow} key={index}>
+                                    <Text style={characterStrengthsTableStyle.tableCell20}>
+                                        {record['character2'].value?.includes(t(`character2.options.${key}`)) ? 'X' : ' '}
+                                    </Text>
+                                    <Text style={characterStrengthsTableStyle.tableCell80}>{t(`character2.options.${key}`)}</Text>
+                                </View>
+                            </>
+                        ))}
+                    </View>
+                    <View style={characterStrengthsTableStyle.tableColumn25}>
+                        {Object.keys(t('character3.options')).map((key: any, index: number) => (
+                            <>
+                                <View style={characterStrengthsTableStyle.tableRow} key={index}>
+                                    <Text style={characterStrengthsTableStyle.tableCell20}>
+                                        {record['character3'].value?.includes(t(`character3.options.${key}`)) ? 'X' : ' '}
+                                    </Text>
+                                    <Text style={characterStrengthsTableStyle.tableCell80}>{t(`character3.options.${key}`)}</Text>
+                                </View>
+                            </>
+                        ))}
+                    </View>
+                    <View style={characterStrengthsTableStyle.tableColumn25}>
+                        {Object.keys(t('character4.options')).map((key: any, index: number) => (
+                            <>
+                                <View style={characterStrengthsTableStyle.tableRow} key={index}>
+                                    <Text style={characterStrengthsTableStyle.tableCell20}>
+                                        {record['character4'].value?.includes(t(`character4.options.${key}`)) ? 'X' : ' '}
+                                    </Text>
+                                    <Text style={characterStrengthsTableStyle.tableCell80}>{t(`character4.options.${key}`)}</Text>
+                                </View>
+                            </>
+                        ))}
+                    </View>
+                </View>
+            </View>
+            {/* Step 9 */}
+            <View style={applicationFormPageStyle.details}>
+                <Text style={applicationFormPageStyle.sectionTitle}>9. REFERENCES</Text>
+                <Text style={applicationFormPageStyle.row}>
+                    For references, please provide us with the names, addresses and phone numbers of an employer, a pastor or spiritual advisor, a
+                    friend and one other person. Please do not use immediate family members (either by blood or marriage) as references. We will
+                    forward evaluation forms to these references. Kindly notify them that the form will be sent.
+                </Text>
+                <Text style={applicationFormPageStyle.row}>Pastor or spiritual advisor:</Text>
+                <Text style={applicationFormPageStyle.row}>
+                    <Text style={applicationFormPageStyle.underline}>{record['refPastorName'].value}</Text>
+                    {',  '}
+                    <Text style={applicationFormPageStyle.underline}>{record['refPastorAddress'].value}</Text>
+                    {',  '}
+                    <Text style={applicationFormPageStyle.underline}>{record['refPastorPhone'].value}</Text>
+                    {',  '}
+                    <Text style={applicationFormPageStyle.underline}>{record['refPastorEmail'].value}</Text>
+                </Text>
+                <Text style={applicationFormPageStyle.row}>Employer:</Text>
+                <Text style={applicationFormPageStyle.row}>
+                    <Text style={applicationFormPageStyle.underline}>{record['refEmployerName'].value}</Text>
+                    {',  '}
+                    <Text style={applicationFormPageStyle.underline}>{record['refEmployerAddress'].value}</Text>
+                    {',  '}
+                    <Text style={applicationFormPageStyle.underline}>{record['refEmployerPhone'].value}</Text>
+                    {',  '}
+                    <Text style={applicationFormPageStyle.underline}>{record['refEmployerEmail'].value}</Text>
+                </Text>
+                <Text style={applicationFormPageStyle.row}>Friend:</Text>
+                <Text style={applicationFormPageStyle.row}>
+                    <Text style={applicationFormPageStyle.underline}>{record['refFriendName'].value}</Text>
+                    {',  '}
+                    <Text style={applicationFormPageStyle.underline}>{record['refFriendAddress'].value}</Text>
+                    {',  '}
+                    <Text style={applicationFormPageStyle.underline}>{record['refFriendPhone'].value}</Text>
+                    {',  '}
+                    <Text style={applicationFormPageStyle.underline}>{record['refFriendEmail'].value}</Text>
+                </Text>
+                {record['type'].value == 'Zealous' || (
+                    <>
+                        {' '}
+                        <Text style={applicationFormPageStyle.row}>Other (please clarify):</Text>
+                        <Text style={applicationFormPageStyle.row}>
+                            <Text style={applicationFormPageStyle.underline}>{record['refOtherName'].value}</Text>
+                            {',  '}
+                            <Text style={applicationFormPageStyle.underline}>{record['refOtherAddress'].value}</Text>
+                            {',  '}
+                            <Text style={applicationFormPageStyle.underline}>{record['refOtherPhone'].value}</Text>
+                            {',  '}
+                            <Text style={applicationFormPageStyle.underline}>{record['refOtherEmail'].value}</Text>
+                            {',  '}
+                            <Text style={applicationFormPageStyle.underline}>{record['refOtherRelationship'].value}</Text>
+                        </Text>
+                    </>
+                )}
+                <Text style={applicationFormPageStyle.row}>
+                    Do you have friends or contacts in Israel?:
+                    <Text style={applicationFormPageStyle.underline}>{record['hasFriendsIsrael'].value}</Text>
+                </Text>
+                <Text style={applicationFormPageStyle.row}>
+                    If yes, please list below their names and organizations:
+                    <Text style={applicationFormPageStyle.underline}>{record['hasFriendsIsraelExplain'].value}</Text>
+                </Text>
+            </View>
+            {/* Step 10 */}
+            <View style={applicationFormPageStyle.details}>
+                <Text style={applicationFormPageStyle.sectionTitle}>10. SIGNATURES</Text>
+                <Text style={applicationFormPageStyle.row}>Please check the appropriate boxes and sign this application.</Text>
+                <Text style={applicationFormPageStyle.row}>
+                    I authorize BFP to contact listed references for information regarding this application.{' '}
+                </Text>
+                <Text style={applicationFormPageStyle.row}>
+                    I authorize the listed references to furnish any information requested in this application.
+                </Text>
+                <Text style={applicationFormPageStyle.row}>
+                    I acknowledge my responsibility to provide my round-trip transportation and all living expenses while serving with BFP.
+                </Text>
+                <Text style={applicationFormPageStyle.row}>
+                    I acknowledge that I must have valid health insurance coverage while serving with BFP in Israel. It is my responsibility to
+                    provide proof of coverage prior to my arrival in Israel.
+                </Text>
+                <Text style={applicationFormPageStyle.row}>
+                    I have read and agree to the following BFP position papers:1. Doctrinal Statement 2. Mission Statement 3. Goals 4. Evangelism
+                    Statement 5. Messianic Jewish Statement
+                </Text>
+                <Text style={applicationFormPageStyle.row}>
+                    I acknowledge that any visa granted to me through BFP is issued according to BFP’s legal standing with the Government of Israel
+                    and on the basis of its good reputation since its establishment in 1976. I furthermore acknowledge that any such visa is granted
+                    solely for the purpose of volunteering with BFP and I will leave Israel upon termination of my time of voluntary service with BFP.
+                    I recognize that should I fail to do so, this could have legal ramifications for BFP.
+                </Text>
+                <Text style={applicationFormPageStyle.row}>
+                    I hereby certify that I have verified all the information given above, and that it is true and correct. Should I be accepted and
+                    placed as a volunteer in Israel, I agree to place myself under the authority of BFP during my term of service, and to abide by
+                    accepted Christian standards of conduct and BFP organizational purposes. I understand that should I act otherwise, I will be
+                    requested to leave Israel and return home immediately.
+                </Text>
+            </View>
         </Page>
     );
 };
 
-export default Page1;
+export default All;
