@@ -47,6 +47,7 @@ const HealthQuestionnaire = (props: { repo: any }) => {
         }))
     );
     const { setIsLoading } = useLoading();
+    const [isSubmitting, setIsSubmitting] = useState(false);
     // temp disable i18n
     // const { t } = useTranslation();
 
@@ -79,17 +80,18 @@ const HealthQuestionnaire = (props: { repo: any }) => {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [page]);
-    // confirm before leave page. TODO: dirty form check not working
     useEffect(() => {
         const handleBeforeUnload = (event: any) => {
-            event.preventDefault();
-            event.returnValue = '';
+            if (!isSubmitting) {
+                event.preventDefault();
+                event.returnValue = '';
+            }
         };
         window.addEventListener('beforeunload', handleBeforeUnload);
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-    }, []);
+    }, [isSubmitting]);
     useEffect(() => {
         if (props.repo.prefilledFormRecord) {
             const data = props.repo.prefilledFormRecord;
@@ -98,6 +100,7 @@ const HealthQuestionnaire = (props: { repo: any }) => {
     }, [props]);
     const onSubmit: SubmitHandler<HealthQuestionnaireType> = async () => {
         setIsLoading(true);
+        setIsSubmitting(true);
         const data = getValues();
         // TODO: when undefined
         const res = await postPersonalHealthQuestionnaire(data, dashboardUser.ref || '0');

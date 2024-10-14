@@ -53,6 +53,7 @@ const ApplicationForm = (props: any) => {
         }))
     );
     const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
         if (isDialogOpen) {
@@ -119,18 +120,18 @@ const ApplicationForm = (props: any) => {
     useEffect(() => {
         document.querySelector('#section-title')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, [step]);
-    // confirm before leave page. TODO: dirty form check not working
     useEffect(() => {
         const handleBeforeUnload = (event: any) => {
-            event.preventDefault();
-            event.returnValue = '';
+            if (!isSubmitting) {
+                event.preventDefault();
+                event.returnValue = '';
+            }
         };
         window.addEventListener('beforeunload', handleBeforeUnload);
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-    }, []);
-
+    }, [isSubmitting]);
     // load prefilled data
     const [isModalOpen, setIsModalOpen] = useState(false);
     useEffect(() => {
@@ -165,6 +166,7 @@ const ApplicationForm = (props: any) => {
     const router = useRouter();
     const onSubmit = async (e: any) => {
         e.preventDefault();
+        setIsSubmitting(true);
         const valid = await validate();
         if (!valid) return;
         if (!window.confirm('Do you want to submit?')) return;
@@ -190,6 +192,10 @@ const ApplicationForm = (props: any) => {
             marginRight: '-50%',
             transform: 'translate(-50%, -50%)'
         }
+    };
+    const handleSaveExit = () => {
+        postTempApplicationForm(getValues(), dashboardUser.ref || '0', step);
+        router.push('/apply');
     };
 
     return (
@@ -256,11 +262,9 @@ const ApplicationForm = (props: any) => {
                             {t('system.back')}
                         </button>
                     )}
-                    {/* {step == 1 && ( */}
-                    <Link href="/apply" className="text-center btn-wide">
-                        Back to Top
-                    </Link>
-                    {/* )} */}
+                    <button className="text-center btn-wide" onClick={() => handleSaveExit()}>
+                        Save & Exit
+                    </button>
                 </form>
             </div>
         </>

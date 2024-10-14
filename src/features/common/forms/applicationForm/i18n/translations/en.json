@@ -223,7 +223,7 @@
     "skillSpecialTraining": "List any special training or abilities you possess that you think would contribute to your role as a BFP volunteer, for example leadership, music, art, administrative ability or biblical training:",
 
     "##comment...": "Step8",
-    "characterDescription": "Read through the list of words or phrases below and check (√) only those that describe a consistent character trait of yours.",
+    "characterDescription": "Read through the list of words or phrases below and check (✓) only those that describe a consistent character trait of yours.",
     "character1": {
         "title": "",
         "options": {
@@ -347,8 +347,8 @@
     "signature": "Applicant's Signature",
     "signatureDate": "Date",
     "system": {
-        "next": "Save & Continue",
-        "back": "Back",
+        "next": "Next",
+        "back": "Previous",
         "submit": "Save & Submit",
         "typeHere": "Type your answer here"
     },

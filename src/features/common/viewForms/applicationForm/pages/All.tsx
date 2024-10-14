@@ -293,7 +293,7 @@ const All: FC<AllProps> = ({ record }) => {
                 <Text style={applicationFormPageStyle.row}>
                     Profession/vocation:{'  '}
                     <Text style={applicationFormPageStyle.underline}>{record['employProfession'].value}</Text>
-                </Text>{' '}
+                </Text>
                 <Text style={applicationFormPageStyle.row}>
                     Accreditation/clergy/licenses held:{'  '}
                     <Text style={applicationFormPageStyle.underline}>{record['employAccreditation'].value}</Text>
@@ -657,6 +657,15 @@ const All: FC<AllProps> = ({ record }) => {
                     placed as a volunteer in Israel, I agree to place myself under the authority of BFP during my term of service, and to abide by
                     accepted Christian standards of conduct and BFP organizational purposes. I understand that should I act otherwise, I will be
                     requested to leave Israel and return home immediately.
+                </Text>
+            </View>
+            <View style={applicationFormPageStyle.details}>
+                <Text style={applicationFormPageStyle.row}>
+                    Applicant's Signature:{'  '}
+                    <Text style={applicationFormPageStyle.underline}>{record['signature'].value}</Text>
+                    {'  '}
+                    Date:{'  '}
+                    <Text style={applicationFormPageStyle.underline}>{record['signatureDate'].value}</Text>
                 </Text>
             </View>
         </Page>
