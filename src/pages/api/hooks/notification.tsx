@@ -12,7 +12,8 @@ const necessaryDocuments = {
     recentPhoto: 'Recent Photo',
     medicalStatusForm: 'Medical Status Form',
     doctorLetter: "Doctor's Letter",
-    criminalCheck: 'Criminal Check'
+    criminalCheck: 'Criminal Check',
+    criminalCheckApostille: 'Criminal Check Apostille'
 };
 export type NecessaryDocumentsUSA = keyof typeof necessaryDocumentsUSA;
 const necessaryDocumentsUSA = {
@@ -21,6 +22,7 @@ const necessaryDocumentsUSA = {
     medicalStatusForm: 'Medical Status Form',
     doctorLetter: "Doctor's Letter",
     criminalCheck: 'Criminal Check',
+    criminalCheckApostille: 'Criminal Check Apostille',
     ssn: 'Social Security Card'
 };
 export type NecessaryDocumentsShortTerm = keyof typeof necessaryDocumentsShortTerm;
@@ -47,7 +49,16 @@ export const emailNationalOffice = {
 
 export type SubmitType = 'documentSubmission' | 'applicationSubmission' | 'healthQuestionnaireSubmission';
 
-type Updated = 'passport' | 'recentPhoto' | 'medicalStatusForm' | 'doctorLetter' | 'application' | 'healthQuestionnaire' | 'criminalCheck' | 'ssn';
+type Updated =
+    | 'passport'
+    | 'recentPhoto'
+    | 'medicalStatusForm'
+    | 'doctorLetter'
+    | 'application'
+    | 'healthQuestionnaire'
+    | 'criminalCheck'
+    | 'criminalCheckApostille'
+    | 'ssn';
 export const updated = {
     passport: 'Passport',
     recentPhoto: 'Recent Photo',
@@ -56,6 +67,7 @@ export const updated = {
     application: 'Online Application',
     healthQuestionnaire: 'Health Questionnaire',
     criminalCheck: 'Criminal Check',
+    criminalCheckApostille: 'Criminal Check Apostille',
     ssn: 'Social Security Card'
 };
 export const notificationApplicationUpdated = async (res: any, updatedField: Updated, record: any, submitType: SubmitType) => {

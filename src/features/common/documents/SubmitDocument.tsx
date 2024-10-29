@@ -171,7 +171,7 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
                     <button className="btn" onClick={async () => await handleSubmit()}>
                         Click to Submit
                     </button>
-                    {Help && <Help />}
+                    <div className="text-xl m-2">{Help && <Help />}</div>
                     <Link href="/contact" className="link">
                         Need Help? Contact Us
                     </Link>

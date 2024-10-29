@@ -40,6 +40,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     record: data
                 });
             }
+            // update Online Volunteer Application app
+            const resp = await client.record.updateRecord({
+                app: VolunteerApplicationMasterAppID as string,
+                id: data['ref'].value,
+                record: {
+                    fop: {
+                        value: ['ok']
+                    }
+                }
+            });
             res.status(200).json({
                 ok: true
             });

@@ -140,7 +140,7 @@ export const getServerSideProps = (async (context) => {
         const resp2 = await client.record
             .getAllRecords<REST_SavedVolunteerApplicationForm>({
                 app: VolunteerApplicationAppID as string,
-                condition: `ref="${cookies.ref}"`
+                condition: `ref="${cookies.ref}" and isSubmitted in ("true")`
             })
             .catch((e) => {
                 throw new Error('resp2:' + e);
@@ -155,6 +155,7 @@ export const getServerSideProps = (async (context) => {
                 throw new Error('resp3:' + e);
             });
         let prefilledFormRecord = resp3[0] ? await resp3[0] : null;
+        // check if form is already submitted
         if (resp2.length > 0) {
             if (resp.record['formSubmission'].value.findIndex((arr) => arr == 'Application Form Completed') == -1) {
                 // check if form is submitted

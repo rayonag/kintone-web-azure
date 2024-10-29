@@ -44,14 +44,15 @@ const useUserStore = create<State & Action>((set, get) => ({
         if (!username || !ref) return;
         if (typeof window === 'undefined') return;
         if (get().username) return;
-        const res = await fetch('/api/fetchUserKintone', {
+        const res = await fetch('/api/getUser', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ username: username })
+            body: JSON.stringify({ ref: ref })
         });
         const user = await res.json();
+        console.log('user', user);
         const userApplicationRef = await getUserApplicationRef({ ref: ref });
         set({
             username: username,

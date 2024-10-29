@@ -35,10 +35,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     password: KintonePassword
                 }
             });
-            const resp = await client.record.addRecord({
-                app: VolunteerApplicationAppID as string,
-                record: record
-            });
             const resp2 = await client.record.getAllRecords<REST_OnlineVolunteerApplication>({
                 app: VolunteerApplicationMasterAppID as string,
                 condition: `ref=${record['ref'].value}`
@@ -46,10 +42,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             if (resp2.length === 0) {
                 logError('No online volunteer application record found: resp2', req.body, 'postApplicationForm');
                 res.status(200).json({
-                    res: resp
+                    res: resp2
                 });
                 return;
             }
+            const resp = await client.record.updateRecord({
+                app: VolunteerApplicationAppID as string,
+                id: resp2[0]['applicationRef'].value,
+                record: record
+            });
             const resp3 = await notificationApplicationUpdated(res, 'application', resp2[0], 'applicationSubmission');
             // TODO: add resp3 handler
             res.status(200).json({

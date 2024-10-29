@@ -1,8 +1,8 @@
 import React from 'react';
 
-const ArrowUpRight = () => {
+const ArrowUpRight = ({ fill }: { fill?: string }) => {
     return (
-        <svg fill="white" viewBox="0 0 64 64" width="24px" height="24px">
+        <svg fill={fill || 'white'} viewBox="0 0 64 64" width="24px" height="24px">
             <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
             <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
             <g id="SVGRepo_iconCarrier">

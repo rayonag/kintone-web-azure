@@ -5,7 +5,7 @@ import React from 'react';
 const MedicalForm = () => {
     const Help = () => (
         <Link href="./medical-form/example" className="link">
-            What is Medical Status Form?
+            How to complete Medical Status Form?
         </Link>
     );
     return (

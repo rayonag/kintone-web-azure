@@ -138,87 +138,87 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
     const all = useUserStore();
     console.log('all', all);
 
-    function VaraText() {
-        let fontSize = 72;
-        if (window.screen.width < 700) fontSize = 32;
-        else if (window.screen.width < 1200) fontSize = 56;
-        useEffect(() => {
-            if (type == 'Zealous')
-                new Vara('#vara-container', 'fonts/test4.json', [
-                    {
-                        text: 'Zealous 8:2',
-                        fontSize: fontSize,
-                        strokeWidth: 1.5,
-                        color: '#fff',
-                        delay: 20000,
-                        textAlign: 'center'
-                    },
-                    {
-                        text: 'Thus says the Lord of hosts:',
-                        fontSize: fontSize * 0.85,
-                        strokeWidth: 1.5,
-                        color: '#fff',
-                        delay: 1000,
-                        textAlign: 'center'
-                    },
-                    {
-                        text: '"I am zealous for Zion with great zeal;',
-                        fontSize: fontSize * 0.85,
-                        strokeWidth: 1.5,
-                        color: '#fff',
-                        textAlign: 'center'
-                    },
-                    {
-                        text: 'with great fervor I am zealous for her."',
-                        fontSize: fontSize * 0.85,
-                        strokeWidth: 1.5,
-                        color: '#fff',
-                        textAlign: 'center'
-                    },
-                    {
-                        text: 'Zechariah 8:2',
-                        fontSize: fontSize * 0.85,
-                        strokeWidth: 1.5,
-                        color: '#fff',
-                        textAlign: 'center'
-                    }
-                ]).animationEnd((i, o) => {
-                    if (typeof i == 'number') {
-                        //console.log('time', (5 - i) * 2);
-                        o.container.style.transition = `opacity 2s ${(5 - i) * 2}s ease-in-out`;
-                        o.container.style.opacity = '0';
-                    }
-                });
-            else
-                new Vara('#vara-container', 'fonts/test4.json', [
-                    {
-                        text: 'Bridges for Peace',
-                        fontSize: fontSize,
-                        strokeWidth: 1,
-                        color: '#fff',
-                        delay: 200,
-                        textAlign: 'center'
-                    },
-                    {
-                        text: '...Your Israel Connection',
-                        fontSize: fontSize * 0.85,
-                        strokeWidth: 1,
-                        delay: 5000,
-                        color: '#fff',
-                        textAlign: 'center'
-                    }
-                ]).animationEnd((i, o) => {
-                    if (typeof i == 'number') {
-                        //console.log('time', (5 - i) * 2);
-                        o.container.style.transition = `all 20s ${i == 0 ? 5 : 0}s ease-in-out`;
-                        o.container.style.opacity = '0';
-                        o.container.style.transform = 'translate(20vw, 20vh)';
-                    }
-                });
-        }, []);
+    // function VaraText() {
+    //     let fontSize = 72;
+    //     if (window.screen.width < 700) fontSize = 32;
+    //     else if (window.screen.width < 1200) fontSize = 56;
+    //     useEffect(() => {
+    //         if (type == 'Zealous')
+    //             new Vara('#vara-container', 'fonts/test4.json', [
+    //                 {
+    //                     text: 'Zealous 8:2',
+    //                     fontSize: fontSize,
+    //                     strokeWidth: 1.5,
+    //                     color: '#fff',
+    //                     delay: 20000,
+    //                     textAlign: 'center'
+    //                 },
+    //                 {
+    //                     text: 'Thus says the Lord of hosts:',
+    //                     fontSize: fontSize * 0.85,
+    //                     strokeWidth: 1.5,
+    //                     color: '#fff',
+    //                     delay: 1000,
+    //                     textAlign: 'center'
+    //                 },
+    //                 {
+    //                     text: '"I am zealous for Zion with great zeal;',
+    //                     fontSize: fontSize * 0.85,
+    //                     strokeWidth: 1.5,
+    //                     color: '#fff',
+    //                     textAlign: 'center'
+    //                 },
+    //                 {
+    //                     text: 'with great fervor I am zealous for her."',
+    //                     fontSize: fontSize * 0.85,
+    //                     strokeWidth: 1.5,
+    //                     color: '#fff',
+    //                     textAlign: 'center'
+    //                 },
+    //                 {
+    //                     text: 'Zechariah 8:2',
+    //                     fontSize: fontSize * 0.85,
+    //                     strokeWidth: 1.5,
+    //                     color: '#fff',
+    //                     textAlign: 'center'
+    //                 }
+    //             ]).animationEnd((i, o) => {
+    //                 if (typeof i == 'number') {
+    //                     //console.log('time', (5 - i) * 2);
+    //                     o.container.style.transition = `opacity 2s ${(5 - i) * 2}s ease-in-out`;
+    //                     o.container.style.opacity = '0';
+    //                 }
+    //             });
+    //         else
+    //             new Vara('#vara-container', 'fonts/test4.json', [
+    //                 {
+    //                     text: 'Bridges for Peace',
+    //                     fontSize: fontSize,
+    //                     strokeWidth: 1,
+    //                     color: '#fff',
+    //                     delay: 200,
+    //                     textAlign: 'center'
+    //                 },
+    //                 {
+    //                     text: '...Your Israel Connection',
+    //                     fontSize: fontSize * 0.85,
+    //                     strokeWidth: 1,
+    //                     delay: 5000,
+    //                     color: '#fff',
+    //                     textAlign: 'center'
+    //                 }
+    //             ]).animationEnd((i, o) => {
+    //                 if (typeof i == 'number') {
+    //                     //console.log('time', (5 - i) * 2);
+    //                     o.container.style.transition = `all 20s ${i == 0 ? 5 : 0}s ease-in-out`;
+    //                     o.container.style.opacity = '0';
+    //                     o.container.style.transform = 'translate(20vw, 20vh)';
+    //                 }
+    //             });
+    //     }, []);
 
-        return <div id="vara-container" className="min-w-[80%] pt-[20vh]"></div>;
-    }
+    //     return <div id="vara-container" className="min-w-[80%] pt-[20vh]"></div>;
+    // }
     const [isVisible, setIsVisible] = useState(false);
     interface ModalProps {
         isVisible: boolean;
@@ -381,7 +381,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                                             {dashboardUser.formSubmission?.includes('Personal Health Questionnaire') && <Check />}
                                         </div>
                                         <div className="relative flex items-center">
-                                            <Link href="/apply/documents" {...buttonProps('submitDocuments')}>
+                                            <Link href="/apply/documents" {...buttonProps('submitApplication')}>
                                                 Submit Necessary Documents
                                             </Link>
                                             {repo?.allDocumentsSubmitted && <Check />}
@@ -456,13 +456,13 @@ export const getServerSideProps = (async (context) => {
         const resp2 = await client.record
             .getAllRecords<REST_VolunteerApplicationForm>({
                 app: VolunteerApplicationAppID as string,
-                condition: `ref="${cookies.ref}"`
+                condition: `ref="${cookies.ref}" and isSubmitted in ("true")`
             })
             .catch((e) => {
                 throw new Error('resp2:' + e);
             });
         if (!resp) return { props: {} };
-        // check if not yet
+        // check if it needs to update the formSubmission on Online Volunteer Application record
         if (resp2.length > 0) {
             if (resp.record['formSubmission'].value.findIndex((arr) => arr == 'Application Form Completed') == -1) {
                 await client.record.updateRecord({

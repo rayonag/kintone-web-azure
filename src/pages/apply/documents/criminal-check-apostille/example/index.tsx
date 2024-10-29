@@ -68,7 +68,7 @@ const Example_CriminalCheck = () => {
                 </>
             )}
             <div className="flex justify-center">
-                <Link href="/apply/documents/criminal-check" className="btn">
+                <Link href="/apply/documents/criminal-check-apostille" className="btn">
                     Back
                 </Link>
             </div>

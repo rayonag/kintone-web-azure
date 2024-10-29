@@ -6,8 +6,10 @@ export interface OnlineVolunteerApplication {
     office: kintone.fieldTypes.DropDown;
     type: kintone.fieldTypes.DropDown;
     password: kintone.fieldTypes.SingleLineText;
+    knownAs: kintone.fieldTypes.SingleLineText;
     email: kintone.fieldTypes.SingleLineText;
     commentNationalOffice: kintone.fieldTypes.MultiLineText;
+    applicationRef: kintone.fieldTypes.Number;
     commentIsraelOffice: kintone.fieldTypes.MultiLineText;
     month: kintone.fieldTypes.DropDown;
     referenceCount: kintone.fieldTypes.SingleLineText;
@@ -18,7 +20,7 @@ export interface OnlineVolunteerApplication {
 
     formSubmission: kintone.fieldTypes.CheckBox;
     documents: kintone.fieldTypes.CheckBox;
-    documentsUSA: kintone.fieldTypes.CheckBox;
+    fop: kintone.fieldTypes.CheckBox;
     reviewAbout: kintone.fieldTypes.CheckBox;
     reviewFaq: kintone.fieldTypes.CheckBox;
 }
@@ -42,8 +44,10 @@ export type REST_OnlineVolunteerApplication = {
     office: KintoneRecordField.DropDown;
     type: KintoneRecordField.DropDown;
     password: KintoneRecordField.SingleLineText;
+    knownAs: KintoneRecordField.SingleLineText;
     email: KintoneRecordField.SingleLineText;
     commentNationalOffice: KintoneRecordField.MultiLineText;
+    applicationRef: KintoneRecordField.Number;
     commentIsraelOffice: KintoneRecordField.MultiLineText;
     month: KintoneRecordField.DropDown;
     referenceCount: KintoneRecordField.SingleLineText;
@@ -54,7 +58,7 @@ export type REST_OnlineVolunteerApplication = {
 
     formSubmission: KintoneRecordField.CheckBox;
     documents: KintoneRecordField.CheckBox;
-    documentsUSA: KintoneRecordField.CheckBox;
+    fop: KintoneRecordField.CheckBox;
     reviewAbout: KintoneRecordField.CheckBox;
     reviewFaq: KintoneRecordField.CheckBox;
 };

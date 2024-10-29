@@ -11,6 +11,9 @@ const postApplicationForm = async (data: ApplicationFormType, ref: string | unde
     const nullIfZero = (value: number) => (value === 0 ? null : value);
     try {
         const record: Partial<any> = {
+            // isSubmitted
+            isSubmitted: { value: true },
+
             ref: { value: parseInt(data.ref) },
             office: { value: data.office.office },
             type: { value: data.type.type },
