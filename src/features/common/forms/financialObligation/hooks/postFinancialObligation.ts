@@ -4,6 +4,7 @@ const postFinancialObligation = async (data: any) => {
     try {
         const record = {
             ref: { value: data.ref },
+            office: { value: data.office },
             paymentOption: { value: data.selectedOption }
         };
         const res = await fetch('/api/reference/postFinancialObligation', {

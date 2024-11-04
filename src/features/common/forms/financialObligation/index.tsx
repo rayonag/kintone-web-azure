@@ -16,6 +16,7 @@ const FinancialObligation = (props: { repo: any }) => {
     const router = useRouter();
     const { setIsLoading } = useLoading();
     const ref = useUserStore((state) => state.ref);
+    const office = useUserStore((state) => state.nationalOffice);
 
     const handleSubmit = async () => {
         if (!selectedOption) {
@@ -27,7 +28,7 @@ const FinancialObligation = (props: { repo: any }) => {
             return;
         } else setIsCheckError(false);
         setIsLoading(true);
-        const res = await postFinancialObligation({ selectedOption, ref });
+        const res = await postFinancialObligation({ selectedOption, office, ref });
         if (res) {
             router.push('/apply/financial-obligation/complete');
         } else {

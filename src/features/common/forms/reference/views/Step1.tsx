@@ -35,6 +35,15 @@ const Step1: FC<Step1Props> = ({ register, errors, getValues, t, control }) => {
                         <div className="font-semibold mt-2">VOLUNTEER REFERENCE</div>
                     </div>
                 </div>
+                <div className="text-2xl my-4 text-gray-600">Before you start...</div>
+                <div className="text-sm md:text-base p-4 text-gray-600">
+                    You will need to complete the Volunteer Refernce form in one go - you cannot save your progress and continue later. If you close
+                    the browser tab your answers will be deleted and you will need to start again.
+                </div>
+                <div className="text-xl text-center mt-24 mb-4 text-gray-600">Scroll down to continue</div>
+                <div className="h-20 flex mb-8 justify-center">
+                    <div className="scroll-line"></div>
+                </div>
                 <Row>
                     <Input
                         label={t('applicantName')}
