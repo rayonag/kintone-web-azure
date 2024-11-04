@@ -1,21 +1,21 @@
 export const sendgridApiKey = process.env.SENDGRID_API_KEY;
 export const openAiApiKey = process.env.OPENAI_API_KEY;
 // kintone
-export const KintoneUserName = process.env.KINTONE_USERNAME;
-export const KintonePassword = process.env.KINTONE_PASSWORD;
+export const KintoneUserName = process.env.NEXT_PUBLIC_KINTONE_USERNAME;
+export const KintonePassword = process.env.NEXT_PUBLIC_KINTONE_PASSWORD;
 // kintone app
-export const VolunteerProfieAppID = process.env.VOLUNTEER_PROFILE_APPID;
-export const VolunteerApplicationAppID = process.env.VOLUNTEER_APPLICATION_FORM_APPID;
-export const TempVolunteerApplicationAppID = process.env.TEMP_VOLUNTEER_APPLICATION_FORM_APPID;
-export const PersonalHealthQuestionnaireAppID = process.env.PERSONAL_HEALTH_QUESTIONNAIRE_APPID;
-export const ReferenceFormAppID = '18'; //process.env.VOLUNTEER_REFERENCE_FORM_APPID;
-export const VolunteerApplicationMasterAppID = process.env.VOLUNTEER_APPLICATION_MASTER_APPID;
-export const ErrorLogsAppID = process.env.ERROR_LOGS_APPID;
-export const ErrorLogsAPIKey = process.env.ERROR_LOGS_APIKEY;
-export const TimesheetAppID = process.env.TIMESHEET_APPID;
+export const VolunteerProfieAppID = process.env.NEXT_PUBLIC_VOLUNTEER_PROFILE_APPID;
+export const VolunteerApplicationAppID = process.env.NEXT_PUBLIC_VOLUNTEER_APPLICATION_FORM_APPID;
+export const TempVolunteerApplicationAppID = process.env.NEXT_PUBLIC_TEMP_VOLUNTEER_APPLICATION_FORM_APPID;
+export const PersonalHealthQuestionnaireAppID = process.env.NEXT_PUBLIC_PERSONAL_HEALTH_QUESTIONNAIRE_APPID;
+export const ReferenceFormAppID = process.env.NEXT_PUBLIC_VOLUNTEER_REFERENCE_FORM_APPID;
+export const VolunteerApplicationMasterAppID = process.env.NEXT_PUBLIC_VOLUNTEER_APPLICATION_MASTER_APPID;
+export const ErrorLogsAppID = process.env.NEXT_PUBLIC_ERROR_LOGS_APPID;
+export const ErrorLogsAPIKey = process.env.NEXT_PUBLIC_ERROR_LOGS_APIKEY;
+export const TimesheetAppID = process.env.NEXT_PUBLIC_TIMESHEET_APPID;
 // email
-export const email_Japan = process.env.EMAIL_JAPAN;
-export const email_SouthAfrica = process.env.EMAIL_SOUTH_AFRICA;
+export const email_Japan = process.env.NEXT_PUBLIC_EMAIL_JAPAN;
+export const email_SouthAfrica = process.env.NEXT_PUBLIC_EMAIL_SOUTH_AFRICA;
 
 // url
 export const zealousAplicationURL =
