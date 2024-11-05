@@ -5,6 +5,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 type Data = {
     ref?: string;
+    isZealous?: boolean;
 };
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
     if (req.method === 'POST') {
@@ -28,9 +29,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 res.status(501).json({ ref: undefined });
             } else if (recordArray.length > 1) {
                 // throw new Error('More than one user found');
-                res.status(200).json({ ref: recordArray[0]['$id'].value as string });
+                res.status(200).json({ ref: recordArray[0]['$id'].value as string, isZealous: recordArray[0]['type'].value == 'Zealous' });
             } else if (recordArray.length == 1) {
-                res.status(200).json({ ref: recordArray[0]['$id'].value as string });
+                res.status(200).json({ ref: recordArray[0]['$id'].value as string, isZealous: recordArray[0]['type'].value == 'Zealous' });
             }
             return;
         } catch (e) {

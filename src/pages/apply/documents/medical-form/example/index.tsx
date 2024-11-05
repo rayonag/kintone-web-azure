@@ -1,10 +1,9 @@
 'use client';
-import Layout_fadeIn from '@/styles/Layout_fadeIn';
 import Link from 'next/link';
 
 const Example_MedicalForm = () => {
     return (
-        <Layout_fadeIn>
+        <>
             <div className="relative flex flex-col items-center justify-center min-h-screen pt-10 text-white overflow-hidden">
                 <section className="my-4 w-4/5 grow md:w-1/3">
                     <div className="text-2xl my-4">Please complete the Medical Status Form by following the instructions below:</div>
@@ -35,7 +34,7 @@ const Example_MedicalForm = () => {
                     </div>
                 </section>
             </div>
-        </Layout_fadeIn>
+        </>
     );
 };
 export default Example_MedicalForm;

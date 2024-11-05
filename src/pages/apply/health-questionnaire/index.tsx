@@ -14,9 +14,6 @@ import { REST_OnlineVolunteerApplication } from '@/types/OnlineVolunteerApplicat
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
-import Layout_slideUp from '@/styles/Layout_slideUp';
-import Layout_fadeIn from '@/styles/Layout_fadeIn';
-import { REST_SavedVolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
 import logError from '@/common/logError';
 import { REST_PersonalHealthQuestionnaire } from '@/types/PersonalHealthQuestionnaire';
 import ViewHealthQuestionnaire from '@/features/common/viewForms/healthQuestionnaire/ViewHealthQuestionnaire';
@@ -31,7 +28,7 @@ const Dashboard = ({ repo }: InferGetServerSidePropsType<typeof getServerSidePro
     return (
         <>
             {formSubmitted ? (
-                <Layout_fadeIn>
+                <>
                     <div className="flex flex-col items-center justify-center h-[95vh]">
                         <div>Thank you for submitting Personal Health Questionnaire.</div>
                         <>
@@ -59,13 +56,13 @@ const Dashboard = ({ repo }: InferGetServerSidePropsType<typeof getServerSidePro
                             Go to Top
                         </Link>
                     </div>
-                </Layout_fadeIn>
+                </>
             ) : (
-                <Layout_fadeIn key="page">
+                <>
                     <div className="flex flex-col items-center justify-center min-h-[95vh] w-full overflow-hidden">
                         <HealthQuestionnaire repo={repo} />
                     </div>
-                </Layout_fadeIn>
+                </>
             )}
         </>
     );

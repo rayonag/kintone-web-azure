@@ -107,6 +107,10 @@ const Login: React.FC = () => {
                     maxAge: 7 * 24 * 60 * 60, // お好きな期限を
                     path: '/'
                 });
+                setCookie(null, 'isZealous', data.isZealous, {
+                    maxAge: 7 * 24 * 60 * 60, // お好きな期限を
+                    path: '/'
+                });
                 router.push('/apply');
             } else {
                 alert('Something wrong. Please start from the top.');
@@ -134,6 +138,10 @@ const Login: React.FC = () => {
                     path: '/'
                 });
                 setCookie(null, 'ref', data.ref, {
+                    maxAge: 7 * 24 * 60 * 60, // お好きな期限を
+                    path: '/'
+                });
+                setCookie(null, 'isZealous', data.isZealous, {
                     maxAge: 7 * 24 * 60 * 60, // お好きな期限を
                     path: '/'
                 });

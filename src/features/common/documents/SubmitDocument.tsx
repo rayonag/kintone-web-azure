@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useDashboardUser } from '@/common/context/dashboardUser';
 import { useLoading } from '@/common/context/loading';
 import postDocument from '@/common/documents/postDocument';
-import Layout_fadeIn from '@/styles/Layout_fadeIn';
 import { useRouter } from 'next/router';
 import { NecessaryDocuments, NecessaryDocumentsShortTerm, NecessaryDocumentsUSA } from '@/pages/api/hooks/notification';
 import { useShallow } from 'zustand/react/shallow';
@@ -146,7 +145,7 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
     };
     return (
         <>
-            <Layout_fadeIn>
+            <>
                 <div className="relative flex flex-col items-center justify-center pt-10 pb-8 text-center min-h-screen text-white overflow-hidden">
                     <span style={{ fontSize: '2rem' }}>{title}</span>
                     {fileData.length == 0 && (
@@ -206,7 +205,7 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
                         Go to Documents Top
                     </Link>
                 </div>
-            </Layout_fadeIn>
+            </>
         </>
     );
 };

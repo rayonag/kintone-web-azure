@@ -1,7 +1,5 @@
 'use client';
 import { useDashboardUser } from '@/common/context/dashboardUser';
-import RateUs from '@/components/modal/RateUs';
-import Layout from '@/styles/Layout_fadeIn';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Dispatch, FC, SetStateAction, useState } from 'react';
@@ -72,7 +70,7 @@ const Contact = () => {
             });
     };
     return (
-        <Layout>
+        <>
             <div className="relative flex flex-col items-center justify-center min-h-screen py-10">
                 <span className="text-3xl font-bold">Contact Us</span>
                 <span className="text-xl mt-16 m-5">We will endeaver to get back to you within 3 business days</span>
@@ -88,7 +86,7 @@ const Contact = () => {
                 </Link>
             </div>
             <ErrorMessageModal modalIsOpen={isModalOpen} setModalIsOpen={setIsModalOpen} message="Please fill out all fields" />
-        </Layout>
+        </>
     );
 };
 

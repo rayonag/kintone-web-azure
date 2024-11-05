@@ -2,14 +2,16 @@
 // Import necessary modules from React
 import React, { useEffect } from 'react';
 import Link from 'next/link';
-import Layout from '@/styles/Layout_fadeIn';
 import { useDashboardUser } from '@/common/context/dashboardUser';
 import GreenCheckMark from '@/components/icons/GreenCheckMark';
 import useUserStore from '@/features/common/store';
 import ArrowUpRight from '@/components/icons/ArrowUpRight';
+import logError from '@/common/logError';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { parseCookies } from 'nookies';
 
 // Define the functional component Page
-const Page: React.FC = () => {
+const Page: React.FC = ({ isZealous }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const dashboardUser = useDashboardUser();
     const loginUser = dashboardUser;
     const user = useUserStore((state) => state);
@@ -38,7 +40,7 @@ const Page: React.FC = () => {
 
     if (!office) return <></>;
     return (
-        <Layout>
+        <>
             <div className="relative flex flex-col items-center justify-center min-h-[95vh] text-white overflow-hidden">
                 {/* Content */}
                 <div className="relative flex flex-col items-center justify-center text-center">
@@ -163,9 +165,23 @@ const Page: React.FC = () => {
                     </div>
                 </div>
             </div>
-        </Layout>
+        </>
     );
 };
 
 // Export the component for use in other files
 export default Page;
+
+type Repo = {
+    selectedOption: any;
+};
+export const getServerSideProps = (async (context) => {
+    try {
+        const cookies = parseCookies(context);
+        // Pass data to the page via props
+        return { props: { isZealous: cookies.isZealous || false } };
+    } catch (e) {
+        logError(e, context, 'getServerSideProps');
+        return { props: {} };
+    }
+}) satisfies GetServerSideProps<{ repo: Repo } | {}>;

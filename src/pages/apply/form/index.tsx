@@ -10,7 +10,6 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { parseCookies } from 'nookies';
 import postIsFirstTime from '@/common/checklist/postIsFirstTime';
 import Link from 'next/link';
-import Layout_fadeIn from '@/styles/Layout_fadeIn';
 import { REST_VolunteerApplicationForm, REST_SavedVolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
 import logError from '@/common/logError';
 import { NationalOffice } from '@/common/context/offices';
@@ -54,7 +53,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
         <>
             {formSubmitted ? (
                 <>
-                    <Layout_fadeIn key="page">
+                    <>
                         <div className="flex flex-col items-center justify-center h-[95vh]">
                             <div>Thank you for submitting {type} application form.</div>
                             {viewMyForm ? (
@@ -89,7 +88,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                                 Go to Top
                             </Link>
                         </div>
-                    </Layout_fadeIn>
+                    </>
                 </>
             ) : (
                 <>

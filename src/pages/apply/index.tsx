@@ -3,7 +3,6 @@
 import React, { use, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { destroyCookie, parseCookies } from 'nookies';
-import Layout_fadeIn_home from '@/styles/Layout_fadeIn_home';
 
 import postReview from '@/common/checklist/postReview';
 import { useDashboardUser } from '@/common/context/dashboardUser';
@@ -56,6 +55,9 @@ export const handleLogout = () => {
         path: '/' // THE KEY IS TO SET THE SAME PATH
     });
     destroyCookie({}, 'ref', {
+        path: '/' // THE KEY IS TO SET THE SAME PATH
+    });
+    destroyCookie({}, 'isZealous', {
         path: '/' // THE KEY IS TO SET THE SAME PATH
     });
     location.reload();
@@ -262,7 +264,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
             {/* <div className=" font-[font-name]">zealous project</div> */}
             {repo && (
                 <>
-                    <Layout_fadeIn_home repo={repo}>
+                    <>
                         {/* TODO: vara text on background
             {isLoaded && (
                 <div className="fixed h-full w-full flex justify-center z-[-1]">
@@ -407,7 +409,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                                 </>
                             )}
                         </>
-                    </Layout_fadeIn_home>
+                    </>
                 </>
             )}
         </>

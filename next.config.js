@@ -14,7 +14,7 @@ const cspHeader = `
     ${isDev ? "img-src 'self' data: http://localhost:3000/;" : ''}
 `;
 const nextConfig = {
-    reactStrictMode: false, // false for Vara.js double render issue
+    reactStrictMode: true, // false for Vara.js double render issue
     output: 'standalone',
     async headers() {
         return [

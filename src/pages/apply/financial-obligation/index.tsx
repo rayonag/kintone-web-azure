@@ -5,19 +5,17 @@ import { REST_OnlineVolunteerApplication } from '@/types/OnlineVolunteerApplicat
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
-import Layout_fadeIn from '@/styles/Layout_fadeIn';
 import logError from '@/common/logError';
 import FinancialObligation from '@/features/common/forms/financialObligation';
-import Layout_fadeIn_zealous from '@/styles/Layout_fadeIn_zealous';
 
 const Dashboard = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     return (
         <>
-            <Layout_fadeIn_zealous key="page">
+            <>
                 <div className="flex flex-col items-center justify-center min-h-[95vh] w-full overflow-hidden">
                     <FinancialObligation repo={repo} />
                 </div>
-            </Layout_fadeIn_zealous>
+            </>
         </>
     );
 };
