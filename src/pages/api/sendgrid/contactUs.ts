@@ -17,11 +17,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
         const message = data.message;
         const office = data.office as EmailNationalOffice;
         const to = emailNationalOffice[office] == undefined ? 'intl.personnel@bridgesforpeace.com' : emailNationalOffice[office];
+        const bcc = to == 'intl.personnel@bridgesforpeace.com' ? '' : 'intl.personnel@bridgesforpeace.com'; // bcc intl if not sent to intl
         sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
         const msg = {
             to: to, // Change to your recipient
-            cc: '', // 'intl.personnel@bridgesforpeace.com'
-            bcc: '',
+            cc: '',
+            bcc: bcc, // 'intl.personnel@bridgesforpeace.com'
             from: 'BFP Online Application<onlineapplication@bridgesforpeace.com>', // Change to your verified sender
             subject: '[Online Volunteer Application]New message from Contact Us Form',
             html: `<div>Name: ${name}</div><div>Email: ${email}</div><div>Message: ${message}</div>`

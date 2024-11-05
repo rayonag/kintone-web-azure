@@ -507,11 +507,11 @@ export const getServerSideProps = (async (context) => {
         const requiredDocumentsCount = () => {
             if (!type || !office) return '-';
             if (office == 'USA') {
+                if (type == 'Short Term') return 6;
+                if (type == 'Long Term' || type == 'Zealous') return 7;
+            } else {
                 if (type == 'Short Term') return 5;
                 if (type == 'Long Term' || type == 'Zealous') return 6;
-            } else {
-                if (type == 'Short Term') return 4;
-                if (type == 'Long Term' || type == 'Zealous') return 5;
             }
         };
         const isAllDocumentsSubmitted = documents.length == requiredDocumentsCount();

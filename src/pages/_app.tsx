@@ -23,7 +23,30 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
         if (username && ref) initUser(username, ref);
     }, [username, ref]);
     const user = useUserStore();
-    console.log('hi');
+    //console.log('hi');
+    console.log('user.type', user.applicationType);
+    // bg color change
+    useEffect(() => {
+        if (user.applicationType == 'Zealous') {
+            // Example client-side variable
+            const zealousTheme = {
+                startColor: '0,0,0', // RGB format
+                endColor: '75,75,75', // RGB format
+                btnBgColor: '#000000', // Black color
+                btnBorderColor: 'red', // Black color
+                btnHoverBgColor: 'gray', // Dark gray color
+                btnHoverBorderColor: '#333333' // Dark gray color
+            };
+
+            // Update CSS variables
+            document.documentElement.style.setProperty('--background-start-rgb', zealousTheme.startColor);
+            document.documentElement.style.setProperty('--background-end-rgb', zealousTheme.endColor);
+            document.documentElement.style.setProperty('--btn-bg-color', zealousTheme.btnBgColor);
+            document.documentElement.style.setProperty('--btn-border-color', zealousTheme.btnBorderColor);
+            document.documentElement.style.setProperty('--btn-hover-bg-color', zealousTheme.btnHoverBgColor);
+            document.documentElement.style.setProperty('--btn-hover-border-color', zealousTheme.btnHoverBorderColor);
+        }
+    }, [user.applicationType]);
     //
     const DashboardUserProvider: ({ children }: { children: JSX.Element }) => JSX.Element = ({ children }) => {
         const [dashboardUser, setDashboardUser] = useState<DashboardUser>({

@@ -14,8 +14,6 @@ export const ErrorLogsAppID = process.env.NEXT_PUBLIC_ERROR_LOGS_APPID;
 export const ErrorLogsAPIKey = process.env.NEXT_PUBLIC_ERROR_LOGS_APIKEY;
 export const TimesheetAppID = process.env.NEXT_PUBLIC_TIMESHEET_APPID;
 // email
-export const email_Japan = process.env.NEXT_PUBLIC_EMAIL_JAPAN;
-export const email_SouthAfrica = process.env.NEXT_PUBLIC_EMAIL_SOUTH_AFRICA;
 
 // url
 export const zealousAplicationURL =

@@ -5,7 +5,11 @@
 :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 26, 26, 26;
-    --background-end-rgb: 1, 44, 102;
+    --background-end-rgb: 1, 44, 102; /* Bridges theme */
+    --btn-bg-color: #012c66;
+    --btn-border-color: #012c66;
+    --btn-hover-bg-color: #014a99;
+    --btn-hover-border-color: #014a99;
 }
 
 body {
@@ -32,11 +36,13 @@ html {
 } */
 
 .btn {
-    @apply bg-[#012c66] border border-[#012c66] rounded-full text-white px-5 py-1.5 self-center m-6 delay-75 ease-out duration-75 font-bold mt-6 max-w-full md:max-w-xs cursor-pointer;
+    @apply border rounded-full text-white px-5 py-1.5 self-center m-6 delay-75 ease-out duration-75 font-bold mt-6 max-w-full md:max-w-xs cursor-pointer;
+    background-color: var(--btn-bg-color);
+    border-color: var(--btn-border-color);
 }
 .btn:hover {
-    @apply bg-[#014a99]; /* Background color change */
-    @apply border-[#014a99]; /* Uncomment for border color change */
+    background-color: var(--btn-hover-bg-color);
+    border-color: var(--btn-hover-border-color);
     @apply scale-105; /* Uncomment for scale effect */
 }
 .btn-disabled {

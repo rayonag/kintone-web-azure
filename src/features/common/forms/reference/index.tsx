@@ -24,6 +24,7 @@ import Step4 from './views/Step4';
 import Step5 from './views/Step5';
 import postReferenceForm from './hooks/postReferenceForm';
 import StepProgressBar from '../components/ProgressBar';
+import ConfirmationModal from './views/Confirmation';
 
 const ReferenceForm = () => {
     const [page, setPage] = useState(0);
@@ -86,10 +87,6 @@ const ReferenceForm = () => {
     useEffect(() => {
         document.querySelector('#section-title')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, [step]);
-    // useEffect(() => {
-    //     // for modal
-    //     ReactModal.setAppElement('#__next');
-    // }, []);
 
     // add param from url to form
     const router = useRouter();
@@ -104,7 +101,7 @@ const ReferenceForm = () => {
         e.preventDefault();
         const valid = await validate();
         if (!valid) return;
-        if (!window.confirm('Do you want to submit?')) return;
+        //if (!window.confirm('Do you want to submit?')) return;
         const values = getValues();
         setIsLoading(true);
         const res = await postReferenceForm(values);
@@ -114,9 +111,6 @@ const ReferenceForm = () => {
             alert('Failed to submit the form. Please try again.');
             setIsLoading(false);
         }
-        //??
-        // const res = await postPersonalHealthQuestionnaire(values, dashboardUser.ref || '0');
-        // if (res) setModalIsOpen(true);
     };
     return (
         <div className="grid justify-center px-10 pb-10 max-h-screen overflow-y-scroll">
@@ -130,7 +124,7 @@ const ReferenceForm = () => {
                 {step === 3 && <Step3 register={register} errors={formatError} getValues={getValues} t={t} control={control} />}
                 {step === 4 && <Step4 register={register} errors={formatError} getValues={getValues} t={t} control={control} />}
                 {step === 5 && <Step5 register={register} errors={formatError} getValues={getValues} t={t} control={control} />}
-                {/* <ConfirmationModal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} getValues={getValues} t={t} /> */}
+                <ConfirmationModal onSubmit={onSubmit} modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} getValues={getValues} t={t} />
                 {step != 5 && (
                     <button
                         type="button"
@@ -145,7 +139,7 @@ const ReferenceForm = () => {
                 )}
                 {step == 5 && (
                     <button
-                        type="submit"
+                        type="button"
                         onClick={async () => {
                             const valid = await validate();
                             if (valid) setModalIsOpen(true);

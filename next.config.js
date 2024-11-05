@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 
+const isDev = process.env.NODE_ENV === 'development';
+
 const cspHeader = `
     default-src 'self' http://localhost:3000/;
     script-src 'self' 'unsafe-eval' 'unsafe-inline';
@@ -9,9 +11,10 @@ const cspHeader = `
     frame-ancestors 'none';
     block-all-mixed-content;
     upgrade-insecure-requests;
+    ${isDev ? "img-src 'self' data: http://localhost:3000/;" : ''}
 `;
 const nextConfig = {
-    reactStrictMode: true, // false for Vara.js double render issue
+    reactStrictMode: false, // false for Vara.js double render issue
     output: 'standalone',
     async headers() {
         return [

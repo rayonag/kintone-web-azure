@@ -9,6 +9,8 @@ import { useRouter } from 'next/router';
 import { NecessaryDocuments, NecessaryDocumentsShortTerm, NecessaryDocumentsUSA } from '@/pages/api/hooks/notification';
 import { useShallow } from 'zustand/react/shallow';
 import useUserStore from '../store';
+import Upload from '@/components/icons/Upload';
+import Trash from '@/components/icons/Trash';
 
 type SubmitDocumentProps = {
     document: NecessaryDocuments | NecessaryDocumentsUSA | NecessaryDocumentsShortTerm;
@@ -34,24 +36,31 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
 
     const [fileData, setFileData] = useState<any>([]);
     const [isDragging, setIsDragging] = useState(false);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
     // Does it need preview?
-    //const [filePreview, setFilePreview] = useState();
+    const [filePreview, setFilePreview] = useState<any>();
 
     // upload from input
     const handleUpload = (e: any) => {
-        const files = e.target.files;
-        handleUploadFiles(files);
-    };
-    const handleUploadFiles = (files: any) => {
-        if (files.length > 0) {
-            const file = files[0];
-            setFileData(files);
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                //setFilePreview(e.target.result);
-            };
-            reader.readAsDataURL(file);
+        const file = e.target.files?.[0];
+        if (file) {
+            if (file.size > 10 * 1024 * 1024) {
+                // 10MB in bytes
+                setErrorMessage('Error: File size should be 10MB or less.');
+            } else {
+                setErrorMessage(null);
+                handleUploadFiles(file);
+            }
         }
+    };
+    const handleUploadFiles = (file: any) => {
+        setFileData([file]); // set file data as array, TODO: review
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            if (e.target?.result == null) return;
+            setFilePreview(e.target.result);
+        };
+        reader.readAsDataURL(file);
     };
     const handleSubmit = async () => {
         try {
@@ -138,36 +147,54 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
     return (
         <>
             <Layout_fadeIn>
-                <div className="relative flex flex-col items-center justify-center pt-10 text-center min-h-screen text-white overflow-hidden">
+                <div className="relative flex flex-col items-center justify-center pt-10 pb-8 text-center min-h-screen text-white overflow-hidden">
                     <span style={{ fontSize: '2rem' }}>{title}</span>
-                    <div className="md:hidden m-5">
-                        <label htmlFor="pdfInput" className="btn">
-                            <input id="pdfInput" type="file" onInput={handleUpload} hidden accept=".pdf,image/png, image/jpeg" />
-                            <span>Upload File</span>
-                        </label>
-                    </div>
-                    <div className="max-sm:hidden md:block">{fileData.length == 0 && <DraggableField />}</div>
+                    {fileData.length == 0 && (
+                        <>
+                            <div className="md:hidden m-5">
+                                <label htmlFor="pdfInput" className="btn flex">
+                                    <input id="pdfInput" type="file" onInput={handleUpload} hidden accept=".pdf,image/png, image/jpeg" />
+                                    <span className="mr-2 flex items-center">
+                                        <Upload />
+                                    </span>
+                                    <span>Upload File</span>
+                                </label>
+                            </div>
+                            <div className="hidden md:block">
+                                <DraggableField />
+                            </div>
+                        </>
+                    )}
                     <div>
                         {fileData.length > 0 ? (
-                            <div className="border flex">
-                                <span className="p-2" style={{ fontSize: '1.5rem', color: 'green' }}>
-                                    ✓{' '}
-                                </span>
-                                <span className="p-2 self-center">{fileData[0].name}</span>
-                                <span
-                                    className="border flex flex-wrap content-center justify-center w-8 hover:bg-white cursor-pointer"
-                                    style={{ fontSize: '2rem', color: 'red' }}
-                                    onClick={handleDelete}
-                                >
-                                    {' '}
-                                    ×{' '}
-                                </span>
-                            </div>
+                            <>
+                                {filePreview && (
+                                    <div className="m-5 max-w-[500px] h-fit">
+                                        <img src={filePreview} alt="Preview not available" style={{ width: 'auto', height: 'auto' }} />
+                                    </div>
+                                )}
+                                <div className="flex justify-center w-full">
+                                    <div className="flex justify-center relative w-fit">
+                                        <div className="rounded-full bg-white bg-opacity-20 flex text-center justify-center">
+                                            <span className="pl-2" style={{ fontSize: '1.5rem', color: 'lightgreen' }}>
+                                                ✓
+                                            </span>
+                                            <span className="p-2 self-center">{fileData[0].name}</span>
+                                        </div>
+                                        <span
+                                            className="absolute -right-[40px] flex flex-wrap content-center justify-center cursor-pointer"
+                                            onClick={handleDelete}
+                                        >
+                                            <Trash />
+                                        </span>
+                                    </div>
+                                </div>
+                            </>
                         ) : (
                             <span></span>
                         )}
-                    </div>
-
+                    </div>{' '}
+                    {errorMessage && <div className="text-lg text-red-500">{errorMessage}</div>}
                     <button className="btn" onClick={async () => await handleSubmit()}>
                         Click to Submit
                     </button>

@@ -1,4 +1,3 @@
-import { email_Japan, email_SouthAfrica } from '@/common/env';
 import NotificationDocument from '@/common/react-email/emails/Notification-document';
 import { render } from '@react-email/render';
 import React from 'react';
@@ -44,7 +43,7 @@ export const emailNationalOffice = {
     'South Korea': 'ronaga@bridgesforpeace.com',
     'United Kingdom': 'ronaga@bridgesforpeace.com',
     USA: 'lschoeman@bfpusa.org',
-    Other: 'ronaga@bridgesforpeace.com'
+    Other: 'intl.personnel@bridgesforpeace.com'
 } as const;
 
 export type SubmitType = 'documentSubmission' | 'applicationSubmission' | 'healthQuestionnaireSubmission';

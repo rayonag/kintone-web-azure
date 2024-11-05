@@ -1,134 +1,198 @@
-// import React, { Dispatch, FC, SetStateAction, useState } from 'react';
-// import { SubmitHandler, UseFormGetValues } from 'react-hook-form';
-// import Modal from 'react-modal';
-// import { TFunction } from 'i18next';
-// import postPersonalHealthQuestionnaire from '../hooks/postPersonalHealthQuestionnaire';
-// import { useRouter } from 'next/router';
-// import { useDashboardUser } from '@/common/context/dashboardUser';
-// import Link from 'next/link';
-// import { useLoading } from '@/common/context/loading';
-// import { ReferenceFormFields, ReferenceFormType } from '../schema';
+import React, { Dispatch, FC, SetStateAction, useState } from 'react';
+import { SubmitHandler, UseFormGetValues } from 'react-hook-form';
+import Modal from 'react-modal';
+import { useRouter } from 'next/router';
+import { useDashboardUser } from '@/common/context/dashboardUser';
+import { ReferenceFormFields, ReferenceFormType } from '../schema';
 
-// type ButtonProps = {
-//     label: string;
-//     isHover: boolean;
-//     setIsHover: React.Dispatch<React.SetStateAction<boolean>>;
-//     onclick: (props: any) => any;
-// };
-// const Button: FC<ButtonProps> = ({ label, setIsHover, onclick }) => {
-//     const buttonStyle = {
-//         color: 'white',
-//         padding: '.5rem 1rem',
-//         border: 'none',
-//         borderRadius: '2rem',
-//         cursor: 'pointer',
-//         fontSize: '1rem'
-//     };
-//     return (
-//         <button className="btn" style={buttonStyle} onClick={onclick} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
-//             {label}
-//         </button>
-//     );
-// };
+type ButtonProps = {
+    label: string;
+    isHover: boolean;
+    setIsHover: React.Dispatch<React.SetStateAction<boolean>>;
+    onclick: (props: any) => any;
+};
+const Button: FC<ButtonProps> = ({ label, setIsHover, onclick }) => {
+    const buttonStyle = {
+        color: 'white',
+        padding: '.5rem 1rem',
+        border: 'none',
+        borderRadius: '2rem',
+        cursor: 'pointer',
+        fontSize: '1rem'
+    };
+    return (
+        <button className="btn" style={buttonStyle} onClick={onclick} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+            {label}
+        </button>
+    );
+};
 
-// type ConfirmationModalProps = {
-//     modalIsOpen: boolean;
-//     setModalIsOpen: Dispatch<SetStateAction<boolean>>;
-//     getValues: UseFormGetValues<ReferenceFormType>;
-//     t: any;
-// };
-// const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIsOpen, getValues, t }) => {
-//     const [isHoverSubmit, setIsHoverSubmit] = useState(false);
-//     const [isHoverCancel, setIsHoverCancel] = useState(false);
-//     const [isComplete, setIsComplete] = useState(false);
-//     const { setIsLoading } = useLoading();
-//     const dashboardUser = useDashboardUser();
-//     const formData = getValues();
-//     const router = useRouter();
-//     const modalStyle = {
-//         content: {
-//             top: '50%',
-//             right: 'auto',
-//             bottom: 'auto',
-//             left: '50%',
-//             transform: 'translate(-50%,-50%)',
-//             width: '80%',
-//             maxWidth: '30rem',
-//             maxHeight: '80vh'
-//         }
-//     };
-//     const onSubmit: SubmitHandler<ReferenceFormType> = async () => {
-//         setIsLoading(true);
-//         const data = getValues();
-//         // TODO: when undefined
-//         const res = await postPersonalHealthQuestionnaire(data, dashboardUser.ref || '0');
-//         if (res) setIsComplete(true);
-//         setIsLoading(false);
-//         router.push('/apply/health-questionnaire/complete');
-//     };
-//     return (
-//         <div className="relative">
-//             <Modal
-//                 isOpen={modalIsOpen}
-//                 onRequestClose={() => setModalIsOpen(false)}
-//                 style={modalStyle}
-//                 shouldCloseOnOverlayClick={false}
-//                 ariaHideApp={false}
-//             >
-//                 {isComplete ? (
-//                     <div className="flex flex-col justify-center">
-//                         <div className="text-2xl m-5 mb-10 text-black font-bold">Response saved and submitted!</div>
-//                         <Link href="/apply" className="btn">
-//                             Go to Top
-//                         </Link>
-//                     </div>
-//                 ) : (
-//                     <>
-//                         <h1
-//                             style={{
-//                                 color: '#333',
-//                                 fontSize: '1.5rem',
-//                                 fontWeight: 'bold',
-//                                 marginBottom: '1rem'
-//                             }}
-//                         >
-//                             Confirm your response
-//                         </h1>
-//                         <div className="text-black">
-//                             {ReferenceFormFields[0].map((field) => {
-//                                 if (field === 'heightUnit' || field === 'weightUnit') return <div>{formData[field]}</div>;
-//                                 return (
-//                                     <div className="py-1">
-//                                         {t(field)}:{' ' + formData[field]}
-//                                         <hr />
-//                                     </div>
-//                                 );
-//                             })}
-//                             <label>Have History of: </label>
-//                             {ReferenceFormFields[1].map((field) => {
-//                                 return <>{formData[field][0] == 'Yes' && <label className="text-black py-1">{t(field)}, </label>}</>;
-//                             })}
-//                             <hr />
-//                             {/* pop() the last question */}
-//                             {ReferenceFormFields[2].slice(0, -1).map((field) => {
-//                                 return (
-//                                     <div className="text-black py-1">
-//                                         {t(field)}
-//                                         <div>{' ' + formData[field]}</div>
-//                                         <hr />
-//                                     </div>
-//                                 );
-//                             })}
-//                         </div>
-//                         <div className="flex flex-col justify-center">
-//                             <Button label="Submit" isHover={isHoverSubmit} setIsHover={setIsHoverSubmit} onclick={onSubmit} />
-//                             <Button label="Back" isHover={isHoverCancel} setIsHover={setIsHoverCancel} onclick={() => setModalIsOpen(false)} />
-//                         </div>
-//                     </>
-//                 )}
-//             </Modal>
-//         </div>
-//     );
-// };
+type ConfirmationModalProps = {
+    modalIsOpen: boolean;
+    setModalIsOpen: Dispatch<SetStateAction<boolean>>;
+    getValues: UseFormGetValues<ReferenceFormType>;
+    t: any;
+    onSubmit: SubmitHandler<ReferenceFormType>;
+};
+const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIsOpen, getValues, t, onSubmit }) => {
+    const [isHoverSubmit, setIsHoverSubmit] = useState(false);
+    const [isHoverCancel, setIsHoverCancel] = useState(false);
+    const [isComplete, setIsComplete] = useState(false);
 
-// export default ConfirmationModal;
+    const dashboardUser = useDashboardUser();
+    const formData = getValues();
+    const router = useRouter();
+    const modalStyle = {
+        content: {
+            top: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            left: '50%',
+            transform: 'translate(-50%,-50%)',
+            width: '80%',
+            maxWidth: '30rem',
+            maxHeight: '80vh'
+        }
+    };
+
+    return (
+        <div className="relative">
+            <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={() => setModalIsOpen(false)}
+                style={modalStyle}
+                shouldCloseOnOverlayClick={false}
+                ariaHideApp={false}
+            >
+                <>
+                    <h1
+                        style={{
+                            color: '#333',
+                            fontSize: '1.5rem',
+                            fontWeight: 'bold',
+                            marginBottom: '1rem'
+                        }}
+                    >
+                        Confirm your response
+                    </h1>
+                    <div className="text-black">
+                        {ReferenceFormFields[1].map((field) => {
+                            if (field === 'relationship') {
+                                return (
+                                    <div className="py-2">
+                                        {t('relationship.title')}:<span className="font-semibold">{' ' + formData[field]}</span>
+                                        <hr />
+                                    </div>
+                                );
+                            }
+                            return (
+                                <div className="py-2">
+                                    {t(field)}:<span className="font-semibold">{' ' + formData[field]}</span>
+                                    <hr />
+                                </div>
+                            );
+                        })}
+                        {ReferenceFormFields[2].map((field) => {
+                            if (field === 'indicationDesire') {
+                                return (
+                                    <div className="py-2">
+                                        {t('indicationDesire.title')}:<span className="font-semibold">{' ' + formData[field]}</span>
+                                        <hr />
+                                    </div>
+                                );
+                            }
+                            return (
+                                <div className="py-2">
+                                    {t(field)}:<span className="font-semibold">{' ' + formData[field]}</span>
+                                    <hr />
+                                </div>
+                            );
+                        })}
+                        {ReferenceFormFields[3].map((field) => {
+                            return (
+                                <div className="py-2">
+                                    {t(field)}:<span className="font-semibold">{' ' + formData[field]}</span>
+                                    <hr />
+                                </div>
+                            );
+                        })}
+                        <div className="py-2">{t('traitTitle')}</div>
+                        <div className="flex flex-wrap text-sm md:text-md justify-between mt-2 text-black">
+                            <div className="mr-2">5 = Strong</div> <div className="mr-2">4 = Above average</div>{' '}
+                            <div className="mr-2">3 = Average</div>
+                            <div className="mr-2">2 = Below average</div> <div>1 = Weak</div>
+                            <div className="mr-2">X = Not observed</div>
+                        </div>
+                        <div className="flex flex-wrap text-sm md:text-md justify-between mt-2 text-black">
+                            {ReferenceFormFields[4].map((field) => {
+                                if (field === 'characters') {
+                                    return <></>;
+                                }
+                                return (
+                                    <div className="py-2">
+                                        {t(field)}:<span className="font-semibold">{' ' + formData[field]}</span>
+                                        <hr />
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        <div className="py-2">{t('characterTitle')}</div>
+                        <div className="flex flex-wrap text-sm md:text-md justify-between mt-2 text-black">
+                            <div className="py-2">
+                                {formData['characters']['character1']?.map((c, i) => (
+                                    <span className="font-semibold">
+                                        {c}
+                                        {formData['characters']['character1']?.length != i + 1 && ','}{' '}
+                                    </span>
+                                ))}
+                                {formData['characters']['character2']?.map((c, i) => (
+                                    <span className="font-semibold">
+                                        {c}
+                                        {formData['characters']['character2']?.length != i + 1 && ','}{' '}
+                                    </span>
+                                ))}
+                                {formData['characters']['character3']?.map((c, i) => (
+                                    <span className="font-semibold">
+                                        {c}
+                                        {formData['characters']['character3']?.length != i + 1 && ','}{' '}
+                                    </span>
+                                ))}
+                                {formData['characters']['character4']?.map((c, i) => (
+                                    <span className="font-semibold">
+                                        {c}
+                                        {formData['characters']['character4']?.length != i + 1 && ','}{' '}
+                                    </span>
+                                ))}
+                                <hr />
+                            </div>
+                        </div>
+                        {ReferenceFormFields[5].map((field) => {
+                            return (
+                                <div className="py-2">
+                                    {t(field)}:<span className="font-semibold">{' ' + formData[field]}</span>
+                                    <hr />
+                                </div>
+                            );
+                        })}
+                    </div>
+                    {/* TODO: add auto-reply email */}
+                    {/* <label className="flex justify-center my-4 text-black">
+                        <div className="flex-col flex text-center justify-center mr-2">
+                            <input className="w-6 h-6" type="checkbox" />
+                        </div>
+                        <div className="flex-col flex text-left justify-center">
+                            <div>Check this box to send copy of </div>
+                            <div>your response to: "{formData['email']}"</div>
+                        </div>
+                    </label> */}
+                    <div className="flex flex-col justify-center">
+                        <Button label="Submit" isHover={isHoverSubmit} setIsHover={setIsHoverSubmit} onclick={onSubmit} />
+                        <Button label="Back" isHover={isHoverCancel} setIsHover={setIsHoverCancel} onclick={() => setModalIsOpen(false)} />
+                    </div>
+                </>
+            </Modal>
+        </div>
+    );
+};
+
+export default ConfirmationModal;
