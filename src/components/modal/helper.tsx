@@ -107,17 +107,35 @@ const Helper: React.FC<HelperProps> = ({ currentStep, userRef, isModalOpen, setI
         ),
         complete: (
             <div>
-                <div>You have completed all the steps. We will review your application and get back to you soon.</div>
-                <br />
-                <div className="text-sm">
-                    Note:{' '}
-                    {type == 'Zealous'
-                        ? `The application deadline is March 31, 2025. After this date the applications will be reviewed and notification about whether or
-                    not you are accepted will be sent in May.`
-                        : `The application process usually takes between two to three months, from the time the application documents are submitted
-                            to receiving a definitive answer from the Jerusalem office. Several factors affect the processing time, including length of service time requested, availability of positions and when
-                            references are received.`}
-                </div>
+                {type === 'Zealous' ? (
+                    <>
+                        <div>Congratulations! You have completed all the parts of your Zealous Israel Project application!</div>
+                        <br />
+                        <div className="italic">Things to do Next:</div>
+                        <div>
+                            Please keep an eye on your emails for updates or news from your national office. They may reach out to clarify details
+                            about your application parts. Also make sure you have let your references know to watch their emails for the reference
+                            forms from us. Your application won't be reviewed in Jerusalem until all your references have responded.{' '}
+                        </div>
+                        <br />
+                        <div className="text-sm">
+                            Note: All of the Zealous Israel Project applications will be reviewed after the deadline of March 31, 2025. Notfitications
+                            about whether or not you are accepted will be sent in May 2025. If you are accepted you will then begin the Visa Process
+                            and work closely with your national office. Until then, please keep an eye on your emails, pray for Israel and seek God's
+                            heart.
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        <div>You have completed all the steps. We will review your application and get back to you soon.</div>
+                        <br />
+                        <div className="text-sm">
+                            Note: The application process usually takes between two to three months, from the time the application documents are
+                            submitted to receiving a definitive answer from the Jerusalem office. Several factors affect the processing time,
+                            including length of service time requested, availability of positions and when references are received.
+                        </div>
+                    </>
+                )}
             </div>
         )
     };

@@ -31,6 +31,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
                 logError(e, e.response.body.errors, 'notificationApplicationUpdated');
                 res.status(200).json({ name: e });
             });
+
+        res.status(200).json({ name: 'Email sent' });
     } else {
         res.status(405).json({ name: 'Method Not Allowed' });
     }

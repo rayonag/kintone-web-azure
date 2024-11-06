@@ -15,8 +15,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 baseUrl: 'https://bfp.kintone.com',
                 // Use password authentication
                 auth: {
-                    username: process.env.KINTONE_USERNAME,
-                    password: process.env.KINTONE_PASSWORD
+                    username: process.env.NEXT_PUBLIC_KINTONE_USERNAME,
+                    password: process.env.NEXT_PUBLIC_KINTONE_PASSWORD
                 }
             });
             const recordArray = await client.record.getAllRecords({ app: '121', condition: `email="${username}"`, orderBy: 'ref desc' });

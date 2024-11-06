@@ -2,6 +2,7 @@
 import React, { FC } from 'react';
 import BridgesLogo from './BridgesLogo';
 import ZealousLogo from './ZealousLogo';
+import Image from 'next/image';
 
 type HeaderProps = {
     isZealous?: boolean;
@@ -10,21 +11,12 @@ const Header: FC<HeaderProps> = ({ isZealous }) => {
     const handleHomeClick = () => {
         location.href = '/apply';
     };
-    const HomeIcon = () => (
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
-            <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001 1h3a1 1 0 001-1"
-            />
-        </svg>
-    );
     return (
         <>
             <header className="hidden h-[5svh] md:flex justify-around content-center">
+                {/* hide when isZealous not given */}
                 <button onClick={handleHomeClick} className="z-10">
-                    {isZealous ? <ZealousLogo /> : <BridgesLogo />}
+                    {isZealous ? <ZealousLogo /> : isZealous == false ? <Image alt="no image" src="" /> : <BridgesLogo />}
                 </button>
             </header>
             {/* TODO: responsive header

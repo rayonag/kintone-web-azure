@@ -17,7 +17,7 @@ type SubmitDocumentProps = {
     Help?: FC<any>;
 };
 const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
-    const { ref, username, name, type, initUser, applicationRef } = useUserStore(
+    const { ref, username, name, type, initUser, applicationRef, getDocuments } = useUserStore(
         useShallow((state) => ({
             ref: state.ref,
             username: state.username,
@@ -25,7 +25,8 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
             knownAs: state.knownAs,
             type: state.applicationType,
             initUser: state.initUser,
-            applicationRef: state.applicationRef
+            applicationRef: state.applicationRef,
+            getDocuments: state.getDocuments
         }))
     );
 
@@ -72,6 +73,7 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
                 formData.append('file', file);
                 await postDocument({ document: document, formData: formData, applicationRef: applicationRef, userRef: ref });
                 setIsLoading(false);
+                getDocuments(username, ref);
                 router.push('/apply/documents/complete');
             } else {
                 setIsLoading(false);

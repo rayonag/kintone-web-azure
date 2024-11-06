@@ -15,7 +15,6 @@ import Layout_fadeIn_home from '@/styles/Layout_fadeIn_home';
 const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
     const router = useRouter();
     const cookies = parseCookies(ctx);
-    const isZealous = cookies.isZealous;
     //
     const username = cookies.auth || undefined;
     const ref = cookies.ref || undefined;
@@ -28,6 +27,7 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
     const theme = pageProps.theme;
     console.log('user.type', theme);
     // bg color change
+    // TODO: temp disable
     useEffect(() => {
         if (theme) {
             document.documentElement.style.setProperty('--background-start-rgb', theme.startColor);
@@ -38,7 +38,7 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
             document.documentElement.style.setProperty('--btn-hover-border-color', theme.btnHoverBorderColor);
         }
     }, [theme]);
-    //
+
     const DashboardUserProvider: ({ children }: { children: JSX.Element }) => JSX.Element = ({ children }) => {
         const [dashboardUser, setDashboardUser] = useState<DashboardUser>({
             isLoggedIn: false,
@@ -85,7 +85,9 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
         );
     };
     const component =
-        typeof pageProps === 'undefined' ? null : router.pathname.startsWith('/apply/login') ? (
+        typeof pageProps === 'undefined' ? (
+            <></>
+        ) : router.pathname.startsWith('/apply/login') ? (
             <CommonProvider>
                 <DashboardUserProvider>
                     <Component {...pageProps} />
@@ -94,7 +96,7 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
         ) : (
             <CommonProvider>
                 <DashboardUserProvider>
-                    <Layout_fadeIn_home repo={{ isZealous }}>
+                    <Layout_fadeIn_home repo={{ isZealous: cookies.isZealous == 'true' }}>
                         <Component {...pageProps} />
                     </Layout_fadeIn_home>
                 </DashboardUserProvider>
@@ -146,7 +148,7 @@ App.getInitialProps = async (appContext: any) => {
     };
 
     console.log('cookies.isZealous', cookies.isZealous);
-    if (cookies.isZealous || appContext.ctx.pathname == '/apply/login/zealous') {
+    if (cookies.isZealous == 'true' || appContext.ctx.pathname == '/apply/login/zealous') {
         theme = {
             startColor: '0,0,0', // RGB format
             endColor: '25,25,25', // RGB format
@@ -161,7 +163,7 @@ App.getInitialProps = async (appContext: any) => {
             ...(appContext.Component.getInitialProps ? await appContext.Component.getInitialProps(appContext.ctx) : {}),
             pathname: appContext.ctx.pathname,
             theme,
-            isZeaous: cookies.isZealous
+            isZealous: cookies.isZealous
         }
     };
 };
