@@ -28,16 +28,17 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
     const theme = pageProps.theme;
     console.log('user.type', theme);
     // bg color change
-    useEffect(() => {
-        if (theme) {
-            document.documentElement.style.setProperty('--background-start-rgb', theme.startColor);
-            document.documentElement.style.setProperty('--background-end-rgb', theme.endColor);
-            document.documentElement.style.setProperty('--btn-bg-color', theme.btnBgColor);
-            document.documentElement.style.setProperty('--btn-border-color', theme.btnBorderColor);
-            document.documentElement.style.setProperty('--btn-hover-bg-color', theme.btnHoverBgColor);
-            document.documentElement.style.setProperty('--btn-hover-border-color', theme.btnHoverBorderColor);
-        }
-    }, [theme]);
+    // TODO: temp disable
+    // useEffect(() => {
+    //     if (theme) {
+    //         document.documentElement.style.setProperty('--background-start-rgb', theme.startColor);
+    //         document.documentElement.style.setProperty('--background-end-rgb', theme.endColor);
+    //         document.documentElement.style.setProperty('--btn-bg-color', theme.btnBgColor);
+    //         document.documentElement.style.setProperty('--btn-border-color', theme.btnBorderColor);
+    //         document.documentElement.style.setProperty('--btn-hover-bg-color', theme.btnHoverBgColor);
+    //         document.documentElement.style.setProperty('--btn-hover-border-color', theme.btnHoverBorderColor);
+    //     }
+    // }, [theme]);
     //
     const DashboardUserProvider: ({ children }: { children: JSX.Element }) => JSX.Element = ({ children }) => {
         const [dashboardUser, setDashboardUser] = useState<DashboardUser>({
