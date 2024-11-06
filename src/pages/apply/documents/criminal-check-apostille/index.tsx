@@ -7,7 +7,7 @@ const CriminalCheck = () => {
     const office = useUserStore((state) => state.nationalOffice);
     const Help = () => (
         <Link href="./criminal-check-apostille/example" className="link">
-            {office == 'USA' ? 'What is FBI Criminal Background Check?' : 'What is Criminal Check?'}
+            {office == 'USA' ? 'What is FBI Criminal Background Check Apostille?' : 'What is Criminal Check Apostille?'}
         </Link>
     );
     return (
