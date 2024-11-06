@@ -136,9 +136,17 @@ App.getInitialProps = async (appContext: any) => {
         }
     }
     // theme
-    let theme = null;
+    let theme = {
+        startColor: '26, 26, 26', // gradient start color
+        endColor: '1, 44, 102', // gradient end color
+        btnBgColor: '#012c66', // button background color
+        btnBorderColor: '#012c66', // button border color
+        btnHoverBgColor: '#014a99', // button hover background color
+        btnHoverBorderColor: '#014a99' // button hover border color
+    };
+
     console.log('cookies.isZealous', cookies.isZealous);
-    if (cookies.isZealous) {
+    if (cookies.isZealous || appContext.ctx.pathname == '/apply/login/zealous') {
         theme = {
             startColor: '0,0,0', // RGB format
             endColor: '25,25,25', // RGB format
