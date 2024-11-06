@@ -200,7 +200,6 @@ const ApplicationForm = (props: any) => {
     return (
         <>
             <div className="grid justify-center px-10 pb-10 max-h-screen overflow-y-scroll">
-                <Header />
                 <div
                     className={`absolute top-20 right-20 bg-[#012c66] font-bold opacity-80 rounded-md text-white p-4 ${
                         isDialogOpen ? 'max-w-40 block' : 'max-w-0 hidden'
