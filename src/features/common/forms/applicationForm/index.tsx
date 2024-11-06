@@ -25,7 +25,6 @@ import Step10 from './views/Step10';
 import { useLoading } from '@/common/context/loading';
 import postApplicationForm from './hooks/postApplicationForm';
 import { useRouter } from 'next/router';
-import Header from '@/components/header menu/Header';
 import convertPrefilledFormRecord from './hooks/convertPrefilledFormRecord';
 import Modal from 'react-modal';
 import ReactModal from 'react-modal';

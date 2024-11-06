@@ -18,7 +18,7 @@ const Layout_fadeIn: FC<Layout_fadeInProps> = ({ key, children }) => {
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
         >
-            <Header />
+            <Header isZealous={false} />
             {children}
         </motion.div>
     );
