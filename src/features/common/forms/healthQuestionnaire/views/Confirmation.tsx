@@ -2,12 +2,8 @@ import React, { Dispatch, FC, SetStateAction, useState } from 'react';
 import { SubmitHandler, UseFormGetValues } from 'react-hook-form';
 import Modal from 'react-modal';
 import { HealthQuestionnaireType, formFields } from '../schema';
-import { TFunction } from 'i18next';
-import postPersonalHealthQuestionnaire from '../hooks/postPersonalHealthQuestionnaire';
 import { useRouter } from 'next/router';
 import { useDashboardUser } from '@/common/context/dashboardUser';
-import Link from 'next/link';
-import { useLoading } from '@/common/context/loading';
 
 type ButtonProps = {
     label: string;
@@ -84,14 +80,14 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIs
                             if (field === 'heightUnit' || field === 'weightUnit') return <div>{formData[field]}</div>;
                             return (
                                 <div className="py-1">
-                                    {t(field)}:{' ' + formData[field]}
+                                    {t(field)}:{<span className="font-semibold"> {formData[field]}</span>}
                                     <hr />
                                 </div>
                             );
                         })}
                         <label>Have History of: </label>
                         {formFields[1].map((field) => {
-                            return <>{formData[field][0] == 'Yes' && <label className="text-black py-1">{t(field)}, </label>}</>;
+                            return <>{formData[field][0] == 'Yes' && <label className="text-black py-1 font-semibold">{t(field)}, </label>}</>;
                         })}
                         <hr />
                         {/* pop() the last question */}
@@ -99,7 +95,9 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIs
                             return (
                                 <div className="text-black py-1">
                                     {t(field)}
-                                    <div>{' ' + formData[field]}</div>
+                                    <div>
+                                        <span className="font-semibold">{' ' + formData[field]}</span>
+                                    </div>
                                     <hr />
                                 </div>
                             );

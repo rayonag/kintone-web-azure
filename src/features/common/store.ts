@@ -18,6 +18,7 @@ type State = {
 
 type Action = {
     initUser: (username: string, ref: string) => void;
+    getDocuments: (username: string, ref: string) => void;
     // updateUsername: (username: State['username']) => void;
     // updateName: (name: State['name']) => void;
     // updateRef: (ref: State['ref']) => void;
@@ -65,6 +66,22 @@ const useUserStore = create<State & Action>((set, get) => ({
             formSubmission: user.formSubmission,
             nationalOffice: user.office as NationalOffice,
             applicationType: user.type
+        });
+    },
+    getDocuments: async (username, ref) => {
+        if (!username || !ref) return;
+        if (typeof window === 'undefined') return;
+        const res = await fetch('/api/getUser', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ ref: ref })
+        });
+        const user = await res.json();
+        set({
+            ...get(),
+            documents: user.documents
         });
     }
 }));

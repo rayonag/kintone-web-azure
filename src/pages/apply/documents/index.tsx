@@ -12,14 +12,19 @@ import { parseCookies } from 'nookies';
 
 // Define the functional component Page
 const Page: React.FC = ({ isZealous }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-    const dashboardUser = useDashboardUser();
-    const loginUser = dashboardUser;
     const user = useUserStore((state) => state);
+    const initUser = useUserStore((state) => state.initUser);
     const Check = () => (
         <div className="absolute right-[-2.5rem]">
             <GreenCheckMark height={30} />
         </div>
     );
+    useEffect(() => {
+        (async () => {
+            console.log('hey');
+            await initUser(user.username, user.ref);
+        })();
+    }, []);
     console.log('loginUser.documents', user);
     const isSubmitted = (document: string) => user.documents?.includes(document);
     const office = useUserStore((state) => state.nationalOffice);

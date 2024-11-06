@@ -260,7 +260,7 @@ const ApplicationForm = (props: any) => {
                             {t('system.back')}
                         </button>
                     )}
-                    <button className="text-center btn-wide" onClick={() => handleSaveExit()}>
+                    <button type="button" className="text-center btn-wide" onClick={() => handleSaveExit()}>
                         Save & Exit
                     </button>
                 </form>
