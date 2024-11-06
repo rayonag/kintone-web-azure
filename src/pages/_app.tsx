@@ -153,7 +153,7 @@ App.getInitialProps = async (appContext: any) => {
             startColor: '0,0,0', // RGB format
             endColor: '25,25,25', // RGB format
             btnBgColor: '#000000', // Black color
-            btnBorderColor: 'red', // Black color
+            btnBorderColor: 'rgb(238,57,35)', // Black color
             btnHoverBgColor: 'gray', // Dark gray color
             btnHoverBorderColor: '#333333' // Dark gray color
         };
