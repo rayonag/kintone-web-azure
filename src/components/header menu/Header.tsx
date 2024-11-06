@@ -16,7 +16,7 @@ const Header: FC<HeaderProps> = ({ isZealous }) => {
             <header className="hidden h-[5svh] md:flex justify-around content-center">
                 {/* hide when isZealous not given */}
                 <button onClick={handleHomeClick} className="z-10">
-                    {isZealous ? <ZealousLogo /> : isZealous == false ? <Image alt="no image" src="" /> : <BridgesLogo />}
+                    {isZealous ? <ZealousLogo /> : isZealous == false ? <BridgesLogo /> : <Image alt="no image" src="" />}
                 </button>
             </header>
             {/* TODO: responsive header

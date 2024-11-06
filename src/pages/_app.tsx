@@ -87,7 +87,7 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
     const component =
         typeof pageProps === 'undefined' ? (
             <></>
-        ) : router.pathname.startsWith('/apply/login') ? (
+        ) : router.pathname.startsWith('/apply/login') || router.pathname.startsWith('/reference') ? (
             <CommonProvider>
                 <DashboardUserProvider>
                     <Component {...pageProps} />
