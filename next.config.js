@@ -11,7 +11,7 @@ const cspHeader = `
     frame-ancestors 'none';
     block-all-mixed-content;
     upgrade-insecure-requests;
-    ${isDev ? "img-src 'self' data: http://localhost:3000/;" : ''}
+    ${isDev ? "img-src 'self' data: http://localhost:3000/;" : "img-src 'self' data: "}
 `;
 const nextConfig = {
     reactStrictMode: true, // false for Vara.js double render issue
