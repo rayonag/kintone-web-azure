@@ -60,7 +60,7 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
             if (e.target?.result == null) return;
             setFilePreview(e.target.result);
         };
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(file[0]);
     };
     const handleSubmit = async () => {
         try {
@@ -81,7 +81,7 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
             }
         } catch (e) {
             console.log(e);
-            alert('Something went wrong. Please try again.');
+            alert('Something went wrong. Could not upload your document.');
             setIsLoading(false);
             return;
         }

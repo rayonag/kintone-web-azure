@@ -36,8 +36,7 @@ const postDocument: (props: postDocumentProps) => any = async ({ document, formD
         if (res.ok && resp.ok) {
             return res;
         } else {
-            alert('Something wrong. Could not upload your document.');
-            return;
+            throw new Error('Something wrong. Could not upload your document.');
         }
     } catch (e) {
         logError(e, { formData, applicationRef }, 'postDocument');
