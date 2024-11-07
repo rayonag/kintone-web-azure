@@ -60,7 +60,7 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
             if (e.target?.result == null) return;
             setFilePreview(e.target.result);
         };
-        reader.readAsDataURL(file[0]);
+        reader.readAsDataURL(file);
     };
     const handleSubmit = async () => {
         try {
@@ -105,8 +105,8 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
         const handleDrop = (e: any) => {
             e.preventDefault();
             setIsDragging(false);
-            const files = [...e.dataTransfer.files];
-            handleUploadFiles(files);
+            const file = e.dataTransfer.files[0];
+            handleUploadFiles(file);
         };
         return (
             <div
