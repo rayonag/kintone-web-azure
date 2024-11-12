@@ -1,9 +1,8 @@
 import useUserStore from '@/features/common/store';
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import SectionTitle from '../../components/SectionTitle';
 import Input from '../../components/Input';
-import { TFunction } from 'i18next';
 import { UseFormRegister, FieldErrors, UseFormGetValues, Control, useWatch } from 'react-hook-form';
 import { ApplicationFormType } from '../schema';
 import Row from '../../components/Row';
@@ -12,7 +11,6 @@ import { Select } from '../../components/Select';
 import Textarea from '../../components/Textarea';
 import { MaritalStatus, Sex, YesNo } from '../enums';
 import Date from '../../components/Date';
-import { DateTime } from 'luxon';
 import Number from '../../components/Number';
 
 type Step1Props = {

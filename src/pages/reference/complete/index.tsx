@@ -1,7 +1,6 @@
 'use client';
 
 import Layout from './Layout';
-import Link from 'next/link';
 import GreenCheckMark from '@/components/icons/GreenCheckMark';
 
 const Complete = () => {

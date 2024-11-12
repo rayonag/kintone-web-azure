@@ -1,19 +1,13 @@
 'use client';
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-
-import Link from 'next/link';
-
-import { useDashboardUser } from '@/common/context/dashboardUser';
 
 import { useReducer } from 'react';
 import { langReducer } from './i18n/lang';
 import { ReferenceFormDefaultValues, ReferenceFormFields, ReferenceFormSchema, ReferenceFormType } from './schema';
 
 import './i18n/translations/config'; //i18
-import useUserStore from '@/features/common/store';
-import { useShallow } from 'zustand/react/shallow';
 import healthQuestionnaire_en from './i18n/translations/en.json';
 import Step1 from './views/Step1';
 import Step2 from './views/Step2';

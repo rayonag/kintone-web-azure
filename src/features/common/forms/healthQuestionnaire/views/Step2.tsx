@@ -4,7 +4,6 @@ import { FC } from 'react';
 import { HealthCheckbox } from '../components/HealthCheckbox';
 import { UseFormRegister, FieldErrors, UseFormGetValues, Control } from 'react-hook-form';
 import { HealthQuestionnaireType } from '../schema';
-import { TFunction } from 'i18next';
 import Row from '../../components/Row';
 
 type Step2Props = {

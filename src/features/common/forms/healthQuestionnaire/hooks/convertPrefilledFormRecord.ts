@@ -1,6 +1,3 @@
-import { SavedVolunteerApplicationForm } from '@/types/VolunteerApplicationForm.js';
-
-import { DateTime } from 'luxon';
 import { HealthQuestionnaireType } from '../schema';
 import { REST_PersonalHealthQuestionnaire } from '@/types/PersonalHealthQuestionnaire';
 
@@ -16,10 +13,6 @@ const convertPrefilledFormRecord = (record: REST_PersonalHealthQuestionnaire, se
         if (value !== undefined && value !== null && value !== '') {
             setValue(key, [value]);
         }
-    };
-
-    const convertDate = (isoDate: string) => {
-        return DateTime.fromISO(isoDate).toFormat('dd/MM/yyyy');
     };
 
     addFieldIfValid('name', record.name?.value);

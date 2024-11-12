@@ -1,8 +1,7 @@
-import { REST_SavedOnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
 import React, { FC } from 'react';
-import { Page, Text, View, Document, StyleSheet, Font, Line, Svg, Image } from '@react-pdf/renderer';
+import { Page, Text, View, Image } from '@react-pdf/renderer';
 import { applicationFormPageStyle, characterStrengthsTableStyle, skillInventoryTableStyle } from '../ViewApplicationForm';
-import { REST_SavedVolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
+
 import { t } from '@/features/common/forms/applicationForm';
 
 type AllProps = {

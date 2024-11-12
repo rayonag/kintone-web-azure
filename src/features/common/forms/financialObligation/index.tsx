@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import useUserStore from '@/features/common/store';
-import Component from './thisPage';
+import Component from './financialObligation';
 import postFinancialObligation from './hooks/postFinancialObligation';
 import { useRouter } from 'next/router';
 import { useLoading } from '@/common/context/loading';

@@ -1,4 +1,3 @@
-import postFormSubmission from '@/common/checklist/postFormSubmission';
 import { ReferenceFormType } from '../schema';
 import logError from '@/common/logError';
 import { DateTime } from 'luxon';
@@ -7,7 +6,6 @@ const postReferenceForm = async (data: ReferenceFormType) => {
     const convertDate = (date: string) => {
         return DateTime.fromFormat(date, 'dd/MM/yyyy').toISODate();
     };
-    const nullIfZero = (value: number) => (value === 0 ? null : value);
     try {
         const record = {
             // system

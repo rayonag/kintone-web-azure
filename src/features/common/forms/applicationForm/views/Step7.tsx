@@ -1,16 +1,11 @@
-import useUserStore from '@/features/common/store';
 import React, { FC } from 'react';
-import { useShallow } from 'zustand/react/shallow';
 import SectionTitle from '../../components/SectionTitle';
-import Input from '../../components/Input';
-import { TFunction } from 'i18next';
 import { UseFormRegister, FieldErrors, UseFormGetValues, Control } from 'react-hook-form';
 import { ApplicationFormType } from '../schema';
 import Row from '../../components/Row';
-import { HealthCondition, SkillSoftware, SkillSystem, YesNo } from '../enums';
+import { SkillSoftware, SkillSystem, YesNo } from '../enums';
 import SkillRangeInput from '../../components/SkillRangeInput';
 import { Radio } from '../../components/Radio';
-import Image from 'next/image';
 import Checkbox from '../../components/Checkbox';
 import Textarea from '../../components/Textarea';
 

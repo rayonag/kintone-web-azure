@@ -1,14 +1,10 @@
 'use client';
 
-import { Page, Text, View, Document, StyleSheet, Font } from '@react-pdf/renderer';
-import { record } from '../mockRecord';
-import { ApplicationFormFields } from '../../forms/applicationForm/schema';
+import { Document, StyleSheet } from '@react-pdf/renderer';
 
 import applicationForm_en from '@/features/common/forms/applicationForm/i18n/translations/en.json';
 import common_en from '@/libs/i18n/common/en.json';
 import Page1 from './pages/All';
-import { KintoneRestAPIClient } from '@kintone/rest-api-client';
-import { REST_VolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
 import { REST_PersonalHealthQuestionnaire } from '@/types/PersonalHealthQuestionnaire';
 
 export const historyOfTableStyle = {

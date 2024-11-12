@@ -1,4 +1,4 @@
-import { FC, useState, ChangeEvent } from 'react';
+import { FC } from 'react';
 import { FieldError, Merge, Control, Controller } from 'react-hook-form';
 
 type CheckboxProps = {

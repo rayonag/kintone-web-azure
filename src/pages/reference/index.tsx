@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import ReferenceForm from '@/features/common/forms/reference';
 import Layout_fadeIn_reference from '@/styles/Layout_fadeIn_reference';
 

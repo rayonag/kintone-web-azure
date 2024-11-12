@@ -1,15 +1,12 @@
 import React, { FC } from 'react';
-import { useShallow } from 'zustand/react/shallow';
 import SectionTitle from '../../components/SectionTitle';
-import Input from '../../components/Input';
-import { TFunction } from 'i18next';
 import { UseFormRegister, FieldErrors, UseFormGetValues, Control, useWatch } from 'react-hook-form';
 import { ReferenceFormType } from '../schema';
 import Row from '../../components/Row';
 import { Radio } from '../../components/Radio';
 import { Select } from '../../components/Select';
 import Textarea from '../../components/Textarea';
-import { IndicationDesire, Rate, Relationship, YesNo } from '../enums';
+import { IndicationDesire, Rate, YesNo } from '../enums';
 
 type Step2Props = {
     register: UseFormRegister<ReferenceFormType>;

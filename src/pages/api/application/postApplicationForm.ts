@@ -4,7 +4,7 @@ import { KintonePassword, KintoneUserName, VolunteerApplicationAppID, VolunteerA
 import handleNullOrEmpty from '../hooks/handleNullOrEmpty';
 import logError from '@/common/logError';
 import { REST_OnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
-import { REST_VolunteerApplicationForm, VolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
+import { REST_VolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
 import notificationApplicationUpdated from '../hooks/notification';
 
 type Data = {

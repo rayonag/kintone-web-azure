@@ -7,7 +7,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import Layout from './Layout';
 import StartButton from './StartButton';
-import Layout_fadeIn from '@/styles/Layout_fadeIn';
+import Layout_fadeIn from '@/styles/Layout_fadeIn_main';
 import { set } from 'zod';
 import logError from '@/common/logError';
 import Layout_fadeIn_zealous from '@/styles/Layout_fadeIn_zealous';
@@ -164,9 +164,9 @@ const Login: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center ">
             <Layout_fadeIn key="top">
-                <div className="flex flex-col h-[95vh] justify-center">
+                <div className="flex flex-col h-[95vh] justify-center ">
                     <div className="text-center text-3xl italic font-serif mb-10">Please select:</div>
                     <div className="flex">
                         <Link href="/apply/login/main" className="flex flex-col justify-center m-4 cursor-pointer">

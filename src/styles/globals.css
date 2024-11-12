@@ -26,14 +26,17 @@ html {
 @media (min-width: 768px) {
     html {
         font-size: 18px;
+        overflow: visible;
     }
 }
-/* @media (max-width: 768px) {
+@media (max-width: 768px) {
     html,
     body {
         overflow: hidden;
+        height: 100%;
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
     }
-} */
+}
 
 .btn {
     @apply border rounded-full text-white px-5 py-1.5 self-center m-6 delay-75 ease-out duration-75 font-bold mt-6 max-w-full md:max-w-xs cursor-pointer;

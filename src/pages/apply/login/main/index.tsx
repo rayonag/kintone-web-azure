@@ -7,7 +7,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import Layout from './Layout';
 import StartButton from './StartButton';
-import Layout_fadeIn from '@/styles/Layout_fadeIn';
+import Layout_fadeIn from '@/styles/Layout_fadeIn_main';
 import { set } from 'zod';
 import logError from '@/common/logError';
 import Layout_fadeIn_zealous from '@/styles/Layout_fadeIn_zealous';
