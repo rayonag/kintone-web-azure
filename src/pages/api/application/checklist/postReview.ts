@@ -1,6 +1,6 @@
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { KintonePassword, KintoneUserName, VolunteerApplicationAppID, VolunteerApplicationMasterAppID } from '@/common/env';
+import { KintonePassword, KintoneUserName, VolunteerApplicationMasterAppID } from '@/common/env';
 import handleNullOrEmpty from '../../hooks/handleNullOrEmpty';
 import logError from '@/common/logError';
 

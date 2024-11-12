@@ -1,6 +1,4 @@
-import postFormSubmission from '@/common/checklist/postFormSubmission';
 import { ApplicationFormType } from '../schema';
-import { VolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
 import { DateTime } from 'luxon';
 
 const postApplicationForm = async (data: ApplicationFormType, ref: string | undefined) => {

@@ -7,14 +7,11 @@ import Link from 'next/link';
 
 import { HealthQuestionnaireDefaultValues, HealthQuestionnaireSchema, HealthQuestionnaireType, formFields } from './schema';
 import { useDashboardUser } from '@/common/context/dashboardUser';
-import { useTranslation } from 'react-i18next';
+
 import { useReducer } from 'react';
 import { langReducer } from './i18n/lang';
 import { customErrorMap } from './schema';
 
-import FirstPage from './views/Step1';
-import SecondPage from './views/Step2';
-import ThirdPage from './views/Step3';
 import ConfirmationModal from './views/Confirmation';
 
 import './i18n/translations/config'; //i18
@@ -25,7 +22,7 @@ import Step1 from './views/Step1';
 import Step2 from './views/Step2';
 import Step3 from './views/Step3';
 import convertPrefilledFormRecord from './hooks/convertPrefilledFormRecord';
-import router from 'next/router';
+
 import postPersonalHealthQuestionnaire from './hooks/postPersonalHealthQuestionnaire';
 import { useLoading } from '@/common/context/loading';
 const tStore = { ...healthQuestionnaire_en };

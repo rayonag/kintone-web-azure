@@ -2,7 +2,6 @@
 'use client';
 import { FC, ReactNode } from 'react';
 import { motion } from 'framer-motion';
-import Header from '@/components/header menu/Header';
 import BridgesLogo from '@/components/header menu/BridgesLogo';
 
 interface Layout_fadeInProps {

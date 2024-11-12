@@ -1,6 +1,6 @@
 'use client';
 // Import necessary modules from React
-import React, { use, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { destroyCookie, parseCookies } from 'nookies';
 
@@ -72,6 +72,7 @@ export const handleCheckListClick = async (field: string, userRef: string) => {
 const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isZealousModalOpen, setIsZealousModalOpen] = useState(false);
     const dashboardUser = useDashboardUser();
     const userRef = dashboardUser.ref;
     useEffect(() => {
@@ -139,7 +140,17 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
     const knownAs = useUserStore((state) => state.knownAs);
     const all = useUserStore();
     console.log('all', all);
-
+    useEffect(() => {
+        // allow scrolling on mobile
+        if (window.screen.width < 768) document.body.style.overflow = 'scroll';
+        else document.body.style.overflow = 'hidden';
+    }, []);
+    useEffect(() => {
+        // disable scrolling when modal is open
+        if (isModalOpen || isZealousModalOpen) document.body.style.overflow = 'hidden';
+        else if (window.screen.width < 768) document.body.style.overflow = 'scroll';
+        else document.body.style.overflow = 'visible';
+    }, [isModalOpen, isZealousModalOpen]);
     // function VaraText() {
     //     let fontSize = 72;
     //     if (window.screen.width < 700) fontSize = 32;
@@ -221,7 +232,6 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
 
     //     return <div id="vara-container" className="min-w-[80%] pt-[20vh]"></div>;
     // }
-    const [isVisible, setIsVisible] = useState(false);
     interface ModalProps {
         isVisible: boolean;
         onClose: () => void;
@@ -236,7 +246,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+                className="fixed top-0 inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
                 onClick={onClose}
             >
                 <motion.div
@@ -256,8 +266,8 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
     };
     return (
         <>
-            <Modal isVisible={isVisible} onClose={() => setIsVisible(false)}>
-                <div className="p-4 max-h-[90vh] max-w-[1000px] overflow-auto">
+            <Modal isVisible={isZealousModalOpen} onClose={() => setIsZealousModalOpen(false)}>
+                <div className="p-4 max-h-[80svh] max-w-[1000px] overflow-auto">
                     <Image src="/images/zealous/cover.jpg" alt="info" width={1000} height={1000} />
                 </div>
             </Modal>
@@ -274,12 +284,12 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                         <>
                             {isLoaded && userRef ? (
                                 <>
-                                    <div className="flex flex-col items-center justify-center w-full">
+                                    <div className="flex flex-col h-fit items-center justify-center w-full my-14">
                                         {type == 'Zealous' && (
                                             <div className="flex pt-10">
                                                 <h1 className="text-xl font-mono">ZProject Application </h1>
                                                 <div className="relative">
-                                                    <div className="absolute pl-1 cursor-pointer" onClick={() => setIsVisible(true)}>
+                                                    <div className="absolute pl-1 cursor-pointer" onClick={() => setIsZealousModalOpen(true)}>
                                                         <svg
                                                             width="32px"
                                                             height="32px"

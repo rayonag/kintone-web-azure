@@ -3,7 +3,6 @@
 import Layout from './Layout';
 import Link from 'next/link';
 import GreenCheckMark from '@/components/icons/GreenCheckMark';
-import { useDashboardUser } from '@/common/context/dashboardUser';
 const Complete = () => {
     return (
         <Layout>

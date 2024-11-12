@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, createContext, useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NextPageContext } from 'next';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
@@ -87,7 +87,7 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
     const component =
         typeof pageProps === 'undefined' ? (
             <></>
-        ) : router.pathname.startsWith('/apply/login') ? (
+        ) : router.pathname.startsWith('/apply/login') || router.pathname.startsWith('/reference') ? (
             <CommonProvider>
                 <DashboardUserProvider>
                     <Component {...pageProps} />
@@ -153,7 +153,7 @@ App.getInitialProps = async (appContext: any) => {
             startColor: '0,0,0', // RGB format
             endColor: '25,25,25', // RGB format
             btnBgColor: '#000000', // Black color
-            btnBorderColor: 'red', // Black color
+            btnBorderColor: 'rgb(238,57,35)', // Black color
             btnHoverBgColor: 'gray', // Dark gray color
             btnHoverBorderColor: '#333333' // Dark gray color
         };

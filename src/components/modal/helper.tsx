@@ -1,5 +1,4 @@
 import { ApplicationSteps, handleCheckListClick } from '@/pages/apply';
-import { color } from 'framer-motion';
 import React, { useState, ChangeEvent, FC, ReactElement } from 'react';
 import Modal from 'react-modal';
 import Link from 'next/link';

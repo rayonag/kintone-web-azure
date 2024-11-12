@@ -1,18 +1,15 @@
 'use client';
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Step1 from './views/Step1';
 import { useDashboardUser } from '@/common/context/dashboardUser';
-import { langReducer } from '@/features/common/forms/healthQuestionnaire/i18n/lang';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import { useShallow } from 'zustand/react/shallow';
 import useUserStore from '../../store';
 import { ApplicationFormDefaultValues, ApplicationFormFields, ApplicationFormSchema, ApplicationFormType, customErrorMap } from './schema';
 import ProgressBar from '../components/ProgressBar';
 import './i18n/translations/config'; //i18
-import Link from 'next/link';
 import Step2 from './views/Step2';
 import Step3 from './views/Step3';
 import Step4 from './views/Step4';
@@ -25,7 +22,6 @@ import Step10 from './views/Step10';
 import { useLoading } from '@/common/context/loading';
 import postApplicationForm from './hooks/postApplicationForm';
 import { useRouter } from 'next/router';
-import Header from '@/components/header menu/Header';
 import convertPrefilledFormRecord from './hooks/convertPrefilledFormRecord';
 import Modal from 'react-modal';
 import ReactModal from 'react-modal';
@@ -126,9 +122,18 @@ const ApplicationForm = (props: any) => {
                 event.returnValue = '';
             }
         };
+        // mobile
+        const handlePageHide = (event: PageTransitionEvent) => {
+            if (!isSubmitting) {
+                event.preventDefault();
+                alert('Please save your progress before leaving the page.');
+            }
+        };
         window.addEventListener('beforeunload', handleBeforeUnload);
+        window.addEventListener('pagehide', handlePageHide);
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
+            window.removeEventListener('pagehide', handlePageHide);
         };
     }, [isSubmitting]);
     // load prefilled data

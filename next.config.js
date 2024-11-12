@@ -10,9 +10,10 @@ const cspHeader = `
     frame-src 'self' blob:;
     frame-ancestors 'none';
     block-all-mixed-content;
-    upgrade-insecure-requests;
-    ${isDev ? "img-src 'self' data: http://localhost:3000/;" : ''}
+    
+    ${isDev ? "img-src 'self' data: http://localhost:3000/;" : "img-src 'self' data: "}
 `;
+// temp disabled upgrade-insecure-requests; due to the issue with the images from the external site
 const nextConfig = {
     reactStrictMode: true, // false for Vara.js double render issue
     output: 'standalone',

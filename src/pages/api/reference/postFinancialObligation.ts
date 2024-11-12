@@ -1,7 +1,5 @@
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import notificationApplicationUpdated from '../hooks/notification';
-import { REST_OnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
 import { VolunteerApplicationMasterAppID } from '@/common/env';
 import logError from '@/common/logError';
 
@@ -13,6 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     if (req.method === 'POST') {
         try {
             const data = req.body;
+            console.log('data', data);
             const client = new KintoneRestAPIClient({
                 baseUrl: 'https://bfp.kintone.com',
                 // Use password authentication
@@ -26,6 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 app: 82,
                 condition: `ref="${data['ref'].value}"`
             });
+            console.log('recordExists', recordExists);
             if (recordExists.length > 0) {
                 // update the record
                 const updateRecord = await client.record.updateRecord({
@@ -39,6 +39,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     app: 82,
                     record: data
                 });
+                console.log('addRecord', addRecord);
             }
             // update Online Volunteer Application app
             const resp = await client.record.updateRecord({

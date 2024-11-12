@@ -1,8 +1,5 @@
-import { ApplicationSteps, handleCheckListClick } from '@/pages/apply';
-import { color } from 'framer-motion';
-import React, { useState, ChangeEvent, FC, ReactElement, useEffect } from 'react';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 import Modal from 'react-modal';
-import Link from 'next/link';
 import { useDashboardUser } from '@/common/context/dashboardUser';
 import GreenCheckMark from '../icons/GreenCheckMark';
 

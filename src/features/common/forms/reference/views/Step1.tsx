@@ -1,17 +1,12 @@
 import React, { FC } from 'react';
-import { useShallow } from 'zustand/react/shallow';
 import SectionTitle from '../../components/SectionTitle';
 import Input from '../../components/Input';
-import { TFunction } from 'i18next';
 import { UseFormRegister, FieldErrors, UseFormGetValues, Control, useWatch } from 'react-hook-form';
 import { ReferenceFormType } from '../schema';
 import Row from '../../components/Row';
 import { Radio } from '../../components/Radio';
-import { Select } from '../../components/Select';
-import Textarea from '../../components/Textarea';
-import { Relationship, YesNo } from '../enums';
+import { Relationship } from '../enums';
 import Image from 'next/image';
-import { bridgesLogoBase64 } from '../../../../../../public/base64/bridgesLogoBase64';
 
 type Step1Props = {
     register: UseFormRegister<ReferenceFormType>;

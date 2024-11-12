@@ -1,16 +1,9 @@
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import {
-    KintonePassword,
-    KintoneUserName,
-    TempVolunteerApplicationAppID,
-    VolunteerApplicationAppID,
-    VolunteerApplicationMasterAppID
-} from '@/common/env';
+import { KintonePassword, KintoneUserName } from '@/common/env';
 import handleNullOrEmpty from '../hooks/handleNullOrEmpty';
 import logError from '@/common/logError';
-import { REST_OnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
-import { REST_SavedVolunteerApplicationForm, REST_VolunteerApplicationForm, VolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
+import { REST_SavedVolunteerApplicationForm, REST_VolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
 
 type Data = {
     res?: any;

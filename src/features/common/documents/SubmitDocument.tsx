@@ -1,7 +1,6 @@
 'use client';
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import Link from 'next/link';
-import { useDashboardUser } from '@/common/context/dashboardUser';
 import { useLoading } from '@/common/context/loading';
 import postDocument from '@/common/documents/postDocument';
 import { useRouter } from 'next/router';
@@ -30,7 +29,6 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
         }))
     );
 
-    const dashboardUser = useDashboardUser();
     const { setIsLoading } = useLoading();
     const router = useRouter();
 
@@ -81,7 +79,7 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
             }
         } catch (e) {
             console.log(e);
-            alert('Something went wrong. Please try again.');
+            alert('Something went wrong. Could not upload your document.');
             setIsLoading(false);
             return;
         }
@@ -105,8 +103,8 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
         const handleDrop = (e: any) => {
             e.preventDefault();
             setIsDragging(false);
-            const files = [...e.dataTransfer.files];
-            handleUploadFiles(files);
+            const file = e.dataTransfer.files[0];
+            handleUploadFiles(file);
         };
         return (
             <div

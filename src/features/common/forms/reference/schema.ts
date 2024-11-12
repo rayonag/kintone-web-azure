@@ -1,23 +1,10 @@
 import { z } from 'zod';
-import { useTranslation } from 'react-i18next';
 
 const error_required = {
     message: 'This field is required'
 };
-const error_invalidDate = {
-    message: 'Invalid date'
-};
-const validateCheckbox = (val: string[]) => {
-    return val.length > 0;
-};
 const requiredErrorMessage = {
     message: 'This field is required'
-};
-const validateNumber = (value: string) => {
-    const numberValue = parseFloat(value);
-    return (
-        !isNaN(numberValue) && numberValue >= 0 && Number.isInteger(numberValue * 100) && Number((numberValue * 100).toFixed(0)) === numberValue * 100
-    );
 };
 const validateRadio = (value: string | null) => value !== null;
 // system

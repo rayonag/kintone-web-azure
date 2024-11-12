@@ -4,6 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 type Data = {
     ref?: any;
+    isZealous?: any;
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
@@ -38,9 +39,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                         }
                     }
                 });
-                res.status(200).json({
-                    ref: user['$id'].value
-                });
+                res.status(200).json({ ref: recordArray[0]['$id'].value as string, isZealous: recordArray[0]['type'].value == 'Zealous' });
             }
         } catch (e: any) {
             logError(e, req.body, 'createPasswordKintone');

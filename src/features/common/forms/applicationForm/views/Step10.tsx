@@ -1,6 +1,5 @@
 import React, { FC, ReactElement, useState } from 'react';
 import SectionTitle from '../../components/SectionTitle';
-import { TFunction } from 'i18next';
 import { UseFormRegister, FieldErrors, UseFormGetValues } from 'react-hook-form';
 import { ApplicationFormType } from '../schema';
 import Verify from '../../components/Verify';

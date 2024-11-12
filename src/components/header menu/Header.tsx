@@ -1,5 +1,5 @@
 'use client';
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import BridgesLogo from './BridgesLogo';
 import ZealousLogo from './ZealousLogo';
 import Image from 'next/image';
@@ -11,20 +11,60 @@ const Header: FC<HeaderProps> = ({ isZealous }) => {
     const handleHomeClick = () => {
         location.href = '/apply';
     };
+    const [isVisible, setIsVisible] = useState(true);
+    const [lastScrollY, setLastScrollY] = useState(0);
+    const controlHeader = () => {
+        if (typeof window !== 'undefined') {
+            const currentScrollY = document.body.scrollTop || document.documentElement.scrollTop;
+            console.log('currentScrollY', currentScrollY);
+            // top of the page
+            if (currentScrollY < 0) {
+                setIsVisible(true);
+                return;
+            } // bottom of the page
+            else if (window.innerHeight + currentScrollY >= document.body.scrollHeight) {
+                setIsVisible(false);
+                return;
+            }
+            if (currentScrollY > lastScrollY) {
+                // Scroll down
+                setIsVisible(false);
+            } else {
+                // Scroll up
+                setIsVisible(true);
+            }
+            setLastScrollY(currentScrollY);
+        }
+    };
+
+    useEffect(() => {
+        // document.body for mobile UI
+        if (typeof window !== 'undefined') {
+            document.body.addEventListener('scroll', controlHeader);
+            document.body.addEventListener('touchmove', controlHeader);
+
+            return () => {
+                document.body.removeEventListener('scroll', controlHeader);
+                document.body.removeEventListener('touchmove', controlHeader);
+            };
+        }
+    }, [lastScrollY]);
     return (
         <>
-            <header className="hidden h-[5svh] md:flex justify-around content-center">
-                {/* hide when isZealous not given */}
+            {/* <header className="hidden h-[5svh] md:flex justify-around content-center">
                 <button onClick={handleHomeClick} className="z-10">
-                    {isZealous ? <ZealousLogo /> : isZealous == false ? <Image alt="no image" src="" /> : <BridgesLogo />}
-                </button>
-            </header>
-            {/* TODO: responsive header
-                <header className="flex md:hidden justify-start items-center bg-theme fixed top-0 bg-[rgb(26,26,26)]/60 left-0 right-0 mx-auto">
-                <button onClick={handleHomeClick} className="z-10 ml-2">
-                    <HomeIcon />
+                    {isZealous ? <ZealousLogo /> : isZealous == false ? <BridgesLogo /> : <Image alt="no image" src="" />}
                 </button>
             </header> */}
+            <header
+                className={`flex justify-center fixed top-0 left-0 w-full z-50 transition-transform duration-300 ${
+                    isVisible ? 'transform translate-y-0' : 'transform -translate-y-full'
+                } ${isZealous ? 'bg-black' : isZealous == false ? 'bg-[#1a1a1a]' : ''}`}
+            >
+                <button onClick={handleHomeClick} className="z-10">
+                    {isZealous ? <ZealousLogo /> : isZealous == false ? <BridgesLogo /> : <Image alt="no image" src="" />}
+                </button>
+            </header>
         </>
     );
 };

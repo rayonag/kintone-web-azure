@@ -3,6 +3,7 @@ import { FC, useState } from 'react';
 import { Control, FieldError, useFieldArray, useFormContext, UseFormRegister } from 'react-hook-form';
 import { ApplicationFormType } from '../applicationForm/schema';
 
+// TODO: redo this component
 // type TableProps = {
 //     name: string;
 //     label: string;
