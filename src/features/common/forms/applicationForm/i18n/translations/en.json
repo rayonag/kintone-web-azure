@@ -54,7 +54,7 @@
         "placeholder": "John, 10, accompanying"
     },
     "hasFamilySupport": "Do you have the full support of your family in this endeavor?",
-    "hasFamilySupportExplain": "Please explain",
+    "hasFamilySupportExplain": "If yes, please explain what support you have. If not, please explain why.",
 
     "###comment..": "Step2",
     "healthCondition": {

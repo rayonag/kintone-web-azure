@@ -84,6 +84,7 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
             </LoadingContext.Provider>
         );
     };
+
     const component =
         typeof pageProps === 'undefined' ? (
             <></>

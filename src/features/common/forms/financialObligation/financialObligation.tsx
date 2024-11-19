@@ -77,16 +77,17 @@ export default function Component() {
                                 <div className="mb-4">
                                     <h4 className={`text-xl font-sans text-red-500 font-bold mb-2`}>Refunds:</h4>
                                     <p className="text-md">
-                                        The funds received for participation in the Zealous Israel Project have been evaluated and set to provide a
-                                        quality experience. The initial overhead and expenditures for the program are incurred in the beginning phase
-                                        of the Zealous Israel Project. Refunds are given only due to personal hardship and in approved circumstances.
-                                        Bridges for Peace will retain the US $500 nonrefundable deposit in all cases except for those involving
-                                        extreme circumstances (for instance cancellation of the ZProject due to COVID-19). Please note that the
-                                        Israeli government may impose restrictions on travel, entry into Israel or general activities at any time
-                                        before or during your volunteer service that could affect the ZProject program and your time with the
-                                        ZProject. Neither Bridges for Peace nor Zealous can be held accountable for the changing restrictions, but we
-                                        will do our best to ensure the success of the program. In case you are unable to enter Israel due to
-                                        COVID-related restrictions, you will receive a refund for your tuition, minus the US $500 down payment.
+                                        The cost for your participation in the ZProject has been evaluated and set to provide a quality experience.
+                                        The initial overhead and expenditures for the program are incurred in the beginning phase of the project.
+                                        Please note that refunds are given only due to personal hardship and in approved circumstances. Bridges for
+                                        Peace will retain the US $500 nonrefundable deposit in all cases, except for those involving extreme
+                                        circumstances (for instance, cancellation of the ZProject due to COVID-19 or inability to enter the country
+                                        due to short-notice travel restrictions). Please note that the Israeli government may impose restrictions on
+                                        travel, entry into Israel or general activities at any time before or during your participation that could
+                                        affect the program and your time with the ZProject. Neither Bridges for Peace nor Zealous can be held
+                                        accountable for the changing restrictions, but please be assured that we will do our best to ensure the
+                                        success of the program under all circumstances. In case you are unable to enter Israel due to short-notice
+                                        travel restrictions, you will receive a refund for your tuition.{' '}
                                     </p>
                                 </div>
                             </section>

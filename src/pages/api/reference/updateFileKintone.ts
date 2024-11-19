@@ -5,7 +5,7 @@ import handleNullOrEmpty from '../hooks/handleNullOrEmpty';
 import notificationApplicationUpdated, { updated } from '../hooks/notification';
 import logError from '@/common/logError';
 import { REST_VolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
-import { REST_OnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
+import { REST_OnlineVolunteerApplication, REST_SavedOnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
 
 type Data = {
     res?: any;
@@ -119,7 +119,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 });
             }
             const newRecord = await client.record
-                .getRecord({
+                .getRecord<REST_SavedOnlineVolunteerApplication>({
                     app: VolunteerApplicationMasterAppID as string,
                     id: userRef
                 })

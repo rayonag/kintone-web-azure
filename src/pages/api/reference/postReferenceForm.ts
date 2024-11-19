@@ -22,6 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     password: KintonePassword
                 }
             });
+            // get applicant record
             const resp = await client.record
                 .getRecord<REST_SavedOnlineVolunteerApplication>({
                     app: VolunteerApplicationMasterAppID as string,
@@ -51,7 +52,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 res.status(501).json({});
                 return;
             }
-            // update reference count
+            // get reference count
             const resp4 = await client.record
                 .getAllRecords({
                     app: ReferenceFormAppID as string,
@@ -62,6 +63,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     res.status(501).json({});
                     return [];
                 });
+            // update reference count
             const resp5 = await client.record
                 .updateRecord({
                     app: VolunteerApplicationMasterAppID as string,
@@ -75,9 +77,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     res.status(501).json({});
                     return;
                 });
-            // update
-            // send notification
-            const resp2 = await notificationReferenceSubmitted(res, resp.record);
+            // send notification when all references are submitted
+            const requiredReferenceCount = resp.record['type'].value === 'Short Term' ? 3 : 4;
+            if (resp4.length >= requiredReferenceCount) {
+                const resp2 = await notificationReferenceSubmitted(res, resp.record);
+            }
 
             res.status(200).json({});
         } catch (e: any) {

@@ -59,10 +59,6 @@ const All: FC<AllProps> = ({ record }) => {
 
     return (
         <Page style={applicationFormPageStyle.page} size="A4">
-            {/* <Svg height="210" width="1000">
-                <Line x1="0" y1="0" x2="1000" y2="0" strokeWidth={2} stroke="rgb(255,0,0)" />
-                <Image src="/images/Bridges logo.jpg" style={applicationFormPageStyle.underline} />
-            </Svg> */}
             <View style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
                 <Text style={applicationFormPageStyle.row}>
                     <Image src="/images/bridges-logo.png" style={{ width: '75px', height: '75px', margin: '20px' }} />
@@ -242,20 +238,27 @@ const All: FC<AllProps> = ({ record }) => {
                     What other area would you like to serve in? (If "other" selected){'  '}
                     <Text style={applicationFormPageStyle.underline}>{record['otherAreaInterested'].value}</Text>
                 </Text>
-                <Text style={applicationFormPageStyle.row}>
-                    Minimum availability:{'  '}
-                    <Text style={applicationFormPageStyle.underline}>{record['minAvailability'].value}</Text>
-                    {'  '}
-                    Maximum availability:{'  '}
-                    <Text style={applicationFormPageStyle.underline}>{record['maxAvailability'].value}</Text>
-                </Text>
-                <Text style={applicationFormPageStyle.row}>
-                    Preferred start date(s): (Day/Month/Year) Option 1:{'  '}
-                    <Text style={applicationFormPageStyle.underline}>{record['preferredStartDate'].value}</Text>
-                    {'  '}
-                    Option 2:{'  '}
-                    <Text style={applicationFormPageStyle.underline}>{record['preferredStartDate2'].value}</Text>
-                </Text>
+                {/* zealous specific */}
+                {record['type'].value === 'Zealous' ? (
+                    <></>
+                ) : (
+                    <>
+                        <Text style={applicationFormPageStyle.row}>
+                            Minimum availability:{'  '}
+                            <Text style={applicationFormPageStyle.underline}>{record['minAvailability'].value}</Text>
+                            {'  '}
+                            Maximum availability:{'  '}
+                            <Text style={applicationFormPageStyle.underline}>{record['maxAvailability'].value}</Text>
+                        </Text>
+                        <Text style={applicationFormPageStyle.row}>
+                            Preferred start date(s): (Day/Month/Year) Option 1:{'  '}
+                            <Text style={applicationFormPageStyle.underline}>{record['preferredStartDate'].value}</Text>
+                            {'  '}
+                            Option 2:{'  '}
+                            <Text style={applicationFormPageStyle.underline}>{record['preferredStartDate2'].value}</Text>
+                        </Text>
+                    </>
+                )}
             </View>
             {/* Step 5 */}
             <View style={applicationFormPageStyle.details}>
@@ -598,7 +601,7 @@ const All: FC<AllProps> = ({ record }) => {
                     {',  '}
                     <Text style={applicationFormPageStyle.underline}>{record['refFriendEmail'].value}</Text>
                 </Text>
-                {record['type'].value == 'Zealous' || (
+                {record['type'].value == 'Short Term' || (
                     <>
                         {' '}
                         <Text style={applicationFormPageStyle.row}>Other (please clarify):</Text>

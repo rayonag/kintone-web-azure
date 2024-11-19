@@ -30,12 +30,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 app: VolunteerApplicationMasterAppID as string,
                 id: data['ref'].value
             });
-            const resp2 = await notificationApplicationUpdated(
-                res,
-                'healthQuestionnaire',
-                applicationMasterRecord.record,
-                'healthQuestionnaireSubmission'
-            );
+            // const resp2 = await notificationApplicationUpdated(
+            //     res,
+            //     'healthQuestionnaire',
+            //     applicationMasterRecord.record,
+            //     'healthQuestionnaireSubmission'
+            // );
             if (applicationMasterRecord.record['formSubmission'].value.findIndex((arr) => arr == 'Personal Health Questionnaire') == -1) {
                 const resp3 = await client.record.updateRecord({
                     app: VolunteerApplicationMasterAppID as string,

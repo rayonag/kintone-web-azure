@@ -50,7 +50,7 @@ const Contact = () => {
     const [phone, setPhone] = useState('');
     const [message, setMessage] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { office } = useDashboardUser();
+    const { office, type } = useDashboardUser();
     const router = useRouter();
     const handleSubmit = () => {
         if (!name) {
@@ -62,7 +62,7 @@ const Contact = () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ name, email, phone, message, office })
+            body: JSON.stringify({ name, email, phone, message, office, type })
         })
             .then((res) => res.json())
             .then((data) => {

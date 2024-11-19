@@ -28,7 +28,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
                 res.status(200).json({ name: e });
             })
             .catch((e) => {
-                logError(e, e.response.body.errors, 'notificationApplicationUpdated');
+                logError(e, e.response.body.errors, 'rateUs');
                 res.status(200).json({ name: e });
             });
 

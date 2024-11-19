@@ -37,6 +37,11 @@ const Login: React.FC = () => {
     const [transitioning, setTransitioning] = useState(false);
     const router = useRouter();
 
+    useEffect(() => {
+        // log screen width
+        alert('screen width: ' + window.innerWidth);
+    }, []);
+
     const handleUsername = async () => {
         try {
             const res = await fetch('/api/login/loginUsername', {

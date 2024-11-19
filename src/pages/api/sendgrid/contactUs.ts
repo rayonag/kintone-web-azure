@@ -14,9 +14,17 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
         const data = req.body; // Access the request body
         const name = data.name;
         const email = data.email;
+        const type = data.type;
         const message = data.message;
-        const office = data.office as EmailNationalOffice;
-        const to = emailNationalOffice[office] == undefined ? 'intl.personnel@bridgesforpeace.com' : emailNationalOffice[office];
+        const office = data.office as EmailNationalOffice | 'Australia';
+        const to =
+            office == 'Australia'
+                ? type == 'Zealous'
+                    ? emailNationalOffice['Australia_zealous']
+                    : emailNationalOffice['Australia_main']
+                : emailNationalOffice[office] == undefined
+                ? 'intl.personnel@bridgesforpeace.com'
+                : emailNationalOffice[office];
         const bcc = to == 'intl.personnel@bridgesforpeace.com' ? '' : 'intl.personnel@bridgesforpeace.com'; // bcc intl if not sent to intl
         sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
         const msg = {
