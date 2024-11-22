@@ -29,7 +29,7 @@ const Dashboard = ({ repo }: InferGetServerSidePropsType<typeof getServerSidePro
         <>
             {formSubmitted ? (
                 <>
-                    <div className="flex flex-col items-center justify-center h-[95vh]">
+                    <div className="flex flex-col text-center items-center justify-center h-[95vh] p-4">
                         <div>Thank you for submitting Personal Health Questionnaire.</div>
                         <>
                             {/* <button className="btn" onClick={() => setViewMyForm(true)}>

@@ -22,7 +22,7 @@ const Layout_fadeIn_home: FC<Layout_fadeIn_homeProps> = ({ key, children, repo }
                     transition={{ duration: 1 }}
                 >
                     <Header isZealous={repo.isZealous} />
-                    <div className="flex flex-col items-center justify-center h-[100svh] text-white">{children}</div>
+                    <div className="flex flex-col items-center justify-center h-[100svh] lg:h-[100vh] text-white">{children}</div>
                 </motion.div>
             ) : (
                 <></>

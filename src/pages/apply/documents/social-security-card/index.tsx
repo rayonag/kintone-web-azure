@@ -10,7 +10,7 @@ const SocialSecurityCard = () => {
     );
     return (
         <>
-            <SubmitDocument document="ssn" title="Please Upload Your Social Security Card" Help={Help}></SubmitDocument>
+            <SubmitDocument document="ssn" title="Please Upload Copy of Your Social Security Card" Help={Help}></SubmitDocument>
         </>
     );
 };
