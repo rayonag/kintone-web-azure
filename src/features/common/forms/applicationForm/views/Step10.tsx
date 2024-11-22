@@ -3,7 +3,7 @@ import SectionTitle from '../../components/SectionTitle';
 import { UseFormRegister, FieldErrors, UseFormGetValues } from 'react-hook-form';
 import { ApplicationFormType } from '../schema';
 import Verify from '../../components/Verify';
-import { DoctrinalStatement, EvangelismStatement, MessianicJudaismStatement, MissionStatement } from '@/pages/apply/form/FirstTimeTips';
+import { DoctrinalStatement, EvangelismStatement, Goals, MessianicJudaismStatement, MissionStatement } from '@/pages/apply/form/FirstTimeTips';
 import ReactModal from 'react-modal';
 import Input from '../../components/Input';
 import Date from '../../components/Date';
@@ -34,7 +34,9 @@ const Step10: FC<Step10Props> = ({ register, errors, getValues, t }) => {
                     <li className="hover:text-blue-700 cursor-pointer" onClick={() => setDocument('missionStatement')}>
                         ◇ {t('verify5.options.2')}
                     </li>
-                    <li>◇ {t('verify5.options.3')}</li>
+                    <li className="hover:text-blue-700 cursor-pointer" onClick={() => setDocument('goal')}>
+                        ◇ {t('verify5.options.3')}
+                    </li>
                     <li className="hover:text-blue-700 cursor-pointer" onClick={() => setDocument('evangelismStatement')}>
                         ◇ {t('verify5.options.4')}
                     </li>
@@ -81,7 +83,7 @@ const DocumentsModal: React.FC<DocumentsModalProps> = ({ document, isModalOpen, 
     const documents: { [key in string]: ReactElement } = {
         doctrinalStatement: <DoctrinalStatement />,
         missionStatement: <MissionStatement />,
-        goal: <></>,
+        goal: <Goals />,
         evangelismStatement: <EvangelismStatement />,
         messianicJudaismStatement: <MessianicJudaismStatement />
     };

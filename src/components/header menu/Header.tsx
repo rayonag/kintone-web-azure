@@ -51,15 +51,10 @@ const Header: FC<HeaderProps> = ({ isZealous }) => {
     }, [lastScrollY]);
     return (
         <>
-            {/* <header className="hidden h-[5svh] md:flex justify-around content-center">
-                <button onClick={handleHomeClick} className="z-10">
-                    {isZealous ? <ZealousLogo /> : isZealous == false ? <BridgesLogo /> : <Image alt="no image" src="" />}
-                </button>
-            </header> */}
             <header
                 className={`flex justify-center fixed top-0 left-0 w-full z-50 transition-transform duration-300 ${
                     isVisible ? 'transform translate-y-0' : 'transform -translate-y-full'
-                } ${isZealous ? 'bg-black' : isZealous == false ? 'bg-[#1a1a1a]' : ''}`}
+                } ${isZealous ? 'bg-black' : isZealous == false ? 'bg-gradient-to-b from-[#191919] to-[#181a1c]' : ''}`}
             >
                 <button onClick={handleHomeClick} className="z-10">
                     {isZealous ? <ZealousLogo /> : isZealous == false ? <BridgesLogo /> : <Image alt="no image" src="" />}

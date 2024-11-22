@@ -23,9 +23,9 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
         if (username && ref) initUser(username, ref);
     }, [username, ref]);
     const user = useUserStore();
-    //console.log('hi');
+    // console.log('hi');
     const theme = pageProps.theme;
-    console.log('user.type', theme);
+    // console.log('user.type', theme);
     // bg color change
     // TODO: temp disable
     useEffect(() => {
@@ -97,7 +97,7 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
         ) : (
             <CommonProvider>
                 <DashboardUserProvider>
-                    <Layout_fadeIn_home repo={{ isZealous: cookies.isZealous == 'true' }}>
+                    <Layout_fadeIn_home repo={{ isZealous: pageProps.isZealous == 'true' }}>
                         <Component {...pageProps} />
                     </Layout_fadeIn_home>
                 </DashboardUserProvider>
@@ -140,7 +140,7 @@ App.getInitialProps = async (appContext: any) => {
     }
     // theme
     let theme = {
-        startColor: '26, 26, 26', // gradient start color
+        startColor: '25, 25, 25', // gradient start color
         endColor: '1, 44, 102', // gradient end color
         btnBgColor: '#012c66', // button background color
         btnBorderColor: '#012c66', // button border color

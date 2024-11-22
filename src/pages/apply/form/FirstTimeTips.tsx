@@ -123,6 +123,48 @@ export const MissionStatement = () => (
         </div>
     </>
 );
+export const Goals = () => (
+    <section>
+        <div className="text-xl md:text-2xl m-5 font-serif italic text-center">WE ARE COMMITTED TO THE FOLLOWING GOALS:</div>
+        <div className="m-3 mb-8 text-left md:text-justify">
+            <div className="mb-3">
+                1. To encourage meaningful and supportive relationships between Christians and Jews in Israel and around the world.
+            </div>
+            <div className="mb-3">
+                2. To educate and equip Christians to identify with Israel, the Jewish people and the biblical/Hebraic foundations of our Christian
+                faith.
+            </div>
+            <div className="mb-3">
+                3. To bless Israel and the Jewish people in Israel and worldwide through practical assistance, volunteer service and prayer.
+            </div>
+            <div className="mb-3">
+                4. To communicate Christian perspectives to the attention of Israeli leaders and the Jewish community at large.
+            </div>
+            <div className="mb-8">
+                5. To counter anti-Semitism worldwide and support Israel’s divine, God-given right to exist in her Godgiven land.
+            </div>
+            <div className="text-2xl m-5 font-serif italic text-center">BASIC VOLUNTEER REQUIREMENTS</div>
+            <div className="mb-3 text-left text-xl md:text-2xl">WHO IS A BFP VOLUNTEER?</div>
+            <div className="m-3">
+                The prophets of Israel knew that one day Gentile people would come to the land of Israel and help in its restoration. The prophet
+                Isaiah mentions these Gentiles on several occasions. He refers to them as “servants” in Isaiah 56:6. They are called “servants and
+                handmaids” in Isaiah 14:2. And in Isaiah 61:5, we read, “Strangers shall stand and feed your flocks, and the sons of the foreigner
+                shall be your plowmen and your vinedressers.”
+            </div>
+            <div className="m-3">
+                We can see from Scripture that Gentiles do not come to Israel in a high and mighty position, but rather in the position of a servant.
+                Their position is much like that of Ruth of old. She was willing to abase herself to a position lower than that of a servant girl
+                (Ruth 2:13). As a result, God highly exalted her to be the great-grandmother of King David.
+            </div>
+            <div className="m-3 mb-8">
+                There are great numbers of Christians from foreign lands in Israel today who have come here in meekness and humility to serve the
+                Jewish people on behalf of God. In general, the work of volunteers is often the work that others do not wish to do. It is demanding
+                and requires much patience and love. But in the end, it is also greatly rewarding.
+            </div>
+        </div>
+    </section>
+);
+
 const TermsAndConditions = (props: { type: string | null }) => {
     return (
         <div className="p-4">

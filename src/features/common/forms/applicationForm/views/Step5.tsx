@@ -7,6 +7,7 @@ import Row from '../../components/Row';
 import { YesNo } from '../enums';
 import { Radio } from '../../components/Radio';
 import ReactInputMask from 'react-input-mask';
+import Textarea from '../../components/Textarea';
 
 type Step5Props = {
     register: UseFormRegister<ApplicationFormType>;
@@ -167,7 +168,7 @@ const Step5: FC<Step5Props> = ({ register, errors, getValues, t, control }) => {
                     </div>
                 </Row>
                 <Row>
-                    <Input label={t('hobby')} register={register('hobby')} placeholder={'Enter here'} error={errors.hobby || undefined} />
+                    <Textarea label={t('hobby')} register={register('hobby')} placeholder={'Enter here'} error={errors.hobby || undefined} />
                 </Row>
                 <Row>
                     <Input label={t('clubs')} register={register('clubs')} placeholder={'Enter here'} error={errors.clubs || undefined} />

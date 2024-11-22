@@ -53,13 +53,11 @@ const Page: React.FC = ({ isZealous }: InferGetServerSidePropsType<typeof getSer
                     <h1 className="text-xl mb-4">
                         {user.documents?.length}/{uploadsArray.length + medicalFormArray.length + criminalCheckArray.length} Completed
                     </h1>
-                    <div className="relative flex flex-col items-center justify-center text-center w-[30rem] bg-opacity-20 bg-gray-50 p-8 m-4 rounded-xl">
+                    <div className="relative flex flex-col items-center justify-center text-center w-96 max-w-[90svw] bg-opacity-20 bg-gray-50 p-8 m-4 rounded-xl">
                         <div className="flex">
-                            <div className="flex self-center border-b-2 border-white w-8" />
                             <div className="flex self-center m-4 text-xl">
                                 Uploads {uploadsArray.filter((element) => user.documents?.includes(element)).length}/{uploadsArray.length} Completed
                             </div>
-                            <div className="flex self-center border-b-2 border-white w-8" />
                         </div>
                         <div className="relative flex items-center">
                             <Link href="./documents/passport" className="btn">
@@ -86,14 +84,12 @@ const Page: React.FC = ({ isZealous }: InferGetServerSidePropsType<typeof getSer
                             {loginUser.documents?.length || '-'}/{requiredDocumentsCount()} Completed
                         </h1> */}
                     </div>
-                    <div className="relative flex flex-col items-center justify-center text-center w-[30rem] bg-opacity-20 bg-gray-50 p-8 m-4 rounded-xl">
+                    <div className="relative flex flex-col items-center justify-center text-center w-96 max-w-[90svw] bg-opacity-20 bg-gray-50 p-8 m-4 rounded-xl">
                         <div className="flex">
-                            <div className="flex self-center border-b-2 border-white w-8" />
-                            <div className="flex self-center m-4 text-xl">
+                            <div className="flex self-center my-4 text-xl">
                                 Medical Form {medicalFormArray.filter((element) => user.documents?.includes(element)).length}/
                                 {medicalFormArray.length} Completed
                             </div>
-                            <div className="flex self-center border-b-2 border-white w-8" />
                         </div>
                         <div className="flex justify-center mt-4">
                             <Link href="./documents/medical-form/example" className="flex hover:text-blue-400 hover:to-blue-100">
@@ -126,14 +122,12 @@ const Page: React.FC = ({ isZealous }: InferGetServerSidePropsType<typeof getSer
                         </div>
                     </div>
                     {type == 'Short Term' || (
-                        <div className="relative flex flex-col items-center justify-center text-center w-[30rem] bg-opacity-20 bg-gray-50 p-8 m-4 rounded-xl">
+                        <div className="relative flex flex-col items-center justify-center text-center w-96 max-w-[90svw] bg-opacity-20 bg-gray-50 p-8 m-4 rounded-xl">
                             <div className="flex">
-                                <div className="flex self-center border-b-2 border-white w-8" />
                                 <div className="flex self-center m-4 text-xl">
                                     Criminal Check {criminalCheckArray.filter((element) => user.documents?.includes(element)).length}/
                                     {criminalCheckArray.length} Completed
                                 </div>
-                                <div className="flex self-center border-b-2 border-white w-8" />
                             </div>
                             <div className="flex justify-center mt-4">
                                 <Link href="./documents/criminal-check/example" className="flex hover:text-blue-400 hover:to-blue-100">
