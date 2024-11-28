@@ -24,8 +24,8 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
     }, [username, ref]);
     const user = useUserStore();
     // console.log('hi');
+    console.log('pageProps', pageProps);
     const theme = pageProps.theme;
-    // console.log('user.type', theme);
     // bg color change
     // TODO: temp disable
     useEffect(() => {
@@ -125,17 +125,18 @@ App.getInitialProps = async (appContext: any) => {
             if (isServer) {
                 appContext.ctx.res.statusCode = 302;
                 appContext.ctx.res.setHeader('Location', '/apply/login');
-                return {};
+                return { pageProps: {} };
             } else {
             }
         }
-    } else if (appContext.ctx.pathname == '/apply/login' && typeof cookies.auth !== 'undefined') {
+    } else if (appContext.ctx.pathname.startsWith('/apply/login') && typeof cookies.auth !== 'undefined') {
         // redirect to dashboard if already logged in
         if (typeof window === 'undefined') {
             appContext.ctx.res.statusCode = 302;
             appContext.ctx.res.setHeader('Location', '/apply/');
-            return {};
+            return { pageProps: {} };
         } else {
+            return { pageProps: {} };
         }
     }
     // theme
@@ -148,7 +149,6 @@ App.getInitialProps = async (appContext: any) => {
         btnHoverBorderColor: '#014a99' // button hover border color
     };
 
-    console.log('cookies.isZealous', cookies.isZealous);
     if (cookies.isZealous == 'true' || appContext.ctx.pathname == '/apply/login/zealous') {
         theme = {
             startColor: '0,0,0', // RGB format

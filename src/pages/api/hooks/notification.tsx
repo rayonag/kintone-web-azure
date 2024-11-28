@@ -40,7 +40,7 @@ export const emailNationalOffice = {
     Canada: 'trevorf@bfpcan.org',
     Japan: 'ronaga@bridgesforpeace.com',
     'New Zealand': 'emather.nz@bridgesforpeace.com',
-    'South Africa': 'cecilia@bridgesforpeace.co.za',
+    'South Africa': 'volunteers@bridgesforpeace.co.za',
     'South Korea': 'ronaga@bridgesforpeace.com',
     'United Kingdom': 'ronaga@bridgesforpeace.com',
     USA: 'lschoeman@bfpusa.org',

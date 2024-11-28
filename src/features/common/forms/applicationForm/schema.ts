@@ -18,6 +18,9 @@ const error_required = {
 const error_invalidDate = {
     message: 'Invalid date'
 };
+const error_maxLength = {
+    message: 'Text is too long'
+};
 const validateNumber = (value: string) => {
     const numberValue = parseFloat(value);
     return (
@@ -37,10 +40,10 @@ const validateSSN = (value: string | undefined, ctx: any, hi: any, s: any) => {
 const yesNo: z.ZodEffects<z.ZodNullable<z.ZodString>> = z.string().nullable().refine(validateRadio, error_required);
 const date: z.ZodEffects<z.ZodString> = z.string().min(1).max(50).refine(validateDate, error_invalidDate);
 const date_optional: z.ZodEffects<z.ZodOptional<z.ZodString>> = z.string().optional().refine(validateDate, error_invalidDate);
-const string50: z.ZodString = z.string().min(1).max(50);
-const string300: z.ZodString = z.string().min(1).max(300);
-const string2000: z.ZodString = z.string().min(1).max(2000);
-const string4000: z.ZodString = z.string().min(1).max(4000);
+const string50: z.ZodString = z.string().min(1).max(50, error_maxLength);
+const string300: z.ZodString = z.string().min(1).max(300, error_maxLength);
+const string2000: z.ZodString = z.string().min(1).max(2000, error_maxLength);
+const string4000: z.ZodString = z.string().min(1).max(4000, error_maxLength);
 const string_optional: z.ZodOptional<z.ZodString> = z.string().optional();
 
 // system
@@ -80,7 +83,7 @@ const type = z.discriminatedUnion('type', [
 const firstName = string50;
 const middleName = string_optional;
 const lastName = string50;
-const street = string50;
+const street = string300;
 const city = string50;
 const state = string50;
 const zip = string50;
@@ -200,17 +203,18 @@ const characters = z
 const checkBox: z.ZodArray<z.ZodString> = z.array(z.string());
 
 // 9
-const refPastorName: z.ZodString = z.string().min(1).max(50);
-const refPastorAddress: z.ZodString = z.string().min(1).max(50);
-const refPastorPhone: z.ZodString = z.string().min(1).max(50);
+// TODO : review why other references are commented out
+const refPastorName = string50;
+const refPastorAddress = string50;
+const refPastorPhone = string50;
 const refPastorEmail: z.ZodString = z.string().email();
-const refEmployerName: z.ZodString = z.string().min(1).max(50);
-const refEmployerAddress: z.ZodString = z.string().min(1).max(50);
-const refEmployerPhone: z.ZodString = z.string().min(1).max(50);
+const refEmployerName = string50;
+const refEmployerAddress = string300;
+const refEmployerPhone = string50;
 const refEmployerEmail: z.ZodString = z.string().email();
-const refFriendName: z.ZodString = z.string().min(1).max(50);
-const refFriendAddress: z.ZodString = z.string().min(1).max(50);
-const refFriendPhone: z.ZodString = z.string().min(1).max(50);
+const refFriendName = string50;
+const refFriendAddress = string300;
+const refFriendPhone = string50;
 const refFriendEmail: z.ZodString = z.string().email();
 
 // 10
