@@ -221,7 +221,7 @@ const Login: React.FC = () => {
                     <Layout_fadeIn_zealous key="top">
                         <div className="flex flex-col h-[95vh] justify-center items-center">
                             <div className="m-4 w-52">Email: {username?.value}</div>
-                            <div className="text-center">Enter your password</div>
+                            <div className="text-center">Create your password</div>
                             <input
                                 type="password"
                                 value={password.value}
