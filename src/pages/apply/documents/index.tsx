@@ -29,19 +29,16 @@ const Page: React.FC = ({ isZealous }: InferGetServerSidePropsType<typeof getSer
     const isSubmitted = (document: string) => user.documents?.includes(document);
     const office = useUserStore((state) => state.nationalOffice);
     const type = useUserStore((state) => state.applicationType);
-    // const requiredDocumentsCount = () => {
-    //     if (!type || !office) return '-';
-    //     if (office == 'USA') {
-    //         if (type == 'Short Term') return 5;
-    //         if (type == 'Long Term' || type == 'Zealous') return 6;
-    //     } else {
-    //         if (type == 'Short Term') return 4;
-    //         if (type == 'Long Term' || type == 'Zealous') return 5;
-    //     }
-    // };
+
     const uploadsArray = office == 'USA' ? ['Passport', 'Recent Photo', 'Social Security Card'] : ['Passport', 'Recent Photo'];
     const medicalFormArray = ['Medical Status Form', "Doctor's Letter"];
     const criminalCheckArray = ['Criminal Check', 'Criminal Check Apostille'];
+    const requiredDocumentsCount = () => {
+        if (!type || !office) return '-';
+        if (type == 'Short Term') return uploadsArray.length + medicalFormArray.length;
+        if (type == 'Long Term' || type == 'Zealous') return uploadsArray.length + medicalFormArray.length + criminalCheckArray.length;
+        else return '-';
+    };
 
     if (!office) return <></>;
     return (
@@ -51,7 +48,7 @@ const Page: React.FC = ({ isZealous }: InferGetServerSidePropsType<typeof getSer
                 <div className="relative flex flex-col items-center justify-center text-center">
                     <h1 className="text-2xl mt-12 mb-8">Documents Submission</h1>
                     <h1 className="text-xl mb-4">
-                        {user.documents?.length}/{uploadsArray.length + medicalFormArray.length + criminalCheckArray.length} Completed
+                        {user.documents?.length}/{requiredDocumentsCount()} Completed
                     </h1>
                     <div className="relative flex flex-col items-center justify-center text-center w-96 max-w-[90svw] bg-opacity-20 bg-gray-50 p-8 m-4 rounded-xl">
                         <div className="flex">

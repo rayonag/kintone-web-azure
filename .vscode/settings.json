@@ -10,5 +10,6 @@
         "key": "C:\\Users\\ronaga\\Desktop\\mkcert\\localhost+2-key.pem"
         // "cert": "C:\\Users\\maint\\Desktop\\mkcert\\localhost+2.pem",
         // "key": "C:\\Users\\maint\\Desktop\\mkcert\\localhost+2-key.pem"
-    }
+    },
+    "typescript.tsdk": "node_modules\\typescript\\lib"
 }
