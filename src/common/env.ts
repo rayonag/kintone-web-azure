@@ -13,6 +13,9 @@ export const VolunteerApplicationMasterAppID = process.env.NEXT_PUBLIC_VOLUNTEER
 export const ErrorLogsAppID = process.env.NEXT_PUBLIC_ERROR_LOGS_APPID;
 export const ErrorLogsAPIKey = process.env.NEXT_PUBLIC_ERROR_LOGS_APIKEY;
 export const TimesheetAppID = process.env.NEXT_PUBLIC_TIMESHEET_APPID;
+// kintone cron
+export const PledgesAppID = process.env.PLEDGES_APPID;
+
 // email
 
 // url
