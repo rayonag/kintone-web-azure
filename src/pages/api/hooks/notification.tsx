@@ -43,7 +43,7 @@ export const emailNationalOffice = {
     'South Africa': 'volunteers@bridgesforpeace.co.za',
     'South Korea': 'ronaga@bridgesforpeace.com',
     'United Kingdom': 'ronaga@bridgesforpeace.com',
-    USA: 'lschoeman@bfpusa.org',
+    USA: 'volunteer@bfpusa.org',
     Other: 'intl.personnel@bridgesforpeace.com'
 } as const;
 
