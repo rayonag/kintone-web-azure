@@ -38,11 +38,11 @@ export const emailNationalOffice = {
     Australia_main: 'rneil.au@bridgesforpeace.com',
     Australia_zealous: 'aprilpatane.nat@gmail.com',
     Canada: 'trevorf@bfpcan.org',
-    Japan: 'ronaga@bridgesforpeace.com',
+    Japan: 'mtabata@bfpj.org',
     'New Zealand': 'emather.nz@bridgesforpeace.com',
     'South Africa': 'volunteers@bridgesforpeace.co.za',
     'South Korea': 'ronaga@bridgesforpeace.com',
-    'United Kingdom': 'ronaga@bridgesforpeace.com',
+    'United Kingdom': 'ukoffice@bridgesforpeace.com',
     USA: 'volunteer@bfpusa.org',
     Other: 'intl.personnel@bridgesforpeace.com'
 } as const;
