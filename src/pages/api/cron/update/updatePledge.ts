@@ -1,4 +1,4 @@
-import { KintonePassword, KintoneUserName, VolunteerProfieAppID } from '@/common/env';
+import { KintonePassword, KintoneUserName, PledgesAppID, VolunteerProfieAppID } from '@/common/env';
 import { REST_SavedVolunteerProfile } from '@/types/VolunteerProfile';
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import { NextApiResponse } from 'next';
@@ -16,9 +16,9 @@ const updateVolunteerProfile = async (res: NextApiResponse) => {
             }
         });
         const records = await client.record.getAllRecords<REST_SavedVolunteerProfile>({
-            app: VolunteerProfieAppID as string,
-            // filter to only current and incoming volunteers
-            condition: 'Personal_Status in ("Current","Incoming")'
+            app: PledgesAppID as string,
+            // filter only active pledges
+            condition: 'status in ("Active")'
         });
         const updatePromises = records.map(async (record) => {
             const updateRecord = {};
