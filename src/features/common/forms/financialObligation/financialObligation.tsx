@@ -158,16 +158,16 @@ export default function Component() {
                                     must be set up through your national office.
                                 </p>
                                 <div className="grid grid-cols-2 gap-2 text-md">
-                                    <p>US $350 due Aug. 1, 2024</p>
-                                    <p>US $350 due Jan. 1, 2025</p>
-                                    <p>US $350 due Sept. 1, 2024</p>
-                                    <p>US $350 due Feb. 1, 2025</p>
-                                    <p>US $350 due Oct. 1, 2024</p>
-                                    <p>US $350 due Mar. 1, 2025</p>
-                                    <p>US $350 due Nov. 1, 2024</p>
-                                    <p>US $350 due Apr. 1, 2025</p>
-                                    <p>US $350 due Dec. 1, 2024</p>
-                                    <p>US $350 due May 1,2025</p>
+                                    <p>US $350 due Aug. 1, 2025</p>
+                                    <p>US $350 due Jan. 1, 2026</p>
+                                    <p>US $350 due Sept. 1, 2025</p>
+                                    <p>US $350 due Feb. 1, 2026</p>
+                                    <p>US $350 due Oct. 1, 2025</p>
+                                    <p>US $350 due Mar. 1, 2026</p>
+                                    <p>US $350 due Nov. 1, 2025</p>
+                                    <p>US $350 due Apr. 1, 2026</p>
+                                    <p>US $350 due Dec. 1, 2025</p>
+                                    <p>US $350 due May 1, 2026</p>
                                 </div>
                             </div>
                         </div>
