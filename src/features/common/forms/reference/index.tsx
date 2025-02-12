@@ -42,7 +42,7 @@ const ReferenceForm = () => {
         register,
         control
     } = useForm<ReferenceFormType>({
-        mode: 'onChange',
+        mode: 'onBlur',
         defaultValues: ReferenceFormDefaultValues,
         resolver: zodResolver(ReferenceFormSchema)
     });

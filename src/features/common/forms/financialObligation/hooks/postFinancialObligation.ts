@@ -18,7 +18,7 @@ const postFinancialObligation = async (data: any) => {
             return res;
         } else {
             alert('Something wrong. Could not save your answers.');
-            return;
+            throw new Error('Failed to save the form');
         }
     } catch (e) {
         logError(e, data, 'postFinancialObligation');

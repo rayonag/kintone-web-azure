@@ -19,6 +19,8 @@ const Helper: React.FC<HelperProps> = ({ currentStep, userRef, isModalOpen, setI
             left: '50%',
             transform: 'translate(-50%,-50%)',
             maxWidth: '25rem',
+            height: '80svh',
+            overflow: 'scroll',
             width: '80%',
             color: 'black'
         }

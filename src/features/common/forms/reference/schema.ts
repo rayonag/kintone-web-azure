@@ -1,12 +1,23 @@
+import { DateTime } from 'luxon';
 import { z } from 'zod';
 
 const error_required = {
     message: 'This field is required'
 };
+const error_invalidDate = {
+    message: 'Invalid date'
+};
 const requiredErrorMessage = {
     message: 'This field is required'
 };
 const validateRadio = (value: string | null) => value !== null;
+const validateDate = (value: string | undefined) => {
+    if (!value) return true;
+    if (!DateTime.fromFormat(value, 'dd/MM/yyyy').isValid) return false;
+    else if (DateTime.fromFormat(value, 'dd/MM/yyyy') >= DateTime.now().plus({ years: 100 })) return false;
+    else if (DateTime.fromFormat(value, 'dd/MM/yyyy') <= DateTime.now().minus({ years: 100 })) return false;
+    return true;
+};
 // system
 const ref: z.ZodString = z.string().min(1).max(50);
 const office: z.ZodString = z.string().min(1).max(50);
@@ -76,12 +87,12 @@ const checkBox: z.ZodArray<z.ZodString> = z.array(z.string());
 
 // 5
 const standpoint = z.string().min(1, requiredErrorMessage);
-const recommend = z.string().min(1, requiredErrorMessage);
+const recommend = radio;
 const address = z.string().min(1, requiredErrorMessage);
 const phone = z.string().min(1, requiredErrorMessage);
 const email = z.string().email();
 const signature = z.string().min(1, requiredErrorMessage);
-const signatureDate = z.string().min(1, requiredErrorMessage);
+const signatureDate: z.ZodEffects<z.ZodString> = z.string().min(1).max(50).refine(validateDate, error_invalidDate);
 
 // Combine individual field schemas into a single schema
 export const ReferenceFormSchema = z.object({

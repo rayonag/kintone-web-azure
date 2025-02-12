@@ -56,7 +56,7 @@ const HealthQuestionnaire = (props: { repo: any }) => {
         register,
         control
     } = useForm<HealthQuestionnaireType>({
-        mode: 'onChange',
+        mode: 'onBlur',
         defaultValues: HealthQuestionnaireDefaultValues,
         resolver: zodResolver(HealthQuestionnaireSchema)
     });

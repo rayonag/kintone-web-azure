@@ -218,7 +218,7 @@ const ApplicationForm = (props: any) => {
                         <button className="btn" onClick={() => handleModalResponse(true)}>
                             Resume from the saved point.
                         </button>
-                        <button className="btn-disabled" onClick={() => handleModalResponse(false)}>
+                        <button className="mt-10 underline" onClick={() => handleModalResponse(false)}>
                             Delete your progress and start from scratch
                         </button>
                     </div>

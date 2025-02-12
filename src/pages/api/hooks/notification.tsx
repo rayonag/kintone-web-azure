@@ -111,7 +111,7 @@ export const notificationApplicationUpdated = async (
         const mailBody = `${name} submitted ${updated[updatedField]}`;
         const cc = ''; //'intl.personnel@bridgesforpeace.com'; // add SDD email
         //const bcc = data.bcc;
-        const mailHTML = render(<NotificationDocument mailBody={mailBody} applicationRef={record['$id'].value} />);
+        const mailHTML = render(<NotificationDocument mailBody={mailBody} applicationRef={record['applicationRef'].value} />);
         sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
         const msg = {
             to: to, // Change to your recipient
@@ -149,7 +149,7 @@ export const notificationReferenceSubmitted = async (res: any, record: REST_Save
         const mailBody = `The Reference Forms are all submitted for ${name}`;
         const cc = ''; //'intl.personnel@bridgesforpeace.com'; // add SDD email?
         // const bcc = 'ronaga@bridgesforpeace.com';
-        const mailHTML = render(<NotificationDocument mailBody={mailBody} applicationRef={record['$id'].value} />);
+        const mailHTML = render(<NotificationDocument mailBody={mailBody} applicationRef={record['applicationRef'].value} />);
         sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
         const msg = {
             to: to, // Change to your recipient

@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon';
 import { ApplicationFormType } from '../schema';
+import logError from '@/common/logError';
 
 const postTempApplicationForm = async (data: ApplicationFormType, ref: string | undefined, step: number) => {
     if (!data || !ref || !step) return undefined;
@@ -253,6 +254,7 @@ const postTempApplicationForm = async (data: ApplicationFormType, ref: string | 
             throw new Error('Failed to add Kintone record');
         }
     } catch (error) {
+        logError(error, data, 'postTempApplicationForm');
         console.error('Error submitting application form:', error);
     }
 };

@@ -55,7 +55,7 @@ export const NotificationDocument: FC<NotificationDocumentProps> = ({ mailBody, 
                     <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
                         <div style={{ background: 'white', width: '700px', height: '100px', padding: '5%', fontWeight: 'bold' }}>
                             <div style={{ marginBottom: '60px' }}>{mailBody}</div>
-                            <Link href={`https://bfp.kintone.com/k/121/show#record=${applicationRef}`}>Go to the record details</Link>
+                            <Link href={`https://bfp.kintone.com/k/16/show#record=${applicationRef}`}>Go to the record details</Link>
                         </div>
                     </div>
                     <Hr style={{ borderTop: '1px solid lightgray' }} />
