@@ -265,9 +265,11 @@ const ApplicationForm = (props: any) => {
                             {t('system.back')}
                         </button>
                     )}
-                    <button type="button" className="text-center btn-wide" onClick={() => handleSaveExit()}>
-                        Save & Exit
-                    </button>
+                    {step != 10 && (
+                        <button type="button" className="text-center btn-wide" onClick={() => handleSaveExit()}>
+                            Save & Exit
+                        </button>
+                    )}
                 </form>
             </div>
         </>
