@@ -198,7 +198,7 @@ const ApplicationForm = (props: any) => {
         }
     };
     const handleSaveExit = () => {
-        postTempApplicationForm(getValues(), dashboardUser.ref || '0', step);
+        postTempApplicationForm(getValues(), dashboardUser.ref || '0', step, true);
         router.push('/apply');
     };
 

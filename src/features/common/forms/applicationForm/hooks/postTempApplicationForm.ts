@@ -2,7 +2,7 @@ import { DateTime } from 'luxon';
 import { ApplicationFormType } from '../schema';
 import logError from '@/common/logError';
 
-const postTempApplicationForm = async (data: ApplicationFormType, ref: string | undefined, step: number) => {
+const postTempApplicationForm = async (data: ApplicationFormType, ref: string | undefined, step: number, isTemporary?: boolean) => {
     if (!data || !ref || !step) return undefined;
     const convertDate = (date: string) => {
         return DateTime.fromFormat(date, 'dd/MM/yyyy').toISODate();
@@ -232,11 +232,18 @@ const postTempApplicationForm = async (data: ApplicationFormType, ref: string | 
                         hasFriendsIsraelExplain: { value: data.hasFriendsIsraelExplain }
                     };
                 case 10:
-                    return {
-                        currentStep: { value: step },
-                        ref: { value: parseInt(data.ref) },
-                        keepingTempRecord: { value: 'false' }
-                    };
+                    if (isTemporary) {
+                        return {
+                            currentStep: { value: step },
+                            ref: { value: parseInt(data.ref) },
+                            keepingTempRecord: { value: 'true' }
+                        };
+                    } else
+                        return {
+                            currentStep: { value: step },
+                            ref: { value: parseInt(data.ref) },
+                            keepingTempRecord: { value: 'false' }
+                        };
                 default:
                     return {};
             }
