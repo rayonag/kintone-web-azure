@@ -197,6 +197,7 @@ const ApplicationForm = (props: any) => {
             transform: 'translate(-50%, -50%)'
         }
     };
+    //
     const handleSaveExit = () => {
         postTempApplicationForm(getValues(), dashboardUser.ref || '0', step, true);
         router.push('/apply');
