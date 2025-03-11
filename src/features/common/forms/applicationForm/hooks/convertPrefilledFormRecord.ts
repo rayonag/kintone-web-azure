@@ -32,8 +32,8 @@ const convertPrefilledFormRecord = (record: SavedVolunteerApplicationForm, setVa
     addFieldIfValid('phone', record.phone.value);
     addFieldIfValid('email', record.email.value);
     addFieldIfValid('passportNumber', record.passportNumber.value);
+    addFieldIfValid('datePassportIssued', convertDate(record.datePassportIssued.value));
     addFieldIfValid('passportExpiration', convertDate(record.passportExpiration.value));
-    addFieldIfValid('passportIssued', record.passportIssued.value);
     addFieldIfValid('age', record.age.value);
     addFieldIfValid('birthday', convertDate(record.birthday.value));
     addFieldIfValid('office.ssnNumber', record.ssnNumber.value);

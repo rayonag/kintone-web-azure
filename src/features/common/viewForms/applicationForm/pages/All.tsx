@@ -113,11 +113,10 @@ const All: FC<AllProps> = ({ record }) => {
                     <Text style={applicationFormPageStyle.underline}>{record['ssnNumber'].value}</Text>
                 </Text>
                 <Text style={applicationFormPageStyle.row}>
+                    Passport issued: (Day/Month/Year){'  '}
+                    <Text style={applicationFormPageStyle.underline}>{record['passportIssuedDate'].value}</Text>
                     Passport expiration: (Day/Month/Year){'  '}
                     <Text style={applicationFormPageStyle.underline}>{record['passportExpiration'].value}</Text>
-                    {'  '}
-                    Issuing country{'  '}
-                    <Text style={applicationFormPageStyle.underline}>{record['passportIssued'].value}</Text>
                 </Text>
                 <Text style={applicationFormPageStyle.row}>
                     Age: {'  '}

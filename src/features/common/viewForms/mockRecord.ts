@@ -178,9 +178,9 @@ export const record = {
             type: 'NUMBER',
             value: ''
         },
-        passportIssued: {
+        datePassportIssued: {
             type: 'SINGLE_LINE_TEXT',
-            value: 'asd'
+            value: '2000-01-01'
         },
         skillTranslation: {
             type: 'NUMBER',

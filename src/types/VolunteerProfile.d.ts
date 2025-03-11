@@ -80,7 +80,7 @@ export interface VolunteerProfile {
     Text_13: kintone.fieldTypes.SingleLineText;
     Text_14: kintone.fieldTypes.SingleLineText;
     Text_10: kintone.fieldTypes.SingleLineText;
-    passportIssued: kintone.fieldTypes.SingleLineText;
+    datePassportIssued: kintone.fieldTypes.SingleLineText;
     citizenship: kintone.fieldTypes.SingleLineText;
     spouseFirstName: kintone.fieldTypes.SingleLineText;
     visaType: kintone.fieldTypes.DropDown;
@@ -240,7 +240,7 @@ export type REST_VolunteerProfile = {
     Text_13: KintoneRecordField.SingleLineText;
     Text_14: KintoneRecordField.SingleLineText;
     Text_10: KintoneRecordField.SingleLineText;
-    passportIssued: KintoneRecordField.SingleLineText;
+    datePassportIssued: KintoneRecordField.SingleLineText;
     citizenship: KintoneRecordField.SingleLineText;
     spouseFirstName: KintoneRecordField.SingleLineText;
     visaType: KintoneRecordField.DropDown;

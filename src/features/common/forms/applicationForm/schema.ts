@@ -91,8 +91,8 @@ const country = string50;
 const phone = string50;
 const email: z.ZodString = z.string().email();
 const passportNumber = string50;
-//const passportExpiration: z.ZodString = z.string().min(1).max(50);
-const passportIssued = string50;
+// const datePassportIssued = date;
+// const passportExpiration = date;
 const age = string50;
 const birthday = string50;
 const ssnNumber = string50;
@@ -256,8 +256,8 @@ export const ApplicationFormSchema = z.object({
     phone: phone,
     email: email,
     passportNumber: passportNumber,
+    datePassportIssued: date,
     passportExpiration: date,
-    passportIssued: passportIssued,
     age: age,
     birthday: date,
     //ssnNumber is under office object
@@ -489,8 +489,8 @@ export const ApplicationFormFields = [
         'phone',
         'email',
         'passportNumber',
+        'datePassportIssued',
         'passportExpiration',
-        'passportIssued',
         'age',
         'birthday',
         //'ssnNumber',

@@ -120,7 +120,7 @@ export interface VolunteerApplicationForm {
     skillAdobePhotoshop: kintone.fieldTypes.Number;
     skillAdobeInDesign: kintone.fieldTypes.Number;
     personalDoctor: kintone.fieldTypes.SingleLineText;
-    passportIssued: kintone.fieldTypes.SingleLineText;
+    datePassportIssued: kintone.fieldTypes.SingleLineText;
     skillVideo: kintone.fieldTypes.Number;
     fullName: kintone.fieldTypes.SingleLineText;
     emergencyName: kintone.fieldTypes.SingleLineText;
@@ -331,7 +331,7 @@ export type REST_VolunteerApplicationForm = {
     skillAdobePhotoshop: KintoneRecordField.Number;
     skillAdobeInDesign: KintoneRecordField.Number;
     personalDoctor: KintoneRecordField.SingleLineText;
-    passportIssued: KintoneRecordField.SingleLineText;
+    datePassportIssued: KintoneRecordField.SingleLineText;
     skillVideo: KintoneRecordField.Number;
     fullName: KintoneRecordField.SingleLineText;
     emergencyName: KintoneRecordField.SingleLineText;

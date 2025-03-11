@@ -64,10 +64,10 @@ const Step1: FC<Step1Props> = ({ register, errors, getValues, t, control }) => {
                     />
                     <Date label={t('passportExpiration')} register={register('passportExpiration')} error={errors.passportExpiration || undefined} />
                     <Input
-                        label={t('passportIssued')}
-                        register={register('passportIssued')}
-                        placeholder={t('passportIssued')}
-                        error={errors.passportIssued || undefined}
+                        label={t('datePassportIssued')}
+                        register={register('datePassportIssued')}
+                        placeholder={t('datePassportIssued')}
+                        error={errors.datePassportIssued || undefined}
                     />
                 </Row>
                 <Row>
