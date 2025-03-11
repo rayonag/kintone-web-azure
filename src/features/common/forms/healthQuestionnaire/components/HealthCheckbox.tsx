@@ -37,7 +37,7 @@ export const HealthCheckbox: FC<HealthCheckboxProps> = ({ label, name, register,
                                             const newValue = event.target.value;
                                             field.onChange([newValue]);
                                         }}
-                                        className="w-8 h-8 m-1 bg-transparent accent-transparent"
+                                        className="w-8 h-8 m-1 bg-transparent"
                                     />
                                 </label>
                                 <label className="flex">
@@ -50,7 +50,7 @@ export const HealthCheckbox: FC<HealthCheckboxProps> = ({ label, name, register,
                                             const newValue = event.target.value;
                                             field.onChange([newValue]);
                                         }}
-                                        className="w-8 h-8 m-1 accent-transparent"
+                                        className="w-8 h-8 m-1"
                                     />
                                 </label>
                             </div>
