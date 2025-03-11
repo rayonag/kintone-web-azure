@@ -62,13 +62,8 @@ const Step1: FC<Step1Props> = ({ register, errors, getValues, t, control }) => {
                         placeholder={t('passportNumber')}
                         error={errors.passportNumber || undefined}
                     />
+                    <Date label={t('datePassportIssued')} register={register('datePassportIssued')} error={errors.datePassportIssued || undefined} />
                     <Date label={t('passportExpiration')} register={register('passportExpiration')} error={errors.passportExpiration || undefined} />
-                    <Input
-                        label={t('datePassportIssued')}
-                        register={register('datePassportIssued')}
-                        placeholder={t('datePassportIssued')}
-                        error={errors.datePassportIssued || undefined}
-                    />
                 </Row>
                 <Row>
                     <Date label={t('birthday')} register={register('birthday')} error={errors.birthday || undefined} />
