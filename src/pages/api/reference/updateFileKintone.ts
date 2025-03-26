@@ -34,6 +34,13 @@ const necessaryDocumentsShortTerm = {
     medicalStatusForm: 'Medical Status Form',
     doctorLetter: "Doctor's Letter"
 };
+const necessaryDocumentsShortTermUSA = {
+    passport: 'Passport',
+    recentPhoto: 'Recent Photo',
+    medicalStatusForm: 'Medical Status Form',
+    doctorLetter: "Doctor's Letter",
+    ssn: 'Copy of Social Security Card (US citizens)'
+};
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
     if (req.method === 'POST') {
         try {
@@ -102,7 +109,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 const updatedDocuments = [...(oldRecord.record['documents'].value as string[]), updated[field]];
                 const necDoc =
                     oldRecord.record['office'].value === 'USA'
-                        ? necessaryDocumentsUSA
+                        ? oldRecord.record['type'].value == 'Short Term'
+                            ? necessaryDocumentsShortTermUSA
+                            : necessaryDocumentsUSA
                         : oldRecord.record['type'].value == 'Short Term'
                         ? necessaryDocumentsShortTerm
                         : necessaryDocuments;
