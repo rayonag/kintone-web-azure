@@ -16,14 +16,17 @@ const necessaryDocuments = {
     recentPhoto: 'Recent Photo',
     medicalStatusForm: 'Medical Status Form',
     doctorLetter: "Doctor's Letter",
-    criminalCheck: 'Criminal Check'
+    criminalCheck: 'Criminal Check',
+    criminalCheckApostille: 'Criminal Check Apostille'
 };
 const necessaryDocumentsUSA = {
     passport: 'Passport',
     recentPhoto: 'Recent Photo',
     medicalStatusForm: 'Medical Status Form',
     doctorLetter: "Doctor's Letter",
-    criminalCheck: 'Criminal Check'
+    criminalCheck: 'Criminal Check',
+    criminalCheckApostille: 'Criminal Check Apostille',
+    ssn: 'Copy of Social Security Card (US citizens)'
 };
 const necessaryDocumentsShortTerm = {
     passport: 'Passport',
@@ -103,19 +106,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                         : oldRecord.record['type'].value == 'Short Term'
                         ? necessaryDocumentsShortTerm
                         : necessaryDocuments;
+                const recordObj = {
+                    documents: {
+                        value: updatedDocuments
+                    }
+                };
+                if (updatedDocuments.length === Object.keys(necDoc).length) {
+                    // update status to 'documentSubmitted' if all documents are submitted
+                    Object.assign(recordObj, {
+                        status: {
+                            value: 'Necessary Documents Submitted'
+                        }
+                    });
+                }
                 await client.record.updateRecord({
                     app: VolunteerApplicationMasterAppID as string,
                     id: userRef,
-                    record: {
-                        documents: {
-                            value: updatedDocuments
-                        },
-                        // update status to 'documentSubmitted' if all documents are submitted
-                        status: {
-                            value:
-                                updatedDocuments.length === Object.keys(necDoc).length ? 'Necessary Documents Submitted' : 'Complete Application Form'
-                        }
-                    }
+                    record: recordObj
                 });
             }
             const newRecord = await client.record
