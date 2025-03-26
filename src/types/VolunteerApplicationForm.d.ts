@@ -14,6 +14,7 @@ export interface VolunteerApplicationForm {
     hasFamilySupportExplain: kintone.fieldTypes.SingleLineText;
     zip: kintone.fieldTypes.SingleLineText;
     skillWebDesign: kintone.fieldTypes.Number;
+    idType: kintone.fieldTypes.DropDown;
     preferredStartDate2: kintone.fieldTypes.Date;
     refPastorPhone: kintone.fieldTypes.SingleLineText;
     skillPublicSpeaking: kintone.fieldTypes.Number;
@@ -94,10 +95,10 @@ export interface VolunteerApplicationForm {
     churchName: kintone.fieldTypes.SingleLineText;
     skillGoogleDrive: kintone.fieldTypes.Number;
     emergencyStreet: kintone.fieldTypes.SingleLineText;
+    datePassportIssued: kintone.fieldTypes.Date;
     christianJewishUnderstanding: kintone.fieldTypes.MultiLineText;
     skillLibrary: kintone.fieldTypes.Number;
     firstName: kintone.fieldTypes.SingleLineText;
-    profileId: kintone.fieldTypes.Number;
     doSmoke: kintone.fieldTypes.RadioButton;
     hasLicenseMoreThanTwelveMonths: kintone.fieldTypes.RadioButton;
     maritalStatus: kintone.fieldTypes.RadioButton;
@@ -157,6 +158,7 @@ export interface VolunteerApplicationForm {
 
     recentPhoto: kintone.fieldTypes.File;
     ssn: kintone.fieldTypes.File;
+    miscellaneous: kintone.fieldTypes.File;
     criminalCheck: kintone.fieldTypes.File;
     criminalCheckApostille: kintone.fieldTypes.File;
     passport: kintone.fieldTypes.File;
@@ -169,7 +171,7 @@ export interface VolunteerApplicationForm {
             value: {
                 employName: kintone.fieldTypes.SingleLineText;
                 employPhone: kintone.fieldTypes.SingleLineText;
-                employDate: kintone.fieldTypes.Date;
+                employDate: kintone.fieldTypes.SingleLineText;
                 employDuties: kintone.fieldTypes.SingleLineText;
                 employAddress: kintone.fieldTypes.SingleLineText;
                 employLeavingReason: kintone.fieldTypes.SingleLineText;
@@ -206,12 +208,11 @@ export interface SavedVolunteerApplicationForm extends VolunteerApplicationForm 
     作成者: kintone.fieldTypes.Creator;
     更新者: kintone.fieldTypes.Modifier;
     レコード番号: kintone.fieldTypes.RecordNumber;
-    更新日時: kintone.fieldTypes.UpdatedTime;
+    updatedDatetime: kintone.fieldTypes.UpdatedTime;
     Created_datetime: kintone.fieldTypes.CreatedTime;
 }
 
 import { KintoneRecordField } from '@kintone/rest-api-client';
-
 export type REST_VolunteerApplicationForm = {
     hasVisitedIsraelDates: KintoneRecordField.SingleLineText;
     hasHandicap: KintoneRecordField.RadioButton;
@@ -228,6 +229,7 @@ export type REST_VolunteerApplicationForm = {
     hasFamilySupportExplain: KintoneRecordField.SingleLineText;
     zip: KintoneRecordField.SingleLineText;
     skillWebDesign: KintoneRecordField.Number;
+    idType: KintoneRecordField.DropDown;
     preferredStartDate2: KintoneRecordField.Date;
     refPastorPhone: KintoneRecordField.SingleLineText;
     skillPublicSpeaking: KintoneRecordField.Number;
@@ -308,10 +310,10 @@ export type REST_VolunteerApplicationForm = {
     churchName: KintoneRecordField.SingleLineText;
     skillGoogleDrive: KintoneRecordField.Number;
     emergencyStreet: KintoneRecordField.SingleLineText;
+    datePassportIssued: KintoneRecordField.Date;
     christianJewishUnderstanding: KintoneRecordField.MultiLineText;
     skillLibrary: KintoneRecordField.Number;
     firstName: KintoneRecordField.SingleLineText;
-    profileId: KintoneRecordField.Number;
     doSmoke: KintoneRecordField.RadioButton;
     hasLicenseMoreThanTwelveMonths: KintoneRecordField.RadioButton;
     maritalStatus: KintoneRecordField.RadioButton;
@@ -369,11 +371,9 @@ export type REST_VolunteerApplicationForm = {
     Check_box_13: KintoneRecordField.CheckBox;
     skillSystem: KintoneRecordField.CheckBox;
 
-    updatedDatetime: KintoneRecordField.CreatedTime;
-
     recentPhoto: KintoneRecordField.File;
-    miscellaneous: KintoneRecordField.File;
     ssn: KintoneRecordField.File;
+    miscellaneous: KintoneRecordField.File;
     criminalCheck: KintoneRecordField.File;
     criminalCheckApostille: KintoneRecordField.File;
     passport: KintoneRecordField.File;
@@ -386,7 +386,7 @@ export type REST_VolunteerApplicationForm = {
             value: {
                 employName: KintoneRecordField.SingleLineText;
                 employPhone: KintoneRecordField.SingleLineText;
-                employDate: KintoneRecordField.Date;
+                employDate: KintoneRecordField.SingleLineText;
                 employDuties: KintoneRecordField.SingleLineText;
                 employAddress: KintoneRecordField.SingleLineText;
                 employLeavingReason: KintoneRecordField.SingleLineText;
@@ -423,6 +423,6 @@ export type REST_SavedVolunteerApplicationForm = REST_VolunteerApplicationForm &
     作成者: KintoneRecordField.Creator;
     更新者: KintoneRecordField.Modifier;
     レコード番号: KintoneRecordField.RecordNumber;
-    更新日時: KintoneRecordField.UpdatedTime;
+    updatedDatetime: KintoneRecordField.UpdatedTime;
     Created_datetime: KintoneRecordField.CreatedTime;
 };
