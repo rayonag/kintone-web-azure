@@ -20,13 +20,6 @@ const logError = (e: any, records?: any, functionName?: string) => {
     if (e.errors) err += `e.errors:${JSON.stringify(e.errors)}\n`;
     if (records) err += `Record:${JSON.stringify(records)}`;
 
-    // if client side, log user
-    if (typeof window !== 'undefined') {
-        const user = useUserStore();
-        if (user) {
-            err += `User:${JSON.stringify(user)}`;
-        }
-    }
     return client.record.addRecord({
         app: ErrorLogsAppID as string,
         record: {

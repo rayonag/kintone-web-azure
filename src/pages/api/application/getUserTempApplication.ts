@@ -1,30 +1,23 @@
 import { KintoneRecordField, KintoneRestAPIClient } from '@kintone/rest-api-client';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { KintonePassword, KintoneUserName } from '@/common/env';
+import { KintonePassword, KintoneUserName, VolunteerApplicationAppID } from '@/common/env';
 import logError from '@/common/logError';
 import { REST_VolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
+import kintoneClient from '@/common/kintoneClient';
 
 type Data = {
-    res: REST_TempVolunteerApplicationForm | undefined;
+    res: REST_VolunteerApplicationForm | undefined;
 };
-type REST_TempVolunteerApplicationForm = REST_VolunteerApplicationForm & { keepingTempRecord: KintoneRecordField.RadioButton };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
     if (req.method === 'POST') {
         try {
             const ref = req.body;
-            const client = new KintoneRestAPIClient({
-                baseUrl: 'https://bfp.kintone.com',
-                // Use password authentication
-                auth: {
-                    username: KintoneUserName,
-                    password: KintonePassword
-                }
-            });
-            const resp = await client.record.getAllRecords<REST_TempVolunteerApplicationForm>({
-                app: 235, //TempVolunteerApplicationAppID as string, TODO: change to env
-                condition: `ref="${ref}" and keepingTempRecord in ("true")`,
-                orderBy: 'createdTime desc'
+            const client = kintoneClient;
+            const resp = await client.record.getAllRecords<REST_VolunteerApplicationForm>({
+                app: VolunteerApplicationAppID as string,
+                condition: `ref="${ref}" and currentStep != "Complete"`,
+                orderBy: '$id desc'
             });
             if (resp.length == 0) {
                 res.json({

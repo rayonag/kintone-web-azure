@@ -1,9 +1,10 @@
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { KintonePassword, KintoneUserName } from '@/common/env';
+import { KintonePassword, KintoneUserName, VolunteerApplicationAppID } from '@/common/env';
 import handleNullOrEmpty from '../hooks/handleNullOrEmpty';
 import logError from '@/common/logError';
 import { REST_SavedVolunteerApplicationForm, REST_VolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
+import kintoneClient from '@/common/kintoneClient';
 
 type Data = {
     res?: any;
@@ -25,23 +26,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 return;
             }
             // update kintone record
-            const client = new KintoneRestAPIClient({
-                baseUrl: 'https://bfp.kintone.com',
-                // Use password authentication
-                auth: {
-                    username: KintoneUserName,
-                    password: KintonePassword
-                }
-            });
+            const client = kintoneClient;
             // check if record already exists
             const resp = await client.record.getAllRecords<REST_SavedVolunteerApplicationForm>({
-                app: 235, //TempVolunteerApplicationAppID as string,
-                condition: `ref="${record.ref.value}" and keepingTempRecord in ("true")`,
+                app: VolunteerApplicationAppID as string,
+                condition: `ref="${record['ref'].value}"`,
                 fields: ['ref']
             });
             if (resp.length > 0) {
                 const resp2 = await client.record.updateRecord({
-                    app: 235, // TempVolunteerApplicationAppID as string,
+                    app: VolunteerApplicationAppID as string,
                     id: resp[0]['$id'].value,
                     record: record
                 });
@@ -52,7 +46,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             }
             if (!resp || resp.length === 0) {
                 const resp2 = await client.record.addRecord({
-                    app: 235, //TempVolunteerApplicationAppID as string,
+                    app: VolunteerApplicationAppID as string,
                     record: record
                 });
                 res.status(200).json({
@@ -60,26 +54,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 });
                 return;
             }
-
-            // const resp = await client.record.getRecord<REST_OnlineVolunteerApplication>({
-            //     app: VolunteerApplicationMasterAppID as string,
-            //     id: userRef
-            // });
-            // if (resp.record['formSubmission'].value.findIndex((arr) => arr == 'Personal Health Questionaire')) {
-            //     res.status(200).json({
-            //         res: resp
-            //     });
-            //     res.end();
-            //     return;
-            // }
-            // // now only Personal Health Questionaire in use
-            // const resp2 = await client.record.updateRecord({
-            //     app: VolunteerApplicationMasterAppID as string,
-            //     id: userRef,
-            //     record: {
-            //         formSubmission: { value: [...resp.record['formSubmission'].value, 'Personal Health Questionaire'] }
-            //     }
-            // });
             res.status(200).json({
                 res: resp
             });

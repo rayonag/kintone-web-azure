@@ -49,7 +49,7 @@ const string_optional: z.ZodOptional<z.ZodString> = z.string().optional();
 // system
 const ref: z.ZodString = z.string().min(1).max(50);
 const nationalOffice = z.discriminatedUnion('office', [
-    // 1 ssnNumber is required if office is USA
+    // step 1 ssnNumber is required if office is USA
     z.object({
         office: z.literal('USA'),
         ssnNumber: z.string().min(1).max(50)
@@ -59,8 +59,19 @@ const nationalOffice = z.discriminatedUnion('office', [
         ssnNumber: z.string().optional()
     })
 ]);
+const spouse = z.discriminatedUnion('maritalStatus', [
+    // step 1 spouseFullName is required if married
+    z.object({
+        maritalStatus: z.literal('Married'),
+        spouseFullName: z.string().min(1).max(50)
+    }),
+    z.object({
+        maritalStatus: z.enum(['Single', 'Divorced', 'Widowed']),
+        spouseFullName: z.string().optional()
+    })
+]);
 const type = z.discriminatedUnion('type', [
-    // 9 reference Other is required if type is Long Term or Zealous
+    // step 9 reference Other is required if type is Long Term or Zealous
     z.object({
         type: z.literal('Short Term'),
         refOtherName: string_optional,
@@ -242,6 +253,7 @@ export const ApplicationFormSchema = z.object({
     // system
     ref: ref,
     office: nationalOffice,
+    spouse: spouse,
     type: type,
 
     // 1
@@ -262,8 +274,8 @@ export const ApplicationFormSchema = z.object({
     birthday: date,
     //ssnNumber is under office object
     sex: sex,
-    maritalStatus: maritalStatus,
-    spouseFullName: spouseFullName,
+    //maritalStatus: maritalStatus, is under spouse object
+    //spouseFullName: spouseFullName, is under spouse object
     hasChildren: yesNo,
     childrenNames: childrenNames,
     hasFamilySupport: hasFamilySupport,
@@ -477,6 +489,7 @@ export const ApplicationFormFields = [
     ['ref', 'office'],
     // Step 1: Personal Information
     [
+        'spouse',
         'office',
         'firstName',
         'middleName',
@@ -495,8 +508,8 @@ export const ApplicationFormFields = [
         'birthday',
         //'ssnNumber',
         'sex',
-        'maritalStatus',
-        'spouseFullName',
+        //'maritalStatus',
+        //'spouseFullName',
         'childrenNames',
         'hasFamilySupport',
         'hasFamilySupportExplain'

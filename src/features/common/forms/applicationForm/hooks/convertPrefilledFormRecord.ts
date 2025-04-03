@@ -38,8 +38,8 @@ const convertPrefilledFormRecord = (record: SavedVolunteerApplicationForm, setVa
     addFieldIfValid('birthday', convertDate(record.birthday.value));
     addFieldIfValid('office.ssnNumber', record.ssnNumber.value);
     addFieldIfValid('sex', record.sex.value);
-    addFieldIfValid('maritalStatus', record.maritalStatus.value);
-    addFieldIfValid('spouseFullName', record.spouseFullName.value);
+    addFieldIfValid('spouse.maritalStatus', record.maritalStatus.value);
+    addFieldIfValid('spouse.spouseFullName', record.spouseFullName.value);
     addFieldIfValid('childrenNames', record.childrenNames.value);
     addFieldIfValid('hasFamilySupport', record.hasFamilySupport.value);
     addFieldIfValid('hasFamilySupportExplain', record.hasFamilySupportExplain.value);

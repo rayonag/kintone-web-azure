@@ -82,7 +82,6 @@ const All: FC<AllProps> = ({ record }) => {
                     <View style={historyOfTableStyle.tableColumn2}>
                         {historyOf1.map((skillName: any, index: number) => (
                             <>
-                                {console.log(skillName, record[skillName])}
                                 <View style={historyOfTableStyle.tableRow} key={index}>
                                     <Text style={historyOfTableStyle.tableCell20}>{record[skillName].value || ' '}</Text>
                                     <Text style={historyOfTableStyle.tableCell80}>{t(skillName)}</Text>
@@ -93,7 +92,6 @@ const All: FC<AllProps> = ({ record }) => {
                     <View style={historyOfTableStyle.tableColumn2}>
                         {historyOf2.map((skillName: any, index: number) => (
                             <>
-                                {console.log(skillName, record[skillName])}
                                 <View style={historyOfTableStyle.tableRow} key={index}>
                                     <Text style={historyOfTableStyle.tableCell20}>{record[skillName].value || ' '}</Text>
                                     <Text style={historyOfTableStyle.tableCell80}>{t(skillName)}</Text>

@@ -5,7 +5,6 @@ import sgMail from '@sendgrid/mail';
 import logError from '@/common/logError';
 import { REST_SavedOnlineVolunteerApplication, REST_OnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
 
-export type NecessaryDocuments = keyof typeof necessaryDocuments;
 const necessaryDocuments = {
     passport: 'Passport',
     recentPhoto: 'Recent Photo',
@@ -14,7 +13,6 @@ const necessaryDocuments = {
     criminalCheck: 'Criminal Check',
     criminalCheckApostille: 'Criminal Check Apostille'
 };
-export type NecessaryDocumentsUSA = keyof typeof necessaryDocumentsUSA;
 const necessaryDocumentsUSA = {
     passport: 'Passport',
     recentPhoto: 'Recent Photo',
@@ -24,7 +22,6 @@ const necessaryDocumentsUSA = {
     criminalCheckApostille: 'Criminal Check Apostille',
     ssn: 'Social Security Card'
 };
-export type NecessaryDocumentsShortTerm = keyof typeof necessaryDocumentsShortTerm;
 const necessaryDocumentsShortTerm = {
     passport: 'Passport',
     recentPhoto: 'Recent Photo',

@@ -1,6 +1,6 @@
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { KintonePassword, KintoneUserName, VolunteerApplicationAppID, VolunteerApplicationMasterAppID } from '@/common/env';
+import { KintonePassword, KintoneUserName, VolunteerApplicationAppID, OnlineVolunteerApplicationAppID } from '@/common/env';
 import handleNullOrEmpty from '../hooks/handleNullOrEmpty';
 import logError from '@/common/logError';
 import { REST_OnlineVolunteerApplication, REST_SavedOnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
@@ -36,7 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 }
             });
             const resp2 = await client.record.getAllRecords<REST_SavedOnlineVolunteerApplication>({
-                app: VolunteerApplicationMasterAppID as string,
+                app: OnlineVolunteerApplicationAppID as string,
                 condition: `ref=${record['ref'].value}`
             });
             if (resp2.length === 0) {

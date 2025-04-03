@@ -2,7 +2,7 @@ import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import notificationApplicationUpdated from '../hooks/notification';
 import { REST_OnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
-import { VolunteerApplicationMasterAppID } from '@/common/env';
+import { OnlineVolunteerApplicationAppID } from '@/common/env';
 import logError from '@/common/logError';
 
 type Data = {
@@ -27,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 record: data
             });
             const applicationMasterRecord = await client.record.getRecord<REST_OnlineVolunteerApplication>({
-                app: VolunteerApplicationMasterAppID as string,
+                app: OnlineVolunteerApplicationAppID as string,
                 id: data['ref'].value
             });
             // const resp2 = await notificationApplicationUpdated(
@@ -38,7 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             // );
             if (applicationMasterRecord.record['formSubmission'].value.findIndex((arr) => arr == 'Personal Health Questionnaire') == -1) {
                 const resp3 = await client.record.updateRecord({
-                    app: VolunteerApplicationMasterAppID as string,
+                    app: OnlineVolunteerApplicationAppID as string,
                     id: data['ref'].value,
                     record: {
                         formSubmission: {

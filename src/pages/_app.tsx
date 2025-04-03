@@ -22,9 +22,6 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
     useEffect(() => {
         if (username && ref) initUser(username, ref);
     }, [username, ref]);
-    const user = useUserStore();
-    // console.log('hi');
-    console.log('pageProps', pageProps);
     const theme = pageProps.theme;
     // bg color change
     // TODO: temp disable

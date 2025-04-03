@@ -7,7 +7,7 @@ import { destroyCookie, parseCookies } from 'nookies';
 import postReview from '@/common/checklist/postReview';
 import { useDashboardUser } from '@/common/context/dashboardUser';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { KintoneUserName, KintonePassword, VolunteerApplicationAppID, VolunteerApplicationMasterAppID } from '@/common/env';
+import { KintoneUserName, KintonePassword, VolunteerApplicationAppID, OnlineVolunteerApplicationAppID } from '@/common/env';
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import { REST_OnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
 import ReactModal from 'react-modal';
@@ -139,7 +139,6 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
     );
     const knownAs = useUserStore((state) => state.knownAs);
     const all = useUserStore();
-    console.log('all', all);
     useEffect(() => {
         // allow scrolling on mobile
         if (window.screen.width < 768) document.body.style.overflow = 'scroll';
@@ -197,7 +196,6 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
     //                 }
     //             ]).animationEnd((i, o) => {
     //                 if (typeof i == 'number') {
-    //                     //console.log('time', (5 - i) * 2);
     //                     o.container.style.transition = `opacity 2s ${(5 - i) * 2}s ease-in-out`;
     //                     o.container.style.opacity = '0';
     //                 }
@@ -222,7 +220,6 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
     //                 }
     //             ]).animationEnd((i, o) => {
     //                 if (typeof i == 'number') {
-    //                     //console.log('time', (5 - i) * 2);
     //                     o.container.style.transition = `all 20s ${i == 0 ? 5 : 0}s ease-in-out`;
     //                     o.container.style.opacity = '0';
     //                     o.container.style.transform = 'translate(20vw, 20vh)';
@@ -450,7 +447,7 @@ export const getServerSideProps = (async (context) => {
         });
         let resp = await client.record
             .getRecord<REST_OnlineVolunteerApplication>({
-                app: VolunteerApplicationMasterAppID as string,
+                app: OnlineVolunteerApplicationAppID as string,
                 id: cookies.ref
             })
             .catch((e) => {
@@ -468,7 +465,7 @@ export const getServerSideProps = (async (context) => {
         const resp2 = await client.record
             .getAllRecords<REST_VolunteerApplicationForm>({
                 app: VolunteerApplicationAppID as string,
-                condition: `ref="${cookies.ref}" and isSubmitted in ("true")`
+                condition: `ref="${cookies.ref}" and currentStep = "Complete"`
             })
             .catch((e) => {
                 throw new Error('resp2:' + e);
@@ -478,7 +475,7 @@ export const getServerSideProps = (async (context) => {
         if (resp2.length > 0) {
             if (resp.record['formSubmission'].value.findIndex((arr) => arr == 'Application Form Completed') == -1) {
                 await client.record.updateRecord({
-                    app: VolunteerApplicationMasterAppID as string,
+                    app: OnlineVolunteerApplicationAppID as string,
                     id: cookies.ref,
                     record: {
                         formSubmission: { value: [...resp.record['formSubmission'].value, 'Application Form Completed'] }
@@ -486,7 +483,7 @@ export const getServerSideProps = (async (context) => {
                 });
                 resp = await client.record
                     .getRecord<REST_OnlineVolunteerApplication>({
-                        app: VolunteerApplicationMasterAppID as string,
+                        app: OnlineVolunteerApplicationAppID as string,
                         id: cookies.ref
                     })
                     .catch((e) => {
@@ -500,7 +497,7 @@ export const getServerSideProps = (async (context) => {
             ) {
                 await client.record
                     .updateRecord({
-                        app: VolunteerApplicationMasterAppID as string,
+                        app: OnlineVolunteerApplicationAppID as string,
                         id: cookies.ref,
                         record: {
                             status: { value: 'Complete Application Form' }
@@ -513,20 +510,7 @@ export const getServerSideProps = (async (context) => {
         }
         // if not yet completed the documents
         // documents submission
-        const type = resp.record['type'].value;
-        const office = resp.record['office'].value;
-        const documents = resp.record['documents'].value;
-        const requiredDocumentsCount = () => {
-            if (!type || !office) return '-';
-            if (office == 'USA') {
-                if (type == 'Short Term') return 6;
-                if (type == 'Long Term' || type == 'Zealous') return 7;
-            } else {
-                if (type == 'Short Term') return 5;
-                if (type == 'Long Term' || type == 'Zealous') return 6;
-            }
-        };
-        const isAllDocumentsSubmitted = documents.length == requiredDocumentsCount();
+        const isAllDocumentsSubmitted = resp.record['formSubmission'].value.includes('Necessary Documents');
         if (isAllDocumentsSubmitted) {
             // update status
             if (
@@ -535,7 +519,7 @@ export const getServerSideProps = (async (context) => {
             ) {
                 await client.record
                     .updateRecord({
-                        app: VolunteerApplicationMasterAppID as string,
+                        app: OnlineVolunteerApplicationAppID as string,
                         id: cookies.ref,
                         record: {
                             status: { value: 'Necessary Documents Submitted' }

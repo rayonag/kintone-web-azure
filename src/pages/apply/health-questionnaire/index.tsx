@@ -6,7 +6,7 @@ import HealthQuestionnaire from '@/features/common/forms/healthQuestionnaire';
 import {
     KintoneUserName,
     KintonePassword,
-    VolunteerApplicationMasterAppID,
+    OnlineVolunteerApplicationAppID,
     VolunteerApplicationAppID,
     PersonalHealthQuestionnaireAppID
 } from '@/common/env';
@@ -87,7 +87,7 @@ export const getServerSideProps = (async (context) => {
         });
         const resp = await client.record
             .getRecord<REST_OnlineVolunteerApplication>({
-                app: VolunteerApplicationMasterAppID as string,
+                app: OnlineVolunteerApplicationAppID as string,
                 id: cookies.ref
             })
             .catch((e) => {

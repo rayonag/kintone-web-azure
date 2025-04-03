@@ -16,7 +16,6 @@ const Header: FC<HeaderProps> = ({ isZealous }) => {
     const controlHeader = () => {
         if (typeof window !== 'undefined') {
             const currentScrollY = document.body.scrollTop || document.documentElement.scrollTop;
-            console.log('currentScrollY', currentScrollY);
             // top of the page
             if (currentScrollY < 0) {
                 setIsVisible(true);

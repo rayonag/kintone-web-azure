@@ -1,4 +1,4 @@
-import { KintonePassword, KintoneUserName, VolunteerApplicationMasterAppID } from '@/common/env';
+import { KintonePassword, KintoneUserName, OnlineVolunteerApplicationAppID } from '@/common/env';
 import logError from '@/common/logError';
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import type { NextApiRequest, NextApiResponse } from 'next';
@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 }
             });
             const recordArray = await client.record.getAllRecords({
-                app: VolunteerApplicationMasterAppID as string,
+                app: OnlineVolunteerApplicationAppID as string,
                 condition: `email="${username}" and password="${password}"`,
                 orderBy: 'ref desc'
             });

@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDashboardUser } from '@/common/context/dashboardUser';
-import { KintoneUserName, KintonePassword, VolunteerApplicationMasterAppID, VolunteerApplicationAppID } from '@/common/env';
+import { KintoneUserName, KintonePassword, OnlineVolunteerApplicationAppID, VolunteerApplicationAppID } from '@/common/env';
 import { REST_OnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
 import { KintoneRecordField, KintoneRestAPIClient } from '@kintone/rest-api-client';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
@@ -108,13 +108,12 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
 // Export the component for use in other files
 export default Page;
 
-type REST_TempVolunteerApplicationForm = REST_VolunteerApplicationForm & { keepingTempRecord: KintoneRecordField.RadioButton };
 type Repo = {
     isFirstTimeOnForm: boolean;
     type: string | null;
     formSubmitted: boolean;
     office: NationalOffice;
-    prefilledFormRecord: REST_TempVolunteerApplicationForm | null;
+    prefilledFormRecord: REST_VolunteerApplicationForm | null;
     submittedFormRecord: REST_VolunteerApplicationForm | null;
 };
 export const getServerSideProps = (async (context) => {
@@ -130,7 +129,7 @@ export const getServerSideProps = (async (context) => {
         });
         let resp = await client.record
             .getRecord<REST_OnlineVolunteerApplication>({
-                app: VolunteerApplicationMasterAppID as string,
+                app: OnlineVolunteerApplicationAppID as string,
                 id: cookies.ref
             })
             .catch((e) => {
@@ -139,36 +138,34 @@ export const getServerSideProps = (async (context) => {
         const resp2 = await client.record
             .getAllRecords<REST_SavedVolunteerApplicationForm>({
                 app: VolunteerApplicationAppID as string,
-                condition: `ref="${cookies.ref}" and isSubmitted in ("true")`
+                condition: `ref="${cookies.ref}" and currentStep = "Complete"`
             })
             .catch((e) => {
                 throw new Error('resp2:' + e);
             });
         const resp3 = await client.record
-            .getAllRecords<REST_TempVolunteerApplicationForm>({
-                app: 235, //TempVolunteerApplicationAppID as string,
-                condition: `ref="${cookies.ref}" and keepingTempRecord in ("true")`,
-                orderBy: '$id desc'
+            .getAllRecords<REST_SavedVolunteerApplicationForm>({
+                app: VolunteerApplicationAppID as string,
+                condition: `ref="${cookies.ref}" and currentStep != "Complete"`
             })
             .catch((e) => {
-                throw new Error('resp3:' + e);
+                throw new Error('resp2:' + e);
             });
-        let prefilledFormRecord = resp3[0] ? await resp3[0] : null;
+        let prefilledFormRecord = resp3[0] ? resp3[0] : null;
         // check if form is already submitted
         if (resp2.length > 0) {
             if (resp.record['formSubmission'].value.findIndex((arr) => arr == 'Application Form Completed') == -1) {
                 // check if form is submitted
                 if (resp2[0]) {
                     await client.record.updateRecord({
-                        app: VolunteerApplicationMasterAppID as string,
+                        app: OnlineVolunteerApplicationAppID as string,
                         id: cookies.ref,
                         record: {
-                            formSubmission: { value: [...resp.record['formSubmission'].value, 'Application Form Completed'] },
-                            status: { value: 'Complete Application Form' }
+                            formSubmission: { value: [...resp.record['formSubmission'].value, 'Application Form Completed'] }
                         }
                     });
                     resp = await client.record.getRecord<REST_OnlineVolunteerApplication>({
-                        app: VolunteerApplicationMasterAppID as string,
+                        app: OnlineVolunteerApplicationAppID as string,
                         id: cookies.ref
                     });
                 }

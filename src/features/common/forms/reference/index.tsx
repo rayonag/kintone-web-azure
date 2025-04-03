@@ -63,13 +63,11 @@ const ReferenceForm = () => {
     }, []);
     const validate = async () => {
         const values = getValues();
-        console.log('values', values);
         const isValid = await trigger(ReferenceFormFields[step] as any); // TODO: review type
         if (isValid) return true;
         else {
             const firstErrorField = Object.keys(formatError)[0];
             const errorElement = document.querySelector(`[name="${firstErrorField}"]`);
-            console.log('errorElement', firstErrorField);
             if (errorElement) {
                 errorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
@@ -86,7 +84,6 @@ const ReferenceForm = () => {
     const router = useRouter();
     useEffect(() => {
         const query = router.query;
-        console.log('query', query);
         setValue('ref', query.ref as string);
         setValue('office', query.office as string);
         setValue('applicantName', query.name as string);

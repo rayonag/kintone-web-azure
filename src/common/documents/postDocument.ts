@@ -1,7 +1,9 @@
+import { ReqData } from '@/pages/api/reference/updateFileKintone';
 import logError from '../logError';
+import { NecessaryDocuments } from '@/constants/necessaryDocuments';
 
 type postDocumentProps = {
-    document: string;
+    document: NecessaryDocuments;
     formData: any;
     applicationRef: string;
     userRef: string;
@@ -17,12 +19,6 @@ const postDocument: (props: postDocumentProps) => any = async ({ document, formD
         if (!fileKey) throw new Error('Could not get a fileKey');
 
         // update kintone record: volunteer application form
-        type ReqData = {
-            userApplicationRef: string;
-            userRef: string;
-            field: string;
-            fileKey: string;
-        };
         const updateBody: ReqData = {
             userApplicationRef: applicationRef,
             userRef: userRef,

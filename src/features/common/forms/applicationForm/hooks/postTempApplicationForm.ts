@@ -33,8 +33,8 @@ const postTempApplicationForm = async (data: ApplicationFormType, ref: string | 
                         birthday: { value: convertDate(data.birthday) },
                         ssnNumber: { value: data.office.ssnNumber },
                         sex: { value: data.sex },
-                        maritalStatus: { value: data.maritalStatus },
-                        spouseFullName: { value: data.spouseFullName },
+                        maritalStatus: { value: data.spouse.maritalStatus },
+                        spouseFullName: { value: data.spouse.spouseFullName },
                         childrenNames: { value: data.childrenNames },
                         hasFamilySupport: { value: data.hasFamilySupport },
                         hasFamilySupportExplain: { value: data.hasFamilySupportExplain }
@@ -235,14 +235,12 @@ const postTempApplicationForm = async (data: ApplicationFormType, ref: string | 
                     if (isTemporary) {
                         return {
                             currentStep: { value: step },
-                            ref: { value: parseInt(data.ref) },
-                            keepingTempRecord: { value: 'true' }
+                            ref: { value: parseInt(data.ref) }
                         };
                     } else
                         return {
-                            currentStep: { value: step },
-                            ref: { value: parseInt(data.ref) },
-                            keepingTempRecord: { value: 'false' }
+                            currentStep: { value: 'Complete' },
+                            ref: { value: parseInt(data.ref) }
                         };
                 default:
                     return {};

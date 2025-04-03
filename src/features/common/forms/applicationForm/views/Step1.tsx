@@ -21,7 +21,7 @@ type Step1Props = {
     control: Control<ApplicationFormType>;
 };
 const Step1: FC<Step1Props> = ({ register, errors, getValues, t, control }) => {
-    const maritalStatusField = useWatch({ control, name: 'maritalStatus' });
+    const maritalStatusField = useWatch({ control, name: 'spouse.maritalStatus' });
     const isMarried = maritalStatusField === 'Married';
     const hasChildrenField = useWatch({ control, name: 'hasChildren' });
     const hasChildren = hasChildrenField === 'Yes';
@@ -84,15 +84,15 @@ const Step1: FC<Step1Props> = ({ register, errors, getValues, t, control }) => {
                     <Select
                         label={t('maritalStatus.title')}
                         options={MaritalStatus(t)}
-                        register={register('maritalStatus')}
-                        error={errors.maritalStatus || undefined}
+                        register={register('spouse.maritalStatus')}
+                        error={errors.spouse?.maritalStatus || undefined}
                     />
                     {isMarried && (
                         <Input
                             label={t('spouseFullName')}
-                            register={register('spouseFullName')}
+                            register={register('spouse.spouseFullName')}
                             placeholder={t('spouseFullName')}
-                            error={errors.spouseFullName || undefined}
+                            error={errors.spouse?.spouseFullName || undefined}
                         />
                     )}
                 </Row>

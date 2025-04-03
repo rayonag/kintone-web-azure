@@ -1,6 +1,6 @@
 'use client';
 
-import { KintoneUserName, KintonePassword, VolunteerApplicationMasterAppID, PersonalHealthQuestionnaireAppID } from '@/common/env';
+import { KintoneUserName, KintonePassword, OnlineVolunteerApplicationAppID, PersonalHealthQuestionnaireAppID } from '@/common/env';
 import { REST_OnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import { InferGetServerSidePropsType, GetServerSideProps } from 'next';

@@ -8,11 +8,9 @@ type HandleNullOrEmptyProps = {
     errorMessage: string;
 };
 const handleNullOrEmpty: (props: HandleNullOrEmptyProps) => NextApiResponse<Data> = ({ res, errorMessage }) => {
-    res.statusCode = 500;
-    res.json({
+    res.status(500).json({
         res: errorMessage
     });
-    res.end();
-    return res;
+    return res.end();
 };
 export default handleNullOrEmpty;

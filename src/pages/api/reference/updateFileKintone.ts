@@ -1,73 +1,47 @@
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { KintonePassword, KintoneUserName, VolunteerApplicationAppID, VolunteerApplicationMasterAppID } from '@/common/env';
+import { KintonePassword, KintoneUserName, VolunteerApplicationAppID, OnlineVolunteerApplicationAppID } from '@/common/env';
 import handleNullOrEmpty from '../hooks/handleNullOrEmpty';
 import notificationApplicationUpdated, { updated } from '../hooks/notification';
 import logError from '@/common/logError';
-import { REST_VolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
+import { REST_SavedVolunteerApplicationForm, REST_VolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
 import { REST_OnlineVolunteerApplication, REST_SavedOnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
+import {
+    Necessary_Documents,
+    Necessary_Documents_ShortTerm,
+    Necessary_Documents_ShortTerm_USA,
+    Necessary_Documents_USA,
+    NecessaryDocuments
+} from '@/constants/necessaryDocuments';
 
 type Data = {
     res?: any;
     resp2?: any;
 };
-const necessaryDocuments = {
-    passport: 'Passport',
-    recentPhoto: 'Recent Photo',
-    medicalStatusForm: 'Medical Status Form',
-    doctorLetter: "Doctor's Letter",
-    criminalCheck: 'Criminal Check',
-    criminalCheckApostille: 'Criminal Check Apostille'
-};
-const necessaryDocumentsUSA = {
-    passport: 'Passport',
-    recentPhoto: 'Recent Photo',
-    medicalStatusForm: 'Medical Status Form',
-    doctorLetter: "Doctor's Letter",
-    criminalCheck: 'Criminal Check',
-    criminalCheckApostille: 'Criminal Check Apostille',
-    ssn: 'Copy of Social Security Card (US citizens)'
-};
-const necessaryDocumentsShortTerm = {
-    passport: 'Passport',
-    recentPhoto: 'Recent Photo',
-    medicalStatusForm: 'Medical Status Form',
-    doctorLetter: "Doctor's Letter"
-};
-const necessaryDocumentsShortTermUSA = {
-    passport: 'Passport',
-    recentPhoto: 'Recent Photo',
-    medicalStatusForm: 'Medical Status Form',
-    doctorLetter: "Doctor's Letter",
-    ssn: 'Copy of Social Security Card (US citizens)'
+
+export type ReqData = {
+    userApplicationRef: string;
+    userRef: string;
+    field: NecessaryDocuments;
+    fileKey: string;
 };
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
     if (req.method === 'POST') {
         try {
-            type ReqData = {
-                userApplicationRef: string;
-                userRef: string;
-                field: keyof typeof necessaryDocuments;
-                fileKey: string;
-            };
             const data: ReqData | undefined = JSON.parse(req.body);
             if (!data) {
-                handleNullOrEmpty({ res: res, errorMessage: 'No data' });
-                return;
+                return handleNullOrEmpty({ res: res, errorMessage: 'No data' });
             }
             const userApplicationRef = data.userApplicationRef;
             const userRef = data.userRef;
             const field = data.field;
             const fileKey = data.fileKey;
             if (!userApplicationRef) {
-                handleNullOrEmpty({ res: res, errorMessage: 'No userApplicationRef' });
-                return;
+                return handleNullOrEmpty({ res: res, errorMessage: 'No userApplicationRef' });
             } else if (!field) {
-                handleNullOrEmpty({ res: res, errorMessage: 'No field' });
-                return;
+                return handleNullOrEmpty({ res: res, errorMessage: 'No field' });
             } else if (!fileKey) {
-                handleNullOrEmpty({ res: res, errorMessage: 'No fileKey' });
-                return;
+                return handleNullOrEmpty({ res: res, errorMessage: 'No fileKey' });
             }
             // update kintone record
             const client = new KintoneRestAPIClient({
@@ -95,54 +69,51 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     }
                 }
             });
-            // TODO: come up with a better way to handle this
-            const oldRecord = await client.record
+            // update formSubmission, 'Necessary Documents', if all documents are submitted
+            const dashboardRecord = await client.record
                 .getRecord<REST_OnlineVolunteerApplication>({
-                    app: VolunteerApplicationMasterAppID as string,
+                    app: OnlineVolunteerApplicationAppID as string,
                     id: userRef
                 })
+                .then((res) => res.record)
                 .catch((e) => {
-                    throw new Error('oilRecord:' + e);
+                    throw new Error('oldRecord:' + e);
                 });
-            const documents = oldRecord.record['documents'].value as string[];
-            if (!documents.includes(updated[field])) {
-                const updatedDocuments = [...(oldRecord.record['documents'].value as string[]), updated[field]];
-                const necDoc =
-                    oldRecord.record['office'].value === 'USA'
-                        ? oldRecord.record['type'].value == 'Short Term'
-                            ? necessaryDocumentsShortTermUSA
-                            : necessaryDocumentsUSA
-                        : oldRecord.record['type'].value == 'Short Term'
-                        ? necessaryDocumentsShortTerm
-                        : necessaryDocuments;
-                const recordObj = {
-                    documents: {
-                        value: updatedDocuments
+            if (!dashboardRecord['formSubmission'].value.includes('Necessary Documents')) {
+                const applicationFormRecord = await client.record
+                    .getRecord<REST_SavedVolunteerApplicationForm>({
+                        app: VolunteerApplicationAppID as string,
+                        id: userApplicationRef
+                    })
+                    .then((res) => res.record);
+                const necessaryDocuments = (() => {
+                    if (dashboardRecord['office'].value === 'USA') {
+                        return dashboardRecord['type'].value == 'Short Term' ? Necessary_Documents_ShortTerm_USA : Necessary_Documents_USA;
+                    } else {
+                        return dashboardRecord['type'].value == 'Short Term' ? Necessary_Documents_ShortTerm : Necessary_Documents;
                     }
-                };
-                if (updatedDocuments.length === Object.keys(necDoc).length) {
-                    // update status to 'documentSubmitted' if all documents are submitted
-                    Object.assign(recordObj, {
-                        status: {
-                            value: 'Necessary Documents Submitted'
+                })();
+                if (necessaryDocuments.every((doc) => applicationFormRecord[doc].value[0])) {
+                    await client.record.updateRecord({
+                        app: OnlineVolunteerApplicationAppID as string,
+                        id: userRef,
+                        record: {
+                            formSubmission: {
+                                value: ['Necessary Documents', ...dashboardRecord['formSubmission'].value]
+                            }
                         }
                     });
                 }
-                await client.record.updateRecord({
-                    app: VolunteerApplicationMasterAppID as string,
-                    id: userRef,
-                    record: recordObj
-                });
+                const newRecord = await client.record
+                    .getRecord<REST_SavedOnlineVolunteerApplication>({
+                        app: OnlineVolunteerApplicationAppID as string,
+                        id: userRef
+                    })
+                    .catch((e) => {
+                        throw new Error('newRecord:' + e);
+                    });
+                const resp2 = await notificationApplicationUpdated(res, field as any, newRecord.record, 'documentSubmission');
             }
-            const newRecord = await client.record
-                .getRecord<REST_SavedOnlineVolunteerApplication>({
-                    app: VolunteerApplicationMasterAppID as string,
-                    id: userRef
-                })
-                .catch((e) => {
-                    throw new Error('newRecord:' + e);
-                });
-            const resp2 = await notificationApplicationUpdated(res, field as any, newRecord.record, 'documentSubmission');
             res.end();
             return;
         } catch (e: any) {

@@ -1,6 +1,6 @@
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { VolunteerApplicationMasterAppID } from '@/common/env';
+import { OnlineVolunteerApplicationAppID } from '@/common/env';
 import logError from '@/common/logError';
 
 type Data = {
@@ -11,7 +11,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     if (req.method === 'POST') {
         try {
             const data = req.body;
-            console.log('data', data);
             const client = new KintoneRestAPIClient({
                 baseUrl: 'https://bfp.kintone.com',
                 // Use password authentication
@@ -25,7 +24,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 app: 82,
                 condition: `ref="${data['ref'].value}"`
             });
-            console.log('recordExists', recordExists);
             if (recordExists.length > 0) {
                 // update the record
                 const updateRecord = await client.record.updateRecord({
@@ -33,17 +31,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     id: recordExists[0].$id.value as any, // review type
                     record: data
                 });
-                console.log('updateRecord', updateRecord);
             } else {
                 const addRecord = await client.record.addRecord({
                     app: 82,
                     record: data
                 });
-                console.log('addRecord', addRecord);
             }
             // update Online Volunteer Application app
             const resp = await client.record.updateRecord({
-                app: VolunteerApplicationMasterAppID as string,
+                app: OnlineVolunteerApplicationAppID as string,
                 id: data['ref'].value,
                 record: {
                     fop: {

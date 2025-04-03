@@ -1,6 +1,6 @@
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { KintonePassword, KintoneUserName, VolunteerApplicationMasterAppID } from '@/common/env';
+import { KintonePassword, KintoneUserName, OnlineVolunteerApplicationAppID } from '@/common/env';
 import handleNullOrEmpty from '../../hooks/handleNullOrEmpty';
 import logError from '@/common/logError';
 import { REST_OnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
@@ -34,7 +34,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 }
             });
             const resp = await client.record.getRecord<REST_OnlineVolunteerApplication>({
-                app: VolunteerApplicationMasterAppID as string,
+                app: OnlineVolunteerApplicationAppID as string,
                 id: userRef
             });
             if (resp.record['formSubmission'].value.findIndex((arr) => arr == 'Personal Health Questionaire')) {
@@ -46,7 +46,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             }
             // now only Personal Health Questionaire in use
             const resp2 = await client.record.updateRecord({
-                app: VolunteerApplicationMasterAppID as string,
+                app: OnlineVolunteerApplicationAppID as string,
                 id: userRef,
                 record: {
                     formSubmission: { value: [...resp.record['formSubmission'].value, 'Personal Health Questionaire'] }

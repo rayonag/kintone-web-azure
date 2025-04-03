@@ -2,7 +2,7 @@ import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { notificationReferenceSubmitted } from '../hooks/notification';
 import { REST_SavedOnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
-import { KintonePassword, KintoneUserName, ReferenceFormAppID, VolunteerApplicationMasterAppID } from '@/common/env';
+import { KintonePassword, KintoneUserName, ReferenceFormAppID, OnlineVolunteerApplicationAppID } from '@/common/env';
 import logError from '@/common/logError';
 
 type Data = {
@@ -25,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             // get applicant record
             const resp = await client.record
                 .getRecord<REST_SavedOnlineVolunteerApplication>({
-                    app: VolunteerApplicationMasterAppID as string,
+                    app: OnlineVolunteerApplicationAppID as string,
                     id: data['ref'].value
                 })
                 .catch((e) => {
@@ -66,7 +66,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             // update reference count
             const resp5 = await client.record
                 .updateRecord({
-                    app: VolunteerApplicationMasterAppID as string,
+                    app: OnlineVolunteerApplicationAppID as string,
                     id: resp.record['$id'].value as string,
                     record: {
                         referenceCount: { value: resp4.length }

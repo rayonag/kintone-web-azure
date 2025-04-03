@@ -10,9 +10,7 @@ const postApplicationForm = async (data: ApplicationFormType, ref: string | unde
     const nullIfZero = (value: number) => (value === 0 ? null : value);
     try {
         const record: Partial<any> = {
-            // isSubmitted
-            isSubmitted: { value: true },
-
+            currentStep: { value: 'Complete' },
             ref: { value: parseInt(data.ref) },
             office: { value: data.office.office },
             type: { value: data.type.type },
@@ -33,7 +31,8 @@ const postApplicationForm = async (data: ApplicationFormType, ref: string | unde
             birthday: { value: DateTime.fromFormat(data.birthday, 'dd/MM/yyyy').toISODate() },
             ssnNumber: { value: data.office.ssnNumber },
             sex: { value: data.sex },
-            maritalStatus: { value: data.maritalStatus },
+            maritalStatus: { value: data.spouse.maritalStatus },
+            spouseFullName: { value: data.spouse.spouseFullName },
             childrenNames: { value: data.childrenNames },
             hasFamilySupport: { value: data.hasFamilySupport },
             hasFamilySupportExplain: { value: data.hasFamilySupportExplain },

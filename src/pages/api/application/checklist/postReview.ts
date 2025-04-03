@@ -1,6 +1,6 @@
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { KintonePassword, KintoneUserName, VolunteerApplicationMasterAppID } from '@/common/env';
+import { KintonePassword, KintoneUserName, OnlineVolunteerApplicationAppID } from '@/common/env';
 import handleNullOrEmpty from '../../hooks/handleNullOrEmpty';
 import logError from '@/common/logError';
 
@@ -39,7 +39,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             });
             // field value should be 'ok'
             const resp = await client.record.updateRecord({
-                app: VolunteerApplicationMasterAppID as string,
+                app: OnlineVolunteerApplicationAppID as string,
                 id: userRef,
                 record: {
                     [field]: {

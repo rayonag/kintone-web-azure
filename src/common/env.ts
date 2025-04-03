@@ -6,10 +6,9 @@ export const KintonePassword = process.env.NEXT_PUBLIC_KINTONE_PASSWORD;
 // kintone app
 export const VolunteerProfieAppID = process.env.NEXT_PUBLIC_VOLUNTEER_PROFILE_APPID;
 export const VolunteerApplicationAppID = process.env.NEXT_PUBLIC_VOLUNTEER_APPLICATION_FORM_APPID;
-export const TempVolunteerApplicationAppID = process.env.NEXT_PUBLIC_TEMP_VOLUNTEER_APPLICATION_FORM_APPID;
 export const PersonalHealthQuestionnaireAppID = process.env.NEXT_PUBLIC_PERSONAL_HEALTH_QUESTIONNAIRE_APPID;
 export const ReferenceFormAppID = process.env.NEXT_PUBLIC_VOLUNTEER_REFERENCE_FORM_APPID;
-export const VolunteerApplicationMasterAppID = process.env.NEXT_PUBLIC_VOLUNTEER_APPLICATION_MASTER_APPID;
+export const OnlineVolunteerApplicationAppID = process.env.NEXT_PUBLIC_VOLUNTEER_APPLICATION_MASTER_APPID;
 export const ErrorLogsAppID = process.env.NEXT_PUBLIC_ERROR_LOGS_APPID;
 export const ErrorLogsAPIKey = process.env.NEXT_PUBLIC_ERROR_LOGS_APIKEY;
 export const TimesheetAppID = process.env.NEXT_PUBLIC_TIMESHEET_APPID;

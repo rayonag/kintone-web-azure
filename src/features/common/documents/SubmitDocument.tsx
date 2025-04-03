@@ -4,14 +4,14 @@ import Link from 'next/link';
 import { useLoading } from '@/common/context/loading';
 import postDocument from '@/common/documents/postDocument';
 import { useRouter } from 'next/router';
-import { NecessaryDocuments, NecessaryDocumentsShortTerm, NecessaryDocumentsUSA } from '@/pages/api/hooks/notification';
 import { useShallow } from 'zustand/react/shallow';
 import useUserStore from '../store';
 import Upload from '@/components/icons/Upload';
 import Trash from '@/components/icons/Trash';
+import { NecessaryDocuments } from '@/constants/necessaryDocuments';
 
 type SubmitDocumentProps = {
-    document: NecessaryDocuments | NecessaryDocumentsUSA | NecessaryDocumentsShortTerm;
+    document: NecessaryDocuments;
     title: string;
     Help?: FC<any>;
 };
@@ -44,7 +44,7 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
         if (file) {
             if (file.size > 10 * 1024 * 1024) {
                 // 10MB in bytes
-                setErrorMessage('Error: File size should be 10MB or less.');
+                setErrorMessage('Error: File size must be 10MB or less.');
             } else {
                 setErrorMessage(null);
                 handleUploadFiles(file);
@@ -78,7 +78,6 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
                 return;
             }
         } catch (e) {
-            console.log(e);
             alert('Something went wrong. Could not upload your document.');
             setIsLoading(false);
             return;

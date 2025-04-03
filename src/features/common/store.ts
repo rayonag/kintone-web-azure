@@ -53,7 +53,6 @@ const useUserStore = create<State & Action>((set, get) => ({
             body: JSON.stringify({ ref: ref })
         });
         const user = await res.json();
-        console.log('user', user);
         const userApplicationRef = await getUserApplicationRef({ ref: ref });
         set({
             username: username,
