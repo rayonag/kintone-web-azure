@@ -408,6 +408,14 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                                         <button className="btn" onClick={handleLogout}>
                                             Log out
                                         </button>
+                                        <footer className="text-center mt-4 text-sm text-gray-200">
+                                            <div className="flex flex-col items-center justify-center mb-2">
+                                                <Link href="/apply/privacy-policy" className="link">
+                                                    Privacy Policy
+                                                </Link>
+                                            </div>
+                                            &copy; {new Date().getFullYear()} Bridges for Peace. All rights reserved.
+                                        </footer>
                                     </div>
                                 </>
                             ) : (
