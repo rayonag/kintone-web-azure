@@ -357,7 +357,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                                         {type == 'Zealous' ? (
                                             <>
                                                 <Link
-                                                    href="https://zealous82.bridgesforpeace.com/about/"
+                                                    href="https://www.bridgesforpeace.com/zealous82/about_z82"
                                                     className="btn flex"
                                                     target="_blank"
                                                     onClick={async () => await handleCheckListClick('reviewAbout', userRef)}
@@ -366,7 +366,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                                                     <ArrowUpRight />
                                                 </Link>
                                                 <Link
-                                                    href="https://zealous82.bridgesforpeace.com/zproject-faq/"
+                                                    href="https://www.bridgesforpeace.com/zealous82/zealous-zproject-home#faq"
                                                     className="btn flex"
                                                     target="_blank"
                                                     onClick={async () => await handleCheckListClick('reviewFaq', userRef)}
@@ -378,7 +378,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                                         ) : (
                                             <>
                                                 <Link
-                                                    href="https://www.bridgesforpeace.com/meet-us/our-vision/"
+                                                    href="https://www.bridgesforpeace.com/about"
                                                     className="btn flex"
                                                     target="_blank"
                                                     onClick={async () => await handleCheckListClick('reviewAbout', userRef)}
@@ -387,7 +387,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                                                     <ArrowUpRight />
                                                 </Link>
                                                 <Link
-                                                    href="https://www.bridgesforpeace.com/get-involved/volunteer/faqs/"
+                                                    href="https://www.bridgesforpeace.com/volunteer#faq"
                                                     className="btn flex"
                                                     target="_blank"
                                                     onClick={async () => await handleCheckListClick('reviewFaq', userRef)}

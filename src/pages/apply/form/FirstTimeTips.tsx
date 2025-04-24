@@ -267,7 +267,7 @@ const TermsAndConditions = (props: { type: string | null }) => {
                         </div>
                         <div className="mb-3">
                             Remember you can find more details about the timing and process on the{' '}
-                            <Link className="text-blue-500 underline" href="https://zealous82.bridgesforpeace.com/apply/">
+                            <Link className="text-blue-500 underline" href="https://www.bridgesforpeace.com/zealous82/zproject_z82">
                                 apply page of the website.
                             </Link>
                         </div>

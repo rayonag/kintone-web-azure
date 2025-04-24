@@ -36,7 +36,7 @@ const Helper: React.FC<HelperProps> = ({ currentStep, userRef, isModalOpen, setI
                     <>
                         <Link
                             className="text-blue-500 underline"
-                            href="https://zealous82.bridgesforpeace.com/about/"
+                            href="https://www.bridgesforpeace.com/zealous82/about_z82"
                             onClick={async () => await handleCheckListClick('reviewAbout', userRef)}
                             target="_blank"
                         >
@@ -45,7 +45,7 @@ const Helper: React.FC<HelperProps> = ({ currentStep, userRef, isModalOpen, setI
                         and{' '}
                         <Link
                             className="text-blue-500 underline"
-                            href="https://zealous82.bridgesforpeace.com/zproject-faq/"
+                            href="https://www.bridgesforpeace.com/zealous82/zealous-zproject-home#faq"
                             onClick={async () => await handleCheckListClick('reviewFaq', userRef)}
                             target="_blank"
                         >
@@ -56,7 +56,7 @@ const Helper: React.FC<HelperProps> = ({ currentStep, userRef, isModalOpen, setI
                     <>
                         <Link
                             className="text-blue-500 underline"
-                            href="https://www.bridgesforpeace.com/meet-us/our-vision/"
+                            href="https://www.bridgesforpeace.com/about"
                             onClick={async () => await handleCheckListClick('reviewAbout', userRef)}
                             target="_blank"
                         >
@@ -65,7 +65,7 @@ const Helper: React.FC<HelperProps> = ({ currentStep, userRef, isModalOpen, setI
                         and{' '}
                         <Link
                             className="text-blue-500 underline"
-                            href="https://www.bridgesforpeace.com/get-involved/volunteer/faqs/"
+                            href="https://www.bridgesforpeace.com/volunteer#faq/"
                             onClick={async () => await handleCheckListClick('reviewFaq', userRef)}
                             target="_blank"
                         >
