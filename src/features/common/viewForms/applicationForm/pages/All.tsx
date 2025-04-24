@@ -114,7 +114,7 @@ const All: FC<AllProps> = ({ record }) => {
                 </Text>
                 <Text style={applicationFormPageStyle.row}>
                     Passport issued: (Day/Month/Year){'  '}
-                    <Text style={applicationFormPageStyle.underline}>{record['passportIssuedDate'].value}</Text>
+                    <Text style={applicationFormPageStyle.underline}>{record['datePassportIssued'].value}</Text>
                     Passport expiration: (Day/Month/Year){'  '}
                     <Text style={applicationFormPageStyle.underline}>{record['passportExpiration'].value}</Text>
                 </Text>

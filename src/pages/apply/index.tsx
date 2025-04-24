@@ -25,6 +25,8 @@ import Vara from 'vara';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
+import Typewriter from 'typewriter-effect';
+
 // application steps that matches the kintone app
 export type ApplicationStepsMasterApp =
     | 'Applying'
@@ -261,6 +263,37 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
             </motion.div>
         );
     };
+
+    const WelcomeText = () => {
+        const [isOnEffect, setIsOnEffect] = useState(true);
+        return (
+            <div className="text-xl my-8">
+                {username && (
+                    <>
+                        {isOnEffect ? (
+                            <Typewriter
+                                options={{ delay: 75 }}
+                                onInit={(typewriter) => {
+                                    typewriter
+                                        .pauseFor(500)
+                                        .typeString(`Welcome${currentStep != 'reviewWebsite' && ' back'} ${knownAs || name || ''}!`)
+                                        .start()
+                                        .pauseFor(500)
+                                        .callFunction(() => {
+                                            setIsOnEffect(false);
+                                        });
+                                }}
+                            />
+                        ) : (
+                            <>
+                                Welcome{currentStep != 'reviewWebsite' && ' back'} {knownAs || name || ''}!<span className="w-1 opacity-0">|</span>
+                            </>
+                        )}
+                    </>
+                )}
+            </div>
+        );
+    };
     return (
         <>
             <Modal isVisible={isZealousModalOpen} onClose={() => setIsZealousModalOpen(false)}>
@@ -320,12 +353,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                                                 </div>
                                             </div>
                                         )}
-                                        <div>
-                                            <h1 className="text-xl my-8">
-                                                Welcome{currentStep != 'reviewWebsite' && ' back'} <span>{knownAs || name || ''}</span>!
-                                                {/* TODO: review welcome message */}
-                                            </h1>
-                                        </div>
+                                        <WelcomeText />
                                         {type == 'Zealous' ? (
                                             <>
                                                 <Link
