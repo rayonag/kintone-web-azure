@@ -26,6 +26,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 import Typewriter from 'typewriter-effect';
+import ReferenceProgress from '@/components/modal/ReferenceProgress';
 
 // application steps that matches the kintone app
 export type ApplicationStepsMasterApp =
@@ -75,6 +76,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
     const [isLoaded, setIsLoaded] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isZealousModalOpen, setIsZealousModalOpen] = useState(false);
+    const [isReferenceModalOpen, setIsReferenceModalOpen] = useState(false);
     const dashboardUser = useDashboardUser();
     const userRef = dashboardUser.ref;
     useEffect(() => {
@@ -152,85 +154,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
         else if (window.screen.width < 768) document.body.style.overflow = 'scroll';
         else document.body.style.overflow = 'visible';
     }, [isModalOpen, isZealousModalOpen]);
-    // function VaraText() {
-    //     let fontSize = 72;
-    //     if (window.screen.width < 700) fontSize = 32;
-    //     else if (window.screen.width < 1200) fontSize = 56;
-    //     useEffect(() => {
-    //         if (type == 'Zealous')
-    //             new Vara('#vara-container', 'fonts/test4.json', [
-    //                 {
-    //                     text: 'Zealous 8:2',
-    //                     fontSize: fontSize,
-    //                     strokeWidth: 1.5,
-    //                     color: '#fff',
-    //                     delay: 20000,
-    //                     textAlign: 'center'
-    //                 },
-    //                 {
-    //                     text: 'Thus says the Lord of hosts:',
-    //                     fontSize: fontSize * 0.85,
-    //                     strokeWidth: 1.5,
-    //                     color: '#fff',
-    //                     delay: 1000,
-    //                     textAlign: 'center'
-    //                 },
-    //                 {
-    //                     text: '"I am zealous for Zion with great zeal;',
-    //                     fontSize: fontSize * 0.85,
-    //                     strokeWidth: 1.5,
-    //                     color: '#fff',
-    //                     textAlign: 'center'
-    //                 },
-    //                 {
-    //                     text: 'with great fervor I am zealous for her."',
-    //                     fontSize: fontSize * 0.85,
-    //                     strokeWidth: 1.5,
-    //                     color: '#fff',
-    //                     textAlign: 'center'
-    //                 },
-    //                 {
-    //                     text: 'Zechariah 8:2',
-    //                     fontSize: fontSize * 0.85,
-    //                     strokeWidth: 1.5,
-    //                     color: '#fff',
-    //                     textAlign: 'center'
-    //                 }
-    //             ]).animationEnd((i, o) => {
-    //                 if (typeof i == 'number') {
-    //                     o.container.style.transition = `opacity 2s ${(5 - i) * 2}s ease-in-out`;
-    //                     o.container.style.opacity = '0';
-    //                 }
-    //             });
-    //         else
-    //             new Vara('#vara-container', 'fonts/test4.json', [
-    //                 {
-    //                     text: 'Bridges for Peace',
-    //                     fontSize: fontSize,
-    //                     strokeWidth: 1,
-    //                     color: '#fff',
-    //                     delay: 200,
-    //                     textAlign: 'center'
-    //                 },
-    //                 {
-    //                     text: '...Your Israel Connection',
-    //                     fontSize: fontSize * 0.85,
-    //                     strokeWidth: 1,
-    //                     delay: 5000,
-    //                     color: '#fff',
-    //                     textAlign: 'center'
-    //                 }
-    //             ]).animationEnd((i, o) => {
-    //                 if (typeof i == 'number') {
-    //                     o.container.style.transition = `all 20s ${i == 0 ? 5 : 0}s ease-in-out`;
-    //                     o.container.style.opacity = '0';
-    //                     o.container.style.transform = 'translate(20vw, 20vh)';
-    //                 }
-    //             });
-    //     }, []);
 
-    //     return <div id="vara-container" className="min-w-[80%] pt-[20vh]"></div>;
-    // }
     interface ModalProps {
         isVisible: boolean;
         onClose: () => void;
@@ -423,6 +347,16 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                                             </Link>
                                             {repo?.allDocumentsSubmitted && <Check />}
                                         </div>
+                                        <div className="relative flex items-center">
+                                            <ReferenceProgress
+                                                referenceCount={repo?.referenceCount || 0}
+                                                referenceRequired={type == 'Short Term' ? 3 : 4}
+                                                isModalOpen={isReferenceModalOpen}
+                                                setIsModalOpen={setIsReferenceModalOpen}
+                                                buttonProps={buttonProps('submitApplication')}
+                                            />
+                                            {repo?.referenceCount == (type == 'Short Term' ? 3 : 4) && <Check />}
+                                        </div>
                                         <Helper
                                             currentStep={currentStep}
                                             userRef={userRef}
@@ -469,6 +403,7 @@ type Repo = {
     isComplete: boolean;
     financialObligationSubmitted: boolean;
     isZealous: boolean;
+    referenceCount: number;
 };
 export const getServerSideProps = (async (context) => {
     try {
@@ -577,7 +512,8 @@ export const getServerSideProps = (async (context) => {
             allDocumentsSubmitted: isAllDocumentsSubmitted,
             isComplete: resp.record['isComplete'].value == 'true' || false,
             financialObligationSubmitted: resp3.length > 0 ? true : false,
-            isZealous: resp.record['type'].value == 'Zealous'
+            isZealous: resp.record['type'].value == 'Zealous',
+            referenceCount: parseInt(resp.record['referenceCount'].value) || 0
         };
 
         // Pass data to the page via props
