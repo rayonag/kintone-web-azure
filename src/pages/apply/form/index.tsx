@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDashboardUser } from '@/common/context/dashboardUser';
+import { usePageTransition } from '@/common/context/pageTransition';
 import { KintoneUserName, KintonePassword, OnlineVolunteerApplicationAppID, VolunteerApplicationAppID } from '@/common/env';
 import { REST_OnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
 import { KintoneRecordField, KintoneRestAPIClient } from '@kintone/rest-api-client';
@@ -22,6 +23,7 @@ import dynamic from 'next/dynamic';
 
 // Dynamically import PDFDownloadLink to ensure it is only loaded on the client side
 const PDFDownloadLink = dynamic(() => import('@react-pdf/renderer').then((mod) => mod.PDFDownloadLink), { ssr: false });
+const BlobProvider = dynamic(() => import('@react-pdf/renderer').then((mod) => mod.BlobProvider), { ssr: false });
 
 const PDFViewer = dynamic(() => import('@react-pdf/renderer').then((mod) => mod.PDFViewer), {
     ssr: false
@@ -30,8 +32,10 @@ const PDFViewer = dynamic(() => import('@react-pdf/renderer').then((mod) => mod.
 const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const [isFirstTimeOnForm, setIsFirstTimeOnForm] = useState(false);
     const [viewMyForm, setViewMyForm] = useState(false);
+    const [isPdfReady, setIsPdfReady] = useState(false);
     const dashboardUser = useDashboardUser();
     const router = useRouter();
+    const pageTransition = usePageTransition();
 
     const type = repo?.type || null;
     const formSubmitted = repo?.formSubmitted || false;
@@ -43,7 +47,15 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
             return;
         }
         setIsFirstTimeOnForm(repo?.isFirstTimeOnForm || false);
-    }, [dashboardUser]);
+
+        // End page transition after component mounts and data is loaded
+        // Timing matches the slide animation duration
+        if (repo) {
+            setTimeout(() => {
+                pageTransition.endTransition();
+            }); // Match the slide animation duration + buffer
+        }
+    }, [dashboardUser, repo]);
     const handleContinueOnFirstTime = async () => {
         if (!dashboardUser.ref) return;
         await postIsFirstTime(dashboardUser.ref);
@@ -70,12 +82,29 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                                     {/* <button className="btn" onClick={() => setViewMyForm(true)}>
                                         View Your Response
                                     </button> */}
-                                    <PDFDownloadLink
-                                        document={<ViewApplicationForm record={repo?.submittedFormRecord} />}
-                                        fileName="application_form.pdf"
-                                    >
-                                        <div className="btn">Download Your Response</div>
-                                    </PDFDownloadLink>
+                                    <BlobProvider document={<ViewApplicationForm record={repo?.submittedFormRecord} />}>
+                                        {({ blob, url, loading, error }) => {
+                                            if (loading) {
+                                                return (
+                                                    <div className="btn bg-gray-400 cursor-not-allowed flex items-center justify-center">
+                                                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                                                        Processing PDF...
+                                                    </div>
+                                                );
+                                            }
+                                            if (error) {
+                                                return <div className="btn bg-red-500 cursor-not-allowed">Error generating PDF</div>;
+                                            }
+                                            if (blob && url) {
+                                                return (
+                                                    <a href={url} download="application_form.pdf" className="btn">
+                                                        Download Your Response
+                                                    </a>
+                                                );
+                                            }
+                                            return <div className="btn bg-gray-400 cursor-not-allowed">Preparing PDF...</div>;
+                                        }}
+                                    </BlobProvider>
                                     {/* TODO: send via email?
                                     <div>
                                         <div className="mt-4">Send Your Response to:</div>
@@ -93,9 +122,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
             ) : (
                 <>
                     {isFirstTimeOnForm ? (
-                        <>
-                            <FirstTimeTips type={type} handleContinueOnFirstTime={handleContinueOnFirstTime} />
-                        </>
+                        <FirstTimeTips type={type} handleContinueOnFirstTime={handleContinueOnFirstTime} />
                     ) : (
                         <ApplicationForm repo={repo} />
                     )}

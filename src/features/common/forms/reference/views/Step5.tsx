@@ -39,7 +39,16 @@ const Step5: FC<Step5Props> = ({ register, errors, getValues, t, control }) => {
                         placeholder={t('signature')}
                         error={errors.signature || undefined}
                     />
-                    <Date label={t('signatureDate')} register={register('signatureDate')} error={errors.signatureDate || undefined} />
+                    <Date
+                        label={t('signatureDate')}
+                        control={control}
+                        register={{
+                            day: register('signatureDate.day'),
+                            month: register('signatureDate.month'),
+                            year: register('signatureDate.year')
+                        }}
+                        error={errors.signatureDate || undefined}
+                    />
                 </Row>
                 <div className="flex justify-center">
                     <div className="text-black italic text-center self-center">{t('verse')}</div>

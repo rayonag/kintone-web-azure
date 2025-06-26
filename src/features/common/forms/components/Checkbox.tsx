@@ -23,9 +23,10 @@ const Checkbox: FC<CheckboxProps> = ({ label, name, control, options, error, the
                         return (
                             <div>
                                 {Object.entries(options).map(([key, value]) => (
-                                    <label key={key} className="flex">
+                                    <label key={key} className="flex items-center ">
                                         <input
                                             name={name}
+                                            className="w-4 h-4"
                                             type="checkbox"
                                             value={value}
                                             checked={field.value?.includes(key)}

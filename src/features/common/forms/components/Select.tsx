@@ -16,7 +16,11 @@ export const Select: FC<SelectProps> = ({ label, register, options, error, optio
                 {label}
                 {optional && <span className="text-gray-500 text-sm"> (optional)</span>}
             </div>
-            <select {...register} className={'text-gray-800 rounded-md border py-2 px-3' + (error ? ' border-red-500' : '')} defaultValue="">
+            <select
+                {...register}
+                className={'text-gray-800 h-10 bg-white rounded-md border py-2 px-3' + (error ? ' border-red-500' : '')}
+                defaultValue=""
+            >
                 <option disabled={true} hidden={true} value="" key="default">
                     --Select--
                 </option>

@@ -18,7 +18,7 @@ import ArrowUpRight from '@/components/icons/ArrowUpRight';
 import logError from '@/common/logError';
 import { useRouter } from 'next/router';
 import RateUs from '@/components/modal/RateUs';
-import LoadingSpinner from '@/components/loading/LoadingSpinner';
+import TransitionLink from '@/components/pageTransition/TransitionLink';
 import useUserStore from '@/features/common/store';
 import { useShallow } from 'zustand/react/shallow';
 import Vara from 'vara';
@@ -27,6 +27,7 @@ import Image from 'next/image';
 
 import Typewriter from 'typewriter-effect';
 import ReferenceProgress from '@/components/modal/ReferenceProgress';
+import { usePageTransition } from '@/common/context/pageTransition';
 
 // application steps that matches the kintone app
 export type ApplicationStepsMasterApp =
@@ -73,14 +74,28 @@ export const handleCheckListClick = async (field: string, userRef: string) => {
 
 // Define the functional component Page
 const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-    const [isLoaded, setIsLoaded] = useState(false);
+    const pageTransition = usePageTransition();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isZealousModalOpen, setIsZealousModalOpen] = useState(false);
     const [isReferenceModalOpen, setIsReferenceModalOpen] = useState(false);
+    const [isClient, setIsClient] = useState(false);
     const dashboardUser = useDashboardUser();
     const userRef = dashboardUser.ref;
+
     useEffect(() => {
-        if (dashboardUser.isLoggedIn) setIsLoaded(true);
+        // Use a more robust client-side detection
+        if (typeof window !== 'undefined') {
+            setIsClient(true);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (dashboardUser.isLoggedIn) {
+            // Only end transition on client side
+            if (typeof window !== 'undefined') {
+                pageTransition.endTransition();
+            }
+        }
     }, [dashboardUser]);
     // helper modal
     const [currentStep, setCurrentStep] = useState<ApplicationSteps>('reviewWebsite');
@@ -236,7 +251,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                 </div>
             )} */}
                         <>
-                            {isLoaded && userRef ? (
+                            {isClient && userRef ? (
                                 <>
                                     <div className="flex flex-col h-fit items-center justify-center w-full my-14">
                                         {type == 'Zealous' && (
@@ -322,29 +337,29 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                                             </>
                                         )}
                                         <div className="relative flex items-center">
-                                            <Link href="/apply/form" {...buttonProps('submitApplication')}>
+                                            <TransitionLink href="/apply/form" {...buttonProps('submitApplication')}>
                                                 Online Application Form
-                                            </Link>
+                                            </TransitionLink>
                                             {dashboardUser.formSubmission?.includes('Application Form Completed') && <Check />}
                                         </div>
                                         {type == 'Zealous' && (
                                             <div className="relative flex items-center">
-                                                <Link href="/apply/financial-obligation" {...buttonProps('submitApplication')}>
+                                                <TransitionLink href="/apply/financial-obligation" {...buttonProps('submitApplication')}>
                                                     Financial Obligation Policy
-                                                </Link>
+                                                </TransitionLink>
                                                 {repo?.financialObligationSubmitted && <Check />}
                                             </div>
                                         )}
                                         <div className="relative flex items-center">
-                                            <Link href="/apply/health-questionnaire" {...buttonProps('submitApplication')}>
+                                            <TransitionLink href="/apply/health-questionnaire" {...buttonProps('submitApplication')}>
                                                 Personal Health Questionnaire
-                                            </Link>
+                                            </TransitionLink>
                                             {dashboardUser.formSubmission?.includes('Personal Health Questionnaire') && <Check />}
                                         </div>
                                         <div className="relative flex items-center">
-                                            <Link href="/apply/documents" {...buttonProps('submitApplication')}>
+                                            <TransitionLink href="/apply/documents" {...buttonProps('submitApplication')}>
                                                 Submit Necessary Documents
-                                            </Link>
+                                            </TransitionLink>
                                             {repo?.allDocumentsSubmitted && <Check />}
                                         </div>
                                         <div className="relative flex items-center">
@@ -380,11 +395,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                                         </footer>
                                     </div>
                                 </>
-                            ) : (
-                                <>
-                                    <LoadingSpinner />
-                                </>
-                            )}
+                            ) : null}
                         </>
                     </>
                 </>

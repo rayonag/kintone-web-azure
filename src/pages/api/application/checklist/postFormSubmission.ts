@@ -56,7 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 res: resp
             });
             res.end();
-            return;
+            return res;
         } catch (e: any) {
             logError(e, req.body, 'postFormSubmission');
             res.status(505).json({

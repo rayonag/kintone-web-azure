@@ -53,16 +53,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 });
                 res.end();
             });
-            return;
         } catch (e: any) {
             logError(e, req.body, 'uploadFileKintone');
             res.status(505).json({
                 res: e
             });
-            return;
+            res.end();
         }
     } else {
-        res.status(405);
-        return;
+        res.status(405).end();
     }
 }

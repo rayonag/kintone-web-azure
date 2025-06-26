@@ -4,9 +4,21 @@ import logError from '@/common/logError';
 
 const postTempApplicationForm = async (data: ApplicationFormType, ref: string | undefined, step: number, isTemporary?: boolean) => {
     if (!data || !ref || !step) return undefined;
+
     const convertDate = (date: string) => {
         return DateTime.fromFormat(date, 'dd/MM/yyyy').toISODate();
     };
+
+    const convertDateObject = (dateObj: { day?: string; month?: string; year?: string } | undefined) => {
+        if (!dateObj || !dateObj.day || !dateObj.month || !dateObj.year) return '';
+        const date = DateTime.fromObject({
+            day: parseInt(dateObj.day),
+            month: parseInt(dateObj.month),
+            year: parseInt(dateObj.year)
+        });
+        return date.isValid ? date.toISODate() : '';
+    };
+
     const nullIfZero = (value: number) => (value === 0 ? null : value);
     try {
         const record = (() => {
@@ -27,10 +39,10 @@ const postTempApplicationForm = async (data: ApplicationFormType, ref: string | 
                         phone: { value: data.phone },
                         email: { value: data.email },
                         passportNumber: { value: data.passportNumber },
-                        datePassportIssued: { value: convertDate(data.datePassportIssued) },
-                        passportExpiration: { value: convertDate(data.passportExpiration) },
+                        datePassportIssued: { value: convertDateObject(data.datePassportIssued) },
+                        passportExpiration: { value: convertDateObject(data.passportExpiration) },
                         age: { value: parseInt(data.age) },
-                        birthday: { value: convertDate(data.birthday) },
+                        birthday: { value: convertDateObject(data.birthday) },
                         ssnNumber: { value: data.office.ssnNumber },
                         sex: { value: data.sex },
                         maritalStatus: { value: data.spouse.maritalStatus },
@@ -76,12 +88,8 @@ const postTempApplicationForm = async (data: ApplicationFormType, ref: string | 
                         otherAreaInterested: { value: data.otherAreaInterested },
                         minAvailability: { value: data.minAvailability },
                         maxAvailability: { value: data.maxAvailability },
-                        preferredStartDate: {
-                            value: data.preferredStartDate ? convertDate(data.preferredStartDate) : ''
-                        },
-                        preferredStartDate2: {
-                            value: data.preferredStartDate2 ? convertDate(data.preferredStartDate2) : ''
-                        },
+                        preferredStartDate: { value: convertDateObject(data.preferredStartDate) },
+                        preferredStartDate2: { value: convertDateObject(data.preferredStartDate2) },
                         ifNoPosition: { value: data.ifNoPosition }
                     };
                 case 5:
@@ -94,7 +102,7 @@ const postTempApplicationForm = async (data: ApplicationFormType, ref: string | 
                                 value: {
                                     educationSchoolName: { value: edu.educationSchoolName },
                                     educationDegree: { value: edu.educationDegree },
-                                    educationDate: { value: edu.educationDate ? convertDate(edu.educationDate) : '' }
+                                    educationDate: { value: edu.educationDate }
                                 }
                             }))
                         },
@@ -119,8 +127,8 @@ const postTempApplicationForm = async (data: ApplicationFormType, ref: string | 
                             value: data.serviceTable.map((service) => ({
                                 value: {
                                     serviceOrganizationName: { value: service.serviceOrganizationName },
-                                    serviceStartDate: { value: service.serviceStartDate ? convertDate(service.serviceStartDate) : '' },
-                                    serviceEndDate: { value: service.serviceEndDate ? convertDate(service.serviceEndDate) : '' },
+                                    serviceStartDate: { value: service.serviceStartDate },
+                                    serviceEndDate: { value: service.serviceEndDate },
                                     serviceDuties: { value: service.serviceDuties }
                                 }
                             }))

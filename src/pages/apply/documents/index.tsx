@@ -14,6 +14,7 @@ import kintoneClient from '@/common/kintoneClient';
 import { REST_SavedVolunteerApplicationForm } from '@/types/VolunteerApplicationForm';
 import { VolunteerApplicationAppID } from '@/common/env';
 import { Necessary_Documents_USA } from '@/constants/necessaryDocuments';
+import { usePageTransition } from '@/common/context/pageTransition';
 
 const Check = () => (
     <div className="absolute right-[-2.5rem]">
@@ -26,11 +27,21 @@ const Documents = ({ repo }: InferGetServerSidePropsType<typeof getServerSidePro
     const office = useUserStore((state) => state.nationalOffice);
     const type = useUserStore((state) => state.applicationType);
     const initUser = useUserStore((state) => state.initUser);
+    const pageTransition = usePageTransition();
     useEffect(() => {
         (async () => {
             await initUser(user.username, user.ref);
         })();
     }, []);
+    useEffect(() => {
+        // End page transition after component mounts and data is loaded
+        // Timing matches the slide animation duration
+        if (repo) {
+            setTimeout(() => {
+                pageTransition.endTransition();
+            }); // Match the slide animation duration + buffer
+        }
+    }, [repo]);
 
     const isSubmitted = (document: (typeof Necessary_Documents_USA)[number]) => repo?.submittedDocuments?.includes(document);
 

@@ -18,13 +18,23 @@ import logError from '@/common/logError';
 import { REST_PersonalHealthQuestionnaire } from '@/types/PersonalHealthQuestionnaire';
 import ViewHealthQuestionnaire from '@/features/common/viewForms/healthQuestionnaire/ViewHealthQuestionnaire';
 import dynamic from 'next/dynamic';
+import { usePageTransition } from '@/common/context/pageTransition';
 // Dynamically import PDFDownloadLink to ensure it is only loaded on the client side
 const PDFDownloadLink = dynamic(() => import('@react-pdf/renderer').then((mod) => mod.PDFDownloadLink), { ssr: false });
 const PDFViewer = dynamic(() => import('@react-pdf/renderer').then((mod) => mod.PDFViewer), { ssr: false });
 
 const Dashboard = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const formSubmitted = repo?.formSubmitted;
-
+    const pageTransition = usePageTransition();
+    useEffect(() => {
+        // End page transition after component mounts and data is loaded
+        // Timing matches the slide animation duration
+        if (repo) {
+            setTimeout(() => {
+                pageTransition.endTransition();
+            }); // Match the slide animation duration + buffer
+        }
+    }, [repo]);
     return (
         <>
             {formSubmitted ? (
@@ -119,6 +129,7 @@ export const getServerSideProps = (async (context) => {
             formSubmitted: isFormSubmitted,
             submittedFormRecord: submittedFormRecord || null
         };
+        console.log('repo', repo);
         // Pass data to the page via props
         return { props: { repo } };
     } catch (e) {

@@ -123,8 +123,11 @@
     "employAccreditation": "Accreditation/clergy/licenses held:",
     "employTable": {
         "title": "Please list all employers for whom you have worked over the past ten years, beginning with your current employer.",
-        "employDate": "",
-        "employName": ""
+        "employDate": "Date",
+        "employName": "Name",
+        "employAddress": "Address",
+        "employDuties": "Duties",
+        "employLeavingReason": "Reason for leaving"
     },
     "hobby": "Please describe your hobbies and interests:",
     "clubs": "Please list which clubs, societies, lodges or other organizations you belong to:",

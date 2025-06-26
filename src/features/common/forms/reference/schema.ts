@@ -18,6 +18,38 @@ const validateDate = (value: string | undefined) => {
     else if (DateTime.fromFormat(value, 'dd/MM/yyyy') <= DateTime.now().minus({ years: 100 })) return false;
     return true;
 };
+// New date validation for day/month/year structure
+const validateDateComponents = (day: string, month: string, year: string) => {
+    if (!day || !month || !year) return false;
+
+    const dayNum = parseInt(day);
+    const monthNum = parseInt(month);
+    const yearNum = parseInt(year);
+
+    if (isNaN(dayNum) || isNaN(monthNum) || isNaN(yearNum)) return false;
+    if (dayNum < 1 || dayNum > 31) return false;
+    if (monthNum < 1 || monthNum > 12) return false;
+    if (yearNum < 1900 || yearNum > 2100) return false;
+
+    // Check if the date is valid (e.g., Feb 30 doesn't exist)
+    const date = DateTime.fromObject({ day: dayNum, month: monthNum, year: yearNum });
+    if (!date.isValid) return false;
+
+    // Check if date is not too far in the future or past
+    if (date >= DateTime.now().plus({ years: 100 })) return false;
+    if (date <= DateTime.now().minus({ years: 100 })) return false;
+
+    return true;
+};
+// New date object schema
+const dateObject = z
+    .object({
+        day: z.string().min(1, error_required),
+        month: z.string().min(1, error_required),
+        year: z.string().min(1, error_required)
+    })
+    .refine((data) => validateDateComponents(data.day, data.month, data.year), error_invalidDate);
+
 // system
 const ref: z.ZodString = z.string().min(1).max(50);
 const office: z.ZodString = z.string().min(1).max(50);
@@ -92,7 +124,7 @@ const address = z.string().min(1, requiredErrorMessage);
 const phone = z.string().min(1, requiredErrorMessage);
 const email = z.string().email();
 const signature = z.string().min(1, requiredErrorMessage);
-const signatureDate: z.ZodEffects<z.ZodString> = z.string().min(1).max(50).refine(validateDate, error_invalidDate);
+const signatureDate = dateObject;
 
 // Combine individual field schemas into a single schema
 export const ReferenceFormSchema = z.object({
@@ -245,66 +277,3 @@ export const ReferenceFormFields = [
     // Step 5
     ['standpoint', 'recommend', 'address', 'phone', 'email', 'signature', 'signatureDate']
 ] as const;
-
-export const ReferenceFormDefaultValuess: ReferenceFormType = {
-    ref: '58',
-    office: 'Japan',
-    applicantName: 'John Doe',
-    refereeName: 'Jane Smith',
-    relationship: 'Friend',
-    relationshipExplain: 'Worked together for 5 years',
-    indicationDesire: 'None of the above',
-    indicationDesireExplain: 'Highly motivated',
-    doctrinalPoint: 'Agrees with core values',
-    ethics: 'Yes',
-    ethicsExplain: 'Always follows ethical guidelines',
-    comeAcross: 'Professional',
-    rateFollowInstructions: 'Strong',
-    rateAttitude: 'Strong',
-    rateVocation: 'Strong',
-    demonstratedServantHeart: 'Always willing to help',
-    dealtProblem: 'Handles conflicts well',
-    familyRelationship: 'Good',
-    guest: 'Yes',
-    guestExplain: 'Visited multiple times',
-    showInterest: 'Yes',
-    showInterestComment: 'Shows great interest in the work',
-    christianJewishRelations: 'Yes',
-    christianJewishRelationsComment: 'Respects all beliefs',
-    aptitudes: 'Skilled in various areas',
-    traitPhysicalCondition: 'X',
-    traitEmotionalStability: 'X',
-    traitSelfDiscipline: 'X',
-    traitFinancialStewardship: 'X',
-    traitSelflessness: 'X',
-    traitFriendliness: 'X',
-    traitSocialAcceptability: 'X',
-    traitServanthood: 'X',
-    traitLeadership: '',
-    traitTeamwork: '',
-    traitJudgment: '',
-    traitPersonalAppearance: '',
-    traitWorkmanship: '',
-    traitFollowingOrders: '',
-    traitSensitivity: '',
-    traitAdaptability: '',
-    traitIndustry: '',
-    traitPerseverance: '',
-    traitOrderliness: '',
-    traitPersonalBibleStudy: '',
-    traitPersonalPrayerLife: '',
-    traitTeachableSpirit: '4',
-    characters: {
-        character1: ['Take charge', 'Determined'],
-        character2: ['Visionary', 'Take risks'],
-        character3: ['Loyal', 'Even-keeled'],
-        character4: []
-    },
-    standpoint: 'Average',
-    recommend: 'Yes',
-    address: '123 Main St, Anytown, USA',
-    phone: '123-456-7890',
-    email: 'test@example.com',
-    signature: 'John Doe',
-    signatureDate: '2023-01-01'
-};

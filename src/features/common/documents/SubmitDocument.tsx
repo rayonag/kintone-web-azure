@@ -2,6 +2,7 @@
 import { FC, useState } from 'react';
 import Link from 'next/link';
 import { useLoading } from '@/common/context/loading';
+import { useSubmitting } from '@/common/context/submitting';
 import postDocument from '@/common/documents/postDocument';
 import { useRouter } from 'next/router';
 import { useShallow } from 'zustand/react/shallow';
@@ -30,6 +31,7 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
     );
 
     const { setIsLoading } = useLoading();
+    const { startSubmitting, endSubmitting } = useSubmitting();
     const router = useRouter();
 
     const [fileData, setFileData] = useState<any>([]);
@@ -65,6 +67,7 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
             const files = fileData;
             if (files == undefined) return;
             if (files.length > 0) {
+                startSubmitting();
                 setIsLoading(true);
                 const file = files[0];
                 const formData = new FormData();
@@ -80,7 +83,8 @@ const SubmitDocument: FC<SubmitDocumentProps> = ({ document, title, Help }) => {
         } catch (e) {
             alert('Something went wrong. Could not upload your document.');
             setIsLoading(false);
-            return;
+        } finally {
+            endSubmitting();
         }
     };
     const handleDelete = () => {

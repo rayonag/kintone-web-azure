@@ -6,8 +6,10 @@ import { ApplicationFormType } from '../schema';
 import Row from '../../components/Row';
 import { YesNo } from '../enums';
 import { Radio } from '../../components/Radio';
-import ReactInputMask from 'react-input-mask';
 import Textarea from '../../components/Textarea';
+import EducationTable from '../../components/EducationTable';
+import EmploymentTable from '../../components/EmploymentTable';
+import ServiceTable from '../../components/ServiceTable';
 
 type Step5Props = {
     register: UseFormRegister<ApplicationFormType>;
@@ -16,81 +18,18 @@ type Step5Props = {
     t: any;
     control: Control<ApplicationFormType>;
 };
+
 const Step5: FC<Step5Props> = ({ register, errors, getValues, t, control }) => {
     return (
         <div>
             <section>
                 <SectionTitle title={t('sectionTitle.5')} />
-                <div className="font-bold mt-2 text-xl text-black text-center">{t('educationTable.title')}</div>
-                <Row>
-                    {/* TODO: come back to table 
-                        <EducationTable
-                        //label={t('educationTable.')}
-                        register={register}
-                        control={control}
-                        fieldKeys={['educationSchoolName', 'educationDegree', 'educationDate']}
-                        t={t}
-                        //error={errors.educationTable || undefined}
-                    /> */}
 
-                    <div className="font-semibold mt-2 text-black">{t('educationTable.description')}</div>
-                    <div className="font-semibold mt-2 text-[1rem] md:text-lg overflow-x-scroll w-full">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th className="p-2 border border-collapse text-gray-500"> {t('educationTable.educationSchoolName')}</th>
-                                    <th className="p-2 border border-collapse text-gray-500"> {t('educationTable.educationDegree')}</th>
-                                    <th className="p-2 border border-collapse text-gray-500"> {t('educationTable.educationDate')}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {Array.from({ length: 5 }).map((_, index) => (
-                                    <tr>
-                                        <td className="border border-collapse text-black">
-                                            <input
-                                                {...register(`educationTable.${index}.educationSchoolName`)}
-                                                className="w-full h-[2rem] p-1 outline-none"
-                                            />
-                                            {errors?.educationTable?.[index]?.educationSchoolName && (
-                                                <div className="text-red-500 pl-1 py-1 text-xs h-4">
-                                                    {errors?.educationTable?.[index]?.educationSchoolName?.message}
-                                                </div>
-                                            )}
-                                        </td>
-                                        <td className="border border-collapse text-black">
-                                            <input
-                                                {...register(`educationTable.${index}.educationDegree`)}
-                                                className="w-full h-[2rem] p-1 outline-none"
-                                            />
-                                            {errors?.educationTable?.[index]?.educationDegree && (
-                                                <div className="text-red-500 pl-1 py-1 text-xs h-4">
-                                                    {errors?.educationTable?.[index]?.educationDegree?.message}
-                                                </div>
-                                            )}
-                                        </td>
-                                        <td className="border border-collapse text-black">
-                                            <ReactInputMask
-                                                {...register(`educationTable.${index}.educationDate`)}
-                                                mask="99/99/9999"
-                                                maskPlaceholder={'dd/mm/yyyy'}
-                                                placeholder="dd/mm/yyyy"
-                                                className="w-32 h-[2rem] p-1 outline-none"
-                                            />
-                                            {errors?.educationTable?.[index]?.educationDate && (
-                                                <div className="text-red-500 pl-1 py-1 text-xs h-4">
-                                                    {errors?.educationTable?.[index]?.educationDate?.message}
-                                                </div>
-                                            )}
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </Row>
-                <div className="font-bold mt-2 text-xl text-black text-center">Employment History:</div>
+                <EducationTable errors={errors} register={register} control={control} t={t} />
+
+                <div className="font-bold mt-8 text-xl text-black text-center">Employment History:</div>
+
                 <Row>
-                    {/* TODO: review hard coded */}
                     <Input
                         label={t('employProfession')}
                         register={register('employProfession')}
@@ -104,135 +43,24 @@ const Step5: FC<Step5Props> = ({ register, errors, getValues, t, control }) => {
                         error={errors.employAccreditation || undefined}
                     />
                 </Row>
+
+                {/* Employment Table */}
                 <Row>
-                    {/* <Textarea
-                        label={t('employHistory.title1')}
-                        register={register('employHistory')}
-                        placeholder={t('employHistory.example')}
-                        error={errors.employHistory || undefined}
-                    /> */}
-                    <div className="font-semibold mt-2 text-black">{t('employTable.title')}</div>
-                    <div className="font-semibold mt-2 mb-2 text-[1rem] md:text-lg overflow-x-scroll w-full">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th className="p-2 border border-collapse text-gray-500">Date of Employment</th>
-                                    <th className="p-2 border border-collapse text-gray-500">Name</th>
-                                    <th className="p-2 border border-collapse text-gray-500">Address</th>
-                                    <th className="p-2 border border-collapse text-gray-500">Duties</th>
-                                    <th className="p-2 border border-collapse text-gray-500">Reason for Leaving</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {Array.from({ length: 5 }).map((_, index) => (
-                                    <tr>
-                                        <td className="border border-collapse text-black">
-                                            <input
-                                                {...register(`employTable.${index}.employDate`)}
-                                                className="w-full h-[2rem] p-1 outline-none"
-                                                placeholder={index === 0 ? 'Jan2020-Present' : ''}
-                                            />
-                                        </td>
-                                        <td className="border border-collapse text-black">
-                                            <input
-                                                {...register(`employTable.${index}.employName`)}
-                                                className="w-full h-[2rem] p-1 outline-none"
-                                                placeholder={index === 0 ? 'Bills Plumbing' : ''}
-                                            />
-                                        </td>
-                                        <td className="border border-collapse text-black">
-                                            <input
-                                                {...register(`employTable.${index}.employAddress`)}
-                                                className="w-full h-[2rem] p-1 outline-none"
-                                                placeholder={index === 0 ? '123 Main St. New York 45678' : ''}
-                                            />
-                                        </td>
-                                        <td className="border border-collapse text-black">
-                                            <input
-                                                {...register(`employTable.${index}.employDuties`)}
-                                                className="w-full h-[2rem] p-1 outline-none"
-                                                placeholder={index === 0 ? 'Installer' : ''}
-                                            />
-                                        </td>
-                                        <td className="border border-collapse text-black">
-                                            <input
-                                                {...register(`employTable.${index}.employLeavingReason`)}
-                                                className="w-full h-[2rem] p-1 outline-none"
-                                                placeholder={index === 0 ? 'looking for a change.' : ''}
-                                            />
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+                    <EmploymentTable errors={errors} register={register} control={control} t={t} />
                 </Row>
+
                 <Row>
                     <Textarea label={t('hobby')} register={register('hobby')} placeholder={'Enter here'} error={errors.hobby || undefined} />
                 </Row>
                 <Row>
                     <Input label={t('clubs')} register={register('clubs')} placeholder={'Enter here'} error={errors.clubs || undefined} />
                 </Row>
+
+                {/* Service Table */}
                 <Row>
-                    {/* <ServiceTable
-                        name={'educationTable'}
-                        //label={t('educationTable.')}
-                        register={register}
-                        control={control}
-                        fieldKeys={['educationSchoolName', 'educationDegree', 'educationDate']}
-                        t={t}
-                        error={errors.educationTable || undefined}
-                    /> */}
-                    <div className="font-semibold mt-2 text-black">{t('serviceTable.title')}</div>
-                    <div className="font-semibold mt-2 text-[1rem] md:text-lg overflow-x-scroll w-full">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th className="p-2 border border-collapse text-gray-500"> {t('serviceTable.serviceOrganizationName')}</th>
-                                    <th className="p-2 border border-collapse text-gray-500"> {t('serviceTable.serviceStartDate')}</th>
-                                    <th className="p-2 border border-collapse text-gray-500"> {t('serviceTable.serviceEndDate')}</th>
-                                    <th className="p-2 border border-collapse text-gray-500"> {t('serviceTable.serviceDuties')}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {Array.from({ length: 5 }).map((_, index) => (
-                                    <tr>
-                                        <td className="border border-collapse text-black">
-                                            <input
-                                                {...register(`serviceTable.${index}.serviceOrganizationName`)}
-                                                className="w-full h-[2rem] p-1 outline-none"
-                                            />
-                                        </td>
-                                        <td className="border border-collapse text-black">
-                                            <ReactInputMask
-                                                {...register(`serviceTable.${index}.serviceStartDate`)}
-                                                mask="99/99/9999"
-                                                maskPlaceholder={'dd/mm/yyyy'}
-                                                placeholder="dd/mm/yyyy"
-                                                className="w-32 h-[2rem] p-1 outline-none"
-                                            />
-                                        </td>
-                                        <td className="border border-collapse text-black">
-                                            <ReactInputMask
-                                                {...register(`serviceTable.${index}.serviceEndDate`)}
-                                                mask="99/99/9999"
-                                                maskPlaceholder={'dd/mm/yyyy'}
-                                                placeholder="dd/mm/yyyy"
-                                                className="w-32 h-[2rem] p-1 outline-none"
-                                            />
-                                        </td>
-                                        <td className="border border-collapse text-black">
-                                            <input
-                                                {...register(`serviceTable.${index}.serviceDuties`)}
-                                                className="w-full h-[2rem] p-1 outline-none"
-                                            />
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+                    <ServiceTable errors={errors} register={register} control={control} t={t} />
                 </Row>
+
                 <Row>
                     <Radio
                         label={t('hasDriverLicense')}

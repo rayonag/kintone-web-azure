@@ -67,13 +67,23 @@ const Step4: FC<Step4Props> = ({ register, errors, getValues, t, control, type }
                 <Row>
                     <Date
                         label={t('preferredStartDate.option1')}
-                        register={register('preferredStartDate')}
+                        register={{
+                            day: register('preferredStartDate.day'),
+                            month: register('preferredStartDate.month'),
+                            year: register('preferredStartDate.year')
+                        }}
+                        control={control}
                         placeholder={t('preferredStartDate')}
                         error={errors.preferredStartDate || undefined}
                     />
                     <Date
                         label={t('preferredStartDate.option2')}
-                        register={register('preferredStartDate2')}
+                        register={{
+                            day: register('preferredStartDate2.day'),
+                            month: register('preferredStartDate2.month'),
+                            year: register('preferredStartDate2.year')
+                        }}
+                        control={control}
                         placeholder={t('preferredStartDate2')}
                         error={errors.preferredStartDate2 || undefined}
                     />

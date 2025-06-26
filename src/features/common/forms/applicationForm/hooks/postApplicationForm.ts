@@ -4,9 +4,21 @@ import { DateTime } from 'luxon';
 
 const postApplicationForm = async (data: ApplicationFormType, ref: string | undefined) => {
     if (!ref) return undefined;
+
     const convertDate = (date: string) => {
         return DateTime.fromFormat(date, 'dd/MM/yyyy').toISODate();
     };
+
+    const convertDateObject = (dateObj: { day?: string; month?: string; year?: string } | undefined) => {
+        if (!dateObj || !dateObj.day || !dateObj.month || !dateObj.year) return '';
+        const date = DateTime.fromObject({
+            day: parseInt(dateObj.day),
+            month: parseInt(dateObj.month),
+            year: parseInt(dateObj.year)
+        });
+        return date.isValid ? date.toISODate() : '';
+    };
+
     const nullIfZero = (value: number) => (value === 0 ? null : value);
     try {
         const record: Partial<any> = {
@@ -25,10 +37,10 @@ const postApplicationForm = async (data: ApplicationFormType, ref: string | unde
             phone: { value: data.phone },
             email: { value: data.email },
             passportNumber: { value: data.passportNumber },
-            datePassportIssued: { value: DateTime.fromFormat(data.datePassportIssued, 'dd/MM/yyyy').toISODate() },
-            passportExpiration: { value: DateTime.fromFormat(data.passportExpiration, 'dd/MM/yyyy').toISODate() },
+            datePassportIssued: { value: convertDateObject(data.datePassportIssued) },
+            passportExpiration: { value: convertDateObject(data.passportExpiration) },
             age: { value: parseInt(data.age) },
-            birthday: { value: DateTime.fromFormat(data.birthday, 'dd/MM/yyyy').toISODate() },
+            birthday: { value: convertDateObject(data.birthday) },
             ssnNumber: { value: data.office.ssnNumber },
             sex: { value: data.sex },
             maritalStatus: { value: data.spouse.maritalStatus },
@@ -59,8 +71,8 @@ const postApplicationForm = async (data: ApplicationFormType, ref: string | unde
             otherAreaInterested: { value: data.otherAreaInterested },
             minAvailability: { value: data.minAvailability },
             maxAvailability: { value: data.maxAvailability },
-            preferredStartDate: { value: data.preferredStartDate ? DateTime.fromFormat(data.preferredStartDate, 'dd/MM/yyyy').toISODate() : '' },
-            preferredStartDate2: { value: data.preferredStartDate2 ? DateTime.fromFormat(data.preferredStartDate2, 'dd/MM/yyyy').toISODate() : '' },
+            preferredStartDate: { value: convertDateObject(data.preferredStartDate) },
+            preferredStartDate2: { value: convertDateObject(data.preferredStartDate2) },
             ifNoPosition: { value: data.ifNoPosition },
             educationTable: {
                 type: 'SUBTABLE',
@@ -195,7 +207,7 @@ const postApplicationForm = async (data: ApplicationFormType, ref: string | unde
             verify6: { value: data.verify6 ? ['Yes'] : ['No'] },
             verify7: { value: data.verify7 ? ['Yes'] : ['No'] },
             signature: { value: data.signature },
-            signatureDate: { value: convertDate(data.signatureDate) }
+            signatureDate: { value: convertDateObject(data.signatureDate) }
         };
         const body = {
             record: record

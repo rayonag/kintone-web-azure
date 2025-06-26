@@ -12,6 +12,31 @@ const validateDate = (value: string | undefined) => {
     else if (DateTime.fromFormat(value, 'dd/MM/yyyy') <= DateTime.now().minus({ years: 100 })) return false;
     return true;
 };
+
+// New date validation for day/month/year structure
+const validateDateComponents = (day: string, month: string, year: string) => {
+    if (!day || !month || !year) return false;
+
+    const dayNum = parseInt(day);
+    const monthNum = parseInt(month);
+    const yearNum = parseInt(year);
+
+    if (isNaN(dayNum) || isNaN(monthNum) || isNaN(yearNum)) return false;
+    if (dayNum < 1 || dayNum > 31) return false;
+    if (monthNum < 1 || monthNum > 12) return false;
+    if (yearNum < 1900 || yearNum > 2100) return false;
+
+    // Check if the date is valid (e.g., Feb 30 doesn't exist)
+    const date = DateTime.fromObject({ day: dayNum, month: monthNum, year: yearNum });
+    if (!date.isValid) return false;
+
+    // Check if date is not too far in the future or past
+    if (date >= DateTime.now().plus({ years: 100 })) return false;
+    if (date <= DateTime.now().minus({ years: 100 })) return false;
+
+    return true;
+};
+
 const error_required = {
     message: 'This field is required'
 };
@@ -40,6 +65,28 @@ const validateSSN = (value: string | undefined, ctx: any, hi: any, s: any) => {
 const yesNo: z.ZodEffects<z.ZodNullable<z.ZodString>> = z.string().nullable().refine(validateRadio, error_required);
 const date: z.ZodEffects<z.ZodString> = z.string().min(1).max(50).refine(validateDate, error_invalidDate);
 const date_optional: z.ZodEffects<z.ZodOptional<z.ZodString>> = z.string().optional().refine(validateDate, error_invalidDate);
+
+// New date object schema
+const dateObject = z
+    .object({
+        day: z.string().min(1, error_required),
+        month: z.string().min(1, error_required),
+        year: z.string().min(1, error_required)
+    })
+    .refine((data) => validateDateComponents(data.day, data.month, data.year), error_invalidDate);
+
+const dateObject_optional = z
+    .object({
+        day: z.string().optional(),
+        month: z.string().optional(),
+        year: z.string().optional()
+    })
+    .refine((data) => {
+        if (!data.day && !data.month && !data.year) return true; // All empty is valid for optional
+        if (!data.day || !data.month || !data.year) return false; // Partial data is invalid
+        return validateDateComponents(data.day, data.month, data.year);
+    }, error_invalidDate);
+
 const string50: z.ZodString = z.string().min(1).max(50, error_maxLength);
 const string300: z.ZodString = z.string().min(1).max(300, error_maxLength);
 const string2000: z.ZodString = z.string().min(1).max(2000, error_maxLength);
@@ -152,7 +199,7 @@ const educationTable = z.array(
     z.object({
         educationSchoolName: string_optional,
         educationDegree: string_optional,
-        educationDate: date_optional
+        educationDate: string_optional
     })
 );
 const employProfession = string_optional;
@@ -268,10 +315,10 @@ export const ApplicationFormSchema = z.object({
     phone: phone,
     email: email,
     passportNumber: passportNumber,
-    datePassportIssued: date,
-    passportExpiration: date,
+    datePassportIssued: dateObject,
+    passportExpiration: dateObject,
     age: age,
-    birthday: date,
+    birthday: dateObject,
     //ssnNumber is under office object
     sex: sex,
     //maritalStatus: maritalStatus, is under spouse object
@@ -309,8 +356,8 @@ export const ApplicationFormSchema = z.object({
     otherAreaInterested: otherAreaInterested,
     minAvailability: string_optional,
     maxAvailability: string_optional,
-    preferredStartDate: date_optional,
-    preferredStartDate2: date_optional,
+    preferredStartDate: dateObject_optional,
+    preferredStartDate2: dateObject_optional,
     ifNoPosition: string_optional, // making optional for Zealous
 
     // 5
@@ -426,7 +473,7 @@ export const ApplicationFormSchema = z.object({
     verify6: verify,
     verify7: verify,
     signature: string50,
-    signatureDate: date
+    signatureDate: dateObject
 });
 
 export type ApplicationFormType = z.infer<typeof ApplicationFormSchema>;

@@ -6,6 +6,15 @@ const postReferenceForm = async (data: ReferenceFormType) => {
     const convertDate = (date: string) => {
         return DateTime.fromFormat(date, 'dd/MM/yyyy').toISODate();
     };
+    const convertDateObject = (dateObj: { day?: string; month?: string; year?: string } | undefined) => {
+        if (!dateObj || !dateObj.day || !dateObj.month || !dateObj.year) return '';
+        const date = DateTime.fromObject({
+            day: parseInt(dateObj.day),
+            month: parseInt(dateObj.month),
+            year: parseInt(dateObj.year)
+        });
+        return date.isValid ? date.toISODate() : '';
+    };
     try {
         const record = {
             // system
@@ -71,7 +80,7 @@ const postReferenceForm = async (data: ReferenceFormType) => {
             phone: { value: data.phone },
             email: { value: data.email },
             signature: { value: data.signature },
-            signatureDate: { value: convertDate(data.signatureDate) }
+            signatureDate: { value: convertDateObject(data.signatureDate) }
         };
 
         const res = await fetch('/api/reference/postReferenceForm', {

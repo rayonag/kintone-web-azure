@@ -1,6 +1,6 @@
 import React, { FC, ReactElement, useState } from 'react';
 import SectionTitle from '../../components/SectionTitle';
-import { UseFormRegister, FieldErrors, UseFormGetValues } from 'react-hook-form';
+import { UseFormRegister, FieldErrors, UseFormGetValues, Control } from 'react-hook-form';
 import { ApplicationFormType } from '../schema';
 import Verify from '../../components/Verify';
 import { DoctrinalStatement, EvangelismStatement, Goals, MessianicJudaismStatement, MissionStatement } from '@/pages/apply/form/FirstTimeTips';
@@ -14,8 +14,9 @@ type Step10Props = {
     errors: FieldErrors<ApplicationFormType>;
     getValues: UseFormGetValues<ApplicationFormType>;
     t: any;
+    control: Control<ApplicationFormType>;
 };
-const Step10: FC<Step10Props> = ({ register, errors, getValues, t }) => {
+const Step10: FC<Step10Props> = ({ register, errors, getValues, t, control }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [document, setDocument] = useState('');
     return (
@@ -51,7 +52,16 @@ const Step10: FC<Step10Props> = ({ register, errors, getValues, t }) => {
             <section>
                 <Row>
                     <Input label={t('signature')} register={register('signature')} error={errors.signature} />
-                    <Date label={t('signatureDate')} register={register('signatureDate')} error={errors.signatureDate} />
+                    <Date
+                        label={t('signatureDate')}
+                        register={{
+                            day: register('signatureDate.day'),
+                            month: register('signatureDate.month'),
+                            year: register('signatureDate.year')
+                        }}
+                        control={control}
+                        error={errors.signatureDate}
+                    />
                 </Row>
             </section>
         </div>

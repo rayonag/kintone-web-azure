@@ -19,6 +19,21 @@ const convertPrefilledFormRecord = (record: SavedVolunteerApplicationForm, setVa
         return DateTime.fromISO(isoDate).toFormat('dd/MM/yyyy');
     };
 
+    const convertDateToObject = (isoDate: string) => {
+        if (!isoDate) {
+            return undefined;
+        }
+        const date = DateTime.fromISO(isoDate);
+        if (!date.isValid) {
+            return undefined;
+        }
+        return {
+            day: date.day.toString().padStart(2, '0'),
+            month: date.month.toString().padStart(2, '0'),
+            year: date.year.toString()
+        };
+    };
+
     addFieldIfValid('ref', record.ref.value);
     //addFieldIfValid('office.office', record.office.value); TODO: needed here? or always refer to userStore?
     addFieldIfValid('firstName', record.firstName.value);
@@ -32,10 +47,10 @@ const convertPrefilledFormRecord = (record: SavedVolunteerApplicationForm, setVa
     addFieldIfValid('phone', record.phone.value);
     addFieldIfValid('email', record.email.value);
     addFieldIfValid('passportNumber', record.passportNumber.value);
-    addFieldIfValid('datePassportIssued', convertDate(record.datePassportIssued.value));
-    addFieldIfValid('passportExpiration', convertDate(record.passportExpiration.value));
+    addFieldIfValid('datePassportIssued', convertDateToObject(record.datePassportIssued.value));
+    addFieldIfValid('passportExpiration', convertDateToObject(record.passportExpiration.value));
     addFieldIfValid('age', record.age.value);
-    addFieldIfValid('birthday', convertDate(record.birthday.value));
+    addFieldIfValid('birthday', convertDateToObject(record.birthday.value));
     addFieldIfValid('office.ssnNumber', record.ssnNumber.value);
     addFieldIfValid('sex', record.sex.value);
     addFieldIfValid('spouse.maritalStatus', record.maritalStatus.value);
@@ -66,15 +81,15 @@ const convertPrefilledFormRecord = (record: SavedVolunteerApplicationForm, setVa
     addFieldIfValid('otherAreaInterested', record.otherAreaInterested.value);
     addFieldIfValid('minAvailability', record.minAvailability.value);
     addFieldIfValid('maxAvailability', record.maxAvailability.value);
-    addFieldIfValid('preferredStartDate', convertDate(record.preferredStartDate.value));
-    addFieldIfValid('preferredStartDate2', convertDate(record.preferredStartDate2.value));
+    addFieldIfValid('preferredStartDate', convertDateToObject(record.preferredStartDate.value));
+    addFieldIfValid('preferredStartDate2', convertDateToObject(record.preferredStartDate2.value));
     addFieldIfValid('ifNoPosition', record.ifNoPosition.value);
     addFieldIfValid(
         'educationTable',
         record.educationTable.value.map((edu: any) => ({
             educationSchoolName: edu.value.educationSchoolName.value,
             educationDegree: edu.value.educationDegree.value,
-            educationDate: convertDate(edu.value.educationDate.value)
+            educationDate: edu.value.educationDate.value
         }))
     );
     addFieldIfValid(
@@ -95,8 +110,8 @@ const convertPrefilledFormRecord = (record: SavedVolunteerApplicationForm, setVa
         'serviceTable',
         record.serviceTable.value.map((service: any) => ({
             serviceOrganizationName: service.value.serviceOrganizationName.value,
-            serviceStartDate: convertDate(service.value.serviceStartDate.value),
-            serviceEndDate: convertDate(service.value.serviceEndDate.value),
+            serviceStartDate: service.value.serviceStartDate.value,
+            serviceEndDate: service.value.serviceEndDate.value,
             serviceDuties: service.value.serviceDuties.value
         }))
     );

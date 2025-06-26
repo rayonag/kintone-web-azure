@@ -3,7 +3,7 @@
 const isDev = process.env.NODE_ENV === 'development';
 
 const cspHeader = `
-    default-src 'self' http://localhost:3000/;
+    default-src 'self' http://localhost:3000/ http://192.168.11.68:3000/;
     script-src 'self' 'unsafe-eval' 'unsafe-inline';
     style-src 'self' 'unsafe-inline';
     object-src 'none';
@@ -11,7 +11,7 @@ const cspHeader = `
     frame-ancestors 'none';
     block-all-mixed-content;
     
-    ${isDev ? "img-src 'self' data: http://localhost:3000/;" : "img-src 'self' data: "}
+    ${isDev ? "img-src 'self' data: http://localhost:3000/ http://192.168.11.68:3000/;" : "img-src 'self' data: "}
 `;
 // temp disabled upgrade-insecure-requests; due to the issue with the images from the external site
 const nextConfig = {

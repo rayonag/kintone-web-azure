@@ -7,14 +7,18 @@ import { parseCookies } from 'nookies';
 
 import '@/styles/globals.css';
 import { DashboardUserContext, DashboardUser } from '@/common/context/dashboardUser';
-import { LoadingContext } from '@/common/context/loading';
+import { PageTransitionProvider } from '@/common/context/pageTransition';
+import { SubmittingProvider, useSubmitting } from '@/common/context/submitting';
 import fetchUserApplicationMaster from '@/common/fetchUserApplicationMaster';
-import LoadingSpinner from '@/components/loading/LoadingSpinner';
+import PageTransitionWrapper from '@/components/pageTransition/PageTransitionWrapper';
+import SubmittingSpinner from '@/components/loading/SubmittingSpinner';
 import useUserStore from '@/features/common/store';
 import Layout_fadeIn_home from '@/styles/Layout_fadeIn_home';
-const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
+
+const AppContent = ({ Component, pageProps }: AppProps) => {
     const router = useRouter();
-    const cookies = parseCookies(ctx);
+    const { isSubmitting } = useSubmitting();
+    const cookies = parseCookies();
     //
     const username = cookies.auth || undefined;
     const ref = cookies.ref || undefined;
@@ -72,36 +76,48 @@ const App = ({ Component, pageProps }: AppProps, ctx: NextPageContext) => {
             return true;
         });
     }, []);
-    const CommonProvider: ({ children }: { children: JSX.Element }) => JSX.Element = ({ children }) => {
-        const [isLoading, setIsLoading] = useState<boolean>(false);
-        return (
-            <LoadingContext.Provider value={{ isLoading, setIsLoading }}>
-                {isLoading && <LoadingSpinner />}
-                {children}
-            </LoadingContext.Provider>
-        );
-    };
 
     const component =
         typeof pageProps === 'undefined' ? (
             <></>
         ) : router.pathname.startsWith('/apply/login') || router.pathname.startsWith('/reference') ? (
-            <CommonProvider>
+            <PageTransitionProvider>
                 <DashboardUserProvider>
-                    <Component {...pageProps} />
+                    <>
+                        <PageTransitionWrapper>
+                            <Component {...pageProps} />
+                        </PageTransitionWrapper>
+                    </>
                 </DashboardUserProvider>
-            </CommonProvider>
+            </PageTransitionProvider>
         ) : (
-            <CommonProvider>
+            <PageTransitionProvider>
                 <DashboardUserProvider>
                     <Layout_fadeIn_home repo={{ isZealous: pageProps.isZealous == 'true' }}>
-                        <Component {...pageProps} />
+                        <>
+                            <PageTransitionWrapper>
+                                <Component {...pageProps} />
+                            </PageTransitionWrapper>
+                        </>
                     </Layout_fadeIn_home>
                 </DashboardUserProvider>
-            </CommonProvider>
+            </PageTransitionProvider>
         );
 
-    return component;
+    return (
+        <>
+            {component}
+            <SubmittingSpinner isVisible={isSubmitting} />
+        </>
+    );
+};
+
+const App = (props: AppProps, ctx: NextPageContext) => {
+    return (
+        <SubmittingProvider>
+            <AppContent {...props} />
+        </SubmittingProvider>
+    );
 };
 
 App.getInitialProps = async (appContext: any) => {

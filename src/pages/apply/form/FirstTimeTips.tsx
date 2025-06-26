@@ -13,41 +13,36 @@ const FirstTimeTips: FC<FirstTimeTipsProps> = ({ type, handleContinueOnFirstTime
 
     useEffect(() => {
         if (scrollRef.current) {
-            scrollRef.current.scrollTo(0, 0);
+            scrollRef.current.scrollIntoView({ behavior: 'auto', block: 'start' });
         }
     }, [page]);
 
     const ConfirmType = () => {
         return (
-            <>
-                <div className="flex flex-col items-center justify-center min-h-screen">
-                    <>
-                        <div className="text-3xl m-5">Before you begin...</div>
-                        <div className="m-3 mb-8">
-                            This is a volunteer application for: <span className="text-2xl">{type}</span>
-                        </div>
-                        <div className="m-3 mb-8">
-                            If you're not intending for <span className="text-2xl">{type}</span> please let us know.
-                        </div>
-                    </>
+            <div className="flex flex-col items-center justify-center p-4 md:p-0">
+                <>
+                    <div className="text-3xl m-5">Before you begin...</div>
+                    <div className="m-3 mb-4">This is a volunteer application for:</div>
+                    <div className="text-2xl text-center">{type}</div>
+                    <div className="m-3 mb-8">If you're not intending for {type} please let us know.</div>
+                </>
 
-                    <div className="flex justify-center flex-col">
-                        <button onClick={() => setPage(1)} className="btn-wide">
-                            Next
-                        </button>
-                        <Link href="/apply" className="btn-wide text-center">
-                            Back to Top
-                        </Link>
-                    </div>
+                <div className="flex justify-center flex-col">
+                    <button onClick={() => setPage(1)} className="btn-wide">
+                        Next
+                    </button>
+                    <Link href="/apply" className="btn-wide text-center">
+                        Back to Top
+                    </Link>
                 </div>
-            </>
+            </div>
         );
     };
     return (
-        <div className="flex flex-col items-center justify-center h-screen">
+        <div ref={scrollRef} className="flex flex-col items-center justify-center pt-8 m-4 md:p-0">
             {page == 0 && <ConfirmType />}
             {page != 0 && (
-                <div ref={scrollRef} className="overflow-y-scroll h-full min-w-80 w-full p-[5%] md:px-[20%]">
+                <div className="min-w-80 md:px-[20%]">
                     {page == 1 && (
                         <>
                             <DoctrinalStatement />
@@ -141,15 +136,15 @@ export const Goals = () => (
                 4. To communicate Christian perspectives to the attention of Israeli leaders and the Jewish community at large.
             </div>
             <div className="mb-8">
-                5. To counter anti-Semitism worldwide and support Israel’s divine, God-given right to exist in her Godgiven land.
+                5. To counter anti-Semitism worldwide and support Israel's divine, God-given right to exist in her Godgiven land.
             </div>
             <div className="text-2xl m-5 font-serif italic text-center">BASIC VOLUNTEER REQUIREMENTS</div>
             <div className="mb-3 text-left text-xl md:text-2xl">WHO IS A BFP VOLUNTEER?</div>
             <div className="m-3">
                 The prophets of Israel knew that one day Gentile people would come to the land of Israel and help in its restoration. The prophet
-                Isaiah mentions these Gentiles on several occasions. He refers to them as “servants” in Isaiah 56:6. They are called “servants and
-                handmaids” in Isaiah 14:2. And in Isaiah 61:5, we read, “Strangers shall stand and feed your flocks, and the sons of the foreigner
-                shall be your plowmen and your vinedressers.”
+                Isaiah mentions these Gentiles on several occasions. He refers to them as "servants" in Isaiah 56:6. They are called "servants and
+                handmaids" in Isaiah 14:2. And in Isaiah 61:5, we read, "Strangers shall stand and feed your flocks, and the sons of the foreigner
+                shall be your plowmen and your vinedressers."
             </div>
             <div className="m-3">
                 We can see from Scripture that Gentiles do not come to Israel in a high and mighty position, but rather in the position of a servant.
@@ -206,15 +201,15 @@ const TermsAndConditions = (props: { type: string | null }) => {
                     4. To communicate Christian perspectives to the attention of Israeli leaders and the Jewish community at large.
                 </div>
                 <div className="mb-8">
-                    5. To counter anti-Semitism worldwide and support Israel’s divine, God-given right to exist in her Godgiven land.
+                    5. To counter anti-Semitism worldwide and support Israel's divine, God-given right to exist in her Godgiven land.
                 </div>
                 <div className="text-2xl m-5 font-serif italic text-center">BASIC VOLUNTEER REQUIREMENTS</div>
                 <div className="mb-3 text-left text-xl md:text-2xl">WHO IS A BFP VOLUNTEER?</div>
                 <div className="m-3">
                     The prophets of Israel knew that one day Gentile people would come to the land of Israel and help in its restoration. The prophet
-                    Isaiah mentions these Gentiles on several occasions. He refers to them as “servants” in Isaiah 56:6. They are called “servants and
-                    handmaids” in Isaiah 14:2. And in Isaiah 61:5, we read, “Strangers shall stand and feed your flocks, and the sons of the foreigner
-                    shall be your plowmen and your vinedressers.”
+                    Isaiah mentions these Gentiles on several occasions. He refers to them as "servants" in Isaiah 56:6. They are called "servants and
+                    handmaids" in Isaiah 14:2. And in Isaiah 61:5, we read, "Strangers shall stand and feed your flocks, and the sons of the foreigner
+                    shall be your plowmen and your vinedressers."
                 </div>
                 <div className="m-3">
                     We can see from Scripture that Gentiles do not come to Israel in a high and mighty position, but rather in the position of a
@@ -229,7 +224,7 @@ const TermsAndConditions = (props: { type: string | null }) => {
             </section>
             <section className="mb-10 text-justify">
                 <div className="text-2xl m-5 font-serif italic text-center">A VOLUNTEER WITH BRIDGES FOR PEACE IS REQUIRED TO:</div>
-                <div className="m-3">1. Have a servant’s heart. </div>
+                <div className="m-3">1. Have a servant's heart. </div>
                 <div className="m-3">2. Be a committed Christian.</div>
                 <div className="m-3">3. Be at least 18 years of age.</div>
                 <div className="m-3">4. Be in good health.</div>
@@ -252,18 +247,19 @@ const TermsAndConditions = (props: { type: string | null }) => {
                     our work in Israel depends largely upon this display of Christian character and faithfulness.
                 </div>
                 <div className="m-3">11. Live and work in an environment where conditions are diverse due to language and cultural differences.</div>
-                <div className="m-3">12. Understand that luxuries found at “home” may be absent.</div>
+                <div className="m-3">12. Understand that luxuries found at "home" may be absent.</div>
             </section>
-            <section className="mb-5 text-xl">
+            <section className="mb-5 bg-gray-100/10 shadow-lg p-4 md:p-8 rounded-lg ">
                 {props.type == 'Zealous' ? (
                     <>
                         <div className="mb-3">
-                            Thank you for completing your application for the Zealous Israel Project. We truly appreciate the desire God has placed in
-                            your heart to serve and comfort His people while being intentionally discipled as well.
+                            <span className="font-bold text-xl">Thank you</span> for completing your application for the Zealous Israel Project. We
+                            truly appreciate the desire God has placed in your heart to serve and comfort His people while being intentionally
+                            discipled as well.
                         </div>
                         <div className="mb-3">
-                            The application deadline is March 31, 2025. After this date the applications will be reviewed and notification about
-                            whether or not you are accepted will be sent in May.
+                            <span className="font-bold text-xl">The application deadline is March 31, 2025.</span> After this date the applications
+                            will be reviewed and notification about whether or not you are accepted will be sent in May.
                         </div>
                         <div className="mb-3">
                             Remember you can find more details about the timing and process on the{' '}
@@ -275,12 +271,13 @@ const TermsAndConditions = (props: { type: string | null }) => {
                 ) : (
                     <>
                         <div className="mb-3">
-                            Thank you for considering BFP as a place to volunteer your time and service in the land of Israel. We truly appreciate the
-                            desire God has placed in your heart to serve and to give comfort to His people.
+                            <span className="font-bold font-sans text-xl">Thank you</span> for considering BFP as a place to volunteer your time and
+                            service in the land of Israel. We truly appreciate the desire God has placed in your heart to serve and to give comfort to
+                            His people.
                         </div>
                         <div className="mb-3">
-                            The application process usually takes between two to three months, from the time the application documents are submitted
-                            to receiving a definitive answer from the Jerusalem office.
+                            <span className="font-bold text-xl">The application process</span> usually takes between two to three months, from the
+                            time the application documents are submitted to receiving a definitive answer from the Jerusalem office.
                         </div>
                         <div className="mb-8">
                             Several factors affect the processing time, including length of service time requested, availability of positions and when
@@ -291,8 +288,8 @@ const TermsAndConditions = (props: { type: string | null }) => {
 
                 {props.type == 'Short Term' || (
                     <div className="mb-3">
-                        <span className="font-bold">Please note:</span> All applicants who are applying to serve for over three months are required to
-                        submit a Criminal Record Check/Police Clearance Certificate (
+                        <span className="font-bold text-xl">Please note:</span> All applicants who are applying to serve for over three months are
+                        required to submit a Criminal Record Check/Police Clearance Certificate (
                         <Link className="underline text-blue-500" href={'/apply/contact-us'}>
                             Contact Us
                         </Link>{' '}
@@ -320,7 +317,7 @@ export const DoctrinalStatement = () => {
             <ul className="m-3 mb-8 list-disc">
                 <li className="mb-2">God is one {italicVerse('(Deut. 6:4; 1 Cor. 8:6)')}</li>
                 <li className="mb-2">The Father, Son and Holy Spirit exist in unity {italicVerse('(Matt. 28:19)')}</li>
-                <li className="mb-2">Jesus the Messiah is God’s only begotten Son {italicVerse('(Matt. 16:16; John 3:16)')}</li>
+                <li className="mb-2">Jesus the Messiah is God's only begotten Son {italicVerse('(Matt. 16:16; John 3:16)')}</li>
                 <li className="mb-2">Jesus the Messiah is the only Mediator between God and man {italicVerse('(1 Tim. 2:5)')}</li>
                 <li className="mb-2">Jesus the Messiah is eternal and fully God and fully man {italicVerse('(John 8:58; John 14:9; John 10:30)')}</li>
             </ul>
@@ -343,14 +340,14 @@ export const DoctrinalStatement = () => {
             </ul>
             <div className={statementTitleStyle}>ISRAEL</div>
             <ul className="m-3 mb-8 list-disc">
-                <li className="mb-2">The nation of Israel is the apple of God’s eye {italicVerse('(Zech. 2:8)')}</li>
+                <li className="mb-2">The nation of Israel is the apple of God's eye {italicVerse('(Zech. 2:8)')}</li>
                 <li className="mb-2">God will not break His covenant with Israel {italicVerse('(Jer. 31:35–37)')}</li>
                 <li className="mb-2">God is restoring the Jewish people to Israel, their Promised Land {italicVerse('(Jer. 23:7–8)')}</li>
                 <li className="mb-2">Believers from Gentile backgrounds have a debt to the Jewish people {italicVerse('(Rom. 11)')}</li>
                 <li className="mb-2">
                     God blesses those who bless Israel and curses those who curse Israel {italicVerse('(Gen. 12:3; Isa. 60:12)')}
                 </li>
-                <li className="mb-2">Blessing is promised to those who pray for Jerusalem’s peace {italicVerse('(Ps. 122:6)')}</li>
+                <li className="mb-2">Blessing is promised to those who pray for Jerusalem's peace {italicVerse('(Ps. 122:6)')}</li>
             </ul>
             <div className={statementTitleStyle}>THE FUTURE</div>
             <ul className="m-3 mb-8 list-disc">
@@ -374,7 +371,7 @@ export const EvangelismStatement = () => (
         <div className="m-3 mb-8 text-justify">
             <div className="mb-3">
                 Bridges for Peace is a Jerusalem-based, Bible-believing Christian organization supporting Israel and building relationships between
-                Jews and Christians worldwide through education and practical deeds, expressing God’s love and mercy.
+                Jews and Christians worldwide through education and practical deeds, expressing God's love and mercy.
             </div>
             <div className="mb-3">
                 The history of Christian–Jewish relationships is seriously marred by the anti-Semitic behavior of Christians toward Jews. The
@@ -396,8 +393,8 @@ export const MessianicJudaismStatement = () => (
         <div className="text-xl md:text-2xl m-5 font-serif italic text-center">STATEMENT ON MESSIANIC JUDAISM</div>
         <div className="m-3 mb-8 text-left md:text-justify">
             <div className="mb-3">
-                Recognizing the variety of callings within the body of Christ (e.g. of Paul as an apostle to the Gentiles; James and Peter to “the
-                circumcision”) we believe it is unwise to appear to be promoting the Messianic movement as Bridges for Peace’s mandate, while our
+                Recognizing the variety of callings within the body of Christ (e.g. of Paul as an apostle to the Gentiles; James and Peter to "the
+                circumcision") we believe it is unwise to appear to be promoting the Messianic movement as Bridges for Peace's mandate, while our
                 calling is building bridges between the Jewish community and the wider body of Christ. This is not meant to restrict your personal
                 choices of worship, it just means that Bridges for Peace, as an organization, is not to be identified with or promote Messianic Jewish
                 activities.
