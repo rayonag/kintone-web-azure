@@ -3,7 +3,6 @@ import { useWatch, Control, useFieldArray, UseFormRegister, FieldErrors } from '
 import { ApplicationFormType } from '../applicationForm/schema';
 import Input from './Input';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import DeleteIcon from '@/components/icons/DeleteIcon';
 import DeleteCircleX from '@/components/icons/DeleteCircleX';
 
 type EducationTableProps = {
