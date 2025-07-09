@@ -29,6 +29,7 @@ import ReactModal from 'react-modal';
 import postTempApplicationForm from './hooks/postTempApplicationForm';
 import applicationForm_en from './i18n/translations/en.json';
 import common_en from '@/libs/i18n/common/en.json';
+import SubmittingSpinner from '@/components/loading/SubmittingSpinner';
 
 const tStore = { ...applicationForm_en, ...common_en };
 const getNestedProperty = (obj: any, path: string) => {
@@ -267,34 +268,33 @@ const ApplicationForm = (props: any) => {
     const router = useRouter();
     const onSubmit = async (e: any) => {
         e.preventDefault();
-        startSubmitting();
-        const valid = await validate();
-        if (!valid) {
-            endSubmitting();
-            return;
-        }
-        if (!window.confirm('Do you want to submit?')) {
-            endSubmitting();
-            return;
-        }
-        const values = getValues();
-        setIsLoading(true);
+        setIsSubmitting(true);
+
         try {
+            const valid = await validate();
+            if (!valid) {
+                return;
+            }
+
+            if (!window.confirm('Do you want to submit?')) {
+                return;
+            }
+
+            const values = getValues();
+
             const res = await postApplicationForm(values, dashboardUser.ref || undefined);
             if (res) {
-                postTempApplicationForm(values, dashboardUser.ref || '0', step);
+                await postTempApplicationForm(values, dashboardUser.ref || '0', step);
                 alert('Your form has been submitted!');
-                setIsLoading(false);
                 window.location.reload();
             } else {
                 alert('Failed to submit the form. Please try again.');
-                setIsLoading(false);
             }
         } catch (error) {
+            console.error('Form submission error:', error);
             alert('Failed to submit the form. Please try again.');
-            setIsLoading(false);
         } finally {
-            endSubmitting();
+            setIsSubmitting(false);
         }
     };
     const customStyles = {
@@ -321,21 +321,22 @@ const ApplicationForm = (props: any) => {
     };
 
     const handleNext = async () => {
+        console.log('getValues()', getValues());
         const valid = await validate();
         if (valid) {
             // temp save
-            startSubmitting();
+            // startSubmitting();
             try {
-                await postTempApplicationForm(getValues(), dashboardUser.ref || '0', step);
-                setIsDialogOpen(true);
                 setStep(step + 1);
+                setIsDialogOpen(true);
                 setTimeout(() => {
                     scrollRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 100);
+                }, 0);
+                await postTempApplicationForm(getValues(), dashboardUser.ref || '0', step);
             } catch (error) {
                 console.error('Failed to save progress:', error);
             } finally {
-                endSubmitting();
+                // endSubmitting();
             }
         }
     };
@@ -347,6 +348,7 @@ const ApplicationForm = (props: any) => {
     };
     return (
         <>
+            <SubmittingSpinner isVisible={isSubmitting} />
             <div className="application-form flex flex-col items-center h-svh overflow-y-scroll md:h-auto md:overflow-y-auto justify-center pt-8 m-4 md:p-0">
                 <div
                     className={`absolute top-20 right-2 md:right-20 bg-[#012c66] font-bold opacity-80 rounded-md text-white p-4 ${
@@ -368,7 +370,7 @@ const ApplicationForm = (props: any) => {
                 </Modal>
                 <div className="" ref={scrollRef}>
                     <form
-                        onSubmit={(e) => onSubmit(e)}
+                        // onSubmit={(e) => onSubmit(e)}
                         className="flex flex-col h-fit my-14 p-6 md:p-10 max-w-[95vw] md:w-[50rem] md:max-w-screen bg-gray-50 border rounded-md"
                     >
                         <ProgressBar steps={10} setStep={setStep} currentStep={step} />
@@ -388,7 +390,7 @@ const ApplicationForm = (props: any) => {
                             </button>
                         )}
                         {step == 10 && (
-                            <button type="submit" className="btn-wide">
+                            <button type="button" onClick={onSubmit} className="btn-wide">
                                 {t('system.submit')}
                             </button>
                         )}
