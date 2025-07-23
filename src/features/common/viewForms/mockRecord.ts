@@ -266,6 +266,10 @@ export const record = {
             type: 'SINGLE_LINE_TEXT',
             value: 'Ray'
         },
+        alias: {
+            type: 'SINGLE_LINE_TEXT',
+            value: 'Raymond'
+        },
         hasHeavyLicense: {
             type: 'RADIO_BUTTON',
             value: 'Yes'

@@ -31,6 +31,7 @@ const postTempApplicationForm = async (data: ApplicationFormType, ref: string | 
                         firstName: { value: data.firstName },
                         middleName: { value: data.middleName },
                         lastName: { value: data.lastName },
+                        alias: { value: data.alias },
                         street: { value: data.street },
                         city: { value: data.city },
                         state: { value: data.state },

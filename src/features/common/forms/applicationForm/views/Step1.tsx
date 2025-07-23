@@ -43,6 +43,9 @@ const Step1: FC<Step1Props> = ({ register, errors, getValues, t, control }) => {
                     <Input label={null} register={register('middleName')} placeholder={t('middleName')} error={errors.middleName || undefined} />
                     <Input label={null} register={register('lastName')} placeholder={t('lastName')} error={errors.lastName || undefined} />
                 </Row>
+                <Row>
+                    <Input label={null} register={register('alias')} placeholder={`${t('alias')} (optional)`} error={errors.alias || undefined} />
+                </Row>
                 <div className="font-semibold mt-2 text-black">{t('address')}</div>
                 <Row>
                     <Input label={null} register={register('street')} placeholder={t('street')} error={errors.street || undefined} />

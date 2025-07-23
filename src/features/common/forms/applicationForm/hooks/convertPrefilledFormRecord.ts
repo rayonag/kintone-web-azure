@@ -39,6 +39,7 @@ const convertPrefilledFormRecord = (record: SavedVolunteerApplicationForm, setVa
     addFieldIfValid('firstName', record.firstName.value);
     addFieldIfValid('middleName', record.middleName.value);
     addFieldIfValid('lastName', record.lastName.value);
+    addFieldIfValid('alias', record.alias.value);
     addFieldIfValid('street', record.street.value);
     addFieldIfValid('city', record.city.value);
     addFieldIfValid('state', record.state.value);

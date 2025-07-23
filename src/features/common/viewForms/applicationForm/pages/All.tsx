@@ -76,6 +76,7 @@ const All: FC<AllProps> = ({ record }) => {
                         {'  '}
                         {record['middleName'].value && record['middleName'].value + '  '}
                         {record['lastName'].value}
+                        {record['alias'].value && '  (' + record['alias'].value + ')'}
                     </Text>
                 </Text>
                 <Text style={applicationFormPageStyle.row}>

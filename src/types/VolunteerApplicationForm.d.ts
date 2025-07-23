@@ -99,6 +99,7 @@ export interface VolunteerApplicationForm {
     christianJewishUnderstanding: kintone.fieldTypes.MultiLineText;
     skillLibrary: kintone.fieldTypes.Number;
     firstName: kintone.fieldTypes.SingleLineText;
+    alias: kintone.fieldTypes.SingleLineText;
     doSmoke: kintone.fieldTypes.RadioButton;
     hasLicenseMoreThanTwelveMonths: kintone.fieldTypes.RadioButton;
     maritalStatus: kintone.fieldTypes.RadioButton;
@@ -314,6 +315,7 @@ export type REST_VolunteerApplicationForm = {
     christianJewishUnderstanding: KintoneRecordField.MultiLineText;
     skillLibrary: KintoneRecordField.Number;
     firstName: KintoneRecordField.SingleLineText;
+    alias: KintoneRecordField.SingleLineText;
     doSmoke: KintoneRecordField.RadioButton;
     hasLicenseMoreThanTwelveMonths: KintoneRecordField.RadioButton;
     maritalStatus: KintoneRecordField.RadioButton;

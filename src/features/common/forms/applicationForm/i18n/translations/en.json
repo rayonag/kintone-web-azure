@@ -16,6 +16,7 @@
     "firstName": "First",
     "middleName": "Middle",
     "lastName": "Last",
+    "alias": "Alias/Preferred Name",
     "address": "Address",
     "street": "Street/PO Box",
     "city": "City",

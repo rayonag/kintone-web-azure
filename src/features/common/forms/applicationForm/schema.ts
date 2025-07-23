@@ -141,6 +141,7 @@ const type = z.discriminatedUnion('type', [
 const firstName = string50;
 const middleName = string_optional;
 const lastName = string50;
+const alias = string_optional;
 const street = string300;
 const city = string50;
 const state = string50;
@@ -307,6 +308,7 @@ export const ApplicationFormSchema = z.object({
     firstName: firstName,
     middleName: middleName,
     lastName: lastName,
+    alias: alias,
     street: street,
     city: city,
     state: state,
