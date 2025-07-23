@@ -118,6 +118,7 @@ const Login: React.FC = () => {
                 router.push('/apply');
             } else {
                 alert('Something wrong. Please start from the top.');
+                logError(JSON.stringify(res), { username, password }, 'handleCreatePassword');
                 router.push('/apply');
                 return;
             }

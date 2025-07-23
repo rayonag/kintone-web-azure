@@ -1,4 +1,3 @@
-export const sendgridApiKey = process.env.SENDGRID_API_KEY;
 export const openAiApiKey = process.env.OPENAI_API_KEY;
 // kintone
 export const KintoneUserName = process.env.NEXT_PUBLIC_KINTONE_USERNAME;

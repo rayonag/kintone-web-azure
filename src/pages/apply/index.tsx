@@ -225,7 +225,8 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                             />
                         ) : (
                             <>
-                                Welcome{currentStep != 'reviewWebsite' && ' back'} {knownAs || name || ''}!<span className="w-1 opacity-0">|</span>
+                                Welcome{currentStep != 'reviewWebsite' ? ' back' : ''} {knownAs || name || ''}!
+                                <span className="w-1 opacity-0">|</span>
                             </>
                         )}
                     </>

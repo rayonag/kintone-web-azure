@@ -1,7 +1,7 @@
 import NotificationDocument from '@/common/react-email/emails/Notification-document';
 import { render } from '@react-email/render';
 import React from 'react';
-import sgMail from '@sendgrid/mail';
+import { sendEmail } from '@/lib/email-service';
 import logError from '@/common/logError';
 import { REST_SavedOnlineVolunteerApplication, REST_OnlineVolunteerApplication } from '@/types/OnlineVolunteerApplication';
 
@@ -106,29 +106,17 @@ export const notificationApplicationUpdated = async (
                 ? `[Online Application] Health Questionnaire submitted by ${name}`
                 : `[Online Application] Document submitted by ${name}`;
         const mailBody = `${name} submitted ${updated[updatedField]}`;
-        const cc = ''; //'intl.personnel@bridgesforpeace.com'; // add SDD email
-        //const bcc = data.bcc;
         const mailHTML = render(<NotificationDocument mailBody={mailBody} applicationRef={record['applicationRef'].value} />);
-        sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
-        const msg = {
-            to: to, // Change to your recipient
-            from: 'BFP Online Application<onlineapplication@bridgesforpeace.com>', // Change to your verified sender
-            cc: cc,
-            bcc: '',
+
+        const emailOptions = {
+            to: to,
             subject: mailTitle,
             html: mailHTML
         };
-        sgMail
-            .send(msg)
-            .then((e) => {
-                res.status(200).json({ resp2: e });
-                return;
-            })
-            .catch((e) => {
-                logError(e, e.response.body.errors, 'notificationApplicationUpdated');
-                res.status(200).json({ resp2: e });
-                return;
-            });
+
+        await sendEmail(emailOptions);
+        res.status(200).json({ resp2: 'Email sent successfully' });
+        return;
     } catch (e) {
         logError(e, record, 'notificationApplicationUpdated');
         res.status(200).json({ resp2: e });
@@ -144,28 +132,18 @@ export const notificationReferenceSubmitted = async (res: any, record: REST_Save
         const to = emailNationalOffice[office];
         const mailTitle = `[Online Application] All Reference Forms submitted for ${name}`;
         const mailBody = `The Reference Forms are all submitted for ${name}`;
-        const cc = ''; //'intl.personnel@bridgesforpeace.com'; // add SDD email?
-        // const bcc = 'ronaga@bridgesforpeace.com';
         const mailHTML = render(<NotificationDocument mailBody={mailBody} applicationRef={record['applicationRef'].value} />);
-        sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
-        const msg = {
-            to: to, // Change to your recipient
-            from: 'BFP Online Application<onlineapplication@bridgesforpeace.com>', // Change to your verified sender
-            cc: cc,
-            bcc: 'ronaga@bridgesforpeace.com', // TODO: delete later
+
+        const emailOptions = {
+            to: to,
             subject: mailTitle,
-            html: mailHTML
+            html: mailHTML,
+            bcc: 'ronaga@bridgesforpeace.com'
         };
-        sgMail
-            .send(msg)
-            .then((e) => {
-                res.status(200).json({ resp2: e });
-                return;
-            })
-            .catch((error) => {
-                res.status(200).json({ resp2: error });
-                return;
-            });
+
+        await sendEmail(emailOptions);
+        res.status(200).json({ resp2: 'Email sent successfully' });
+        return;
     } catch (e) {
         logError(e, record, 'notificationApplicationUpdated');
         res.status(200).json({ resp2: e });
