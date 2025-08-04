@@ -51,6 +51,11 @@ const PrivacyPolicy = () => {
                             </ul>
                         </div>
                         <div className="text-lg my-4">
+                            <div>
+                                <Link className="link" href="https://www.bridgesforpeace.com/privacy-policy" target="_blank">
+                                    Click here to read our full Privacy Policy
+                                </Link>
+                            </div>
                             If you have any concerns about how we collect and use your personal data please let us know by selecting{' '}
                             <Link className="link" href="/contact">
                                 Contact Us
