@@ -4,14 +4,16 @@ import Modal from 'react-modal';
 import { useRouter } from 'next/router';
 import { useDashboardUser } from '@/common/context/dashboardUser';
 import { ReferenceFormFields, ReferenceFormType } from '../schema';
+import { DateTime } from 'luxon';
 
 type ButtonProps = {
     label: string;
     isHover: boolean;
     setIsHover: React.Dispatch<React.SetStateAction<boolean>>;
     onclick: (props: any) => any;
+    disabled?: boolean;
 };
-const Button: FC<ButtonProps> = ({ label, setIsHover, onclick }) => {
+const Button: FC<ButtonProps> = ({ label, setIsHover, onclick, disabled = false }) => {
     const buttonStyle = {
         color: 'white',
         padding: '.5rem 1rem',
@@ -21,7 +23,18 @@ const Button: FC<ButtonProps> = ({ label, setIsHover, onclick }) => {
         fontSize: '1rem'
     };
     return (
-        <button className="btn" style={buttonStyle} onClick={onclick} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+        <button
+            className="btn"
+            style={{
+                ...buttonStyle,
+                opacity: disabled ? 0.7 : 1,
+                cursor: disabled ? 'not-allowed' : 'pointer'
+            }}
+            onClick={onclick}
+            onMouseEnter={() => setIsHover(true)}
+            onMouseLeave={() => setIsHover(false)}
+            disabled={disabled}
+        >
             {label}
         </button>
     );
@@ -33,8 +46,9 @@ type ConfirmationModalProps = {
     getValues: UseFormGetValues<ReferenceFormType>;
     t: any;
     onSubmit: SubmitHandler<ReferenceFormType>;
+    isSubmitting?: boolean;
 };
-const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIsOpen, getValues, t, onSubmit }) => {
+const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIsOpen, getValues, t, onSubmit, isSubmitting = false }) => {
     const [isHoverSubmit, setIsHoverSubmit] = useState(false);
     const [isHoverCancel, setIsHoverCancel] = useState(false);
     const [isComplete, setIsComplete] = useState(false);
@@ -174,6 +188,17 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIs
                                 </div>
                             );
                         })}
+                        <div className="py-2">
+                            {t('signatureDate')}:{' '}
+                            <span className="font-semibold">
+                                {DateTime.fromObject({
+                                    day: parseInt(formData['signatureDate']?.day || '0'),
+                                    month: parseInt(formData['signatureDate']?.month || '0'),
+                                    year: parseInt(formData['signatureDate']?.year || '0')
+                                }).toFormat('dd/LLL/yyyy')}
+                            </span>
+                            <hr />
+                        </div>
                     </div>
                     {/* TODO: add auto-reply email */}
                     {/* <label className="flex justify-center my-4 text-black">
@@ -186,8 +211,20 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({ modalIsOpen, setModalIs
                         </div>
                     </label> */}
                     <div className="flex flex-col justify-center">
-                        <Button label="Submit" isHover={isHoverSubmit} setIsHover={setIsHoverSubmit} onclick={onSubmit} />
-                        <Button label="Back" isHover={isHoverCancel} setIsHover={setIsHoverCancel} onclick={() => setModalIsOpen(false)} />
+                        <Button
+                            label={isSubmitting ? 'Submitting...' : 'Submit'}
+                            isHover={isHoverSubmit}
+                            setIsHover={setIsHoverSubmit}
+                            onclick={onSubmit}
+                            disabled={isSubmitting}
+                        />
+                        <Button
+                            label="Back"
+                            isHover={isHoverCancel}
+                            setIsHover={setIsHoverCancel}
+                            onclick={() => setModalIsOpen(false)}
+                            disabled={isSubmitting}
+                        />
                     </div>
                 </>
             </Modal>

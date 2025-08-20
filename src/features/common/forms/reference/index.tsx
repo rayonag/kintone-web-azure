@@ -19,10 +19,12 @@ import Step5 from './views/Step5';
 import postReferenceForm from './hooks/postReferenceForm';
 import StepProgressBar from '../components/ProgressBar';
 import ConfirmationModal from './views/Confirmation';
+import SubmittingSpinner from '@/components/loading/SubmittingSpinner';
 
 const ReferenceForm = () => {
     const [page, setPage] = useState(0);
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     // for future use on multi language
     const initialLang = 'en';
     const [locale, dispatch] = useReducer<(state: string, actions: string) => string>(langReducer, initialLang);
@@ -90,21 +92,30 @@ const ReferenceForm = () => {
     }, [router]);
     const onSubmit = async (e: any) => {
         e.preventDefault();
+        if (isSubmitting) return;
+
         const valid = await validate();
         if (!valid) return;
-        //if (!window.confirm('Do you want to submit?')) return;
-        const values = getValues();
-        setIsLoading(true);
-        const res = await postReferenceForm(values);
-        if (res) {
-            router.push('/reference/complete');
-        } else {
+
+        try {
+            setIsSubmitting(true);
+            setIsLoading(true);
+            const values = getValues();
+            const res = await postReferenceForm(values);
+            if (res) {
+                router.push('/reference/complete');
+            } else {
+                throw new Error('Failed to submit the form');
+            }
+        } catch (error) {
             alert('Failed to submit the form. Please try again.');
             setIsLoading(false);
+            setIsSubmitting(false);
         }
     };
     return (
         <div className="grid justify-center px-10 pb-10 max-h-screen overflow-y-scroll">
+            <SubmittingSpinner isVisible={isSubmitting} />
             <form
                 onSubmit={(e) => onSubmit(e)}
                 className="flex flex-col my-14 p-10 max-w-[95vw] md:w-[50rem] md:max-w-screen bg-gray-50 border rounded-md"
@@ -115,7 +126,14 @@ const ReferenceForm = () => {
                 {step === 3 && <Step3 register={register} errors={formatError} getValues={getValues} t={t} control={control} />}
                 {step === 4 && <Step4 register={register} errors={formatError} getValues={getValues} t={t} control={control} />}
                 {step === 5 && <Step5 register={register} errors={formatError} getValues={getValues} t={t} control={control} />}
-                <ConfirmationModal onSubmit={onSubmit} modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} getValues={getValues} t={t} />
+                <ConfirmationModal
+                    onSubmit={onSubmit}
+                    modalIsOpen={modalIsOpen}
+                    setModalIsOpen={setModalIsOpen}
+                    getValues={getValues}
+                    t={t}
+                    isSubmitting={isSubmitting}
+                />
                 {step != 5 && (
                     <button
                         type="button"

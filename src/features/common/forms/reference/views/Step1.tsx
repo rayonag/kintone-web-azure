@@ -32,8 +32,8 @@ const Step1: FC<Step1Props> = ({ register, errors, getValues, t, control }) => {
                 </div>
                 <div className="text-2xl my-4 pl-4 text-gray-600">Before you start...</div>
                 <div className="text-sm md:text-base p-4 text-gray-600">
-                    You will need to complete the Volunteer Reference form in one go - you cannot save your progress and continue later. If you close
-                    the browser tab your answers will be deleted and you will need to start again.
+                    You will need to complete the Volunteer Reference form in one sitting (about 15-20 minutes). Your progress cannot be saved, so if
+                    you close the browser tab your answers will be lost and you will need to start again.
                 </div>
                 <div className="text-xl text-center mt-24 mb-4 text-gray-600">Scroll down to continue</div>
                 <div className="h-16 flex mb-8 justify-center">

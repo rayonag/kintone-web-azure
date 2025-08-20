@@ -275,5 +275,5 @@ export const ReferenceFormFields = [
         'characters'
     ],
     // Step 5
-    ['standpoint', 'recommend', 'address', 'phone', 'email', 'signature', 'signatureDate']
+    ['standpoint', 'recommend', 'address', 'phone', 'email', 'signature'] //  signatureDate is not included because it is not required
 ] as const;
