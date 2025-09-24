@@ -371,7 +371,7 @@ const ApplicationForm = (props: any) => {
                 <div className="" ref={scrollRef}>
                     <form
                         // onSubmit={(e) => onSubmit(e)}
-                        className="flex flex-col h-fit my-14 p-6 md:p-10 max-w-[95vw] md:w-[50rem] md:max-w-screen bg-gray-50 border rounded-md"
+                        className="flex flex-col h-fit my-14 p-6 md:p-10 max-w-[90vw] md:w-[50rem] md:max-w-screen bg-gray-50 border rounded-md"
                     >
                         <ProgressBar steps={10} setStep={setStep} currentStep={step} />
                         {step == 1 && <Step1 register={register} getValues={getValues} errors={formatError} t={t} control={control} />}
