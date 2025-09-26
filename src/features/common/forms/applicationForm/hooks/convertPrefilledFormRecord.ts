@@ -6,6 +6,11 @@ const convertPrefilledFormRecord = (record: SavedVolunteerApplicationForm, setVa
     const convertedForm: Partial<ApplicationFormType> = {};
     // type for office.office
     const addFieldIfValid = (key: keyof ApplicationFormType | any, value: any) => {
+        // Handle dropdown fields with "--" default value
+        if (value === '--') {
+            setValue(key, null);
+            return;
+        }
         if (value !== undefined && value !== null && value !== '') {
             setValue(key, value);
         }

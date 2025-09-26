@@ -115,6 +115,10 @@ const spouse = z.discriminatedUnion('maritalStatus', [
     z.object({
         maritalStatus: z.enum(['Single', 'Divorced', 'Widowed']),
         spouseFullName: z.string().optional()
+    }),
+    z.object({
+        maritalStatus: z.string().nullable().refine(validateRadio, error_required),
+        spouseFullName: z.string().optional()
     })
 ]);
 const type = z.discriminatedUnion('type', [
