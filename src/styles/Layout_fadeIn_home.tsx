@@ -14,15 +14,9 @@ const Layout_fadeIn_home: FC<Layout_fadeIn_homeProps> = ({ key, children, repo }
     return (
         <>
             {repo ? (
-                <motion.div
-                    key={key || 'page'}
-                    className="h-screen w-screen relative"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 1 }}
-                >
+                <motion.div key={key || 'page'} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
                     <Header isZealous={repo.isZealous} />
-                    <div className="flex flex-col items-center justify-center h-[100svh] lg:h-[100vh] text-white">{children}</div>
+                    {children}
                 </motion.div>
             ) : (
                 <></>

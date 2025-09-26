@@ -66,7 +66,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
             {formSubmitted ? (
                 <>
                     <>
-                        <div className="flex flex-col items-center justify-center h-[95svh]">
+                        <div className="">
                             <div>Thank you for submitting {type} application form.</div>
                             {viewMyForm ? (
                                 <>

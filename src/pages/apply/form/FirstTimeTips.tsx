@@ -9,6 +9,7 @@ type FirstTimeTipsProps = {
 const FirstTimeTips: FC<FirstTimeTipsProps> = ({ type, handleContinueOnFirstTime }) => {
     const [page, setPage] = useState(0);
     const [haveRead, setHaveRead] = useState(false);
+    const [haveReadWaiver, setHaveReadWaiver] = useState(false);
     const scrollRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -39,10 +40,10 @@ const FirstTimeTips: FC<FirstTimeTipsProps> = ({ type, handleContinueOnFirstTime
         );
     };
     return (
-        <div ref={scrollRef} className="flex flex-col items-center justify-center pt-8 m-4 md:p-0">
+        <div ref={scrollRef} className="min-w-80 md:p-[10%] p-12 flex flex-col items-center justify-center">
             {page == 0 && <ConfirmType />}
             {page != 0 && (
-                <div className="min-w-80 md:px-[20%]">
+                <div>
                     {page == 1 && (
                         <>
                             <DoctrinalStatement />
@@ -51,6 +52,7 @@ const FirstTimeTips: FC<FirstTimeTipsProps> = ({ type, handleContinueOnFirstTime
                         </>
                     )}
                     {page == 2 && <TermsAndConditions type={type} />}
+                    {page == 3 && <WaiverNotice />}
                     <div className="flex justify-center flex-col">
                         {page == 1 && (
                             <>
@@ -71,7 +73,30 @@ const FirstTimeTips: FC<FirstTimeTipsProps> = ({ type, handleContinueOnFirstTime
                                         type="checkbox"
                                         className="m-2 scale-150 text-center"
                                     />
-                                    <span>I have read and agree with the above</span>
+                                    <span>I have read and agree to the above</span>
+                                </label>
+                                <button
+                                    onClick={() => setPage(3)}
+                                    aria-disabled={!haveRead}
+                                    className={`${!haveRead ? 'btn-disabled-wide pointer-events-none btn-wide' : 'btn-wide'}`}
+                                >
+                                    Continue
+                                </button>
+                                <button onClick={() => setPage(1)} className="btn-wide">
+                                    Back
+                                </button>
+                            </>
+                        )}
+                        {page === 3 && (
+                            <>
+                                <label className="flex justify-center items-center">
+                                    <input
+                                        onClick={() => setHaveReadWaiver(!haveReadWaiver)}
+                                        checked={haveReadWaiver}
+                                        type="checkbox"
+                                        className="m-2 scale-150 text-center"
+                                    />
+                                    <span>I have read and agree to the above</span>
                                 </label>
                                 <button
                                     onClick={handleContinueOnFirstTime}
@@ -80,7 +105,7 @@ const FirstTimeTips: FC<FirstTimeTipsProps> = ({ type, handleContinueOnFirstTime
                                 >
                                     Continue
                                 </button>
-                                <button onClick={() => setPage(1)} className="btn-wide">
+                                <button onClick={() => setPage(2)} className="btn-wide">
                                     Back
                                 </button>
                             </>
@@ -419,4 +444,73 @@ export const MessianicJudaismStatement = () => (
             </div>
         </div>
     </>
+);
+
+export const WaiverNotice = () => (
+    <div className="p-2">
+        <div className="m-3 mb-8 text-justify">
+            <p>
+                In order to volunteer for Bridges for Peace in Israel, you will be required to sign a contractual waiver that has legal consequences.
+                Please carefully read the words below and check the confirmation box at the bottom of this page to acknowledge your understanding.
+            </p>
+        </div>
+        <div className="m-3 mb-8 text-justify">
+            <div className="text-2xl md:text-3xl mt-16 m-6 font-serif text-center">Waiver Notice</div>
+            <p>
+                I am an adult over 18 years of age, and in consideration of my volunteering for the organization Bridges for Peace (hereinafter:
+                “Bridges for Peace” or “the organization”) in Israel, I hereby freely agree to make the following contractual representations and
+                agreements:
+            </p>
+            <ol className="list-decimal text-left ml-5 mt-5">
+                <li className="mb-3">
+                    I will read and understand the relevant Government Travel Advisory regarding the risks of travel to Israel and in any countries I
+                    will be visiting during my period of volunteering in Israel.
+                </li>
+                <li className="mb-3">
+                    I understand that Bridges for Peace cannot guarantee my safety during my period of volunteering in Israel and I assume full
+                    responsibility for all risks associated with my travel to and volunteering in Israel.
+                </li>
+                <li className="mb-3">
+                    I will voluntarily assume all the risks associated with such participation in the organization's volunteer programme and I declare
+                    that I have not been forced, persuaded or coerced by any person to volunteer for the organization.
+                </li>
+                <li className="mb-3">
+                    I agree that it is my sole responsibility to be familiar with the physical and/or mental demands associated with volunteering for
+                    Bridges for Peace. With these demands in mind, I have no physical or mental condition which, to my knowledge, would endanger
+                    myself or others if I volunteer. I further agree to abide by any established rules or regulations of the organization connected to
+                    the period of volunteering.
+                </li>
+                <li className="mb-3">
+                    I understand and expressly assume all the risks and dangers that may arise during my period of volunteering in Israel, and I
+                    hereby release, waive, discharge, and covenant not to sue Bridges for Peace and/or their officers, directors, agents, servants,
+                    and employees (collectively, the "Releasees") from all liability, claims, demands, actions, or causes of action whatsoever arising
+                    out of any damages, loss, or injury to me or to my property while participating in the volunteer programme of the organization
+                    whether such damage, loss, or injury, results from the negligence of the Releasees or for any other cause.
+                </li>
+                <li className="mb-3">
+                    I also hereby release, waive, discharge and covenant not to sue the Releasees from any claims whatsoever on account of any first
+                    aid, treatment, or service rendered to me during my participation in the above activity.
+                </li>
+                <li className="mb-3">
+                    I agree, for myself and my successors, that the above representations and agreements are contractually binding and are not mere
+                    recitals. I agree that this Agreement is intended to be as broad and inclusive as permitted by the laws of the country I am
+                    resident in, and that if any portion of it is held invalid, the balance shall continue in full force and effect.
+                </li>
+                <li className="mb-3">
+                    I have carefully read this form and fully understand its contents. I am aware that this is a release of liability, a waiver of
+                    claims, an agreement not to sue, an indemnity, and a contract between myself and Bridges for Peace and I agree to it of my own
+                    free will.
+                </li>
+                <li className="mb-3">
+                    This agreement also discharges the Releasees from any liability and/or claim that any third party may have against the
+                    organization with respect to any claim that any third party may have or bring against the Releasees which may result from my
+                    participation in any activity or volunteer programme of the organization.
+                </li>
+                <li>
+                    I agree that this Waiver is intended to be as broad and inclusive as permitted by the laws of the State of Israel, and that this
+                    Waiver shall be solely governed by and interpreted in accordance with the laws of the State of Israel.
+                </li>
+            </ol>
+        </div>
+    </div>
 );
