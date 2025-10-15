@@ -23,12 +23,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 return res.status(400).json({ error: 'Password is required' });
             }
 
-            // Validate email format
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(username)) {
-                return res.status(400).json({ error: 'Invalid email format' });
-            }
-
             // Validate environment variables
             if (!process.env.NEXT_PUBLIC_KINTONE_USERNAME || !process.env.NEXT_PUBLIC_KINTONE_PASSWORD) {
                 logError(new Error('Kintone credentials not configured'), { username }, 'createPasswordKintone');
@@ -85,6 +79,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             }
 
             const user = recordArray[0];
+            console.log('user', user);
+            // validate email format, except for the test records
+            if (user['isTest'].value == 'true') {
+                // skip validation
+            } else {
+                // Validate email format
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(username)) {
+                    return res.status(400).json({ error: 'Invalid email format' });
+                }
+            }
 
             // Validate record structure
             if (!user['$id'] || typeof user['$id'].value !== 'string') {

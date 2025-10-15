@@ -24,6 +24,7 @@ import { useShallow } from 'zustand/react/shallow';
 import Vara from 'vara';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import LoadingSpinner from '@/components/loading/LoadingSpinner';
 
 import Typewriter from 'typewriter-effect';
 import ReferenceProgress from '@/components/modal/ReferenceProgress';
@@ -215,7 +216,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                                 onInit={(typewriter) => {
                                     typewriter
                                         .pauseFor(500)
-                                        .typeString(`Welcome${currentStep != 'reviewWebsite' && ' back'} ${knownAs || name || ''}!`)
+                                        .typeString(`Welcome${currentStep != 'reviewWebsite' ? ' back' : ''} ${knownAs || name || ''}!`)
                                         .start()
                                         .pauseFor(500)
                                         .callFunction(() => {
@@ -237,8 +238,10 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
     return (
         <>
             <Modal isVisible={isZealousModalOpen} onClose={() => setIsZealousModalOpen(false)}>
-                <div className="p-4 max-h-[80svh] max-w-[1000px] overflow-auto">
-                    <Image src="/images/zealous/cover.jpg" alt="info" width={1000} height={1000} />
+                <div className="p-4 max-h-[80svh] max-w-[1000px] overflow-auto relative">
+                    <div className="relative w-full h-full min-h-[300px]">
+                        <Image src="/images/zealous/cover.jpg" alt="info" width={1000} height={1000} />
+                    </div>
                 </div>
             </Modal>
             {/* <div className=" font-[font-name]">zealous project</div> */}
