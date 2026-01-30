@@ -96,21 +96,37 @@ const HealthQuestionnaire = (props: { repo: any }) => {
         }
     }, [props]);
     const onSubmit: SubmitHandler<HealthQuestionnaireType> = async () => {
-        setIsLoading(true);
-        setIsSubmitting(true);
-        const data = getValues();
-        // TODO: when undefined
-        const res = await postPersonalHealthQuestionnaire(data, dashboardUser.ref || '0');
-        setIsLoading(false);
-        if (!res) return alert('Something went wrong. Please try again later.');
-        window.location.reload();
+        if (isSubmitting) return;
+
+        try {
+            setIsSubmitting(true);
+            setIsLoading(true);
+            const data = getValues();
+            // TODO: when undefined
+            const res = await postPersonalHealthQuestionnaire(data, dashboardUser.ref || '0');
+            if (!res) {
+                throw new Error('Failed to submit the form');
+            }
+            window.location.reload();
+        } catch (error) {
+            alert('Something went wrong. Please try again later.');
+            setIsLoading(false);
+            setIsSubmitting(false);
+        }
     };
     return (
         <form className="flex flex-col px-10 pb-10 text-center">
             {page === 0 && <Step1 register={register} errors={formatError} getValues={getValues} t={t} control={control} />}
             {page === 1 && <Step2 register={register} errors={formatError} getValues={getValues} t={t} control={control} />}
             {page === 2 && <Step3 register={register} errors={formatError} t={t} control={control} />}
-            <ConfirmationModal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} getValues={getValues} t={t} onSubmit={onSubmit} />
+            <ConfirmationModal 
+                modalIsOpen={modalIsOpen} 
+                setModalIsOpen={setModalIsOpen} 
+                getValues={getValues} 
+                t={t} 
+                onSubmit={onSubmit}
+                isSubmitting={isSubmitting}
+            />
             {page != 2 && (
                 <button
                     type="button"
