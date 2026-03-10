@@ -1,6 +1,6 @@
 'use client';
 // Import necessary modules from React
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { destroyCookie, parseCookies } from 'nookies';
 
@@ -16,15 +16,12 @@ import { REST_VolunteerApplicationForm } from '@/types/VolunteerApplicationForm'
 import GreenCheckMark from '@/components/icons/GreenCheckMark';
 import ArrowUpRight from '@/components/icons/ArrowUpRight';
 import logError from '@/common/logError';
-import { useRouter } from 'next/router';
 import RateUs from '@/components/modal/RateUs';
 import TransitionLink from '@/components/pageTransition/TransitionLink';
 import useUserStore from '@/features/common/store';
 import { useShallow } from 'zustand/react/shallow';
-import Vara from 'vara';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import LoadingSpinner from '@/components/loading/LoadingSpinner';
 
 import Typewriter from 'typewriter-effect';
 import ReferenceProgress from '@/components/modal/ReferenceProgress';
@@ -82,6 +79,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
     const [isClient, setIsClient] = useState(false);
     const dashboardUser = useDashboardUser();
     const userRef = dashboardUser.ref;
+    const initialBodyOverflowRef = useRef<string | null>(null);
 
     useEffect(() => {
         // Use a more robust client-side detection
@@ -158,18 +156,29 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
         }))
     );
     const knownAs = useUserStore((state) => state.knownAs);
-    const all = useUserStore();
     useEffect(() => {
-        // allow scrolling on mobile
-        if (window.screen.width < 768) document.body.style.overflow = 'scroll';
-        else document.body.style.overflow = 'hidden';
-    }, []);
-    useEffect(() => {
-        // disable scrolling when modal is open
-        if (isModalOpen || isZealousModalOpen) document.body.style.overflow = 'hidden';
-        else if (window.screen.width < 768) document.body.style.overflow = 'scroll';
-        else document.body.style.overflow = 'visible';
-    }, [isModalOpen, isZealousModalOpen]);
+        if (typeof window === 'undefined') return;
+
+        // Keep global CSS as the source of truth unless a modal is open.
+        if (initialBodyOverflowRef.current === null) {
+            initialBodyOverflowRef.current = document.body.style.overflow ?? '';
+        }
+
+        const isAnyModalOpen = isModalOpen || isZealousModalOpen || isReferenceModalOpen;
+        if (isAnyModalOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            // Let CSS handle scroll behavior (mobile "native-app feel" etc.)
+            document.body.style.overflow = initialBodyOverflowRef.current;
+        }
+
+        return () => {
+            // Prevent leaking inline overflow styles across route changes.
+            if (initialBodyOverflowRef.current !== null) {
+                document.body.style.overflow = initialBodyOverflowRef.current;
+            }
+        };
+    }, [isModalOpen, isZealousModalOpen, isReferenceModalOpen]);
 
     interface ModalProps {
         isVisible: boolean;
