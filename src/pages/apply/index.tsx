@@ -76,6 +76,9 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isZealousModalOpen, setIsZealousModalOpen] = useState(false);
     const [isReferenceModalOpen, setIsReferenceModalOpen] = useState(false);
+    const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+    const [aboutDone, setAboutDone] = useState(repo?.reviewAbout === 'ok');
+    const [faqDone, setFaqDone] = useState(repo?.reviewFaq === 'ok');
     const [isClient, setIsClient] = useState(false);
     const dashboardUser = useDashboardUser();
     const userRef = dashboardUser.ref;
@@ -146,6 +149,23 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
             <GreenCheckMark height={30} width={30} />
         </div>
     );
+    const handleReviewClick = async (field: 'reviewAbout' | 'reviewFaq') => {
+        if (!userRef) return;
+        const willAboutBeDone = field === 'reviewAbout' ? true : aboutDone;
+        const willFaqBeDone = field === 'reviewFaq' ? true : faqDone;
+        // optimistic UI: turn the check mark green immediately
+        if (field === 'reviewAbout') setAboutDone(true);
+        else setFaqDone(true);
+        try {
+            await postReview(field, userRef);
+        } catch (e) {
+            logError(e, null, 'apply/handleReviewClick');
+        }
+        // once both links have been reviewed, refresh so the application steps unlock
+        if (willAboutBeDone && willFaqBeDone) {
+            location.reload();
+        }
+    };
     const { username, name, type, initUser } = useUserStore(
         useShallow((state) => ({
             username: state.username,
@@ -306,85 +326,106 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                                             </div>
                                         )}
                                         <WelcomeText />
-                                        {type == 'Zealous' ? (
-                                            <>
-                                                <Link
-                                                    href="https://www.bridgesforpeace.com/zealous82/about_z82"
-                                                    className="btn flex"
-                                                    target="_blank"
-                                                    onClick={async () => await handleCheckListClick('reviewAbout', userRef)}
-                                                >
-                                                    About Zealous Project
-                                                    <ArrowUpRight />
-                                                </Link>
-                                                <Link
-                                                    href="https://www.bridgesforpeace.com/zealous82/zealous-zproject-home#faq"
-                                                    className="btn flex"
-                                                    target="_blank"
-                                                    onClick={async () => await handleCheckListClick('reviewFaq', userRef)}
-                                                >
-                                                    ZProject FAQ
-                                                    <ArrowUpRight />
-                                                </Link>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <Link
-                                                    href="https://www.bridgesforpeace.com/about"
-                                                    className="btn flex"
-                                                    target="_blank"
-                                                    onClick={async () => await handleCheckListClick('reviewAbout', userRef)}
-                                                >
-                                                    About Bridges for Peace
-                                                    <ArrowUpRight />
-                                                </Link>
-                                                <Link
-                                                    href="https://www.bridgesforpeace.com/volunteer#faq"
-                                                    className="btn flex"
-                                                    target="_blank"
-                                                    onClick={async () => await handleCheckListClick('reviewFaq', userRef)}
-                                                >
-                                                    Frequently Asked Questions
-                                                    <ArrowUpRight />
-                                                </Link>
-                                            </>
+                                        {needsRevieWebsite && (
+                                            <button className="btn" onClick={() => setIsReviewModalOpen(true)}>
+                                                Start Application
+                                            </button>
                                         )}
-                                        <div className="relative flex items-center">
-                                            <TransitionLink href="/apply/form" {...buttonProps('submitApplication')}>
-                                                Online Application Form
-                                            </TransitionLink>
-                                            {dashboardUser.formSubmission?.includes('Application Form Completed') && <Check />}
-                                        </div>
-                                        {type == 'Zealous' && (
-                                            <div className="relative flex items-center">
-                                                <TransitionLink href="/apply/financial-obligation" {...buttonProps('submitApplication')}>
-                                                    Financial Obligation Policy
-                                                </TransitionLink>
-                                                {repo?.financialObligationSubmitted && <Check />}
+                                        <Modal isVisible={isReviewModalOpen} onClose={() => setIsReviewModalOpen(false)}>
+                                            <div className="bg-white text-black rounded-lg p-6 w-[90vw] max-w-md shadow-xl">
+                                                <h2 className="text-lg font-semibold mb-1">Before you start</h2>
+                                                <p className="text-sm text-gray-600 mb-4">
+                                                    Please review both pages below to begin your application.
+                                                </p>
+                                                {(type == 'Zealous'
+                                                    ? [
+                                                          {
+                                                              field: 'reviewAbout' as const,
+                                                              label: 'About Zealous Project',
+                                                              href: 'https://www.bridgesforpeace.com/zealous82/about_z82',
+                                                              done: aboutDone
+                                                          },
+                                                          {
+                                                              field: 'reviewFaq' as const,
+                                                              label: 'ZProject FAQ',
+                                                              href: 'https://www.bridgesforpeace.com/zealous82/zealous-zproject-home#faq',
+                                                              done: faqDone
+                                                          }
+                                                      ]
+                                                    : [
+                                                          {
+                                                              field: 'reviewAbout' as const,
+                                                              label: 'About Bridges for Peace',
+                                                              href: 'https://www.bridgesforpeace.com/about',
+                                                              done: aboutDone
+                                                          },
+                                                          {
+                                                              field: 'reviewFaq' as const,
+                                                              label: 'Frequently Asked Questions',
+                                                              href: 'https://www.bridgesforpeace.com/volunteer#faq',
+                                                              done: faqDone
+                                                          }
+                                                      ]
+                                                ).map((item) => (
+                                                    <div key={item.field} className="flex items-center justify-between gap-3 py-2">
+                                                        <Link
+                                                            href={item.href}
+                                                            className="flex items-center text-blue-600 hover:underline"
+                                                            target="_blank"
+                                                            onClick={() => handleReviewClick(item.field)}
+                                                        >
+                                                            {item.label}
+                                                            <ArrowUpRight />
+                                                        </Link>
+                                                        <GreenCheckMark
+                                                            height={28}
+                                                            width={28}
+                                                            color={item.done ? '#17c200' : '#9ca3af'}
+                                                        />
+                                                    </div>
+                                                ))}
                                             </div>
+                                        </Modal>
+                                        {!needsRevieWebsite && (
+                                            <>
+                                                <div className="relative flex items-center">
+                                                    <TransitionLink href="/apply/form" {...buttonProps('submitApplication')}>
+                                                        Online Application Form
+                                                    </TransitionLink>
+                                                    {dashboardUser.formSubmission?.includes('Application Form Completed') && <Check />}
+                                                </div>
+                                                {type == 'Zealous' && (
+                                                    <div className="relative flex items-center">
+                                                        <TransitionLink href="/apply/financial-obligation" {...buttonProps('submitApplication')}>
+                                                            Financial Obligation Policy
+                                                        </TransitionLink>
+                                                        {repo?.financialObligationSubmitted && <Check />}
+                                                    </div>
+                                                )}
+                                                <div className="relative flex items-center">
+                                                    <TransitionLink href="/apply/health-questionnaire" {...buttonProps('submitApplication')}>
+                                                        Personal Health Questionnaire
+                                                    </TransitionLink>
+                                                    {dashboardUser.formSubmission?.includes('Personal Health Questionnaire') && <Check />}
+                                                </div>
+                                                <div className="relative flex items-center">
+                                                    <TransitionLink href="/apply/documents" {...buttonProps('submitApplication')}>
+                                                        Submit Necessary Documents
+                                                    </TransitionLink>
+                                                    {repo?.allDocumentsSubmitted && <Check />}
+                                                </div>
+                                                <div className="relative flex items-center">
+                                                    <ReferenceProgress
+                                                        referenceCount={repo?.referenceCount || 0}
+                                                        referenceRequired={type == 'Short Term' ? 3 : 4}
+                                                        isModalOpen={isReferenceModalOpen}
+                                                        setIsModalOpen={setIsReferenceModalOpen}
+                                                        buttonProps={buttonProps('submitApplication')}
+                                                    />
+                                                    {repo?.referenceCount == (type == 'Short Term' ? 3 : 4) && <Check />}
+                                                </div>
+                                            </>
                                         )}
-                                        <div className="relative flex items-center">
-                                            <TransitionLink href="/apply/health-questionnaire" {...buttonProps('submitApplication')}>
-                                                Personal Health Questionnaire
-                                            </TransitionLink>
-                                            {dashboardUser.formSubmission?.includes('Personal Health Questionnaire') && <Check />}
-                                        </div>
-                                        <div className="relative flex items-center">
-                                            <TransitionLink href="/apply/documents" {...buttonProps('submitApplication')}>
-                                                Submit Necessary Documents
-                                            </TransitionLink>
-                                            {repo?.allDocumentsSubmitted && <Check />}
-                                        </div>
-                                        <div className="relative flex items-center">
-                                            <ReferenceProgress
-                                                referenceCount={repo?.referenceCount || 0}
-                                                referenceRequired={type == 'Short Term' ? 3 : 4}
-                                                isModalOpen={isReferenceModalOpen}
-                                                setIsModalOpen={setIsReferenceModalOpen}
-                                                buttonProps={buttonProps('submitApplication')}
-                                            />
-                                            {repo?.referenceCount == (type == 'Short Term' ? 3 : 4) && <Check />}
-                                        </div>
                                         <Helper
                                             currentStep={currentStep}
                                             userRef={userRef}
