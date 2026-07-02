@@ -15,7 +15,6 @@ import { REST_VolunteerApplicationForm, REST_SavedVolunteerApplicationForm } fro
 import logError from '@/common/logError';
 import { NationalOffice } from '@/common/context/offices';
 import FirstTimeTips from './FirstTimeTips';
-import 'react-loading-skeleton/dist/skeleton.css';
 import ApplicationForm from '@/features/common/forms/applicationForm';
 
 import ViewApplicationForm from '@/features/common/viewForms/applicationForm/ViewApplicationForm';
@@ -66,7 +65,7 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
             {formSubmitted ? (
                 <>
                     <>
-                        <div className="">
+                        <div className="min-h-[60vh] w-full max-w-3xl mx-auto flex flex-col items-center justify-center text-center gap-4 px-4">
                             <div>Thank you for submitting {type} application form.</div>
                             {viewMyForm ? (
                                 <>
