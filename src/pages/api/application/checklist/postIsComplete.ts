@@ -12,6 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         try {
             type ReqData = {
                 userRef: string;
+                isComplete?: boolean;
             };
             const data: ReqData | undefined = JSON.parse(req.body);
             if (!data) {
@@ -23,6 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 handleNullOrEmpty({ res: res, errorMessage: 'No userRef' });
                 return;
             }
+            const isComplete = data.isComplete ?? true;
             // update kintone record
             const client = new KintoneRestAPIClient({
                 baseUrl: 'https://bfp.kintone.com',
@@ -32,12 +34,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     password: KintonePassword
                 }
             });
-            // field value to 'false'
             const resp = await client.record.updateRecord({
                 app: OnlineVolunteerApplicationAppID as string,
                 id: userRef,
                 record: {
-                    isComplete: { value: true }
+                    isComplete: { value: isComplete ? 'true' : 'false' }
                 }
             });
             res.status(200).json({

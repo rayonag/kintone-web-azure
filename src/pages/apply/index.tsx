@@ -101,22 +101,11 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
     }, [dashboardUser]);
     // helper modal
     const [currentStep, setCurrentStep] = useState<ApplicationSteps>('reviewWebsite');
-    useEffect(() => {
-        if (!repo) return;
-        if (repo.reviewAbout !== 'ok' || repo.reviewFaq !== 'ok') {
-            setCurrentStep('reviewWebsite');
-        } else if (!dashboardUser.formSubmission?.includes('Application Form Completed')) {
-            setCurrentStep('submitApplication');
-        } else if (!repo.allDocumentsSubmitted) {
-            setCurrentStep('submitDocuments');
-        } else {
-            setCurrentStep('complete');
-        }
-    }, [dashboardUser]);
-    const setIsCompleteTrue = async (ref: string | undefined) => {
+    const setIsComplete = async (ref: string | undefined, isComplete: boolean) => {
         if (!ref) return;
         const body = {
-            userRef: ref
+            userRef: ref,
+            isComplete
         };
         const res = await fetch('/api/application/checklist/postIsComplete', {
             method: 'POST',
@@ -129,11 +118,33 @@ const Page = ({ repo }: InferGetServerSidePropsType<typeof getServerSideProps>) 
         }
     };
     useEffect(() => {
-        if (!repo?.isComplete && currentStep == 'complete') {
-            setIsModalOpen(true);
-            setIsCompleteTrue(dashboardUser.ref);
+        if (!repo || !dashboardUser.isLoggedIn) return;
+        const formSubmission = dashboardUser.formSubmission ?? [];
+        const hasApplicationForm = formSubmission.includes('Application Form Completed');
+        const hasHealthQuestionnaire = formSubmission.includes('Personal Health Questionnaire');
+
+        let nextStep: ApplicationSteps;
+        if (repo.reviewAbout !== 'ok' || repo.reviewFaq !== 'ok') {
+            nextStep = 'reviewWebsite';
+        } else if (!hasApplicationForm || !hasHealthQuestionnaire) {
+            // Application form and Personal Health Questionnaire are both required
+            nextStep = 'submitApplication';
+        } else if (!repo.allDocumentsSubmitted) {
+            nextStep = 'submitDocuments';
+        } else {
+            nextStep = 'complete';
         }
-    }, [currentStep]);
+        setCurrentStep(nextStep);
+
+        if (!dashboardUser.ref) return;
+        if (nextStep === 'complete' && !repo.isComplete) {
+            setIsModalOpen(true);
+            setIsComplete(dashboardUser.ref, true);
+        } else if (nextStep !== 'complete' && repo.isComplete) {
+            // Correct stale isComplete when required steps are still missing
+            setIsComplete(dashboardUser.ref, false);
+        }
+    }, [dashboardUser]);
     const needsRevieWebsite = currentStep == 'reviewWebsite' ? true : false;
     useEffect(() => {
         // for modal
